@@ -1,0 +1,23 @@
+---
+abstract: 'Raw wireless packet injection using the Lorcon2 library'
+author:
+  - 'BASEBAND <BASEBAND_at_cpan.org>'
+build_requires:
+  ExtUtils::MakeMaker: '0'
+configure_requires:
+  ExtUtils::MakeMaker: '0'
+dynamic_config: 1
+generated_by: 'ExtUtils::MakeMaker version 6.98, CPAN::Meta::Converter version 2.143240'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: '1.4'
+name: Net-Lorcon2
+no_index:
+  directory:
+    - t
+    - inc
+requires:
+  Class::Gomor: '0'
+  perl: '5.006001'
+version: '3.51'

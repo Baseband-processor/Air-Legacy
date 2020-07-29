@@ -1,0 +1,332 @@
+
+#include "EXTERN.h"
+#include "perl.h"
+#include "XSUB.h"
+
+#include <lorcon2/lorcon.h>
+#include <lorcon2/lorcon_packet.h>
+#include <lorcon2/lorcon_multi.h>
+#include <lorcon2/drv_madwifing.h>
+
+
+typedef lorcon_t                   NetLorcon;
+typedef lorcon_driver_t            NetLorconDriver;
+typedef lorcon_packet_t            NetLorconPacket;
+typedef lorcon_multi_t             NetLorconMulti;
+typedef lorcon_multi_interface_t   NetLorconInterface;
+typedef pcap_t                     Pcap;
+
+#include "c/lorcon_driver_t.c"
+
+MODULE = Net::Lorcon2   PACKAGE = Net::Lorcon2
+PROTOTYPES: DISABLE
+
+AV *
+lorcon_list_drivers()
+   INIT:
+      lorcon_driver_t *list = lorcon_list_drivers();
+      lorcon_driver_t *cur = NULL;
+      AV *av = newAV();
+   CODE:
+      for (cur = list; cur != NULL; cur = cur->next) {
+         SV *this = lorcon_driver_t_c2sv(cur);
+         av_push(av, this);
+      }
+      lorcon_free_driver_list(list);
+      RETVAL = av;
+   OUTPUT:
+      RETVAL
+
+
+const char *
+lorcon_get_error( context )
+      NetLorcon *context
+
+NetLorconDriver *
+lorcon_find_driver( driver )
+      const char *driver
+
+NetLorconDriver *
+lorcon_auto_driver(interface)
+      const char *interface
+
+void
+lorcon_free_driver_list(list)
+      NetLorconDriver *list
+
+NetLorcon *
+lorcon_create(interface, driver)
+      const char *interface
+      NetLorconDriver *driver
+
+void
+lorcon_free(context)
+      NetLorcon *context
+
+void
+lorcon_set_timeout(context, timeout)
+      NetLorcon *context
+      int timeout
+
+int
+lorcon_get_timeout(context)
+      NetLorcon *context
+
+int
+lorcon_open_inject(context)
+      NetLorcon *context
+
+int
+lorcon_open_monitor(context)
+      NetLorcon *context
+
+int
+lorcon_open_injmon(context)
+      NetLorcon *context
+
+void
+lorcon_set_vap(context, vap)
+      NetLorcon *context
+      const char *vap
+
+const char *
+lorcon_get_vap(context)
+      NetLorcon *context
+
+const char *
+lorcon_get_capiface(context)
+      NetLorcon *context
+
+
+const char *
+lorcon_get_driver_name(context)
+      NetLorcon *context
+
+void
+lorcon_close(context)
+      NetLorcon *context
+
+int
+lorcon_get_datalink(context)
+      NetLorcon *context
+
+int
+lorcon_set_datalink(context, dlt)
+      NetLorcon *context
+      int dlt
+
+int
+lorcon_set_channel(context, channel)
+      NetLorcon *context
+      int channel
+
+int
+lorcon_get_channel(context)
+      NetLorcon *context
+
+int 
+lorcon_get_hwmac(context, mac)
+      NetLorcon *context
+      char **mac
+
+int 
+lorcon_set_hwmac(context, mac_len, mac)
+      NetLorcon *context
+      int mac_len
+      unsigned char *mac
+
+Pcap *
+lorcon_get_pcap(context)
+      NetLorcon *context
+
+#void 
+#lorcon_packet_set_freedata(packet, freedata)
+#  NetLorconPacket *packet
+#  int freedata
+
+int
+lorcon_get_selectable_fd(context)
+      NetLorcon *context
+
+int
+lorcon_next_ex(context, packet)
+      NetLorcon *context
+      NetLorconPacket *packet
+
+int
+lorcon_set_filter(context, filter)
+      NetLorcon *context
+      const char *filter
+
+#int
+#lorcon_set_compiled_filter(context, filter)
+      #NetLorcon *context
+      #struct bpf_program *filter
+
+#int 
+#lorcon_loop(context, count,  callback, user)
+#  NetLorcon *context
+#  int count
+#  NetLorconHandler callback
+#  u_char *user
+
+#int lorcon_dispatch(lorcon_t *context, int count,  callback, u_char *user);
+
+void
+lorcon_breakloop(context);
+  NetLorcon *context
+
+
+int
+lorcon_inject(context, packet)
+      NetLorcon *context
+      NetLorconPacket *packet
+
+int
+lorcon_send_bytes(context, length, bytes)
+      NetLorcon *context
+      int length
+      u_char *bytes
+
+unsigned long int
+lorcon_get_version()
+
+int
+lorcon_add_wepkey(context, bssid, key, length)
+      NetLorcon *context
+      u_char *bssid
+      u_char *key
+      int length
+
+#void 
+#lorcon_set_useraux(context, aux)
+#  NetLorcon *context
+#  void *aux
+
+void  
+lorcon_get_useraux(context)
+  NetLorcon *context
+
+void  
+lorcon_packet_free(packet)
+  NetLorconPacket *packet
+
+int 
+lorcon_packet_decode(packet)
+  NetLorconPacket *packet
+
+void  
+lorcon_packet_set_channel(packet, channel)
+  NetLorconPacket *packet
+  int channel
+
+NetLorconPacket *
+lorcon_packet_from_dot3(bssid, dot11_direction, data, length)
+  u_char *bssid
+  int dot11_direction
+  u_char *data
+  int length
+
+int 
+lorcon_packet_to_dot3(packet, data)
+  NetLorconPacket *packet
+  u_char *data
+
+
+int 
+lorcon_ifup( context )
+  NetLorcon *context
+
+
+const u_char *
+lorcon_packet_get_source_mac(packet);
+  NetLorconPacket *packet
+
+void
+lcpf_randmac(addr, valid)
+  uint8_t *addr
+  int valid
+
+const u_char *
+lorcon_packet_get_dest_mac(packet);
+  NetLorconPacket *packet
+
+const u_char *
+locon_packet_get_bssid_mac(packet);
+  NetLorconPacket *packet
+
+int 
+lorcon_ifdown( context );
+  NetLorcon *context
+
+#int
+#lorcon_set_complex_channel(context, channel)
+#  NetLorcon *context
+#  NetLorconChannel *channel
+
+#int
+#lorcon_get_complex_channel( context, channel )
+#  NetLorcon *context
+#  NetLorconChannel *channel
+
+#int 
+#lorcon_parse_ht_channel( channel, return_channel );
+ # const char *in_chanstr
+  #NetLorconChannel *channel
+
+NetLorconMulti *
+lorcon_multi_create()
+
+void
+lorcon_multi_free(ctx, free_interfaces)
+  NetLorconMulti *ctx
+  int free_interfaces
+
+int
+lorcon_multi_add_interface(ctx, lorcon_intf)
+  NetLorconMulti *ctx
+  NetLorcon *lorcon_intf
+
+void 
+lorcon_multi_del_interface(ctx, lorcon_intf, free_interface)
+  NetLorconMulti *ctx
+  NetLorcon *lorcon_intf
+  int free_interface
+
+NetLorconInterface *
+lorcon_multi_get_interfaces(ctx)
+  NetLorconMulti *ctx
+
+NetLorconInterface *
+lorcon_multi_get_next_interface(ctx, intf)
+  NetLorconMulti *ctx
+  NetLorconInterface *intf
+
+NetLorcon *
+lorcon_multi_interface_get_lorcon(intf)
+  NetLorconInterface *intf
+
+#void 
+#lorcon_multi_set_interface_error_handler(ctx, lorcon_interface)
+ # NetLorconMulti *ctx
+  #NetLorcon *lorcon_interface
+
+void
+lorcon_multi_remove_interface_error_handler(ctx, lorcon_interface)
+  NetLorconMulti *ctx
+  NetLorcon *lorcon_interface
+
+#int
+#lorcon_multi_loop(ctx, count, callback, user)
+ # NetLorconMulti *ctx
+  #int count
+  ## callback
+  #unsigned char *user
+
+NetLorconDriver *
+drv_madwifing_listdriver()
+
+int 
+drv_madwifing_init(context) 
+  NetLorcon *context
+

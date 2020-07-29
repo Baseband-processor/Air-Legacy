@@ -1,0 +1,63 @@
+Revision history for Perl extension Net::Lorcon2.
+
+5.00 Sat jul 25 5:15:00 CET 2020
+  - update function list
+  - tested first 20 functions
+  - fixed minor bugs
+  - added madwifing interface special control functions
+  - still working on interface compatibility 
+  - working on TunTap interface
+  - added injection function
+  - added open_monitor function
+  - working on lorcon_list_drivers crash
+  - creating a modified lorcon library for the module compatibility
+  - creating a modified installer for handling the modified lorcon library
+
+3.51 Mon Jul 20 1:25:00 CET 2020
+  - update MANIFEST file
+  - added TODO file for ideas
+
+3.50 Mon Jul 20 1:00:00 CET 2020
+  - added multi loop features for multiple sniffing
+  - added more documentation
+  - code optimization and correction
+  - added 2 new constants
+
+3.10 Sun Jul 19 19:00:00 CET 2020
+   - added complex channel manipulation
+
+3.05 Sun Jul 19 17:30:00 CET 2020
+   - added lorcon_ifup and lorcon_ifdown functions
+   - added additional documentation
+
+3.01 Sun Jul 19 16:00:00 CET 2020
+   - added the requests constant type
+   - general upgrade to tests
+   - code improvement
+   - examples improvement
+
+3.00 Sun Jul 19 15:00:00 CET 2020
+   - added 4 new constant types
+   - new documentation
+   - more examples
+   - added more functions
+   - update tests
+
+2.03 Tue Feb 17 08:01:33 CET 2015
+   - update: Kwalitee
+   - update: copyright notice
+
+2.02 Sat Sep 25 10:22:45 CEST 2010
+   - Net::Lorcon2 is born, supports new lorcon2 API
+
+0.02 Sat Nov 08 13:45:11 2008
+   - update: getchan() is now getchannel()
+   - more tests
+   - more injection drivers supported
+   - some examples written
+   - new constants
+   - no need for include linux/wireless.h anymore
+
+0.01  Sun Jan 21 21:27:16 2007
+   - original version
+
