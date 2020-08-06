@@ -12,6 +12,7 @@ all: CT perlT
 
 CT:
         cd $(C_LORCON_DIR) && \
+        chmod 755 C/configure
         configure --prefix=$(TMP_INSTALL_DIR) && \
         make all && \
         make install
