@@ -341,3 +341,46 @@ int
 drv_madwifing_init(context) 
   NetLorcon *context
 
+int
+lorcon_airjack_init(in_tx)
+  NetLorcon *in_tx
+
+NetLorconDriver *
+lorcon_airjack_listdriver()
+  NetLorconDriver *
+
+int 
+aj_setmonitor(ifname, rfmonset)
+  char *ifname
+  int rfmonset
+
+int 
+aj_setmode(ifname,  mode)
+  char *ifname
+  int mode
+
+int 
+aj_setchannel(ifname,channel)
+  char *ifname
+  int channel
+
+int 
+aj_setmac(ifname, mac)
+  char *ifname
+  uint8_t *mac
+
+int 
+aj_xmitframe(ifname, xmit, len, errstr)
+  char *ifname
+  uint8_t *xmit
+  int len
+  char *errstr
+
+int
+aj_recvframe(ifname, buf, len)
+  char *ifname
+  uint8_t *buf
+  int len
+
+
+
