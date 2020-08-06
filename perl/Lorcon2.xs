@@ -25,6 +25,7 @@ typedef lorcon_driver_t            NetLorconDriver;
 typedef lorcon_packet_t            NetLorconPacket;
 typedef lorcon_multi_t             NetLorconMulti;
 typedef lorcon_multi_interface_t   NetLorconInterface;
+typedef lorcon_channel_t           NetLorconChannel;
 typedef pcap_t                     Pcap;
 
 #include "c/lorcon_driver_t.c"
@@ -181,7 +182,8 @@ lorcon_set_filter(context, filter)
 #  NetLorconHandler callback
 #  u_char *user
 
-#int lorcon_dispatch(lorcon_t *context, int count,  callback, u_char *user);
+#int 
+#lorcon_dispatch(lorcon_t *context, int count,  callback, u_char *user);
 
 void
 lorcon_breakloop(context);
@@ -270,20 +272,20 @@ int
 lorcon_ifdown( context );
   NetLorcon *context
 
-#int
-#lorcon_set_complex_channel(context, channel)
-#  NetLorcon *context
-#  NetLorconChannel *channel
+int
+lorcon_set_complex_channel(context, channel)
+  NetLorcon *context
+  NetLorconChannel *channel
 
-#int
-#lorcon_get_complex_channel( context, channel )
-#  NetLorcon *context
-#  NetLorconChannel *channel
+int
+lorcon_get_complex_channel( context, channel )
+  NetLorcon *context
+  NetLorconChannel *channel
 
-#int 
-#lorcon_parse_ht_channel( channel, return_channel );
- # const char *in_chanstr
-  #NetLorconChannel *channel
+int 
+lorcon_parse_ht_channel( channel, return_channel );
+  const char *in_chanstr
+  NetLorconChannel *channel
 
 NetLorconMulti *
 lorcon_multi_create()
