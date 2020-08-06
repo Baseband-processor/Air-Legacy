@@ -75,6 +75,7 @@ install:	$(LIBOUT)
 	install -m 644 nl80211_control.h $(INCLUDE)/lorcon2/nl80211_control.h	
 	install -m 644 airpinject.h $(INCLUDE)/lorcon2/airpinject.h
 	install -m 644 drv_file.h $(INCLUDE)/lorcon2/drv_file.h
+	install -m 644 lorcon_int.h $(INCLUDE)/lorcon2/lorcon_int.h
 	install -m 644 iwcontrol.h $(INCLUDE)/lorcon2/iwcontrol.h
 	install -m 644 drv_airjack.h $(INCLUDE)/lorcon2/drv_airjack.h
 	install -m 644 lorcon_packet.h $(INCLUDE)/lorcon2/lorcon_packet.h
