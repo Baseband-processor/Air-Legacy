@@ -70,9 +70,13 @@ install:	$(LIBOUT)
 	install -d -m 755 $(INCLUDE)/lorcon2/
 	install -m 644 lorcon.h $(INCLUDE)/lorcon2/lorcon.h
 	install -m 644 lorcon.h $(INCLUDE)/lorcon2/drv_tuntap.h
-	install -m 644 lorcon.h $(INCLUDE)/lorcon2/drv_madwifing.h
+	install -m 644 lorcon.h $(INCLUDE)/lorcon2/drv_madwifing.h	
 	install -m 644 lorcon.h $(INCLUDE)/lorcon2/drv_mac80211.h
-	install -m 644 lorcon.h $(INCLUDE)/lorcon2/drv_hostap.h
+        install -m 644 lorcon.h $(INCLUDE)/lorcon2/nl80211_control.h	
+        install -m 644 lorcon.h $(INCLUDE)/lorcon2/airpinject.h
+ 	install -m 644 lorcon.h $(INCLUDE)/lorcon2/drv_file.h
+ 	install -m 644 lorcon.h $(INCLUDE)/lorcon2/iwcontrol.h
+	install -m 644 lorcon.h $(INCLUDE)/lorcon2/drv_airjack.h
 	install -m 644 lorcon_packet.h $(INCLUDE)/lorcon2/lorcon_packet.h
 	install -m 644 lorcon_packasm.h $(INCLUDE)/lorcon2/lorcon_packasm.h
 	install -m 644 lorcon_forge.h $(INCLUDE)/lorcon2/lorcon_forge.h
