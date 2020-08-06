@@ -4,7 +4,7 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
    NAME => 'Net::Lorcon2',
    LICENSE => 'perl',
-   AUTHOR => 'Edoardo Mantovani',
+   AUTHOR => 'Edoardo Mantovani aka Baseband',
    DEFINE => '',
    VERSION_FROM => 'lib/Net/Lorcon2.pm',
    LIBS => ['-L/lib -L/usr/lib -L/usr/local/lib -lorcon'],
