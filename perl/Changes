@@ -1,6 +1,15 @@
 Revision history for Perl extension Net::Lorcon2.
 
-5.00 Sat jul 25 5:15:00 CET 2020
+4.00    Fri  Aug 7 00:55:00 CET 2020
+
+  - [*] New contributor: Andreas
+  - added more functions for the airjack driver 
+  - added few constants ( working on it )
+  - Auto-installer created
+  - Modified Lorcon2 files
+  - updated documentation
+  
+3.58.00 Sat jul 25 5:15:00 CET 2020
   - update function list
   - tested first 20 functions
   - fixed minor bugs
