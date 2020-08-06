@@ -75,7 +75,7 @@ install:	$(LIBOUT)
 	install -m 644 lorcon_multi.h $(INCLUDE)/lorcon2/lorcon_multi.h
 	install -m 644 ieee80211.h $(INCLUDE)/lorcon2/lorcon_ieee80211.h
 	install -d -m 755 $(MAN)/man3
-	install -o root -m 644 lorcon.3 $(MAN)/man3/lorcon.3
+	install  -m 644 lorcon.3 $(MAN)/man3/lorcon.3
 
 	$(LDCONFIG)
 
