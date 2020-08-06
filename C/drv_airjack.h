@@ -18,8 +18,8 @@
     Copyright (c) 2005 dragorn and Joshua Wright
 */
 
-#include <lorcon.h>
-#include <lorcon_int.h>
+#include "lorcon.h"
+#include "lorcon_int.h"
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
