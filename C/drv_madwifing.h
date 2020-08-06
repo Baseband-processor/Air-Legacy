@@ -22,7 +22,7 @@
 #define __DRV_MADWIFING_H__
 
 #include "config.h"
-#include <lorcon.h>
+#include "lorcon.h"
 
 #if defined(SYS_LINUX) && defined(HAVE_LINUX_WIRELESS)
 
