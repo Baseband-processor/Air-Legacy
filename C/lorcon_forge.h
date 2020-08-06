@@ -35,7 +35,7 @@
 
 
 #ifndef __PACKET_ASSEMBLY_H__
-#include <lorcon_packasm.h>
+#include "lorcon_packasm.h"
 #endif
 
 /* Create a random MAC address, optionally seeded with a valid wireless OUI
