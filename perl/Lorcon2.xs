@@ -151,10 +151,10 @@ Pcap *
 lorcon_get_pcap(context)
       NetLorcon *context
 
-#void 
-#lorcon_packet_set_freedata(packet, freedata)
-#  NetLorconPacket *packet
-#  int freedata
+void 
+lorcon_packet_set_freedata(packet, freedata)
+  NetLorconPacket *packet
+  int freedata
 
 int
 lorcon_get_selectable_fd(context)
@@ -283,7 +283,7 @@ lorcon_get_complex_channel( context, channel )
   NetLorconChannel *channel
 
 int 
-lorcon_parse_ht_channel( channel, return_channel )
+lorcon_parse_ht_channel( in_chanstr, channel )
   const char *in_chanstr
   NetLorconChannel *channel
 
