@@ -252,7 +252,7 @@ lorcon_ifup( context )
 
 
 const u_char *
-lorcon_packet_get_source_mac(packet);
+lorcon_packet_get_source_mac(packet)
   NetLorconPacket *packet
 
 void
@@ -261,11 +261,11 @@ lcpf_randmac(addr, valid)
   int valid
 
 const u_char *
-lorcon_packet_get_dest_mac(packet);
+lorcon_packet_get_dest_mac(packet)
   NetLorconPacket *packet
 
 const u_char *
-locon_packet_get_bssid_mac(packet);
+locon_packet_get_bssid_mac(packet)
   NetLorconPacket *packet
 
 int 
@@ -283,7 +283,7 @@ lorcon_get_complex_channel( context, channel )
   NetLorconChannel *channel
 
 int 
-lorcon_parse_ht_channel( channel, return_channel );
+lorcon_parse_ht_channel( channel, return_channel )
   const char *in_chanstr
   NetLorconChannel *channel
 
