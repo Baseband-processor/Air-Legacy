@@ -22,7 +22,7 @@
 #define __DRV_TUNTAP_H__
 
 #include "config.h"
-#include <lorcon.h>
+#include "lorcon.h"
 
 #if defined(SYS_LINUX)
 
