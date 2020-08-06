@@ -3,7 +3,7 @@ package Net::Lorcon2;
 use strict;
 use warnings;
 
-our $VERSION = '3.55';
+our $VERSION = '4.00';
 use base qw(Exporter DynaLoader);
 
 use constant LORCON_EGENERIC => -1;
