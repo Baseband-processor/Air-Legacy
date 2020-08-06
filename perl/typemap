@@ -5,6 +5,7 @@ NetLorconDriver *    T_PTRREF
 NetLorconPacket *    T_PTRREF
 NetLorconMulti *     T_PTRREF
 NetLorconInterface * T_PTRREF
+NetLorconChannel *   T_PTRREF
 Pcap *               T_PTRREF
 
 
