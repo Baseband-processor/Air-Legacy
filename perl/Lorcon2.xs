@@ -347,7 +347,6 @@ lorcon_airjack_init(in_tx)
 
 NetLorconDriver *
 lorcon_airjack_listdriver()
-  NetLorconDriver *
 
 int 
 aj_setmonitor(ifname, rfmonset)
