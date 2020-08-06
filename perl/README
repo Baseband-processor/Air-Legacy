@@ -16,29 +16,25 @@ INSTALLATION
 
 To install this module type the following:
 
-   perl Makefile.PL
-   make
-   make test 
-   make install
+   sudo make
 
-p.s
-make test can cause some troubles, cpanm --force is suggested if the "make test" phase fails
+Just execute the makefile script outside the C and perl directory, for now there are no tests, they will be added in future.
 
 DEPENDENCIES
 
 This module requires these other modules and libraries:
 
-  - Class::Gomor
   - lorcon2
-
+Since the version 3.55, Net::Lorcon2 has an auto-installer, which permits to install a modified version of Lorcon2 and set the Net::Lorcon2.
 Unfortunately the official site is closed, some good links for documentation and for download Net::Lorcon2 are:
-  
+
+ - Libpcap (suggested)
+ I suggest to use libpcap with the Net::Lorcon2 library for speed up some lorcon's originary functions which uses pcap as beack-end.   
   - https://github.com/kismetwireless/lorcon 
   - http://blog.opensecurityresearch.com/2012/09/getting-started-with-lorcon.html
 
-COPYRIGHT AND LICENCE
 
-Put the correct copyright and licence information here.
+COPYRIGHT AND LICENCE
 
 Copyright (C) 2020 by Edoardo Mantovani, aka BASEBAND
 
