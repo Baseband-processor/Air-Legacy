@@ -27,6 +27,9 @@ typedef lorcon_multi_interface_t   NetLorconInterface;
 typedef lorcon_channel_t           NetLorconChannel;
 typedef pcap_t                     Pcap;
 
+typedef struct tx80211        TX80211;
+typedef struct tx80211_packet TX80211_PACKET;
+
 #include "c/lorcon_driver_t.c"
 
 MODULE = Net::Lorcon2   PACKAGE = Net::Lorcon2
@@ -382,5 +385,29 @@ aj_recvframe(ifname, buf, len)
   uint8_t *buf
   int len
 
+int 
+tx80211_airpcap_init(in_tx)
+  TX80211 *in_tx
+  
+int
+tx80211_airpcap_capabilities()
 
+int
+airpcap_open(in_tx)
+  TX80211 *in_tx
 
+int
+airpcap_send(in_tx,  in_pkt)
+  TX80211 *in_tx
+  TX80211_PACKET *in_pkt
+
+int
+airpcap_setfuncmode(in_tx, funcmode)
+  TX80211 *in_tx
+  int funcmode
+  
+int 
+airpcap_close(in_tx)
+  TX80211 *in_tx
+  
+  
