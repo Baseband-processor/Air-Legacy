@@ -283,7 +283,13 @@ sub RString_Gen(){ # adapted string for MAC address
 
 sub RMAC_gen(){
   require Net::MAC;
-  return(Net::MAC->new('mac' => &RString_Gen(), 'die' => 0) );
+  my $raw_mac = (Net::MAC->new('mac' => &RString_Gen(), 'die' => 0) );
+  my $formatted_mac = $raw_mac->convert(
+    'bit_group' => 8,  
+    'delimiter' => ':'
+);
+  return ($formatted_mac);
+
 }
 
 __PACKAGE__->bootstrap($VERSION);
