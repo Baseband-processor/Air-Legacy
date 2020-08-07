@@ -410,4 +410,7 @@ int
 airpcap_close(in_tx)
   TX80211 *in_tx
   
-  
+int
+airpcap_setmode(in_tx, mode)
+  TX80211 *in_tx
+  int mode
