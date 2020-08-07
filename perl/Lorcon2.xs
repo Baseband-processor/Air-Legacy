@@ -470,3 +470,21 @@ nl80211_setfrequency_cache(ifidx, nl_sock,nl80211_id, control_freq, chan_width, 
 char *
 nl80211_find_parent(interface)
    const char *interface
+
+int
+iwconfig_set_ssid(in_dev,errstr,in_essid)
+   const char *in_dev
+   char *errstr
+   char *in_essid
+                         
+int
+iwconfig_get_ssid(in_dev, errstr, in_essid)
+   const char *in_dev   
+   char *errstr
+   char *in_essid
+
+int
+iwconfig_get_name(in_dev,errstr,in_name)
+   const char *in_dev
+   char *errstr
+   char *in_name
