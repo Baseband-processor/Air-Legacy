@@ -79,6 +79,7 @@ install:	$(LIBOUT)
 	install -m 644 iwcontrol.h $(INCLUDE)/lorcon2/iwcontrol.h
 	install -m 644 drv_airjack.h $(INCLUDE)/lorcon2/drv_airjack.h
 	install -m 644 lorcon_packet.h $(INCLUDE)/lorcon2/lorcon_packet.h
+	install -m 644 config.h $(INCLUDE)/lorcon2/config.h
 	install -m 644 lorcon_packasm.h $(INCLUDE)/lorcon2/lorcon_packasm.h
 	install -m 644 lorcon_forge.h $(INCLUDE)/lorcon2/lorcon_forge.h
 	install -m 644 lorcon_multi.h $(INCLUDE)/lorcon2/lorcon_multi.h
