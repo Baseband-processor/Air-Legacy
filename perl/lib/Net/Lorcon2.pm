@@ -231,7 +231,6 @@ our %EXPORT_TAGS = (
       lorcon_set_filter
       lorcon_next_ex
       lorcon_parse_ht_channel
-      lorcon
       lorcon_get_selectable_fd
       lorcon_packet_set_freedata
       lorcon_get_pcap
