@@ -436,7 +436,7 @@ nl80211_createvif(interface, newinterface, in_flags, flags_sz, errstr)
      char *errstr
 
 int
-nl80211_setchannel(interface, channel, chmode,errstr)
+nl80211_setchannel(interface, channel, chmode, errstr)
      const char *interface
      int channel
      unsigned int chmode
@@ -449,7 +449,7 @@ nl80211_setchannel_cache(ifidx,nl_sock,nl80211_id, errstr)
         char *errstr
 
 int
-nl80211_setfrequency(interface, control_freq,chan_width, center_freq1, center_freq2, errstr)
+nl80211_setfrequency(interface, control_freq, chan_width, center_freq1, center_freq2, errstr)
         const char *interface 
         unsigned int control_freq
         unsigned int chan_width
@@ -457,7 +457,7 @@ nl80211_setfrequency(interface, control_freq,chan_width, center_freq1, center_fr
         unsigned int center_freq2
         char *errstr
 int
-nl80211_setfrequency_cache(ifidx, nl_sock,nl80211_id, control_freq, chan_width, center_freq1,center_freq2, errstr)
+nl80211_setfrequency_cache(ifidx, nl_sock, nl80211_id, control_freq, chan_width, center_freq1, center_freq2, errstr)
    int ifidx
    void *nl_sock
    int nl80211_id
@@ -472,7 +472,7 @@ nl80211_find_parent(interface)
    const char *interface
 
 int
-iwconfig_set_ssid(in_dev,errstr,in_essid)
+iwconfig_set_ssid(in_dev, errstr, in_essid)
    const char *in_dev
    char *errstr
    char *in_essid
@@ -484,7 +484,7 @@ iwconfig_get_ssid(in_dev, errstr, in_essid)
    char *in_essid
 
 int
-iwconfig_get_name(in_dev,errstr,in_name)
+iwconfig_get_name(in_dev, errstr, in_name)
    const char *in_dev
    char *errstr
    char *in_name
