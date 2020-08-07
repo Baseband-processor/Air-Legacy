@@ -6,6 +6,8 @@ NetLorconPacket *    T_PTRREF
 NetLorconMulti *     T_PTRREF
 NetLorconInterface * T_PTRREF
 NetLorconChannel *   T_PTRREF
+TX80211 *            T_PTRREF
+TX80211_PACKET *     T_PTRREF
 Pcap *               T_PTRREF
 
 
