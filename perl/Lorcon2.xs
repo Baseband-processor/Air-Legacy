@@ -488,3 +488,25 @@ iwconfig_get_name(in_dev,errstr,in_name)
    const char *in_dev
    char *errstr
    char *in_name
+   
+int
+iwconfig_get_channel(in_dev, errstr)
+   const char *in_dev
+   char *errstr
+
+int
+iwconfig_set_channel(in_dev, errstr, in_ch)
+   const char *in_dev
+   char *errstr
+   int in_ch
+
+int 
+iwconfig_get_mode(in_dev, errstr)
+   const char *in_dev
+   char *errstr
+                         
+int
+iwconfig_set_mode(in_dev, errstr, in_mode)
+   const char *in_dev
+   char *errstr
+   int in_mode
