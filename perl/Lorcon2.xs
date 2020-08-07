@@ -12,7 +12,6 @@
 #include <lorcon2/airpinject.h>
 #include <lorcon2/drv_airjack.h>
 #include <lorcon2/drv_file.h>
-#include <lorcon2/drv_hostap.h>
 #include <lorcon2/drv_mac80211.h>
 #include <lorcon2/drv_tuntap.h>
 #include <lorcon2/iwcontrol.h>
