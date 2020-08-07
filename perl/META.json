@@ -32,7 +32,7 @@
       },
       "runtime" : {
          "requires" : {
-            "perl" : "5.6.1"
+            "perl" : "5.22.1"
             "Sed" : "1.11"
             "Net::MAC" : "0"
          }
