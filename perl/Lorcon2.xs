@@ -265,7 +265,7 @@ lorcon_packet_get_dest_mac(packet)
   NetLorconPacket *packet
 
 const u_char *
-locon_packet_get_bssid_mac(packet)
+lorcon_packet_get_bssid_mac(packet)
   NetLorconPacket *packet
 
 int 
