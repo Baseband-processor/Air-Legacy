@@ -263,6 +263,18 @@ our @EXPORT = (
 
 );
 
+#sperimental tools
+
+sub Detect_Driver(){ # pure perl detect driver
+  require Sed;
+  my $comm = `ls -l /sys/class/net/wlo1/device/driver`;
+  if(! $comm) {
+    $comm = `ls -l /sys/class/net/wlan0/device/driver`;
+    }
+  return(sed {s/^.*\/\([a-zA-Z0-9_-]*\)$/\1/} $comm); 
+}
+
+
 __PACKAGE__->bootstrap($VERSION);
 
 
