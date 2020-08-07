@@ -336,8 +336,8 @@ lorcon_multi_remove_interface_error_handler(ctx, lorcon_interface)
   ## callback
   #unsigned char *user
 
-NetLorconDriver *
-drv_madwifing_listdriver()
+#NetLorconDriver *
+#drv_madwifing_listdriver()
 
 int 
 drv_madwifing_init(context) 
@@ -347,8 +347,8 @@ int
 lorcon_airjack_init(in_tx)
   NetLorcon *in_tx
 
-NetLorconDriver *
-lorcon_airjack_listdriver()
+#NetLorconDriver *
+#lorcon_airjack_listdriver()
 
 int 
 aj_setmonitor(ifname, rfmonset)
