@@ -282,7 +282,7 @@ sub RString_Gen(){ # adapted string for MAC address
 }
 
 sub RMAC_gen(){
-  require Net::Mac;
+  require Net::MAC;
   return(Net::MAC->new('mac' => &RString_Gen(), 'die' => 0) );
 }
 
