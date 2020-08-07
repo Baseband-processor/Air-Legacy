@@ -1,3 +1,4 @@
+use 5.6.1;
 package Net::Lorcon2;
 
 use strict;
