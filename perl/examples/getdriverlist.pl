@@ -7,8 +7,6 @@ use warnings;
 use Data::Dumper qw( Dumper );
 use Net::Lorcon2 qw( :subs );
 
-foreach ( Net::Lorcon2::lorcon_list_drivers() ){
+my @Avaiable_cards = Net::Lorcon2::lorcon_list_drivers();
+print Dumper(\@Avaiable_cards);
 
-  print Dumper($_); 
-
-}
