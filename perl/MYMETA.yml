@@ -20,6 +20,6 @@ no_index:
 requires:
   perl: '5.006001'
   Sed: '1.11'
-  Net::Mac: '0'
+  Net::MAC: '0'
 version: '4.00'
 x_serialization_backend: 'CPAN::Meta::YAML version 0.018'
