@@ -1,4 +1,6 @@
-lorcon - Loss Of Radio CONtrol
+lorcon - Loss Of Radio CONtrol [ adapted for Net::Lorcon2 ]
+
+Copyright (c) 2020 - Edoardo Mantovani aka Baseband (modified some installer parts)
 
 Copyright (c) 2009 - Joshua Wright <jwright@hasborg.com>
                      dragorn <dragorn@kismetwireless.net>
