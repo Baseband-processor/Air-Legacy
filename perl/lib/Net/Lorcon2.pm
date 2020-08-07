@@ -248,6 +248,29 @@ our %EXPORT_TAGS = (
       aj_setmonitor
       lorcon_airjack_listdriver
       lorcon_airjack_init
+      iwconfig_set_mode
+      iwconfig_get_mode
+      iwconfig_set_channel
+      iwconfig_get_channel
+      iwconfig_get_name
+      iwconfig_get_ssid
+      iwconfig_set_ssid
+      nl80211_find_parent
+      nl80211_setfrequency_cache
+      nl80211_setfrequency
+      nl80211_setchannel
+      nl80211_setchannel_cache
+      nl80211_createvif
+      nl80211_disconnect
+      nl80211_connect
+      airpcap_setmode
+      airpcap_close
+      airpcap_setfuncmode
+      airpcap_send
+      airpcap_open
+      tx80211_airpcap_capabilities
+      tx80211_airpcap_init
+
 
    )],
 );
