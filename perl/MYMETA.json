@@ -32,12 +32,12 @@
       },
       "runtime" : {
          "requires" : {
-            "Class::Gomor" : "0",
+            "Sed" : "1.11",
             "perl" : "5.006001"
          }
       }
    },
    "release_status" : "stable",
-   "version" : "3.51",
+   "version" : "4.00",
    "x_serialization_backend" : "JSON::PP version 4.04"
 }
