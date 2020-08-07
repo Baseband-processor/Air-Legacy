@@ -434,3 +434,39 @@ nl80211_createvif(interface, newinterface, in_flags, flags_sz, errstr)
      unsigned int *in_flags
      unsigned int * flags_sz
      char *errstr
+
+int
+nl80211_setchannel(interface, channel, chmode,errstr)
+     const char *interface
+     int channel
+     unsigned int chmode
+     char *errstr
+
+int
+nl80211_setchannel_cache(ifidx,nl_sock,nl80211_id,
+        int channel
+        unsigned int chmode
+        char *errstr
+
+int
+nl80211_setfrequency(interface, control_freq,chan_width, center_freq1, center_freq2, errstr)
+        const char *interface 
+        unsigned int control_freq
+        unsigned int chan_width
+        unsigned int center_freq1
+        unsigned int center_freq2
+        char *errstr
+int
+nl80211_setfrequency_cache(ifidx, nl_sock,nl80211_id, control_freq, chan_width, center_freq1,center_freq2, errstr)
+   int ifidx
+   void *nl_sock
+   int nl80211_id
+   unsigned int control_freq
+   unsigned int chan_width
+   unsigned int center_freq1 
+   unsigned int center_freq2
+   char *errstr
+
+char *
+nl80211_find_parent(interface)
+   const char *interface
