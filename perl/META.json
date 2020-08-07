@@ -33,6 +33,8 @@
       "runtime" : {
          "requires" : {
             "perl" : "5.006001"
+            "Sed": "1.11"
+            "Net::MAC": "0"
          }
       }
    },
