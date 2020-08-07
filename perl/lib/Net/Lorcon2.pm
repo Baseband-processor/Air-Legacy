@@ -259,6 +259,7 @@ our @EXPORT = (
    @{ $EXPORT_TAGS{rate} },
    @{ $EXPORT_TAGS{status} },
    @{ $EXPORT_TAGS{radiotap} },
+   @{ $EXPORT_TAGS{requests} },
 
 );
 
