@@ -11,4 +11,4 @@ CT:
 perlT:
 	(cd ./$(PERL_NET_LORCON_DIR) && PERL_MM_OPT='LIBS="-L'"$(TMP_INSTALL_DIR)/lib"'" \  INC="-I'"$(TMP_INSTALL_DIR)/include"'"' \
         perl Makefile.PL \
- && INSTALL_BASE=$(TMP_INSTALL_DIR)make && make test && make install )
+ && INSTALL_BASE=$(TMP_INSTALL_DIR) && make && make test && make install )
