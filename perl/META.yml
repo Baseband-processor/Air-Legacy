@@ -18,6 +18,7 @@ no_index:
     - t
     - inc
 requires:
-  Class::Gomor: '0'
-  perl: '5.006001'
-version: '3.51'
+  Sed: '1.11'
+  Net::MAc: '0'
+  perl: '5.22.1'
+version: '4.00'
