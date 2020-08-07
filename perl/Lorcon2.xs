@@ -443,7 +443,7 @@ nl80211_setchannel(interface, channel, chmode,errstr)
      char *errstr
 
 int
-nl80211_setchannel_cache(ifidx,nl_sock,nl80211_id,
+nl80211_setchannel_cache(ifidx,nl_sock,nl80211_id, errstr)
         int channel
         unsigned int chmode
         char *errstr
