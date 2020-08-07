@@ -414,3 +414,23 @@ int
 airpcap_setmode(in_tx, mode)
   TX80211 *in_tx
   int mode
+
+int 
+nl80211_connect(interface, nl_sock, nl80211_id, if_index, errstr)
+     const char *interface
+     void **nl_sock
+     int *nl80211_id
+     int *if_index
+     char *errstr
+     
+void
+nl80211_disconnect(nl_sock)
+     void *nl_sock
+
+int 
+nl80211_createvif(interface, newinterface, in_flags, flags_sz, errstr)
+     const char *interface
+     const char *newinterface
+     unsigned int *in_flags
+     unsigned int * flags_sz
+     char *errstr
