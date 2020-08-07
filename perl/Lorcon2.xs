@@ -211,10 +211,10 @@ lorcon_add_wepkey(context, bssid, key, length)
       u_char *key
       int length
 
-#void 
-#lorcon_set_useraux(context, aux)
-#  NetLorcon *context
-#  void *aux
+void 
+lorcon_set_useraux(context, aux)
+  NetLorcon *context
+  void *aux
 
 void  
 lorcon_get_useraux(context)
