@@ -7,6 +7,9 @@ Revision history for Perl extension Net::Lorcon2.
   - added driver compatible functions
   - added advanced nl80211 driver manipulation
   - added basic iw support
+  - added experimental perl-based subroutines for MAC manipulation, random MAC creation and driver detenction (still in beta!)
+  - wrote a first bad-made OOP implementation
+ 
   
   
 4.00    Fri  Aug 7 00:55:00 CET 2020
