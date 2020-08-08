@@ -534,21 +534,21 @@ tx80211_hostap_capabilities()
      
      
 int 
-drv_tuntap_init(a)
-   NetLorcon *a
+drv_tuntap_init(init)
+   NetLorcon *init
      
 NetLorconDriver *
-drv_tuntap_listdriver(a)
-   NetLorconDriver *a
+drv_tuntap_listdriver(drv)
+   NetLorconDriver *drv
 
 int
-drv_file_init(a)
-     NetLorcon *a
+drv_file_init(init)
+     NetLorcon *init
 int
-drv_rtfile_init(a)
-     NetLorcon *a
+drv_rtfile_init(init)
+     NetLorcon *init
      
 NetLorconDriver *
-drv_file_listdriver(a)
-     NetLorconDriver *a
+drv_file_listdriver(drv)
+     NetLorconDriver *drv
      
