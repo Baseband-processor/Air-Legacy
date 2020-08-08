@@ -1,5 +1,5 @@
-use 5.22.1;
 package Net::Lorcon2;
+require  v5.22.1;
 
 use strict;
 use warnings;
