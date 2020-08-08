@@ -281,13 +281,16 @@ our %EXPORT_TAGS = (
       drv_mac80211_init
       RMAC_gen
       RString_Gen
-
+      Craft_TCP_Frame
+      Craft_UDP_Frame
+      Craft_RAW_Frame
+      Craft_NULL_Frame
    )],
 );
 
 our @EXPORT = (
-   @{$EXPORT_TAGS{consts}},
-   @{$EXPORT_TAGS{lorcon}},
+   @{ $EXPORT_TAGS{consts} },
+   @{ $EXPORT_TAGS{lorcon} },
    @{ $EXPORT_TAGS{channel} },
    @{ $EXPORT_TAGS{extrapacket} },
    @{ $EXPORT_TAGS{rate} },
