@@ -176,7 +176,7 @@ lorcon_set_filter(context, filter)
 int
 lorcon_set_compiled_filter(context, filter)
       NetLorcon *context
-      struct bpf_program *filter
+      BPF_PROGRAM *filter
 
 #int 
 #lorcon_loop(context, count,  callback, user)
@@ -322,10 +322,10 @@ NetLorcon *
 lorcon_multi_interface_get_lorcon(intf)
   NetLorconInterface *intf
 
-void 
-lorcon_multi_set_interface_error_handler(ctx, lorcon_interface)
-  NetLorconMulti *ctx
-  NetLorcon *lorcon_interface
+#void 
+#lorcon_multi_set_interface_error_handler(ctx, lorcon_interface)
+#  NetLorconMulti *ctx
+#  NetLorcon *lorcon_interface
 
 void
 lorcon_multi_remove_interface_error_handler(ctx, lorcon_interface)
@@ -352,7 +352,7 @@ lorcon_airjack_init(in_tx)
   NetLorcon *in_tx
 
 NetLorconDriver *
-lorcon_airjack_listdriver()
+lorcon_airjack_listdriver(drv)
    NetLorconDriver *drv
 
 int 
@@ -544,9 +544,9 @@ drv_tuntap_listdriver(drv)
 int
 drv_file_init(init)
      NetLorcon *init
-int
-drv_rtfile_init(init)
-     NetLorcon *init
+#int
+#drv_rtfile_init(init)
+ #    NetLorcon *init
      
 NetLorconDriver *
 drv_file_listdriver(drv)
