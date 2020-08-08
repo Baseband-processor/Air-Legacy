@@ -18,7 +18,6 @@
 #include <lorcon2/lorcon_int.h>
 #include <lorcon2/nl80211_control.h>
 #include <lorcon2/lorcon_packasm.h>
-#include "c/lorcon_driver_t.c"
 
 typedef lorcon_t                   NetLorcon;
 typedef lorcon_driver_t            NetLorconDriver;
@@ -31,7 +30,7 @@ typedef pcap_t                     Pcap;
 typedef struct tx80211        TX80211;
 typedef struct tx80211_packet TX80211_PACKET;
 
-
+#include "c/lorcon_driver_t.c"
 
 MODULE = Net::Lorcon2   PACKAGE = Net::Lorcon2
 PROTOTYPES: DISABLE
