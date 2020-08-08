@@ -29,6 +29,7 @@ typedef pcap_t                     Pcap;
 
 typedef struct tx80211        TX80211;
 typedef struct tx80211_packet TX80211_PACKET;
+typedef struct bpf_program    BPF_PROGRAM;
 
 #include "c/lorcon_driver_t.c"
 
@@ -172,10 +173,10 @@ lorcon_set_filter(context, filter)
       NetLorcon *context
       const char *filter
 
-#int
-#lorcon_set_compiled_filter(context, filter)
-      #NetLorcon *context
-      #struct bpf_program *filter
+int
+lorcon_set_compiled_filter(context, filter)
+      NetLorcon *context
+      struct bpf_program *filter
 
 #int 
 #lorcon_loop(context, count,  callback, user)
@@ -321,10 +322,10 @@ NetLorcon *
 lorcon_multi_interface_get_lorcon(intf)
   NetLorconInterface *intf
 
-#void 
-#lorcon_multi_set_interface_error_handler(ctx, lorcon_interface)
- # NetLorconMulti *ctx
-  #NetLorcon *lorcon_interface
+void 
+lorcon_multi_set_interface_error_handler(ctx, lorcon_interface)
+  NetLorconMulti *ctx
+  NetLorcon *lorcon_interface
 
 void
 lorcon_multi_remove_interface_error_handler(ctx, lorcon_interface)
@@ -338,9 +339,10 @@ lorcon_multi_remove_interface_error_handler(ctx, lorcon_interface)
   ## callback
   #unsigned char *user
 
-#NetLorconDriver *
-#drv_madwifing_listdriver()
-
+NetLorconDriver *
+drv_madwifing_listdriver(drv)
+   NetLorconDriver * drv
+     
 int 
 drv_madwifing_init(context) 
   NetLorcon *context
@@ -349,8 +351,9 @@ int
 lorcon_airjack_init(in_tx)
   NetLorcon *in_tx
 
-#NetLorconDriver *
-#lorcon_airjack_listdriver()
+NetLorconDriver *
+lorcon_airjack_listdriver()
+   NetLorconDriver *drv
 
 int 
 aj_setmonitor(ifname, rfmonset)
