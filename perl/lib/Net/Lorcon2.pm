@@ -270,6 +270,15 @@ our %EXPORT_TAGS = (
       airpcap_open
       tx80211_airpcap_capabilities
       tx80211_airpcap_init 
+      drv_file_listdriver
+      drv_rtfile_init
+      drv_file_init
+      drv_tuntap_listdriver
+      drv_tuntap_init
+      tx80211_hostap_capabilities
+      tx80211_hostap_init
+      drv_mac80211_listdriver
+      drv_mac80211_init
       RMAC_gen
       RString_Gen
 
