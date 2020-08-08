@@ -59,4 +59,4 @@ lorcon_get_version       (W)
 # some fails occoured, line 202 of lorcon.xs tested
 
 TODO:
-#....
+# test until line 500
