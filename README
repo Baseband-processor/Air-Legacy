@@ -1,0 +1,34 @@
+FUNCTIONS PROGRESS TESTING
+
+Made by Edoardo Mantovani, 2020
+
+function list with working grades:
+
+W == work without any error
+
+C == Crash
+
+F == Fail unconditionally
+
+N == Not Tested
+
+=================================
+FUNCTION LIST:
+=================================
+
+lorcon_get_error   (W)
+lorcon_get_error   (W)
+lorcon_find_driver (W)
+lorcon_auto_driver (W)
+
+lorcon_free_driver_list (N)
+
+lorcon_create       (W)
+lorcon_free         (W)
+lorcon_set_timeout  (W)
+lorcon_get_timeout  (W)
+lorcon_open_inject  (W) # note: this works under some devices (tuntap)  but it crash under madwifing driver
+lorcon_open_monitor (W) # note: same as upside 
+lorcon_open_injmon  (W) # note: same as upside
+
+# for now everything works until line 102 of lorcon2.xs
