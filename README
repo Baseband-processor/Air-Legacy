@@ -44,3 +44,19 @@ lorcon_set_channel     (F)
 lorcon_get_channel     (W)
 
 # some errors occoured, line 141 of lorcon.xs
+
+lorcon_get_hwmac         (N)
+lorcon_set_hwmac         (N)
+lorcon_get_pcap          (?) # note: it doesn't fail but it gives no output
+lorcon_get_selectable_fd (F)
+lorcon_next_ex           (N)
+lorcon_set_filter        (?) # note: don't know what filters are used
+lorcon_breakloop         (W)
+lorcon_inject            (N)
+lorcon_send_bytes        (N)
+lorcon_get_version       (W)
+
+# some fails occoured, line 202 of lorcon.xs tested
+
+TODO:
+#....
