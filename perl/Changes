@@ -1,5 +1,14 @@
 Revision history for Perl extension Net::Lorcon2.
 
+[ALPHA]
+
+6.66    Sat  Aug 8 16:45:00 CET 2020
+  - fixed bug related to symlinks
+  - added driver compatible functions
+  - added advanced nl80211 driver manipulation
+  - added basic iw support
+  
+  
 4.00    Fri  Aug 7 00:55:00 CET 2020
 
   - [*] New contributor: Andreas
