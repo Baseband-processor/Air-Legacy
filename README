@@ -88,7 +88,7 @@ lorcon_airjack_init          (?)
 #nl80211..
 nl80211_find_parent          (W)
 
-
+# iwconfig...
 
 TODO:
 # test until line 500
