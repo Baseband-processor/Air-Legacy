@@ -32,3 +32,15 @@ lorcon_open_monitor (W) # note: same as upside
 lorcon_open_injmon  (W) # note: same as upside
 
 # for now everything works until line 102 of lorcon2.xs
+
+lorcon_set_vap         (W) 
+lorcon_get_vap         (W)
+lorcon_get_capiface    (W)
+lorcon_get_driver_name (W)
+lorcon_close           (W)
+lorcon_get_datalink    (F)
+lorcon_set_datalink    (F)
+lorcon_set_channel     (F)
+lorcon_get_channel     (W)
+
+# some errors occoured, line 141 of lorcon.xs
