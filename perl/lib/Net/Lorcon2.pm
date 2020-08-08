@@ -315,7 +315,9 @@ sub RString_Gen(){ # adapted string for MAC address
   my @chars = ("a".."f", 0 .. 9);
   my $string;
   $string .= $chars[rand @chars] for 1..12;
-  return($string)
+  return($string);
+
+}
 
 sub RMAC_gen(){
   require Net::MAC;
