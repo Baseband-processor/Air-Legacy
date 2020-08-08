@@ -330,7 +330,7 @@ sub RMAC_gen(){
 
 }
 
-sub Craft_TCP_Frame($src, $dst, $flags, $opts){
+sub Craft_TCP_Frame(){
   my ($src, $dst, $flags, $opts) = @_;
   use Net::Frame::Layer::TCP qw(:consts);
   my $TCP_packet = Net::Frame::Layer::TCP->new(
@@ -339,7 +339,7 @@ sub Craft_TCP_Frame($src, $dst, $flags, $opts){
       ack => 0,
       off => 0,
       flags => $flags,
-      options => $opt,
+      options => $opts,
       win     => 0xffff
   );
   $TCP_packet->pack;
@@ -347,7 +347,7 @@ sub Craft_TCP_Frame($src, $dst, $flags, $opts){
 }
 
 
-sub Craft_RAW_Frame($raw, $payload, $nextlayer){
+sub Craft_RAW_Frame(){
    my ($raw, $payload, $nextlayer) = @_;
    use Net::Frame::Layer::RAW qw(:consts);
    my $RAW_packet = Net::Frame::Layer::RAW->new(
@@ -368,7 +368,7 @@ sub Craft_NULL_Frame(){ # for 802.11
    return( $NULL_packet->dump );
 }
 
-sub Craft_UDP_Frame($src, $dst, $length, $chksum){
+sub Craft_UDP_Frame(){
    my ($src, $dst, $length, $chksum) = @_;
    use Net::Frame::Layer::UDP;
    my $UDP_packet = Net::Frame::Layer::UDP->new(
