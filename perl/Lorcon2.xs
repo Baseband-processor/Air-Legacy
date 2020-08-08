@@ -513,3 +513,40 @@ iwconfig_set_mode(in_dev, errstr, in_mode)
    const char *in_dev
    char *errstr
    int in_mode
+
+int
+drv_mac80211_init(a)
+     NetLorcon *a
+     
+NetLorconDriver *
+drv_mac80211_listdriver(a)
+     NetLorconDriver *a
+     
+int
+tx80211_hostap_init(in_tx)
+     TX80211 *in_tx
+
+int
+tx80211_hostap_capabilities()
+     
+     
+int 
+drv_tuntap_init(a)
+   NetLorcon *a
+     
+NetLorconDriver *
+drv_tuntap_listdriver(a)
+   NetLorconDriver *a
+
+int
+drv_file_init(a)
+     NetLorcon *a
+int
+drv_rtfile_init(a)
+     NetLorcon *a
+     
+NetLorconDriver *
+drv_file_listdriver(a)
+     NetLorconDriver *a
+     
+     
