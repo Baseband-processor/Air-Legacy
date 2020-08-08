@@ -180,7 +180,7 @@ our %EXPORT_TAGS = (
 
 )],
 
-   subs => [qw(
+   lorcon => [qw(
       lorcon_list_drivers
       lorcon_find_driver
       lorcon_set_datalink
@@ -269,15 +269,16 @@ our %EXPORT_TAGS = (
       airpcap_send
       airpcap_open
       tx80211_airpcap_capabilities
-      tx80211_airpcap_init
-
+      tx80211_airpcap_init 
+      RMAC_gen
+      RString_Gen
 
    )],
 );
 
 our @EXPORT = (
    @{$EXPORT_TAGS{consts}},
-   @{$EXPORT_TAGS{subs}},
+   @{$EXPORT_TAGS{lorcon}},
    @{ $EXPORT_TAGS{channel} },
    @{ $EXPORT_TAGS{extrapacket} },
    @{ $EXPORT_TAGS{rate} },
