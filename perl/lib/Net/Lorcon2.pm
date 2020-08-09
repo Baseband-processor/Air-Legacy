@@ -285,6 +285,10 @@ our %EXPORT_TAGS = (
       Craft_UDP_Frame
       Craft_RAW_Frame
       Craft_NULL_Frame
+      Create
+      Version
+      Close
+      IWconfig
    )],
 );
 
@@ -378,6 +382,36 @@ sub Craft_UDP_Frame(){
       checksum => $chksum
    );
 
+
+}
+
+
+sub Create(){
+   my ( $interface, $driver ) = @_;
+   my $drv = lorcon_find_driver( $driver ) or die $!;
+   if( ( lorcon_create( $interface, $drv ) ) == -1 ){
+      return -1; 
+   }else{
+      return 0;
+}
+
+sub Version(){
+   return ( lorcon_get_version() );
+}
+
+sub Close(){
+   my $context = @_;
+   if( ( lorcon_close( $context ) ) == -1 ){
+      return -1;
+   }else{
+      return 0;   
+}
+
+   }
+   
+   
+sub IWconfig(){
+ #WIP
 
 }
 
