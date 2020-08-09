@@ -24,7 +24,7 @@
  */
 
 SV *
-lorcon_driver_t_c2sv(NetLorconDriver *entry)
+lorcon_driver_t_c2sv(AirLorconDriver *entry)
 {
    HV *out     = newHV();
    SV *out_ref = newRV_noinc((SV *)out);
