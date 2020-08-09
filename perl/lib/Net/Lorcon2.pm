@@ -281,10 +281,6 @@ our %EXPORT_TAGS = (
       drv_mac80211_init
       RMAC_gen
       RString_Gen
-      Craft_TCP_Frame
-      Craft_UDP_Frame
-      Craft_RAW_Frame
-      Craft_NULL_Frame
       Create
       Version
       Close
@@ -334,56 +330,7 @@ sub RMAC_gen(){
 
 }
 
-sub Craft_TCP_Frame(){
-  my ($src, $dst, $flags, $opts) = @_;
-  use Net::Frame::Layer::TCP qw(:consts);
-  my $TCP_packet = Net::Frame::Layer::TCP->new(
-      src => $src,
-      dst => $dst,
-      ack => 0,
-      off => 0,
-      flags => $flags,
-      options => $opts,
-      win     => 0xffff
-  );
-  $TCP_packet->pack;
-  return( $TCP_packet->dump );
-}
 
-
-sub Craft_RAW_Frame(){
-   my ($raw, $payload, $nextlayer) = @_;
-   use Net::Frame::Layer::RAW qw(:consts);
-   my $RAW_packet = Net::Frame::Layer::RAW->new(
-      raw => $raw,
-      payload => $payload,
-      nextLayer => $nextlayer
-      );
-   $RAW_packet->pack;
-   return( $RAW_packet->dump );
-}
-
-sub Craft_NULL_Frame(){ # for 802.11
-   use Net::Frame::Layer::NULL qw(:consts);
-   my $NULL_packet = Net::Frame::Layer::NULL->new(
-      type => NF_NULL_TYPE_80211,
-   );
-   $NULL_packet->pack;
-   return( $NULL_packet->dump );
-}
-
-sub Craft_UDP_Frame(){
-   my ($src, $dst, $length, $chksum) = @_;
-   use Net::Frame::Layer::UDP;
-   my $UDP_packet = Net::Frame::Layer::UDP->new(
-      src => $src,
-      dst => $dst,
-      length => $length,
-      checksum => $chksum
-   );
-
-
-}
 
 
 sub Create(){
