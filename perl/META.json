@@ -12,7 +12,7 @@
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : "2"
    },
-   "name" : "Net-Lorcon2",
+   "name" : "Air-Lorcon2",
    "no_index" : {
       "directory" : [
          "t",
@@ -33,7 +33,6 @@
       "runtime" : {
          "requires" : {
             "perl" : "5.22.1"
-            "Sed" : "1.11"
             "Net::MAC" : "0"
          }
       }
