@@ -1,4 +1,4 @@
-package Net::Lorcon2;
+package Air::Lorcon2;
 require  v5.22.1;
 
 use strict;
