@@ -1,6 +1,7 @@
 TYPEMAP
 
 AirLorcon *          T_PTRREF
+AirLorconHandler *   T_PTRREF
 AirLorconDriver *    T_PTRREF
 AirLorconPacket *    T_PTRREF
 AirLorconMulti *     T_PTRREF
