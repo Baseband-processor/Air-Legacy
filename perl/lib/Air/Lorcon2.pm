@@ -338,7 +338,7 @@ sub Create(){
    }else{
       return 0;
 }
-
+   }
 sub Version(){
    return ( lorcon_get_version() );
 }
