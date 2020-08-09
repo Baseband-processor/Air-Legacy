@@ -4,6 +4,7 @@ Revision history for Perl extension Net::Lorcon2.
 
 6.67    Sat  Aug 8 16:45:00 CET 2020
 
+  - Project's name changed to Air::Lorcon2
   - fixed bug related to symlinks
   - added driver compatible functions
   - added advanced nl80211 driver manipulation
