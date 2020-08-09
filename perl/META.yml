@@ -12,13 +12,12 @@ license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: '1.4'
-name: Net-Lorcon2
+name: Air-Lorcon2
 no_index:
   directory:
     - t
     - inc
 requires:
-  Sed: '1.11'
   Net::MAc: '0'
   perl: '5.22.1'
 version: '4.00'
