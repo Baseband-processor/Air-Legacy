@@ -1,4 +1,4 @@
-Net::Lorcon2
+Air::Lorcon2
 ============
 
 The README is used to introduce the module and provide instructions on
@@ -25,8 +25,8 @@ DEPENDENCIES
 This module requires these other modules and libraries:
 
   - lorcon2
-Since the version 3.55, Net::Lorcon2 has an auto-installer, which permits to install a modified version of Lorcon2 and set the Net::Lorcon2.
-Unfortunately the official site is closed, some good links for documentation and for download Net::Lorcon2 are:
+Since the version 3.55, Air::Lorcon2 has an auto-installer, which permits to install a modified version of Lorcon2 and set the Air::Lorcon2.
+Unfortunately the official site is closed, some good links for documentation and for download Air::Lorcon2 are:
 
  - Libpcap (suggested)
  I suggest to use libpcap with the Net::Lorcon2 library for speed up some lorcon's originary functions which uses pcap as beack-end.   
