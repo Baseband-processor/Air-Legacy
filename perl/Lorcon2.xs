@@ -19,6 +19,7 @@
 #include <lorcon2/nl80211_control.h>
 #include <lorcon2/lorcon_packasm.h>
 
+typedef void lorcon_handler        AirLorconHandler;
 typedef lorcon_t                   AirLorcon;
 typedef lorcon_driver_t            AirLorconDriver;
 typedef lorcon_packet_t            AirLorconPacket;
@@ -178,18 +179,22 @@ lorcon_set_compiled_filter(context, filter)
       AirLorcon *context
       BPF_PROGRAM *filter
 
-#int 
-#lorcon_loop(context, count,  callback, user)
-#  AirLorcon *context
-#  int count
-#  AirLorconHandler callback
-#  u_char *user
+int 
+lorcon_loop(context, counter,  callback, user)
+  AirLorcon *context
+  int counter
+  AirLorconHandler callback
+  u_char *user
 
-#int 
-#lorcon_dispatch(lorcon_t *context, int count,  callback, u_char *user);
-
+int 
+lorcon_dispatch(context, counter,  callback, user)
+   AirLorcon *context
+   int counter
+   AirLorconHandler callback
+   u_char *user
+   
 void
-lorcon_breakloop(context);
+lorcon_breakloop(context)
   AirLorcon *context
 
 
@@ -332,12 +337,12 @@ lorcon_multi_remove_interface_error_handler(ctx, lorcon_interface)
   AirLorconMulti *ctx
   AirLorcon *lorcon_interface
 
-#int
-#lorcon_multi_loop(ctx, count, callback, user)
- # AirLorconMulti *ctx
-  #int count
-  ## callback
-  #unsigned char *user
+int
+lorcon_multi_loop(ctx, counter, callback, user)
+  AirLorconMulti *ctx
+  int counter
+  AirLorconHandler callback
+  unsigned char *user
 
 AirLorconDriver *
 drv_madwifing_listdriver(drv)
