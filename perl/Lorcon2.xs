@@ -19,7 +19,7 @@
 #include <lorcon2/nl80211_control.h>
 #include <lorcon2/lorcon_packasm.h>
 
-typedef void lorcon_handler        AirLorconHandler;
+typedef lorcon_handler             AirLorconHandler;
 typedef lorcon_t                   AirLorcon;
 typedef lorcon_driver_t            AirLorconDriver;
 typedef lorcon_packet_t            AirLorconPacket;
