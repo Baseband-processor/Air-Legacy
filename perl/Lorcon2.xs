@@ -277,7 +277,7 @@ lorcon_packet_get_bssid_mac(packet)
   AirLorconPacket *packet
 
 int 
-lorcon_ifdown( context );
+lorcon_ifdown( context )
   AirLorcon *context
 
 int
