@@ -123,19 +123,35 @@ lorcon_get_timeout(context)
 int
 lorcon_open_inject(context)
       AirLorcon *context
+           CODE:
+      RETVAL = lorcon_open_inject(&context);
+   OUTPUT:
+      RETVAL
 
 int
 lorcon_open_monitor(context)
       AirLorcon *context
+          CODE:
+      RETVAL = lorcon_open_monitor(&context);
+   OUTPUT:
+      RETVAL
 
 int
 lorcon_open_injmon(context)
       AirLorcon *context
+         CODE:
+      RETVAL = lorcon_open_injmon(&context);
+   OUTPUT:
+      RETVAL
 
 void
 lorcon_set_vap(context, vap)
       AirLorcon *context
       const char *vap
+           CODE:
+      RETVAL = lorcon_set_vap(&context, &vap);
+   OUTPUT:
+      RETVAL
 
 const char *
 lorcon_get_vap(context)
@@ -210,14 +226,22 @@ int
 lorcon_set_compiled_filter(context, filter)
       AirLorcon *context
       BPF_PROGRAM *filter
-
+               CODE:
+      RETVAL = lorcon_set_compiled_filter(&context, &filter);
+   OUTPUT:
+      RETVAL
+      
 int 
 lorcon_loop(context, counter,  callback, user)
   AirLorcon *context
   int counter
   AirLorconHandler callback
   u_char *user
-
+           CODE:
+      RETVAL = lorcon_loop(&context, counter, callback, &user);
+   OUTPUT:
+      RETVAL
+      
 int 
 lorcon_dispatch(context, counter,  callback, user)
    AirLorcon *context
@@ -612,11 +636,20 @@ lcpa_insert(in_pack, in_type, in_length, in_data)
         const char *in_type
         int in_length
         uint8_t *in_data
-
+        CODE:
+      RETVAL = lcpa_insert(&in_pack, &in_type, in_length, &in_data);
+   OUTPUT:
+      RETVAL
+      
 LCPA_META *
 lcpa_find_name(in_head, in_type)
               LCPA_META *in_head
               const char *in_type
+         CODE:
+      RETVAL = lcpa_find_name(&in_head, &in_type);
+   OUTPUT:
+      RETVAL
+      
 void
 lcpa_replace_copy(in_pack, in_type, in_length, in_data)
               LCPA_META *in_pack
