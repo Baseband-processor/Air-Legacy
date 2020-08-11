@@ -588,4 +588,30 @@ drv_file_init(init)
 AirLorconDriver *
 drv_file_listdriver(drv)
      AirLorconDriver *drv
-     
+
+LCPA_META *
+lcpa_init()
+
+struct lcpa_metapack *lcpa_append_copy(struct lcpa_metapack *in_pack, 
+                                       const char *in_type, 
+                                                                           int in_len, uint8_t *in_data);
+struct lcpa_metapack *lcpa_append(struct lcpa_metapack *in_pack, 
+                                  const char *in_type,
+                                                                  int in_len, uint8_t *in_data
+struct lcpa_metapack *lcpa_insert(struct lcpa_metapack *in_pack, 
+                                  const char *in_type,
+                                                                  int in_len, uint8_t *in_data);
+
+
+struct lcpa_metapack *lcpa_find_name(struct lcpa_metapack *in_head, 
+                                     const char *in_type);
+void lcpa_replace_copy(struct lcpa_metapack *in_pack, 
+                       const char *in_type, 
+                                           int in_len, uint8_t *in_data);
+void lcpa_replace(struct lcpa_metapack *in_pack, const char *in_type,
+                                  int in_len, uint8_t *in_data);
+
+void lcpa_free(struct lcpa_metapack *in_head);
+int lcpa_size(struct lcpa_metapack *in_head);
+
+void lcpa_freeze(struct lcpa_metapack *in_head, u_char *bytes);
