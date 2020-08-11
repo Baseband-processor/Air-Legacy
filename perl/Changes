@@ -8,6 +8,7 @@ Revision history for Perl extension Net::Lorcon2.
   - added lcpa packet forge capabilities
   - added even more functions
   - fixed minor bugs
+  - adjusting constants formatting and optimizing tags imports
   - STILL UNDER BETA FOR NOW
   
 [*ALPHA]
