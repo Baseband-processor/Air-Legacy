@@ -286,6 +286,16 @@ our %EXPORT_TAGS = (
       Version
       Close
       IWconfig
+      lcpa_init
+      lcpa_append
+      lcpa_append_copy
+      lcpa_insert
+      lcpa_find_name
+      lcpa_replace_copy
+      lcpa_replace
+      lcpa_free
+      lcpa_size
+      lcpa_freeze
    )],
 );
 
