@@ -28,9 +28,9 @@ typedef lorcon_multi_interface_t   AirLorconInterface;
 typedef lorcon_channel_t           AirLorconChannel;
 typedef pcap_t                     Pcap;
 
-typedef struct tx80211        TX80211;
-typedef struct tx80211_packet TX80211_PACKET;
-typedef struct bpf_program    BPF_PROGRAM;
+typedef struct tx80211        * TX80211;
+typedef struct tx80211_packet * TX80211_PACKET;
+typedef struct bpf_program    * BPF_PROGRAM;
 
 #include "c/lorcon_driver_t.c"
 
