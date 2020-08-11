@@ -2,6 +2,16 @@ Revision history for Perl extension Net::Lorcon2.
 
 [*ALPHA]
 
+10.5    Tue Aug 11 6:00:00  CET 2020
+
+  - added first part of struct
+  - added lcpa packet forge capabilities
+  - added even more functions
+  - fixed minor bugs
+  - STILL UNDER BETA FOR NOW
+  
+[*ALPHA]
+
 6.67    Sat  Aug 8 16:45:00 CET 2020
 
   - Project's name changed to Air::Lorcon2
