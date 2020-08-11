@@ -42,6 +42,14 @@ typedef struct {
 
 typedef lorcon_dot11_extra*        Lorcon_DOT11;
 
+typedef struct {
+    const u_char *source_mac;
+    const u_char *dest_mac;
+    unsigned int llc_type;
+}lorcon_dot3_extra;
+
+typedef lorcon_dot3_extra*         Lorcon_DOT3;
+
 typedef lorcon_handler             AirLorconHandler;
 
 typedef lorcon_t                   AirLorcon;
