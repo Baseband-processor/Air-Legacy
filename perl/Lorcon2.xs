@@ -148,10 +148,6 @@ void
 lorcon_set_vap(context, vap)
       AirLorcon *context
       const char *vap
-           CODE:
-      RETVAL = lorcon_set_vap(&context, &vap);
-   OUTPUT:
-      RETVAL
 
 const char *
 lorcon_get_vap(context)
@@ -664,13 +660,4 @@ lcpa_replace(in_pack, in_type, in_length, in_data)
         int in_length
         uint8_t *in_data
         
-void
-lcpa_free(in_head)
-        LCPA_META *in_head
-int
-lcpa_size(in_head)
-        LCPA_META *in_head
-void
-lcpa_freeze(in_head, bytes)
-        LCPA_META *in_head
-        u_char *bytes
+
