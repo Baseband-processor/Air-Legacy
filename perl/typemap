@@ -22,6 +22,7 @@ const u_char *      T_PV
 u_char *            T_PV
 char *              T_PV
 int *               T_PV
+void                T_PV
 void *              T_PV
 void **             T_PV
 unsigned long int   T_U_LONG
