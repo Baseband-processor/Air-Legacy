@@ -592,26 +592,52 @@ drv_file_listdriver(drv)
 LCPA_META *
 lcpa_init()
 
-struct lcpa_metapack *lcpa_append_copy(struct lcpa_metapack *in_pack, 
-                                       const char *in_type, 
-                                                                           int in_len, uint8_t *in_data);
-struct lcpa_metapack *lcpa_append(struct lcpa_metapack *in_pack, 
-                                  const char *in_type,
-                                                                  int in_len, uint8_t *in_data
-struct lcpa_metapack *lcpa_insert(struct lcpa_metapack *in_pack, 
-                                  const char *in_type,
-                                                                  int in_len, uint8_t *in_data);
+LCPA_META *
+lcpa_append_copy(in_pack, in_type, in_length, in_data)
+              LCPA_META *in_pack
+              const char *in_type
+              int in_length
+              uint8_t *in_data
 
+LCPA_META *
+lcpa_append(in_pack, in_type, in_length, in_data)
+              LCPA_META *in_pack
+              const char *in_type
+              int in_length
+              uint8_t *in_data
 
-struct lcpa_metapack *lcpa_find_name(struct lcpa_metapack *in_head, 
-                                     const char *in_type);
-void lcpa_replace_copy(struct lcpa_metapack *in_pack, 
-                       const char *in_type, 
-                                           int in_len, uint8_t *in_data);
-void lcpa_replace(struct lcpa_metapack *in_pack, const char *in_type,
-                                  int in_len, uint8_t *in_data);
+LCPA_META *
+lcpa_insert(in_pack, in_type, in_length, in_data)
+        LCPA_META *in_pack
+        const char *in_type
+        int in_lenght
+        uint8_t *in_data
 
-void lcpa_free(struct lcpa_metapack *in_head);
-int lcpa_size(struct lcpa_metapack *in_head);
-
-void lcpa_freeze(struct lcpa_metapack *in_head, u_char *bytes);
+LCPA_META *
+lcpa_find_name(in_head, in_type)
+              LCPA_META *in_head
+              const char *in_type
+void
+lcpa_replace_copy(in_pack, in_type, in_length, in_data)
+              LCPA_META *in_pack
+              const char *in_type
+              int in_length
+              uint8_t *in_data
+              
+void
+lcpa_replace(in_pack, in_type, in_length, in_data)
+        LCPA_META *in_pack
+        const char *in_type
+        int in_length
+        uint8_t *in_data
+        
+void
+lcpa_free(in_head)
+        LCPA_META *in_head
+int
+lcpa_size(in_head)
+        LCPA_META *in_head
+void
+lcpa_freeze(in_head, bytes)
+        LCPA_META *in_head
+        u_char *bytes
