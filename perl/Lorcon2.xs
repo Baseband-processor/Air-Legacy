@@ -610,7 +610,7 @@ LCPA_META *
 lcpa_insert(in_pack, in_type, in_length, in_data)
         LCPA_META *in_pack
         const char *in_type
-        int in_lenght
+        int in_length
         uint8_t *in_data
 
 LCPA_META *
