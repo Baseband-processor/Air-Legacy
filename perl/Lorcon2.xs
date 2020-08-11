@@ -19,7 +19,31 @@
 #include <lorcon2/nl80211_control.h>
 #include <lorcon2/lorcon_packasm.h>
 
+typedef struct  {
+        struct lcpa_metapack *prev;
+        struct lcpa_metapack *next;
+        char type[24];
+        int len;
+        uint8_t *data;
+        int freedata;
+}lcpa_metapack;
+
+typedef lcpa_metapack *             LCPA_META;
+
+typedef struct {
+        int type, subtype;
+        int reason_code;
+        int corrupt;
+        const u_char *source_mac, *dest_mac, *bssid_mac, *other_mac;
+        unsigned int from_ds, to_ds, frame_protected, fragmented, retry;
+        unsigned int qos, sequence, duration, fragment;
+        uint16_t capability;
+}lorcon_dot11_extra;
+
+typedef lorcon_dot11_extra*        Lorcon_DOT11;
+
 typedef lorcon_handler             AirLorconHandler;
+
 typedef lorcon_t                   AirLorcon;
 typedef lorcon_driver_t            AirLorconDriver;
 typedef lorcon_packet_t            AirLorconPacket;
