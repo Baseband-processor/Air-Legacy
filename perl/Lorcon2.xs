@@ -123,26 +123,17 @@ lorcon_get_timeout(context)
 int
 lorcon_open_inject(context)
       AirLorcon *context
-           CODE:
-      RETVAL = lorcon_open_inject(&context);
-   OUTPUT:
-      RETVAL
+  
 
 int
 lorcon_open_monitor(context)
       AirLorcon *context
-          CODE:
-      RETVAL = lorcon_open_monitor(&context);
-   OUTPUT:
-      RETVAL
+
 
 int
 lorcon_open_injmon(context)
       AirLorcon *context
-         CODE:
-      RETVAL = lorcon_open_injmon(&context);
-   OUTPUT:
-      RETVAL
+ 
 
 void
 lorcon_set_vap(context, vap)
