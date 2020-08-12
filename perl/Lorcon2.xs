@@ -370,10 +370,10 @@ AirLorcon *
 lorcon_multi_interface_get_lorcon(intf)
   AirLorconInterface *intf
 
-#void 
-#lorcon_multi_set_interface_error_handler(ctx, lorcon_interface)
-#  AirLorconMulti *ctx
-#  AirLorcon *lorcon_interface
+void 
+lorcon_multi_set_interface_error_handler(ctx, lorcon_interface)
+  AirLorconMulti *ctx
+  AirLorcon *lorcon_interface
 
 void
 lorcon_multi_remove_interface_error_handler(ctx, lorcon_interface)
