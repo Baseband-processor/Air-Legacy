@@ -52,8 +52,8 @@ lorcon_get_selectable_fd (F)
 lorcon_next_ex           (N)
 lorcon_set_filter        (?) # note: don't know what filters are used
 lorcon_breakloop         (W)
-lorcon_inject            (N)
-lorcon_send_bytes        (N)
+lorcon_inject            (W)
+lorcon_send_bytes        (W)
 lorcon_get_version       (W)
 
 # some fails occoured, line 202 of lorcon.xs tested
