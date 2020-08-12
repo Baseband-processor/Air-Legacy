@@ -4,7 +4,7 @@ require  v5.22.1;
 use strict;
 use warnings;
 
-our $VERSION = '4.00';
+our $VERSION = '10.5';
 use base qw(Exporter DynaLoader);
 
 use constant {
