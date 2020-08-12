@@ -375,7 +375,7 @@ void
 lorcon_multi_set_interface_error_handler(ctx, lorcon_interface, handler, aux)
   AirLorconMulti *ctx
   AirLorcon *lorcon_interface
-  lorcon_multi_error_handler handler
+  LORCON_MULTI_ERROR_HANDLER handler
   void *aux
 
 void
