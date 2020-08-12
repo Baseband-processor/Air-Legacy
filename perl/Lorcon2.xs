@@ -19,6 +19,7 @@
 #include <lorcon2/nl80211_control.h>
 #include <lorcon2/lorcon_packasm.h>
 
+typedef lorcon_multi_error_handler   LORCON_MULTI_ERROR_HANDLER;
 typedef struct  {
         struct lcpa_metapack *prev;
         struct lcpa_metapack *next;
