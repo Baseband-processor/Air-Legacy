@@ -327,7 +327,6 @@ sub RString_Gen(){ # adapted string for MAC address
   my $string;
   $string .= $chars[rand @chars] for 1..12;
   return($string);
-
 }
 
 sub RMAC_gen(){
@@ -342,24 +341,22 @@ sub RMAC_gen(){
 }
 
 
-
-
-sub Create(){
+sub create(){
    my ( $interface, $driver ) = @_;
-   my $drv = lorcon_find_driver( $driver ) or die $!;
-   if( ( lorcon_create( $interface, $drv ) ) == -1 ){
+   my $drv = Air::Lorcon2::lorcon_find_driver( $driver ) or die $!;
+   if( ( Air::Lorcon2::lorcon_create( $interface, $drv ) ) == -1 ){
       return -1; 
    }else{
       return 0;
 }
    }
-sub Version(){
-   return ( lorcon_get_version() );
+sub version(){
+   return ( Air::Lorcon2::lorcon_get_version() );
 }
 
-sub Close(){
+sub kill_lorcon(){
    my $context = @_;
-   if( ( lorcon_close( $context ) ) == -1 ){
+   if( ( Air::Lorcon2::lorcon_close( $context ) ) == -1 ){
       return -1;
    }else{
       return 0;   
@@ -374,7 +371,6 @@ sub IWconfig(){
 }
 
 __PACKAGE__->bootstrap($VERSION);
-
 
 1;
 
