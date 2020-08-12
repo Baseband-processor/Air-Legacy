@@ -16,6 +16,7 @@ TX80211 *            T_PTRREF
 TX80211_PACKET *     T_PTRREF
 Pcap *               T_PTRREF
 BPF_PROGRAM *        T_PTRREF
+LORCON_MULTI_ERROR_HANDLER T_PTRREF
 
 const char *        T_PV
 const u_char *      T_PV
