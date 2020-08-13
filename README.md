@@ -3,10 +3,10 @@ Air::Lorcon2
 
 **REQUIREMENTS**
 
-[] perl 
-[] libpcap
-[] flex
-[] C compiler (gcc is fine)
+- [ ] perl 
+- [ ] libpcap
+- [ ] flex
+- [ ] C compiler (gcc is fine)
 
 **INSTALLATION**
 
