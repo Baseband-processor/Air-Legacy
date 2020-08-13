@@ -3,10 +3,10 @@ Air::Lorcon2
 
 **REQUIREMENTS**
 
-- [ ] perl 
-- [ ] libpcap
-- [ ] flex
-- [ ] C compiler (gcc is fine)
+- [x] perl 
+- [x] libpcap
+- [x] flex
+- [x] C compiler (gcc is fine)
 
 **INSTALLATION**
 
@@ -51,9 +51,9 @@ if interested in some examples for the perl library go under the examples/ direc
 A big thanks to *andreas hadjiprocopis* aka Bliako, probably the best library contributor in the history, without him the biggest part related to C code wouldn't be working.
 
 **other thanks**
-	-perlmonks community, especially syphilis  for his initial help
-	-*Mike Kershaw* aka Dragorn, the main developer of Lorcon2, who explained some obscure part of his code
-	-*GomoR*, the old version author, who never replied to my emails
+* perlmonks community, especially syphilis  for his initial help
+* *Mike Kershaw* aka Dragorn, the main developer of Lorcon2, who explained some obscure part of his code
+* *GomoR*, the old version author, who never replied to my emails
 
 **COPYRIGHT AND LICENCE**
 
