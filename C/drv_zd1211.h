@@ -53,7 +53,7 @@
 #include <net/ethernet.h>
 #include <netpacket/packet.h>
 
-#include "wtinject.h"
+
 
 int tx80211_zd1211rw_init(struct tx80211 *in_tx);
 int tx80211_zd1211rw_send(struct tx80211 *in_tx, struct tx80211_packet *in_pkt);

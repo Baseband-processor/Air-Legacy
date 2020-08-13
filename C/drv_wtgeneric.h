@@ -54,7 +54,7 @@
 
 #define ETH_P_80211_RAW        (ETH_P_ECONET + 1)
 #include "iwcontrol.h"
-#include "tx80211.h"
+
 
 int wtinj_send(struct tx80211 *wtinj, struct tx80211_packet *in_pkt);
 int wtinj_open(struct tx80211 *wtinj);
