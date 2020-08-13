@@ -296,6 +296,33 @@ our %EXPORT_TAGS = (
       lcpa_free
       lcpa_size
       lcpa_freeze
+      madwifing_list_vaps
+      madwifing_free_vaps
+      madwifing_destroy_vap
+      madwifing_build_vap
+      madwifing_setdevtype
+      madwifing_find_parent
+      ifconfig_get_sysdriver
+      ifconfig_get_sysattr
+      ifconfig_set_flags
+      ifconfig_delta_flags
+      ifconfig_get_flags
+      ifconfig_get_hwaddr
+      ifconfig_set_hwaddr
+      ifconfig_set_mtu
+      ifconfig_ifupdown
+      wtinj_send
+      wtinj_open
+      wtinj_close
+      wtinj_setchannel
+      wtinj_getchannel
+      wtinj_setmode
+      wtinj_getmode
+      wtinj_setfuncmode
+      wtinj_selfack 
+      tx80211_zd1211rw_init
+      tx80211_zd1211rw_send
+      tx80211_zd1211rw_capabilities
    )],
 );
 
