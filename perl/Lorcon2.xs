@@ -18,7 +18,13 @@
 #include <lorcon2/lorcon_int.h>
 #include <lorcon2/nl80211_control.h>
 #include <lorcon2/lorcon_packasm.h>
+#include <lorcon2/madwifing_control.h>
+#include <lorcon2/ifcontrol_linux.h>
+#include <lorcon2/drv_wtgeneric.h>
+#include <lorcon2/drv_zd1211.h>
 
+
+typedef struct madwi_vaps            MADWIFI_VAPS;
 typedef lorcon_multi_error_handler   LORCON_MULTI_ERROR_HANDLER;
 typedef struct  {
         struct lcpa_metapack *prev;
@@ -654,4 +660,140 @@ lcpa_replace(in_pack, in_type, in_length, in_data)
         int in_length
         uint8_t *in_data
         
+MADWIFI_VAPS *
+madwifing_list_vaps(interface_name, errorstring)
+	const char *interface_name
+	char *errorstring
+
+void 
+madwifing_free_vaps(in_vaplist)
+	MADWIFI_VAPS *in_vaplist
+
+int 
+madwifing_destroy_vap(interface_name, errorstring)
+	const char *interface_name
+	char *errorstring
+
+int 
+madwifing_build_vap(interface_name, errorstring, vapname, retvapname, vapmode, vapflags)
+	const char *interface_name
+	char *errorstring
+	const char *vapname
+	char *retvapname
+	int vapmode
+	int vapflags
+
+int 
+madwifing_setdevtype(interface_name, devtype, errorstring)
+	const char *interface_name
+	char *devtype
+	char *errorstring
+
+char *
+madwifing_find_parent(vaplist)
+	MADWIFI_VAPS *vaplist
+
+char *
+ifconfig_get_sysdriver(in_dev)
+	const char *in_dev
+
+int
+ifconfig_get_sysattr(in_dev, attr)
+	const char *in_dev
+	const char *attr
+
+int 
+ifconfig_set_flags(in_dev, errorstring, flags)
+	const char *in_dev
+	char *errorstring
+	short flags
+
+int 
+ifconfig_delta_flags(in_dev, errorstring,  flags)
+	const char *in_dev
+	char *errorstring
+	short flags
+
+int 
+ifconfig_get_flags(in_dev, errorstring, flags)
+	const char *in_dev
+	char *errorstring
+	short *flags
+
+int 
+ifconfig_get_hwaddr(in_dev, errorstring, ret_hwaddr)
+	const char *in_dev
+	char *errorstring
+	uint8_t * ret_hwaddr
+
+int 
+ifconfig_set_hwaddr(in_dev, errorstring, in_hwaddr)
+	const char *in_dev
+	char *errorstring
+	uint8_t * in_hwaddr
+
+int 
+ifconfig_set_mtu(in_dev, errorstring, in_mtu)
+	const char *in_dev
+	char *errorstring
+	uint16_t in_mtu
+
+int 
+ifconfig_ifupdown(in_dev, errorstring,  devup)
+	const char *in_dev
+	char *errorstring
+	int devup
+
+int 
+wtinj_send(wtinj, in_pkt)
+	TX80211 *wtinj
+	TX80211_PACKET *in_pkt
+
+int 
+wtinj_open(wtinj)
+	TX80211 *wtinj
+
+int 
+wtinj_close(wtinj)
+	TX80211 *wtinj
+
+int 
+wtinj_setchannel(wtinj, channel)
+	TX80211 *wtinj
+	int channel
+
+int 
+wtinj_getchannel(wtinj)
+	TX80211 *wtinj
+
+int 
+wtinj_setmode(wtinj, mode)
+	TX80211 *wtinj
+	int mode
+
+int 
+wtinj_getmode(wtinj)
+	TX80211  *wtinj
+
+int 
+wtinj_setfuncmode(wtinj, funcmode)
+	TX80211 *wtinj
+	int funcmode
+
+int 
+wtinj_selfack(wtinj, addr)
+	TX80211 *wtinj
+	uint8_t *addr
+
+int 
+tx80211_zd1211rw_init(in_tx)
+	TX80211 *in_tx
+
+int 
+tx80211_zd1211rw_send(in_tx, in_pkt)
+	TX80211 *in_tx
+	TX80211_PACKET *in_pkt
+
+int 
+tx80211_zd1211rw_capabilities()
 

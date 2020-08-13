@@ -17,6 +17,7 @@ TX80211_PACKET *     T_PTRREF
 Pcap *               T_PTRREF
 BPF_PROGRAM *        T_PTRREF
 LORCON_MULTI_ERROR_HANDLER T_PTRREF
+MADWIFI_VAPS *       T_PTRREF
 
 const char *        T_PV
 const u_char *      T_PV
@@ -29,6 +30,8 @@ void **             T_PV
 unsigned long int   T_U_LONG
 uint8_t             T_U_SHORT
 uint8_t *           T_U_SHORT
+uint16_t            T_U_SHORT
+uint16_t *          T_U_SHORT
 unsigned int        T_PV
 unsigned int *      T_PV
 const u8 *          T_PV
@@ -54,6 +57,7 @@ unsigned int		T_UV
 long			      T_IV
 unsigned long		T_UV
 short			      T_IV
+short *                       T_IV
 unsigned short	T_UV
 char			      T_CHAR
 unsigned char		T_U_CHAR
