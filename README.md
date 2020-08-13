@@ -1,42 +1,64 @@
+================================================
 Air::Lorcon2
-============
+================================================
 
-The README is used to introduce the module and provide instructions on
-how to install the module, any machine dependencies it may have (for
-example C compilers and installed libraries) and any other information
-that should be provided before the module is installed.
+**REQUIREMENTS**
 
-A README file is required for CPAN modules since CPAN extracts the
-README file from a module distribution so that people browsing the
-archive can use it get an idea of the modules uses. It is usually a
-good idea to provide version information here so that people can
-decide whether fixes for the module are worth downloading.
+[] perl 
+[] libpcap
+[] flex
+[] C compiler (gcc is fine)
 
-INSTALLATION
+**INSTALLATION**
 
-To install this module type the following:
+for installing the *Air::Lorcon2* and *Lorcon2* libraries you just need to type:
 
+```shell
    sudo make
 
-Just execute the makefile script outside the C and perl directory, for now there are no tests, they will be added in future.
+```
 
-DEPENDENCIES
+this will start the Makefile outside the C and perl directories.
 
-This module requires these other modules and libraries:
+**CODE EXAMPLE**
 
-  - lorcon2
-Since the version 3.55, Air::Lorcon2 has an auto-installer, which permits to install a modified version of Lorcon2 and set the Air::Lorcon2.
-Unfortunately the official site is closed, some good links for documentation and for download Air::Lorcon2 are:
+for veryfing that everything works just type 
+*perl -e '*
 
- - Libpcap (suggested)
- I suggest to use libpcap with the Net::Lorcon2 library for speed up some lorcon's originary functions which uses pcap as beack-end.   
+and write:
+
+```perl
+
+use Air::Lorcon2;
+print Control_state();
+
+```
+
+if returns a value > 0 everything works fine.
+
+**C DOCUMENTATION**
+ 
+some articles about C Lorcon2 library are here:
+
   - https://github.com/kismetwireless/lorcon 
   - http://blog.opensecurityresearch.com/2012/09/getting-started-with-lorcon.html
 
+**PERL DOCUMENTATION**
 
-COPYRIGHT AND LICENCE
+if interested in some examples for the perl library go under the examples/ directory.
 
-Copyright (C) 2020 by Edoardo Mantovani, aka BASEBAND
+**SPECIAL THANKS**
+
+A big thanks to *andreas hadjiprocopis* aka Bliako, probably the best library contributor in the history, without him the biggest part related to C code wouldn't be working.
+
+**other thanks**
+	-perlmonks community, especially syphilis  for his initial help
+	-*Mike Kershaw* aka Dragorn, the main developer of Lorcon2, who explained some obscure part of his code
+	-*GomoR*, the old version author, who never replied to my emails
+
+**COPYRIGHT AND LICENCE**
+
+Copyright (C) 2020 by *Edoardo Mantovani*, aka BASEBAND
 
 
 This library is free software; you can redistribute it and/or modify
