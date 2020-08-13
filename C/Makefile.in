@@ -91,7 +91,7 @@ install:	$(LIBOUT)
 	install -m 644 ieee80211.h $(INCLUDE)/lorcon2/ifcontrol_linux.h
 	install -m 644 ifcontrol_linux.h $(INCLUDE)/lorcon2/lorcon_ieee80211.h
 	install -m 644 drv_wtgeneric.h $(INCLUDE)/lorcon2/drv_wtgeneric.h
-	install -m 644 zd1211.h $(INCLUDE)/lorcon2/zd1211.h
+	install -m 644 drv_zd1211.h $(INCLUDE)/lorcon2/drv_zd1211.h
 	install -d -m 755 $(MAN)/man3
 	install  -m 644 lorcon.3 $(MAN)/man3/lorcon.3
 
