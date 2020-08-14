@@ -348,6 +348,33 @@ lorcon_packet_decode(packet)
   AirLorconPacket *packet
 
 
+AirLorconPacket *
+lorcon_packet_decrypt(context, packet) 
+  AirLorcon *context
+  AirLorconPacket *packet
+	CODE:
+	AirLorconPacket *ret;
+	lorcon_wep_t *wepidx = context->wepkeys;
+	struct lorcon_dot11_extra *extra = (Lorcon_DOT11 *) packet->extra_info;
+	u_char pwd[LORCON_WEPKEY_MAX + 3], keyblock[256];
+	int pwdlen = 3;
+	int kba = 0, kbb = 0;
+if (packet->extra_info == NULL || packet->extra_type != LORCON_PACKET_EXTRA_80211 ||
+		packet->packet_data == NULL || packet->length_data < 7)
+		return NULL;
+	while (wepidx) {
+		if (memcmp(extra->bssid_mac, wepidx->bssid, 6) == 0){
+			break;
+		}
+		wepidx = wepidx->next;
+		RETVAL = wepidx;
+	}
+	if(wepidx == NULL){
+		return( NULL );
+	}
+	  OUTPUT:
+		RETVAL //return null if wepIDX is null
+			
 void  
 lorcon_packet_set_channel(packet, channel)
   AirLorconPacket *packet
@@ -364,7 +391,16 @@ int
 lorcon_packet_to_dot3(packet, data)
   AirLorconPacket *packet
   u_char *data
+  CODE:
+	*data = (u_char *) malloc(sizeof(u_char) * length);
+	memcpy(*data, extra->dest_mac, 6);
+	memcpy(*data + 6, extra->source_mac, 6);
+	memcpy(*data + 12, packet->packet_data + offt, packet->length_data - offt);
 
+	RETVAL = length;
+	  OUTPUT:
+		RETVAL
+		
 
 int 
 lorcon_ifup( context )
