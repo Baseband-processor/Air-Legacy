@@ -280,7 +280,7 @@ lorcon_set_compiled_filter(context, filter)
 void 
 lorcon_pcap_handler(user, h, bytes)
 	u_char *user
-	const struct PCAP_PKTHDR *h
+	const  PCAP_PKTHDR *h
 	const u_char *bytes
 
 int 
