@@ -109,7 +109,7 @@ Air::Lorcon2::lorcon_send_bytes( $context, length($Packet), \$Packet );
 
 **SPECIAL THANKS**
 
-A great thanks to *Andreas Hadjiprocopis* (aka *Bliako*), probably the best library contributor ever, without him the biggest part related to C code would be broken.
+A great thanks to *Andreas Hadjiprocopis* (aka *Bliako*), probably the best collaborator I ever had, without him the biggest part related to the C code would be broken.
 
 **other thanks**
 * perlmonks community, especially syphilis  for his initial help
@@ -117,6 +117,7 @@ A great thanks to *Andreas Hadjiprocopis* (aka *Bliako*), probably the best libr
 * *GomoR*, the old version author, who never replied to my emails
 
 **Future works and directions**
+
 This library is the result of 2 months of hard work and, still now, there are several problem related to the perl-types conversion, 
 Probably the project will grow even more, my main ideas are:
 
