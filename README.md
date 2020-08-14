@@ -131,6 +131,11 @@ Probably the project will grow even more, my main ideas are:
    
 - [ ] Write a brief PDF manual about the six perl wireless-security module
 
+**Requests and collaborations**
+
+Feel free to email me at <EdoardoMantovani@Lorcon2.com>
+I am open for suggestions, code improvement, collaboration and other requests
+
 **COPYRIGHT AND LICENCE**
 
 Copyright (C) 2020 by *Edoardo Mantovani*, aka BASEBAND
