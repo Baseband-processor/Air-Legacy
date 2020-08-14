@@ -3,25 +3,7 @@
 #include "perl.h"
 #include "XSUB.h"
 
-#include <lorcon2/lorcon.h>
-#include <lorcon2/lorcon_packet.h>
-#include <lorcon2/lorcon_multi.h>
-#include <lorcon2/lorcon_ieee80211.h>
-#include <lorcon2/lorcon_forge.h>
-#include <lorcon2/drv_madwifing.h>
-#include <lorcon2/airpinject.h>
-#include <lorcon2/drv_airjack.h>
-#include <lorcon2/drv_file.h>
-#include <lorcon2/drv_mac80211.h>
-#include <lorcon2/drv_tuntap.h>
-#include <lorcon2/iwcontrol.h>
-#include <lorcon2/lorcon_int.h>
-#include <lorcon2/nl80211_control.h>
-#include <lorcon2/lorcon_packasm.h>
-#include <lorcon2/madwifing_control.h>
-#include <lorcon2/ifcontrol_linux.h>
-#include <lorcon2/drv_wtgeneric.h>
-#include <lorcon2/drv_zd1211.h>
+#include "Ctxs.h"
 
 
 typedef struct madwi_vaps            MADWIFI_VAPS;
@@ -113,6 +95,52 @@ AirLorcon *
 lorcon_create(interface, driver)
       const char *interface
       AirLorconDriver *driver
+      CODE:
+	AirLorcon *context = NULL;
+	if (driver->init_func == NULL){
+		return NULL;
+	}
+	context = (AirLorcon *) malloc(sizeof(AirLorcon));
+	memset(context, 0, sizeof(AirLorcon));
+	snprintf(context->drivername, 32, "%s", driver->name);
+    context->ifname = strdup(interface);
+    context->vapname = NULL;
+	context->pcap = NULL;
+	context->inject_fd = context->ioctl_fd = context->capture_fd = -1;
+	context->packets_sent = 0;
+	context->packets_recv = 0;
+	context->dlt = -1;
+	context->channel = -1;
+    context->channel_ht_flags = LORCON_CHANNEL_BASIC;
+	context->errstr[0] = 0;
+	context->timeout_ms = 0;
+	memset(context->original_mac, 0, 6);
+	context->handler_cb = NULL;
+	context->handler_user = NULL;
+	context->close_cb = NULL;
+	context->openinject_cb = NULL;
+	context->openmon_cb = NULL;
+	context->openinjmon_cb = NULL;
+	context->setchan_cb = NULL;
+	context->getchan_cb = NULL;
+    context->setchan_ht_cb = NULL;
+    context->getchan_ht_cb = NULL;
+	context->sendpacket_cb = NULL;
+	context->getpacket_cb = NULL;
+	context->setdlt_cb = NULL;
+	context->getdlt_cb = NULL;
+	context->getmac_cb = NULL;
+	context->setmac_cb = NULL;
+    context->pcap_handler_cb = NULL;
+	context->wepkeys = NULL;
+	if ((*(driver->init_func))(context) < 0) {
+		free(context);
+		return NULL;
+	}
+	RETVAL = context;
+	OUTPUT:
+	  RETVAL
+
 
 void
 lorcon_free(context)
@@ -135,12 +163,26 @@ lorcon_open_inject(context)
 int
 lorcon_open_monitor(context)
       AirLorcon *context
-
+	CODE:
+	  if (context->openmon_cb == NULL) {
+		snprintf(context->errstr, LORCON_STATUS_MAX,  "Driver %s does not support MONITOR mode", context->drivername);
+		return LORCON_ENOTSUPP;
+	}
+	RETVAL =  (*(context->openmon_cb))(context);
+	OUTPUT:
+		RETVAL
 
 int
 lorcon_open_injmon(context)
       AirLorcon *context
- 
+      	CODE:
+ 	if(lorcon_open_injmon(context) == NULL) {
+		snprintf(context->errstr, LORCON_STATUS_MAX,  "Driver %s does not support INJMON mode", context->drivername);
+		return LORCON_ENOTSUPP;
+	}
+	RETVAL =  (*(context->openinjmon_cb))(context);
+	OUTPUT:
+		RETVAL
 
 void
 lorcon_set_vap(context, vap)
@@ -220,10 +262,19 @@ int
 lorcon_set_compiled_filter(context, filter)
       AirLorcon *context
       BPF_PROGRAM *filter
-               CODE:
-      RETVAL = lorcon_set_compiled_filter(&context, &filter);
-   OUTPUT:
-      RETVAL
+      	CODE:
+	  if (context->pcap == NULL) {
+		snprintf(context->errstr, LORCON_STATUS_MAX, "Driver %s does not define a pcap capture type", context->drivername);
+		return LORCON_ENOTSUPP;
+	}
+	if (pcap_setfilter(context->pcap, filter) < 0) {
+		snprintf(context->errstr, LORCON_STATUS_MAX, "%s", pcap_geterr(context->pcap));
+		return -1;
+	}
+	RETVAL = 1;
+      	  OUTPUT:
+		  RETVAL
+		
       
 int 
 lorcon_loop(context, counter,  callback, user)
@@ -231,10 +282,20 @@ lorcon_loop(context, counter,  callback, user)
   int counter
   AirLorconHandler callback
   u_char *user
-           CODE:
-      RETVAL = lorcon_loop(&context, counter, callback, &user);
-   OUTPUT:
-      RETVAL
+  	CODE:
+	int ret;
+	if(context->pcap == NULL) {
+		snprintf( context->errstr, LORCON_STATUS_MAX,  "capture driver %s did not create a pcap context", lorcon_get_driver_name(context) );
+		return LORCON_ENOTSUPP; // aka  -255
+	}
+	context->handler_cb = callback;
+	context->handler_user = user;
+	ret = pcap_loop(context->pcap, count, lorcon_pcap_handler, (u_char *) context);
+    RETVAL =  ret;
+	OUTPUT:
+	  RETVAL
+	  
+
       
 int 
 lorcon_dispatch(context, counter,  callback, user)
@@ -285,6 +346,7 @@ lorcon_packet_free(packet)
 int 
 lorcon_packet_decode(packet)
   AirLorconPacket *packet
+
 
 void  
 lorcon_packet_set_channel(packet, channel)
