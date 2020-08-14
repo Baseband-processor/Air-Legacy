@@ -109,11 +109,11 @@ Air::Lorcon2::lorcon_send_bytes( $context, length($Packet), \$Packet );
 
 **SPECIAL THANKS**
 
-A great thanks to *Andreas Hadjiprocopis* aka *Bliako*, probably the best library contributor in the history, without him the biggest part related to C code wouldn't be working.
+A great thanks to *Andreas Hadjiprocopis* (aka *Bliako*), probably the best library contributor in the history, without him the biggest part related to C code wouldn't be working.
 
 **other thanks**
 * perlmonks community, especially syphilis  for his initial help
-* *Mike Kershaw* aka Dragorn, the main developer of Lorcon2, who explained some obscure part of his code
+* *Mike Kershaw* (aka Dragorn), the main developer of Lorcon2, who explained some obscure part of his code
 * *GomoR*, the old version author, who never replied to my emails
 
 **Future works and directions**
