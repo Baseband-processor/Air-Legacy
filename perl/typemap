@@ -5,7 +5,7 @@ Lorcon_DOT11 *       T_PTROBJ
 Lorcon_DOT3 *        T_PTROBJ
 
 PCAP_PKTHDR	     T_PTROBJ
-const PCAP_PKTHDR    T_PTROBJ
+const PCAP_PKTHDR *  T_PTROBJ
 PCAP_PKTHDR *        T_PTROBJ
 AirLorcon *          T_PTRREF
 AirLorconHandler     T_PV
