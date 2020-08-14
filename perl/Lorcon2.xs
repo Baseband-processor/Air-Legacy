@@ -7,7 +7,7 @@
 
 
 typedef struct madwi_vaps            MADWIFI_VAPS;
-typedef struct struct pcap_pkthdr    PCAP_PKTHDR;
+typedef struct pcap_pkthdr           PCAP_PKTHDR;
 typedef lorcon_multi_error_handler   LORCON_MULTI_ERROR_HANDLER;
 typedef struct  {
         struct lcpa_metapack *prev;
