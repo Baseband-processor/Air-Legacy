@@ -590,17 +590,36 @@ int
 tx80211_hostap_capabilities()
      
      
-int 
-drv_tuntap_init(init)
-   AirLorcon *init
-     
+#int 
+#drv_tuntap_init(context)
+#   AirLorcon *context
+#     CODE:
+#	lorcon_open_inject(context) =  tuntap_openmon_cb;
+#	lorcon_open_monitor(context) = tuntap_openmon_cb;
+#	lorcon_open_injmon(context) =  tuntap_openmon_cb;
+#	RETVAL = 1;
+#	  OUTPUT:
+#	RETVAL
+
 AirLorconDriver *
 drv_tuntap_listdriver(drv)
    AirLorconDriver *drv
+	CODE:
+ 	AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver));
+
+	d->name = strdup("tuntap");
+	d->details = strdup("Linux tuntap virtual interface drivers");
+	d->init_func = drv_tuntap_init;
+	d->probe_func = NULL;
+
+	RETVAL =  d;
+	OUTPUT:
+	  RETVAL
 
 int
 drv_file_init(init)
      AirLorcon *init
+
 #int
 #drv_rtfile_init(init)
  #    AirLorcon *init
