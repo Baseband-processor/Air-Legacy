@@ -728,7 +728,19 @@ drv_file_listdriver(drv)
 
 LCPA_META *
 lcpa_init()
-
+	CODE:
+	int c; //init c
+	LCPA_META *c = (LCPA_META *) malloc(sizeof(LCPA_META));
+	c->len = 0;
+	c->data = NULL;
+	c->freedata = 0;
+	snprintf(c->type, 24, "INIT");
+	c->prev = NULL;
+	c->next = NULL;
+	RETVAL =  c;
+	  OUTPUT:
+		RETVAL
+		
 LCPA_META *
 lcpa_append_copy(in_pack, in_type, in_length, in_data)
               LCPA_META *in_pack
