@@ -20,34 +20,65 @@ for installing the *Air::Lorcon2* and *Lorcon2* libraries you just need to type:
 
 ```
 
-this will start the Makefile outside the C and perl directories.
+this will start the Makefile outside the C and perl directories, Lorcon2 Headers will be automatically installed in */usr/include*.
+directory.
 
 **CODE EXAMPLE**
 
-for veryfing that everything works just type 
+for veryfing that everything works just start typing 
 *perl -e '*
-
-and write:
 
 ```perl
 
 use Air::Lorcon2;
-print Control_state();
+use Data::Dumper;
+print Dumper( Air::Lorcon2::lorcon_list_drivers() );
 
 ```
 
-if returns a value > 0 everything works fine.
+if this return no drivers or if in the output there isn't any wireless card try to init the interfaces though the *drv_* functions listed below:
+
+- drv_madwifing_init
+- drv_mac80211_init
+
+for now only the mac80211 and madwifing drivers are avaiable, more on future.
 
 **C DOCUMENTATION**
  
-some articles about C Lorcon2 library are here:
+some resources about C Lorcon2 library are here:
 
   - https://github.com/kismetwireless/lorcon 
   - http://blog.opensecurityresearch.com/2012/09/getting-started-with-lorcon.html
 
+but, as *Mike Kershaw* said:
+
+*there isn't really any documentation on the other functions, sorry; the code would be the best reference there.*
+
+so take advantage of the C open source code.
+
 **PERL DOCUMENTATION**
 
-if interested in some examples for the perl library go under the examples/ directory.
+if interested in more advanced examples for the perl library please go under the *examples/* directory.
+
+the most basic usage is:
+
+```perl
+use strict;
+use Net::Pcap qw( pcap_lookupdev );
+use Data::Dumper qw(Dumper);
+use Air::Lorcon2 qw(:lorcon); # This will export every lorcon2 subroutines
+
+my $pcap_err = '';
+my $pcap_interface = pcap_lookupdev( \$pcap_err ); # This will give us the best interface avaiable for sniffing 
+
+print Dumper( Air::Lorcon2::lorcon_list_drivers() ) or die $!;
+my $driver = <STDIN>;
+chomp( $driver ); # Delete the 'ret' character from the $driver string
+my $drv = Air::Lorcon2::lorcon_find_driver( $driver );
+
+my $context = Air::Lorcon2::lorcon_create($pcap_interface, $drv) or die $!;
+
+```
 
 **SPECIAL THANKS**
 
