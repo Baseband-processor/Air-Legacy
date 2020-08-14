@@ -78,6 +78,33 @@ my $drv = Air::Lorcon2::lorcon_find_driver( $driver );
 
 my $context = Air::Lorcon2::lorcon_create($pcap_interface, $drv) or die $!;
 
+# From here we have access to an huge number of functions, some simple examples are:
+
+Air::Lorcon2::lorcon_ifdown( $context ) or die Air::Lorcon2::lorcon_get_error( $context ); # Set interface 'down'
+Air::Lorcon2::lorcon_ifup( $context ) or die Air::Lorcon2::lorcon_get_error( $context ); # Set interface 'up'
+
+my $channel = 2;
+Air::Lorcon2::lorcon_set_channel( $context, $channel); # Set 2 as wireless-channel
+Air::Lorcon2::lorcon_get_channel( $context ); # Return 2
+
+Air::Lorcon2::lorcon_open_inject (  $context ) or die Air::Lorcon2::lorcon_get_error( $context ); # set the injection mode
+Air::Lorcon2::lorcon_open_monitor(  $context ) or Air::Lorcon2::lorcon_get_error( $context ); # set the monitor mode
+Air::Lorcon2::lorcon_open_injmon (  $context ) or Air::Lorcon2::lorcon_get_error( $context ); # set both
+
+# We can also initialize our preferred network driver using
+
+Air::Lorcon2::drv_madwifing_init( $context ); 
+
+# ||
+
+Air::Lorcon2::drv_mac80211_init( $context ); 
+
+# And if we add a packet the possible uses  grows exponentially:
+
+my $Packet = "\xdd\x09\x00\x50\xf2\x04\x10\x4a\x00\x01\x10"; # WPS probe packet taken by Air::Reaver, another my module for Reaver
+
+Air::Lorcon2::lorcon_send_bytes( $context, length($Packet), \$Packet );
+
 ```
 
 **SPECIAL THANKS**
