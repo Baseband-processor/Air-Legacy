@@ -202,7 +202,14 @@ void
 lorcon_set_vap(context, vap)
       AirLorcon *context
       const char *vap
-
+        BOOT:
+	     if (context->vapname != NULL){
+ 		RETVAL = free(context->vapname);
+	     }
+	 OUTPUT:
+		RETVAL
+		
+		
 const char *
 lorcon_get_vap(context)
       AirLorcon *context
@@ -252,6 +259,10 @@ lorcon_set_hwmac(context, mac_len, mac)
 Pcap *
 lorcon_get_pcap(context)
       AirLorcon *context
+      	CODE:
+	  RETVAL = (context->pcap);
+	OUTPUT:
+	  RETVAL
 
 void 
 lorcon_packet_set_freedata(packet, freedata)
@@ -322,7 +333,10 @@ lorcon_dispatch(context, counter,  callback, user)
 void
 lorcon_breakloop(context)
   AirLorcon *context
-
+        BOOT:
+	if (context->pcap == NULL) {
+		snprintf( context->errstr, LORCON_STATUS_MAX,  "capture driver %s did not create a pcap context", lorcon_get_driver_name(context) );		
+}
 
 int
 lorcon_inject(context, packet)
@@ -390,7 +404,7 @@ lorcon_packet_decrypt(context, packet)
 	CODE:
 	AirLorconPacket *ret;
 	lorcon_wep_t *wepidx = context->wepkeys;
-	struct lorcon_dot11_extra *extra = (Lorcon_DOT11 *) packet->extra_info;
+	Lorcon_DOT11 *extra = (Lorcon_DOT11 *) packet->extra_info;
 	u_char pwd[LORCON_WEPKEY_MAX + 3], keyblock[256];
 	int pwdlen = 3;
 	int kba = 0, kbb = 0;
@@ -938,20 +952,7 @@ tx80211_zd1211rw_capabilities()
 int 
 tx80211_zd1211rw_init(in_tx)
 	TX80211 *in_tx
-	CODE:
-	  TX80211 *in_tx
-	in_tx->capabilities = tx80211_zd1211rw_capabilities();
-	in_tx->open_callthrough = &wtinj_open;
-	in_tx->close_callthrough = &wtinj_close;
-	in_tx->setmode_callthrough = &wtinj_setmode;
-	in_tx->getmode_callthrough = &wtinj_getmode;
-	in_tx->getchan_callthrough = &wtinj_getchannel;
-	in_tx->setchan_callthrough = &wtinj_setchannel;
-	in_tx->txpacket_callthrough = &tx80211_zd1211rw_send;
-	in_tx->setfuncmode_callthrough = &wtinj_setfuncmode;
-	RETVAL = 0;
-	  OUTPUT:
-	    RETVAL
+
 int 
 tx80211_zd1211rw_send(in_tx, in_pkt)
 	TX80211 *in_tx
