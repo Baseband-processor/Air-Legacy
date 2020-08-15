@@ -7,6 +7,8 @@
 
 
 
+typedef struct lorcon_wep_t          LORCON_WEP;
+
 typedef struct madwi_vaps            MADWIFI_VAPS;
 
 typedef lorcon_multi_error_handler   LORCON_MULTI_ERROR_HANDLER;
@@ -22,7 +24,7 @@ typedef struct  {
         int freedata;
 }lcpa_metapack;
 
-typedef lcpa_metapack *             LCPA_META;
+typedef struct lcpa_metapack             LCPA_META;
 
 typedef struct {
         int type, subtype;
@@ -297,12 +299,13 @@ lorcon_loop(context, counter,  callback, user)
   	CODE:
 	int ret;
 	if(context->pcap == NULL) {
-		snprintf( context->errstr, LORCON_STATUS_MAX,  "capture driver %s did not create a pcap context", lorcon_get_driver_name(context) );
-		return LORCON_ENOTSUPP; // aka  -255
+		snprintf( lorcon_get_error(context), LORCON_STATUS_MAX,  "capture driver %s did not create a pcap context", lorcon_get_driver_name(context) ); // 
+		return LORCON_ENOTSUPP; // aka  -255 status code
 	}
+
 	context->handler_cb = callback;
 	context->handler_user = user;
-	ret = pcap_loop(context->pcap, counter, lorcon_pcap_handler *, (u_char *) context);
+	ret = pcap_loop(context->pcap, counter,  (u_char *) context);
     RETVAL =  ret;
 	OUTPUT:
 	  RETVAL
@@ -341,6 +344,22 @@ lorcon_add_wepkey(context, bssid, key, length)
       u_char *bssid
       u_char *key
       int length
+	BOOT:
+	  	if (length > 26){
+		return -1;
+	}
+	CODE:
+	LORCON_WEP *wep;
+	wep = (	LORCON_WEP *) malloc(sizeof(LORCON_WEP) );
+	memcpy(wep->bssid, bssid, 6);
+	memcpy(wep->key, key, length);
+	wep->len = length;
+	wep->next = context->wepkeys;
+	context->wepkeys = wep;
+	RETVAL = 1;
+	  OUTPUT:
+	    RETVAL
+
 
 void 
 lorcon_set_useraux(context, aux)
@@ -350,7 +369,11 @@ lorcon_set_useraux(context, aux)
 void  
 lorcon_get_useraux(context)
   AirLorcon *context
-
+    CODE:
+	RETVAL = (context->userauxptr);	
+	OUTPUT:
+	  RETVAL
+	  
 void  
 lorcon_packet_free(packet)
   AirLorconPacket *packet
@@ -403,21 +426,8 @@ int
 lorcon_packet_to_dot3(packet, data)
   AirLorconPacket *packet
   u_char *data
-  CODE:
-	packet = AirLorconPacket *packet;
-	data = u_char *data;
-	Lorcon_DOT11 *extra = (Lorcon_DOT11 *) packet->extra_info;
-	int offset = 0;
-	int length = 0;
-	*data = (u_char *) malloc(sizeof(u_char) * length);
-	memcpy(*data, extra->dest_mac, 6);
-	memcpy(*data + 6, extra->source_mac, 6);
-	memcpy(*data + 12, packet->packet_data + offset, packet->length_data - offset);
-	RETVAL = length;
-	  OUTPUT:
-		RETVAL
-		
 
+		
 int 
 lorcon_ifup( context )
   AirLorcon *context
@@ -744,19 +754,7 @@ drv_file_listdriver(drv)
 
 LCPA_META *
 lcpa_init()
-	CODE:
-	int c; //init c
-	LCPA_META *c = (LCPA_META *) malloc(sizeof(LCPA_META));
-	c->len = 0;
-	c->data = NULL;
-	c->freedata = 0;
-	snprintf(c->type, 24, "INIT");
-	c->prev = NULL;
-	c->next = NULL;
-	RETVAL =  c;
-	  OUTPUT:
-		RETVAL
-		
+
 LCPA_META *
 lcpa_append_copy(in_pack, in_type, in_length, in_data)
               LCPA_META *in_pack
