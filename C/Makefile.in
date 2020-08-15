@@ -69,6 +69,7 @@ install:	$(LIBOUT)
 	install -d -m 755 $(INCLUDE)
 	install -d -m 755 $(INCLUDE)/lorcon2/
 	install -m 644 lorcon.h $(INCLUDE)/lorcon2/lorcon.h
+	install -m 644 drv_wtgeneric.h $(INCLUDE)/lorcon2/drv_wtgeneric.h
 	install -m 644 drv_tuntap.h $(INCLUDE)/lorcon2/drv_tuntap.h
 	install -m 644 drv_madwifing.h $(INCLUDE)/lorcon2/drv_madwifing.h
 	install -m 644 drv_mac80211.h $(INCLUDE)/lorcon2/drv_mac80211.h
