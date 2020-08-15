@@ -94,7 +94,7 @@ AirLorconDriver *
 lorcon_auto_driver(interface)
       const char *interface
       CODE:
-      AirLorcon *list = NULL, *i = NULL, *ret = NULL;
+      AirLorconDriver *list = NULL, *i = NULL, *ret = NULL;
       i = list = lorcon_list_drivers();
 	while (i) {
 		if (i->probe_func != NULL) {
@@ -216,13 +216,7 @@ void
 lorcon_set_vap(context, vap)
       AirLorcon *context
       const char *vap
-        BOOT:
-	     if (context->vapname != NULL){
- 		RETVAL = free(context->vapname);
-	     }
-	 OUTPUT:
-		RETVAL
-		
+ 
 		
 const char *
 lorcon_get_vap(context)
@@ -344,13 +338,12 @@ lorcon_dispatch(context, counter,  callback, user)
    AirLorconHandler callback
    u_char *user
    
+
+
 void
 lorcon_breakloop(context)
   AirLorcon *context
-        BOOT:
-	if (context->pcap == NULL) {
-		snprintf( context->errstr, LORCON_STATUS_MAX,  "capture driver %s did not create a pcap context", lorcon_get_driver_name(context) );		
-}
+    
 
 int
 lorcon_inject(context, packet)
@@ -366,17 +359,20 @@ lorcon_send_bytes(context, length, bytes)
 unsigned long int
 lorcon_get_version()
 
+
+
 int
 lorcon_add_wepkey(context, bssid, key, length)
       AirLorcon *context
       u_char *bssid
       u_char *key
       int length
-	BOOT:
-	  	if (length > 26){
+	
+	CODE:
+	  
+	 if (length > 26){
 		return -1;
 	}
-	CODE:
 	LORCON_WEP *wep;
 	wep = (	LORCON_WEP *) malloc(sizeof(LORCON_WEP) );
 	memcpy(wep->bssid, bssid, 6);
@@ -397,8 +393,9 @@ lorcon_set_useraux(context, aux)
 void  
 lorcon_get_useraux(context)
   AirLorcon *context
+
     CODE:
-	RETVAL = (context->userauxptr);	
+	RETVAL = context->userauxptr;	
 	OUTPUT:
 	  RETVAL
 	  
@@ -959,7 +956,7 @@ wtinj_selfack(wtinj, addr)
 int 
 tx80211_zd1211rw_capabilities()
 	CODE:
-	  RETVAL = (TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT | TX80211_CAP_SEQ | TX80211_CAP_BSSTIME | TX80211_CAP_FRAG | TX80211_CAP_DURID | TX80211_CAP_SNIFFACK | TX80211_CAP_DSSSTX);
+	  RETVAL = ("TX80211_CAP_SNIFF", "TX80211_CAP_TRANSMIT", "TX80211_CAP_SEQ", "TX80211_CAP_BSSTIME", "TX80211_CAP_FRAG", "TX80211_CAP_DURID" , "TX80211_CAP_SNIFFACK" , "TX80211_CAP_DSSSTX");
 	OUTPUT:
 	  RETVAL
 	  

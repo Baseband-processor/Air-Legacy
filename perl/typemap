@@ -4,6 +4,7 @@ LCPA_META *          T_PTROBJ
 Lorcon_DOT11 *       T_PTROBJ
 Lorcon_DOT3 *        T_PTROBJ
 
+LORCON_WEP           T_PTROBJ
 PCAP_PKTHDR	     T_PTROBJ
 const PCAP_PKTHDR *  T_PTROBJ
 PCAP_PKTHDR *        T_PTROBJ
