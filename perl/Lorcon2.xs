@@ -7,7 +7,6 @@
 
 
 typedef struct madwi_vaps            MADWIFI_VAPS;
-typedef struct pcap_pkthdr           PCAP_PKTHDR;
 typedef lorcon_multi_error_handler   LORCON_MULTI_ERROR_HANDLER;
 typedef struct  {
         struct lcpa_metapack *prev;
@@ -104,15 +103,15 @@ lorcon_create(interface, driver)
 	context = (AirLorcon *) malloc(sizeof(AirLorcon));
 	memset(context, 0, sizeof(AirLorcon));
 	snprintf(context->drivername, 32, "%s", driver->name);
-    context->ifname = strdup(interface);
-    context->vapname = NULL;
+   	 context->ifname = strdup(interface);
+   	 context->vapname = NULL;
 	context->pcap = NULL;
 	context->inject_fd = context->ioctl_fd = context->capture_fd = -1;
 	context->packets_sent = 0;
 	context->packets_recv = 0;
 	context->dlt = -1;
 	context->channel = -1;
-    context->channel_ht_flags = LORCON_CHANNEL_BASIC;
+   	 context->channel_ht_flags = LORCON_CHANNEL_BASIC;
 	context->errstr[0] = 0;
 	context->timeout_ms = 0;
 	memset(context->original_mac, 0, 6);
@@ -277,12 +276,6 @@ lorcon_set_compiled_filter(context, filter)
 		  RETVAL
 		
       
-void 
-lorcon_pcap_handler(user, h, bytes)
-	u_char *user
-	const  PCAP_PKTHDR *h
-	const u_char *bytes
-
 int 
 lorcon_loop(context, counter,  callback, user)
   AirLorcon *context
@@ -297,7 +290,7 @@ lorcon_loop(context, counter,  callback, user)
 	}
 	context->handler_cb = callback;
 	context->handler_user = user;
-	ret = pcap_loop(context->pcap, counter, lorcon_pcap_handler, (u_char *) context);
+	ret = pcap_loop(context->pcap, counter, lorcon_pcap_handler , (u_char *) context);
     RETVAL =  ret;
 	OUTPUT:
 	  RETVAL
@@ -399,12 +392,15 @@ lorcon_packet_to_dot3(packet, data)
   AirLorconPacket *packet
   u_char *data
   CODE:
-	int length = 0, offset = 0;
 	Lorcon_DOT11 *extra = (Lorcon_DOT11 *) packet->extra_info;
+
+	int offset = 0;
+	int length = 0;
 	*data = (u_char *) malloc(sizeof(u_char) * length);
 	memcpy(*data, extra->dest_mac, 6);
 	memcpy(*data + 6, extra->source_mac, 6);
 	memcpy(*data + 12, packet->packet_data + offset, packet->length_data - offset);
+
 	RETVAL = length;
 	  OUTPUT:
 		RETVAL
