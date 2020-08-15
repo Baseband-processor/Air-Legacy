@@ -929,17 +929,32 @@ wtinj_selfack(wtinj, addr)
 	uint8_t *addr
 
 int 
-tx80211_zd1211rw_init(in_tx)
-	TX80211 *in_tx
-
-int 
-tx80211_zd1211rw_send(in_tx, in_pkt)
-	TX80211 *in_tx
-	TX80211_PACKET *in_pkt
-
-int 
 tx80211_zd1211rw_capabilities()
 	CODE:
 	  RETVAL = (TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT | TX80211_CAP_SEQ | TX80211_CAP_BSSTIME | TX80211_CAP_FRAG | TX80211_CAP_DURID | TX80211_CAP_SNIFFACK | TX80211_CAP_DSSSTX);
 	OUTPUT:
 	  RETVAL
+	  
+int 
+tx80211_zd1211rw_init(in_tx)
+	TX80211 *in_tx
+	CODE:
+	  TX80211 *in_tx
+	in_tx->capabilities = tx80211_zd1211rw_capabilities();
+	in_tx->open_callthrough = &wtinj_open;
+	in_tx->close_callthrough = &wtinj_close;
+	in_tx->setmode_callthrough = &wtinj_setmode;
+	in_tx->getmode_callthrough = &wtinj_getmode;
+	in_tx->getchan_callthrough = &wtinj_getchannel;
+	in_tx->setchan_callthrough = &wtinj_setchannel;
+	in_tx->txpacket_callthrough = &tx80211_zd1211rw_send;
+	in_tx->setfuncmode_callthrough = &wtinj_setfuncmode;
+	RETVAL = 0;
+	  OUTPUT:
+	    RETVAL
+int 
+tx80211_zd1211rw_send(in_tx, in_pkt)
+	TX80211 *in_tx
+	TX80211_PACKET *in_pkt
+
+
