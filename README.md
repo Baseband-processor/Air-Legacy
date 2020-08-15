@@ -88,8 +88,8 @@ Air::Lorcon2::lorcon_set_channel( $context, $channel); # Set 2 as wireless-chann
 Air::Lorcon2::lorcon_get_channel( $context ); # Return 2
 
 Air::Lorcon2::lorcon_open_inject (  $context ) or die Air::Lorcon2::lorcon_get_error( $context ); # set the injection mode
-Air::Lorcon2::lorcon_open_monitor(  $context ) or Air::Lorcon2::lorcon_get_error( $context ); # set the monitor mode
-Air::Lorcon2::lorcon_open_injmon (  $context ) or Air::Lorcon2::lorcon_get_error( $context ); # set both
+Air::Lorcon2::lorcon_open_monitor(  $context ) or die Air::Lorcon2::lorcon_get_error( $context ); # set the monitor mode
+Air::Lorcon2::lorcon_open_injmon (  $context ) or die Air::Lorcon2::lorcon_get_error( $context ); # set both
 
 # We can also initialize our preferred network driver using
 
@@ -103,7 +103,7 @@ Air::Lorcon2::drv_mac80211_init( $context );
 
 my $Packet = "\xdd\x09\x00\x50\xf2\x04\x10\x4a\x00\x01\x10"; # WPS probe packet taken by Air::Reaver, another my module for Reaver
 
-Air::Lorcon2::lorcon_send_bytes( $context, length($Packet), \$Packet );
+Air::Lorcon2::lorcon_send_bytes( $context, length($Packet), \$Packet ); # this will send the raw bytes though the network
 
 ```
 
