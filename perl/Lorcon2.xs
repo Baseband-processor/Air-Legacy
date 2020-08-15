@@ -93,6 +93,20 @@ lorcon_find_driver( driver )
 AirLorconDriver *
 lorcon_auto_driver(interface)
       const char *interface
+      CODE:
+      AirLorcon *list = NULL, *i = NULL, *ret = NULL;
+      i = list = lorcon_list_drivers();
+	while (i) {
+		if (i->probe_func != NULL) {
+			if ((*(i->probe_func))(interface) > 0) {
+				ret = _lorcon_copy_driver(i);
+				break;
+			}
+		}
+	i = i->next;
+		
+	}
+
 
 void
 lorcon_free_driver_list(list)
