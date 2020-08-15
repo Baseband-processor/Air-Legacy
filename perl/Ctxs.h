@@ -17,6 +17,5 @@
 #include <lorcon2/lorcon_int.h>
 #include <lorcon2/nl80211_control.h>
 #include <lorcon2/lorcon_packasm.h>
-#include <lorcon2/drv_wtgeneric.h>
 
 #endif /* __CTXS_H */
