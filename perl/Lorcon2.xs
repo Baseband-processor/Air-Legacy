@@ -57,11 +57,32 @@ typedef struct {
 
 typedef lorcon_dot3_extra*         Lorcon_DOT3;
 
-typedef lorcon_handler             AirLorconHandler;
-
 typedef lorcon_t                   AirLorcon;
-typedef lorcon_driver_t            AirLorconDriver;
+
+typedef struct {
+	struct timeval ts;
+	int dlt;
+	int channel;
+	int length;
+	int length_header;
+	int length_data;
+	LCPA_META *lcpa;
+	int free_data;
+	const u_char *packet_raw;
+	const u_char *packet_header;
+	const u_char *packet_data;
+	void *extra_info;
+	int extra_type;
+    AirLorcon *interface;
+    unsigned int set_tx_mcs;
+    unsigned int tx_mcs_rate;
+    unsigned int tx_mcs_short_guard;
+    unsigned int tx_mcs_40mhz;
+}lorcon_packet;
+
 typedef lorcon_packet_t            AirLorconPacket;
+typedef lorcon_handler             AirLorconHandler;
+typedef lorcon_driver_t            AirLorconDriver;
 typedef lorcon_multi_t             AirLorconMulti;
 typedef lorcon_multi_interface_t   AirLorconInterface;
 typedef lorcon_channel_t           AirLorconChannel;
@@ -410,7 +431,7 @@ lorcon_packet_decrypt(context, packet)
 	u_char pwd[LORCON_WEPKEY_MAX + 3], keyblock[256];
 	int pwdlen = 3;
 	int kba = 0, kbb = 0;
-if (packet->extra_info == NULL || packet->extra_tfype != LORCON_PACKET_EXTRA_80211 ||
+if (packet->extra_info == NULL || packet->extra_type != LORCON_PACKET_EXTRA_80211 ||
 		packet->packet_data == NULL || packet->length_data < 7)
 		return NULL;
 	while (wepidx) {
