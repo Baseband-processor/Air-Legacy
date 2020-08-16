@@ -6,6 +6,13 @@
 #define LORCON_STATUS_MAX	1024
 #define LORCON_MAX_PACKET_LEN	8192
 #define LORCON_ENOTSUPP -255
+#define	IFNAMSIZ	16
+#define	IFALIASZ	256
+
+#define ARPHDR_RADIOTAP "803"
+
+
+#define SIOC80211IFCREATE (SIOCDEVPRIVATE+7)
 
 #include "EXTERN.h"
 #include "perl.h"
@@ -13,6 +20,15 @@
 
 #include "Ctxs.h"
 
+typedef struct  {
+		char icp_name[IFNAMSIZ];
+		uint16_t icp_opmode;
+		uint16_t icp_flags;
+}ieee80211_clone_params;
+
+typedef struct ieee80211_clone_params IEE80211_CLONE_PARAMS;
+
+typedef struct ifreq                 IFREQ;
 
 typedef struct madwi_vaps            MADWIFI_VAPS;
 
@@ -860,6 +876,13 @@ madwifing_free_vaps(in_vaplist)
 	MADWIFI_VAPS *in_vaplist
 
 int 
+madwifing_setdevtype(interface_name, devtype, errorstring)
+	const char *interface_name
+	char *devtype
+	char *errorstring
+
+
+int 
 madwifing_destroy_vap(interface_name, errorstring)
 	const char *interface_name
 	char *errorstring
@@ -872,12 +895,59 @@ madwifing_build_vap(interface_name, errorstring, vapname, retvapname, vapmode, v
 	char *retvapname
 	int vapmode
 	int vapflags
+  CODE:
 
-int 
-madwifing_setdevtype(interface_name, devtype, errorstring)
-	const char *interface_name
-	char *devtype
-	char *errorstring
+
+	IEE80211_CLONE_PARAMS *cp = malloc(sizeof(IEE80211_CLONE_PARAMS *));
+	IFREQ ifr;
+	int sock;
+	char tnam[IFNAMSIZ];
+	int n;
+	char *errstr;
+
+	for (n = 0; n < 10; n++) {
+		short fl;
+		snprintf(tnam, IFNAMSIZ, "%s%d", vapname, n);
+		if (ifconfig_get_flags(tnam, errstr, &fl) < 0)
+			break;
+		tnam[0] = '\0';
+	}
+
+	if (tnam[0] == '\0') {
+		snprintf(errstr, 1024, "Unable to find free slot for VAP %s", vapname);
+		return -1;
+	}
+
+	memset(&ifr, 0, sizeof(ifr));
+	memset(&cp, 0, sizeof(cp));
+
+	//strncpy(cp->icp_name, tnam, IFNAMSIZ);
+	//cp->icp_opmode = vapmode;
+	//cp->icp_flags = vapflags;
+
+	strncpy(ifr.ifr_name, interface_name, IFNAMSIZ);
+	ifr.ifr_data = (caddr_t) &cp;
+
+	if ((sock = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
+		snprintf(errstr, 1024, "Unable to create socket to madwifi-ng: %s",
+				 strerror(errno));
+		return -1;
+	}
+
+	if (ioctl(sock, SIOC80211IFCREATE, &ifr) < 0) {
+		snprintf(errstr, 1024, "Unable to create VAP: %s", strerror(errno));
+		close(sock);
+		return -1;
+	}
+
+	if (madwifing_setdevtype(ifr.ifr_name, ARPHDR_RADIOTAP, errstr) < 0) {
+		return -1;
+	}
+
+	strncpy(retvapname, ifr.ifr_name, IFNAMSIZ);
+	close(sock);
+
+
 
 char *
 madwifing_find_parent(vaplist)
@@ -975,83 +1045,6 @@ wtinj_selfack(wtinj, addr)
 	TX80211 *wtinj
 	uint8_t *addr
 
-int 
-tx80211_zd1211rw_capabilities()
-	CODE:
-	  RETVAL = ("TX80211_CAP_SNIFF", "TX80211_CAP_TRANSMIT", "TX80211_CAP_SEQ", "TX80211_CAP_BSSTIME", "TX80211_CAP_FRAG", "TX80211_CAP_DURID" , "TX80211_CAP_SNIFFACK" , "TX80211_CAP_DSSSTX");
-	OUTPUT:
-	  RETVAL
-	  
-int 
-tx80211_zd1211rw_init(in_tx)
-	TX80211 *in_tx
 
-int 
-tx80211_zd1211rw_send(in_tx, in_pkt)
-	TX80211 *in_tx
-	TX80211_PACKET *in_pkt
-  CODE:
-	TX80211_PACKET mwng_pkt;
-	TX80211_RADIOTAP_H *rtaphdr;
-	uint8_t *pkt;
-	int len, channel, sendcount;
-
-	memset(&mwng_pkt, 0, sizeof(mwng_pkt));
-	len = (in_pkt->plen + TX80211_RTAP_LEN);
-
-	pkt = malloc(len);
-	if (pkt == NULL) {
-		snprintf(in_tx->errstr, TX80211_STATUS_MAX,  "Unable to allocate memory buffer for send function");
-		return -1;
-	}
-
-	memset(pkt, 0, len);
-
-	channel = tx80211_getchannel(in_tx);
-
-	rtaphdr = (TX80211_RADIOTAP_H *)pkt;
-	rtaphdr->it_version = 0;
-	rtaphdr->it_pad = 0;
-	rtaphdr->it_len = tx80211_le16(TX80211_RTAP_LEN);
-	rtaphdr->it_present = tx80211_le32(TX80211_RTAP_PRESENT);
-	rtaphdr->wr_flags = 0;
-	rtaphdr->wr_rate = in_pkt->txrate; /* 0 if not set for default */
-	rtaphdr->wr_chan_freq = tx80211_chan2mhz(channel);
-
-	switch(in_pkt->modulation) {
-		case TX80211_MOD_DEFAULT:
-			rtaphdr->wr_chan_flags = 0;
-			break;
-		case TX80211_MOD_DSSS:
-			rtaphdr->wr_chan_flags =
-				tx80211_le16(TX80211_RTAP_CHAN_B);
-			break;
-		case TX80211_MOD_OFDM:
-			/* OFDM can be 802.11g or 802.11a */
-			if (channel <= 14) {
-				/* 802.11g network */
-				rtaphdr->wr_chan_flags = 
-					tx80211_le16(TX80211_RTAP_CHAN_G);
-			} else {
-				rtaphdr->wr_chan_flags = 
-					tx80211_le16(TX80211_RTAP_CHAN_A);
-			}
-			break;
-		case TX80211_MOD_TURBO:
-			/* Turbo can be 802.11g or 802.11a */
-			if (channel <= 14) {
-				/* 802.11g network */
-				rtaphdr->wr_chan_flags = 
-					tx80211_le16(TX80211_RTAP_CHAN_TG);
-			} else {
-				rtaphdr->wr_chan_flags = 
-					tx80211_le16(TX80211_RTAP_CHAN_TA);
-			}
-			break;
-		default:
-			snprintf(in_tx->errstr, TX80211_STATUS_MAX, 
-					"Unsupported modulation mechanism "
-					"specified in send function.");
-return TX80211_ENOTSUPP;
 
 
