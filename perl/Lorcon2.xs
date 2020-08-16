@@ -83,6 +83,7 @@ typedef struct {
     unsigned int tx_mcs_40mhz;
 }lorcon_packet;
 
+typedef struct tx80211_radiotap_header TX80211_RADIOTAP_H;
 typedef lorcon_packet_t            AirLorconPacket;
 typedef lorcon_handler             AirLorconHandler;
 typedef lorcon_driver_t            AirLorconDriver;
@@ -989,5 +990,68 @@ int
 tx80211_zd1211rw_send(in_tx, in_pkt)
 	TX80211 *in_tx
 	TX80211_PACKET *in_pkt
+  CODE:
+	TX80211_PACKET mwng_pkt;
+	TX80211_RADIOTAP_H *rtaphdr;
+	uint8_t *pkt;
+	int len, channel, sendcount;
+
+	memset(&mwng_pkt, 0, sizeof(mwng_pkt));
+	len = (in_pkt->plen + TX80211_RTAP_LEN);
+
+	pkt = malloc(len);
+	if (pkt == NULL) {
+		snprintf(in_tx->errstr, TX80211_STATUS_MAX,  "Unable to allocate memory buffer for send function");
+		return -1;
+	}
+
+	memset(pkt, 0, len);
+
+	channel = tx80211_getchannel(in_tx);
+
+	rtaphdr = (TX80211_RADIOTAP_H *)pkt;
+	rtaphdr->it_version = 0;
+	rtaphdr->it_pad = 0;
+	rtaphdr->it_len = tx80211_le16(TX80211_RTAP_LEN);
+	rtaphdr->it_present = tx80211_le32(TX80211_RTAP_PRESENT);
+	rtaphdr->wr_flags = 0;
+	rtaphdr->wr_rate = in_pkt->txrate; /* 0 if not set for default */
+	rtaphdr->wr_chan_freq = tx80211_chan2mhz(channel);
+
+	switch(in_pkt->modulation) {
+		case TX80211_MOD_DEFAULT:
+			rtaphdr->wr_chan_flags = 0;
+			break;
+		case TX80211_MOD_DSSS:
+			rtaphdr->wr_chan_flags =
+				tx80211_le16(TX80211_RTAP_CHAN_B);
+			break;
+		case TX80211_MOD_OFDM:
+			/* OFDM can be 802.11g or 802.11a */
+			if (channel <= 14) {
+				/* 802.11g network */
+				rtaphdr->wr_chan_flags = 
+					tx80211_le16(TX80211_RTAP_CHAN_G);
+			} else {
+				rtaphdr->wr_chan_flags = 
+					tx80211_le16(TX80211_RTAP_CHAN_A);
+			}
+			break;
+		case TX80211_MOD_TURBO:
+			/* Turbo can be 802.11g or 802.11a */
+			if (channel <= 14) {
+				/* 802.11g network */
+				rtaphdr->wr_chan_flags = 
+					tx80211_le16(TX80211_RTAP_CHAN_TG);
+			} else {
+				rtaphdr->wr_chan_flags = 
+					tx80211_le16(TX80211_RTAP_CHAN_TA);
+			}
+			break;
+		default:
+			snprintf(in_tx->errstr, TX80211_STATUS_MAX, 
+					"Unsupported modulation mechanism "
+					"specified in send function.");
+return TX80211_ENOTSUPP;
 
 
