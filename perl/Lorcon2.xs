@@ -3,6 +3,9 @@
 #define LORCON_PACKET_EXTRA_NONE		0
 #define LORCON_PACKET_EXTRA_80211		1
 #define LORCON_PACKET_EXTRA_8023		2
+#define LORCON_STATUS_MAX	1024
+#define LORCON_MAX_PACKET_LEN	8192
+#define LORCON_ENOTSUPP -255
 
 #include "EXTERN.h"
 #include "perl.h"
@@ -211,7 +214,8 @@ lorcon_get_timeout(context)
 int
 lorcon_open_inject(context)
       AirLorcon *context
-  
+
+
 
 int
 lorcon_open_monitor(context)
@@ -368,6 +372,13 @@ int
 lorcon_inject(context, packet)
       AirLorcon *context
       AirLorconPacket *packet
+	  CODE:
+	if (context->sendpacket_cb == NULL) {
+		snprintf(context->errstr, LORCON_STATUS_MAX,  "Driver %s does not define a send function", context->drivername);
+		return LORCON_ENOTSUPP;
+	}
+
+
 
 int
 lorcon_send_bytes(context, length, bytes)
