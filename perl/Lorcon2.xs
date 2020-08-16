@@ -1,3 +1,8 @@
+#define MAX_IFNAME_LEN		32
+#define LORCON_WEPKEY_MAX	26
+#define LORCON_PACKET_EXTRA_NONE		0
+#define LORCON_PACKET_EXTRA_80211		1
+#define LORCON_PACKET_EXTRA_8023		2
 
 #include "EXTERN.h"
 #include "perl.h"
@@ -6,14 +11,20 @@
 #include "Ctxs.h"
 
 
-
-typedef struct lorcon_wep_t          LORCON_WEP;
-
 typedef struct madwi_vaps            MADWIFI_VAPS;
 
 typedef lorcon_multi_error_handler   LORCON_MULTI_ERROR_HANDLER;
 
 typedef struct pcap_pkthdr           PCAP_PKTHDR;
+
+typedef struct  {
+	u_char bssid[6];
+	u_char key[LORCON_WEPKEY_MAX];
+	int len;
+	struct lorcon_wep *next;
+}lorcon_wep;
+
+typedef struct lorcon_wep         LORCON_WEP;
 
 typedef struct  {
         struct lcpa_metapack *prev;
@@ -121,8 +132,8 @@ lorcon_create(interface, driver)
 	if (driver->init_func == NULL){
 		return NULL;
 	}
-	context = (AirLorcon *) malloc(sizeof(AirLorcon));
-	memset(context, 0, sizeof(AirLorcon));
+	context = (AirLorcon *) malloc(sizeof(AirLorcon *));
+	memset(context, 0, sizeof(AirLorcon *));
 	snprintf(context->drivername, 32, "%s", driver->name);
    	 context->ifname = strdup(interface);
    	 context->vapname = NULL;
@@ -315,20 +326,7 @@ lorcon_loop(context, counter,  callback, user)
   int counter
   AirLorconHandler callback
   u_char *user
-  	CODE:
-	int ret;
-	if(context->pcap == NULL) {
-		snprintf( lorcon_get_error(context), LORCON_STATUS_MAX,  "capture driver %s did not create a pcap context", lorcon_get_driver_name(context) ); // 
-		return LORCON_ENOTSUPP; // aka  -255 status code
-	}
 
-	context->handler_cb = callback;
-	context->handler_user = user;
-	ret = pcap_loop(context->pcap, counter,  (u_char *) context);
-    RETVAL =  ret;
-	OUTPUT:
-	  RETVAL
-	  
 
       
 int 
@@ -374,15 +372,13 @@ lorcon_add_wepkey(context, bssid, key, length)
 		return -1;
 	}
 	LORCON_WEP *wep;
-	wep = (	LORCON_WEP *) malloc(sizeof(LORCON_WEP) );
+	wep = (	LORCON_WEP *) malloc(sizeof(LORCON_WEP *) );
 	memcpy(wep->bssid, bssid, 6);
 	memcpy(wep->key, key, length);
 	wep->len = length;
 	wep->next = context->wepkeys;
 	context->wepkeys = wep;
-	RETVAL = 1;
-	  OUTPUT:
-	    RETVAL
+	
 
 
 void 
@@ -394,11 +390,6 @@ void
 lorcon_get_useraux(context)
   AirLorcon *context
 
-    CODE:
-	RETVAL = context->userauxptr;	
-	OUTPUT:
-	  RETVAL
-	  
 void  
 lorcon_packet_free(packet)
   AirLorconPacket *packet
@@ -419,13 +410,11 @@ lorcon_packet_decrypt(context, packet)
 	u_char pwd[LORCON_WEPKEY_MAX + 3], keyblock[256];
 	int pwdlen = 3;
 	int kba = 0, kbb = 0;
-if (packet->extra_info == NULL || packet->extra_type != LORCON_PACKET_EXTRA_80211 ||
+if (packet->extra_info == NULL || packet->extra_tfype != LORCON_PACKET_EXTRA_80211 ||
 		packet->packet_data == NULL || packet->length_data < 7)
 		return NULL;
 	while (wepidx) {
-		if (memcmp(extra->bssid_mac, wepidx->bssid, 6) == 0){
-			break;
-		}
+
 		wepidx = wepidx->next;
 		RETVAL = wepidx;
 	}
@@ -433,7 +422,7 @@ if (packet->extra_info == NULL || packet->extra_type != LORCON_PACKET_EXTRA_8021
 		return( NULL );
 	}
 	  OUTPUT:
-		RETVAL //return null if wepIDX is null
+		RETVAL 
 			
 void  
 lorcon_packet_set_channel(packet, channel)
@@ -754,7 +743,7 @@ AirLorconDriver *
 drv_tuntap_listdriver(drv)
    AirLorconDriver *drv
 	CODE:
- 	AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver));
+ 	AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
 
 	d->name = strdup("tuntap");
 	d->details = strdup("Linux tuntap virtual interface drivers");
