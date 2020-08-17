@@ -11,6 +11,8 @@
 #define TX80211_IFUP 1
 #define TX80211_IFDOWN 0
 
+#define ETH_P_ECONET	0x0018
+#define ETH_P_80211_RAW (ETH_P_ECONET + 1)
 #define ARPHDR_RADIOTAP "803"
 
 
@@ -170,7 +172,7 @@ typedef struct {
 	int (*txpacket_callthrough) (struct tx80211 *, TX80211_PACKET *);
 }tx80211;
 
-typedef struct tx80211        * TX80211;
+typedef struct tx80211        TX80211;
 
 typedef struct bpf_program    * BPF_PROGRAM;
 
@@ -1078,14 +1080,13 @@ wtinj_open(wtinj)
 	int err;
 	short flags;
 	IFREQ if_req;
-	struct sockaddr_ll sa_ll;
+	SOCKADDR *sa_ll;
 
 	if (ifconfig_get_flags(wtinj->ifname, wtinj->errstr, &flags) < 0) {
 		return 1;
 	}
 	if ((flags & IFF_UP) == 0) {
-		if (ifconfig_ifupdown(wtinj->ifname, wtinj->errstr,
-				TX80211_IFUP) < 0) {
+		if (ifconfig_ifupdown(wtinj->ifname, wtinj->errstr, TX80211_IFUP) < 0) {
 			return 1;
 		}
 	}
@@ -1093,7 +1094,7 @@ wtinj_open(wtinj)
 	wtinj->raw_fd = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
 
 	if (wtinj->raw_fd < 0) {
-		snprintf(wtinj->errstr, TX80211_STATUS_MAX, "no socket fd in tx descriptor");
+		snprintf(wtinj->errstr, "", "no socket fd in tx descriptor");
 		return -1;
 	}
 
@@ -1102,8 +1103,7 @@ wtinj_open(wtinj)
 	if_req.ifr_name[IFNAMSIZ - 1] = 0;
 	err = ioctl(wtinj->raw_fd, SIOCGIFINDEX, &if_req);
 	if (err < 0) {
-		snprintf(wtinj->errstr, TX80211_STATUS_MAX, "SIOCGIFINDEX ioctl failed, %s",
-				 strerror(errno));
+		snprintf(wtinj->errstr, "", "SIOCGIFINDEX ioctl failed, %s", strerror(errno));
 		close(wtinj->raw_fd);
 		return -2;
 	}
@@ -1114,7 +1114,7 @@ wtinj_open(wtinj)
 	sa_ll.sll_ifindex = if_req.ifr_ifindex;
 	err = bind(wtinj->raw_fd, (struct sockaddr *)&sa_ll, sizeof sa_ll);
 	if (err != 0) {
-		snprintf(wtinj->errstr, TX80211_STATUS_MAX, "bind() failed, %s",
+		snprintf(wtinj->errstr, "", "bind() failed, %s",
 				 strerror(errno));
 		close(wtinj->raw_fd);
 		return -3;
@@ -1167,15 +1167,15 @@ int
 tx80211_zd1211rw_init()
 	TX80211 *in_tx
 	CODE:
-	in_tx->capabilities = tx80211_zd1211rw_capabilities();
-	in_tx->open_callthrough = &wtinj_open;
-	in_tx->close_callthrough = &wtinj_close;
-	in_tx->setmode_callthrough = &wtinj_setmode;
-	in_tx->getmode_callthrough = &wtinj_getmode;
-	in_tx->getchan_callthrough = &wtinj_getchannel;
-	in_tx->setchan_callthrough = &wtinj_setchannel;
-	in_tx->txpacket_callthrough = &tx80211_zd1211rw_send;
-	in_tx->setfuncmode_callthrough = &wtinj_setfuncmode;
+#	in_tx->capabilities = tx80211_zd1211rw_capabilities();
+#	in_tx->open_callthrough = wtinj_open;
+#	in_tx->close_callthrough = wtinj_close;
+#	in_tx->setmode_callthrough = wtinj_setmode;
+#	in_tx->getmode_callthrough = wtinj_getmode;
+#	in_tx->getchan_callthrough = wtinj_getchannel;
+#	in_tx->setchan_callthrough = wtinj_setchannel;
+#	in_tx->txpacket_callthrough = tx80211_zd1211rw_send;
+#	in_tx->setfuncmode_callthrough = wtinj_setfuncmode;
 
 
 
