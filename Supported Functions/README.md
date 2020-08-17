@@ -184,6 +184,24 @@ actually Working functions
 - [x]      lorcon_multi_create
 - [x]      nl80211_find_parent
 - [x]      madwifing_find_parent
+- [x]      lcpa_append
+- [x]      lcpa_insert
+
+
+**NOT WORKING FUNCTIONS**
+
+- [ ]      lcpa_append_copy
+- [ ]      wtinj_send
+- [ ]      wtinj_open
+- [ ]      wtinj_close
+- [ ]     wtinj_setchannel
+- [ ]      wtinj_getchannel
+- [ ]     wtinj_setmode
+- [ ]     wtinj_getmode
+- [ ]     wtinj_setfuncmode
+- [ ]      wtinj_selfac
+- [ ]      tx80211_zd1211rw_init
+	...
 
 **NOTE:**
 
