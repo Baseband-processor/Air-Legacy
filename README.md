@@ -46,7 +46,8 @@ for now only the mac80211 and madwifing drivers are avaiable, more on future.
 **C DOCUMENTATION**
  
 some resources about C Lorcon2 library are here:
-
+  - _HACKING EXPOSED™ WIRELESS: WIRELESS SECURITY SECRETS & SOLUTIONS SECOND AND THIRD EDITION_ 
+  - https://www.willhackforsushi.com/presentations/shmoocon2007.pdf
   - https://github.com/kismetwireless/lorcon 
   - http://blog.opensecurityresearch.com/2012/09/getting-started-with-lorcon.html
 
