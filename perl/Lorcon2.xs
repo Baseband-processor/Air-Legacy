@@ -20,6 +20,7 @@
 #include "perl.h"
 #include "XSUB.h"
 
+#include <linux/socket.h>
 #include "Ctxs.h"
 
 typedef struct  {
