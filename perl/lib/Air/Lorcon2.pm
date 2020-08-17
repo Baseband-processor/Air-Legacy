@@ -242,8 +242,6 @@ our %EXPORT_TAGS = (
    lorcon => [qw(
       lorcon_list_drivers
       lorcon_find_driver
-      lorcon_set_datalink
-      lorcon_get_datalink
       lorcon_create
       lorcon_free_driver_list
       lorcon_free
