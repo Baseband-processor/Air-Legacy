@@ -110,6 +110,13 @@ typedef lorcon_channel_t           AirLorconChannel;
 typedef pcap_t                     Pcap;
 
 
+typedef struct {
+	uint8_t modulation;
+	uint8_t txrate;
+	uint8_t *packet;
+	int plen;
+}tx80211_packet;
+
 typedef struct tx80211_packet * TX80211_PACKET;
 
 
@@ -122,6 +129,7 @@ typedef struct {
 }tx80211;
 
 typedef struct tx80211        * TX80211;
+
 typedef struct bpf_program    * BPF_PROGRAM;
 
 #include "c/lorcon_driver_t.c"
