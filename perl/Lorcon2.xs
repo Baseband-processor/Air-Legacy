@@ -8,6 +8,8 @@
 #define LORCON_ENOTSUPP -255
 #define	IFNAMSIZ	16
 #define	IFALIASZ	256
+#define TX80211_IFUP 1
+#define TX80211_IFDOWN 0
 
 #define ARPHDR_RADIOTAP "803"
 
@@ -27,6 +29,45 @@ typedef struct  {
 }ieee80211_clone_params;
 
 typedef struct ieee80211_clone_params IEE80211_CLONE_PARAMS;
+
+typedef struct  {
+                      unsigned long   mem_start;
+                      unsigned long   mem_end;
+                      unsigned short  base_addr;
+                      unsigned char   irq;
+                      unsigned char   dma;
+                      unsigned char   port;
+}ifmap;
+
+typedef struct ifmap IFMAP;
+
+typedef sa_family_t SA_FAM;
+
+typedef struct  {
+               SA_FAM sa_family;
+               char        sa_data[14];
+           }sockaddr;
+
+typedef struct sockaddr SOCKADDR;
+
+typedef struct  {
+               char ifr_name[IFNAMSIZ]; 
+               union {
+                   SOCKADDR ifr_addr;
+                   SOCKADDR ifr_dstaddr;
+                   SOCKADDR ifr_broadaddr;
+                   SOCKADDR ifr_netmask;
+                   SOCKADDR ifr_hwaddr;
+                   short           ifr_flags;
+                   int             ifr_ifindex;
+                   int             ifr_metric;
+                   int             ifr_mtu;
+                   IFMAP           ifr_map;
+                   char            ifr_slave[IFNAMSIZ];
+                   char            ifr_newname[IFNAMSIZ];
+                   char           *ifr_data;
+               };
+           }ifreq;
 
 typedef struct ifreq                 IFREQ;
 
@@ -1032,6 +1073,52 @@ wtinj_send(wtinj, in_pkt)
 int 
 wtinj_open(wtinj)
 	TX80211 *wtinj
+  CODE:
+	int err;
+	short flags;
+	IFREQ if_req;
+	struct sockaddr_ll sa_ll;
+
+	if (ifconfig_get_flags(wtinj->ifname, wtinj->errstr, &flags) < 0) {
+		return 1;
+	}
+	if ((flags & IFF_UP) == 0) {
+		if (ifconfig_ifupdown(wtinj->ifname, wtinj->errstr,
+				TX80211_IFUP) < 0) {
+			return 1;
+		}
+	}
+
+	wtinj->raw_fd = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
+
+	if (wtinj->raw_fd < 0) {
+		snprintf(wtinj->errstr, TX80211_STATUS_MAX, "no socket fd in tx descriptor");
+		return -1;
+	}
+
+	memset(&if_req, 0, sizeof if_req);
+	memcpy(if_req.ifr_name, wtinj->ifname, IFNAMSIZ);
+	if_req.ifr_name[IFNAMSIZ - 1] = 0;
+	err = ioctl(wtinj->raw_fd, SIOCGIFINDEX, &if_req);
+	if (err < 0) {
+		snprintf(wtinj->errstr, TX80211_STATUS_MAX, "SIOCGIFINDEX ioctl failed, %s",
+				 strerror(errno));
+		close(wtinj->raw_fd);
+		return -2;
+	}
+
+	memset(&sa_ll, 0, sizeof sa_ll);
+	sa_ll.sll_family = AF_PACKET;
+	sa_ll.sll_protocol = htons(ETH_P_80211_RAW);
+	sa_ll.sll_ifindex = if_req.ifr_ifindex;
+	err = bind(wtinj->raw_fd, (struct sockaddr *)&sa_ll, sizeof sa_ll);
+	if (err != 0) {
+		snprintf(wtinj->errstr, TX80211_STATUS_MAX, "bind() failed, %s",
+				 strerror(errno));
+		close(wtinj->raw_fd);
+		return -3;
+	}
+
 
 int 
 wtinj_close(wtinj)
