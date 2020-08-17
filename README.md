@@ -84,8 +84,7 @@ Air::Lorcon2::lorcon_ifdown( $context ) or die Air::Lorcon2::lorcon_get_error( $
 Air::Lorcon2::lorcon_ifup( $context ) or die Air::Lorcon2::lorcon_get_error( $context ); # Set interface 'up'
 
 my $channel = 2;
-Air::Lorcon2::lorcon_set_channel( $context, $channel); # Set 2 as wireless-channel
-Air::Lorcon2::lorcon_get_channel( $context ); # Return 2
+
 
 Air::Lorcon2::lorcon_open_inject (  $context ) or die Air::Lorcon2::lorcon_get_error( $context ); # set the injection mode
 Air::Lorcon2::lorcon_open_monitor(  $context ) or die Air::Lorcon2::lorcon_get_error( $context ); # set the monitor mode
