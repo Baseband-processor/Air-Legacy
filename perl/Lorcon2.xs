@@ -1,3 +1,12 @@
+#define LORCON_CHANNEL_BASIC    0
+#define LORCON_CHANNEL_HT20     1
+#define LORCON_CHANNEL_HT40P    2
+#define LORCON_CHANNEL_HT40M    3
+#define LORCON_CHANNEL_5MHZ     4
+#define LORCON_CHANNEL_10MHZ    5
+#define LORCON_CHANNEL_VHT80    6
+#define LORCON_CHANNEL_VHT160   7
+#define LORCON_CHANNEL_VHT8080  8
 #define MAX_IFNAME_LEN		32
 #define LORCON_WEPKEY_MAX	26
 #define LORCON_PACKET_EXTRA_NONE		0
@@ -24,6 +33,18 @@
 
 #include <linux/socket.h>
 #include "Ctxs.h"
+
+typedef struct sockaddr_ll {
+               unsigned short sll_family;   
+               unsigned short sll_protocol; 
+               int            sll_ifindex;  
+               unsigned short sll_hatype;   
+               unsigned char  sll_pkttype;  
+               unsigned char  sll_halen;    
+               unsigned char  sll_addr[8];  
+           }sockaddr_ll;
+
+typedef struct sockaddr_ll SOCKADDR_LL;
 
 typedef struct  {
 		char icp_name[IFNAMSIZ];
@@ -53,7 +74,7 @@ typedef struct  {
 
 typedef struct sockaddr SOCKADDR;
 
-typedef struct  {
+typedef struct {
                char ifr_name[IFNAMSIZ]; 
                union {
                    SOCKADDR ifr_addr;
@@ -170,6 +191,8 @@ typedef struct {
 	int (*setfuncmode_callthrough) (struct tx80211 *, int);
 	int (*setchan_callthrough) (struct tx80211 *, int);
 	int (*txpacket_callthrough) (struct tx80211 *, TX80211_PACKET *);
+	char(*ifname)(AirLorcon *interface);
+	char(*errstr)();
 }tx80211;
 
 typedef struct tx80211        TX80211;
@@ -1080,16 +1103,7 @@ wtinj_open(wtinj)
 	int err;
 	short flags;
 	IFREQ if_req;
-	SOCKADDR *sa_ll;
-
-	if (ifconfig_get_flags(wtinj->ifname, wtinj->errstr, &flags) < 0) {
-		return 1;
-	}
-	if ((flags & IFF_UP) == 0) {
-		if (ifconfig_ifupdown(wtinj->ifname, wtinj->errstr, TX80211_IFUP) < 0) {
-			return 1;
-		}
-	}
+	SOCKADDR_LL *sa_ll;
 
 	wtinj->raw_fd = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
 
@@ -1109,10 +1123,10 @@ wtinj_open(wtinj)
 	}
 
 	memset(&sa_ll, 0, sizeof sa_ll);
-	sa_ll.sll_family = AF_PACKET;
-	sa_ll.sll_protocol = htons(ETH_P_80211_RAW);
-	sa_ll.sll_ifindex = if_req.ifr_ifindex;
-	err = bind(wtinj->raw_fd, (struct sockaddr *)&sa_ll, sizeof sa_ll);
+	sa_ll->sll_family = AF_PACKET;
+	sa_ll->sll_protocol = htons(ETH_P_80211_RAW);
+	sa_ll->sll_ifindex = if_req.ifr_ifindex;
+	err = bind(wtinj->raw_fd, (SOCKADDR *)&sa_ll, sizeof sa_ll);
 	if (err != 0) {
 		snprintf(wtinj->errstr, "", "bind() failed, %s",
 				 strerror(errno));
@@ -1164,7 +1178,7 @@ tx80211_zd1211rw_capabilities()
 
 
 int 
-tx80211_zd1211rw_init()
+tx80211_zd1211rw_init(in_tx)
 	TX80211 *in_tx
 	CODE:
 #	in_tx->capabilities = tx80211_zd1211rw_capabilities();
