@@ -383,7 +383,13 @@ lorcon_get_timeout(context)
 int
 lorcon_open_inject(context)
       AirLorcon *context
+  CODE:	
+	if (context->openinject_cb == NULL) {
+		snprintf(context->errstr, LORCON_STATUS_MAX,  "Driver %s does not support INJECT mode", context->drivername);
+		return LORCON_ENOTSUPP;
+	}
 
+	return (*(context->openinject_cb))(context);
 
 
 int
@@ -410,6 +416,17 @@ lorcon_open_injmon(context)
 	OUTPUT:
 		RETVAL
 
+AirLorconPacket *
+lorcon_packet_from_lcpa(context, lcpa)
+	AirLorcon *context							 
+	LCPA_META *lcpa
+	
+AirLorconPacket *
+lorcon_packet_from_pcap(context, h,  bytes)
+	AirLorcon *context							 
+	PCAP_PKTHDR *h
+	const u_char *bytes
+	
 void 
 lorcon_pcap_handler(user,  h, bytes)
 	u_char *user
