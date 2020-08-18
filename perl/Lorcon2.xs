@@ -35,6 +35,15 @@
 #include <pcap.h>
 #include "Ctxs.h"
 
+
+typedef struct {
+	u_char bssid[6];
+	u_char key[LORCON_WEPKEY_MAX];
+	int len;
+	struct lorcon_wep *next;
+}lorcon_wep_t;
+
+typedef lorcon_wep_t               LORCON_WEP;
 typedef pcap_t                     Pcap;
 
 typedef struct sockaddr_ll {
@@ -175,7 +184,7 @@ typedef struct  {
 	int (*getpacket_cb)(lorcon_t *context, lorcon_packet_t **packet);
 	int (*setdlt_cb)(lorcon_t *context, int dlt);
 	int (*getdlt_cb)(lorcon_t *context);
-	lorcon_wep_t *wepkeys;
+	LORCON_WEP *wepkeys;
 	int (*getmac_cb)(lorcon_t *context, uint8_t **mac);
 	int (*setmac_cb)(lorcon_t *context, int len, uint8_t *mac);
     	int (*pcap_handler_cb)(u_char *user, const struct pcap_pkthdr *h, const u_char *bytes);
@@ -321,15 +330,15 @@ lorcon_create(interface, driver)
 	context->openinjmon_cb = NULL;
 	context->setchan_cb = NULL;
 	context->getchan_cb = NULL;
-    context->setchan_ht_cb = NULL;
-    context->getchan_ht_cb = NULL;
+   	context->setchan_ht_cb = NULL;
+   	context->getchan_ht_cb = NULL;
 	context->sendpacket_cb = NULL;
 	context->getpacket_cb = NULL;
 	context->setdlt_cb = NULL;
 	context->getdlt_cb = NULL;
 	context->getmac_cb = NULL;
 	context->setmac_cb = NULL;
-    context->pcap_handler_cb = NULL;
+    	context->pcap_handler_cb = NULL;
 	context->wepkeys = NULL;
 	if ((*(driver->init_func))(context) < 0) {
 		free(context);
