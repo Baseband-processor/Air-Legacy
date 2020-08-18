@@ -137,7 +137,7 @@ Probably the project will grow even more, my main ideas are:
 unfortunately perl doesn't have the same number of libraries as python, but some exists!
 for starting I suggest to learn:
 
- [Socket]({{<mcpan "Socket" >}})
+* [Socket!](https://metacpan.org/pod/Socket)
 * [Net::Pcap]({{<mcpan "Net::Pcap" >}})
 * [Net::Frame]({{<mcpan "Net::Frame" >}})
 * [NetPacket]({{<mcpan "NetPacket" >}})
