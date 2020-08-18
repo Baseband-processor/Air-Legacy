@@ -36,6 +36,7 @@ uint8_t             T_U_SHORT
 uint8_t *           T_U_SHORT
 uint16_t            T_U_SHORT
 uint16_t *          T_U_SHORT
+uint64_t            T_U_SHORT
 unsigned int        T_PV
 unsigned int *      T_PV
 const u8 *          T_PV

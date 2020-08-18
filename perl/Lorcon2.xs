@@ -738,10 +738,6 @@ int
 lorcon_ifdown( context )
   AirLorcon *context
 
-int
-lorcon_set_complex_channel(context, channel)
-  AirLorcon *context
-  AirLorconChannel *channel
 
 int
 lorcon_get_complex_channel( context, channel )
@@ -749,7 +745,7 @@ lorcon_get_complex_channel( context, channel )
   AirLorconChannel *channel
 
 int 
-lorcon_parse_ht_channel( in_chanstr, channel )
+lorcon_parse_ht_channel(in_chanstr, channel)
   const char *in_chanstr
   AirLorconChannel *channel
 
@@ -1389,7 +1385,6 @@ lcpf_qos_data(pack, fcflags, duration, mac1, mac2, mac3, mac4, fragment,  sequen
 	uint8_t *mac4
 	unsigned int fragment
 	unsigned int sequence
-		
 CODE:
 	lcpf_80211headers(pack, WLAN_FC_TYPE_DATA, WLAN_FC_SUBTYPE_QOSDATA, fcflags, duration, mac1, mac2, mac3, mac4, fragment, sequence);
 
@@ -1617,7 +1612,6 @@ lcpf_assocreq(pack, dst, src, bssid, framecontrol, duration, fragment, sequence,
 	int sequence
 	uint16_t capabilities
 	uint16_t listenint
-
 CODE:
 	uint8_t chunk[2];
 	uint16_t *sixptr = (uint16_t *) chunk;
