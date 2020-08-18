@@ -150,7 +150,8 @@ typedef lorcon_handler             AirLorconHandler;
 typedef lorcon_channel_t           AirLorconChannel;
 
 
-typedef struct {
+
+typedef struct lorcon_packet_t{
 	struct timeval ts;
 	int dlt;
 	int channel;
@@ -164,21 +165,19 @@ typedef struct {
 	const u_char *packet_data;
 	void *extra_info;
 	int extra_type;
-    AirLorcon *interface;
-    unsigned int set_tx_mcs;
-    unsigned int tx_mcs_rate;
-    unsigned int tx_mcs_short_guard;
-    unsigned int tx_mcs_40mhz;
-}lorcon_packet;
-
-typedef lorcon_packet_t            AirLorconPacket;
+    	lorcon_t *interface;
+   	unsigned int set_tx_mcs;
+    	unsigned int tx_mcs_rate;
+    	unsigned int tx_mcs_short_guard;
+    	unsigned int tx_mcs_40mhz;
+}AirLorconPacket;
 
 
-typedef struct  {
+typedef struct  lorcon_t{
 	char drivername[32];
 	char *ifname;
 	char *vapname;
-	PCAP *pcap;
+	Pcap *pcap;
 	int inject_fd, ioctl_fd, capture_fd;
 	int packets_sent;
 	int packets_recv;
@@ -209,9 +208,8 @@ typedef struct  {
 	int (*getmac_cb)(lorcon_t *context, uint8_t **mac);
 	int (*setmac_cb)(lorcon_t *context, int len, uint8_t *mac);
     	int (*pcap_handler_cb)(u_char *user, PCAP_PKTHDR *h, const u_char *bytes);
-}lorcon_t;
+}AirLorcon;
 
-typedef lorcon_t                   AirLorcon;
 
 
 typedef struct tx80211_radiotap_header TX80211_RADIOTAP_H;
@@ -220,24 +218,23 @@ typedef lorcon_handler             AirLorconHandler;
 typedef lorcon_driver_t            AirLorconDriver;
 
 
-typedef struct  {
+typedef struct  lorcon_multi_interface_t{
     struct lorcon_multi_interface *next;
     AirLorcon *lorcon_intf;
-    lorcon_multi_error_handler error_handler;
+    LORCON_MULTI_ERROR_HANDLER error_handler;
     void *error_aux;
-}lorcon_multi_interface_t;
-
-typedef lorcon_multi_interface_t   AirLorconInterface;
+}AirLorconInterface;
 
 
-typedef struct {
+
+
+typedef struct lorcon_multi_t{
     	AirLorconInterface *interfaces;
 	char errstr[LORCON_STATUS_MAX];
    	AirLorconHandler handler_cb;
 	void *handler_user;
-}lorcon_multi_t;
+}AirLorconMulti;
 
-typedef lorcon_multi_t             AirLorconMulti;
 
 
 typedef struct {
