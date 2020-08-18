@@ -1362,20 +1362,25 @@ CODE:
 
 
 void 
-lcpf_qos_data(struct lcpa_metapack *pack, unsigned int fcflags, 
-		unsigned int duration, uint8_t *mac1, uint8_t *mac2, 
-		uint8_t *mac3, uint8_t *mac4, unsigned int fragment, 
-		unsigned int sequence) {
+lcpf_qos_data(pack, fcflags, duration, mac1, mac2, mac3, mac4, fragment,  sequence) 
+	LCPA_META *pack
+	unsigned int fcflags
+	unsigned int duration
+	uint8_t *mac1
+	uint8_t *mac2
+	uint8_t *mac3
+	uint8_t *mac4
+	unsigned int fragment
+	unsigned int sequence
+		
+CODE:
+	lcpf_80211headers(pack, WLAN_FC_TYPE_DATA, WLAN_FC_SUBTYPE_QOSDATA, fcflags, duration, mac1, mac2, mac3, mac4, fragment, sequence);
 
-	lcpf_80211headers(pack, WLAN_FC_TYPE_DATA, WLAN_FC_SUBTYPE_QOSDATA,
-		fcflags, duration, mac1, mac2, mac3, mac4, fragment, sequence);
-}
 
 
 
-void lcpf_beacon(struct lcpa_metapack *pack, uint8_t *src, uint8_t *bssid, 
-				 int framecontrol, int duration, int fragment, int sequence, 
-				 uint64_t timestamp, int beacon, int capabilities) {
+void 
+lcpf_beacon(struct lcpa_metapack *pack, uint8_t *src, uint8_t *bssid,  int framecontrol, int duration, int fragment, int sequence,  uint64_t timestamp, int beacon, int capabilities) {
 	uint8_t chunk[8];
 	uint16_t *sixptr = (uint16_t *) chunk;
 	uint64_t *ch64 = (uint64_t *) chunk;
