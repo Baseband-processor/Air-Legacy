@@ -132,6 +132,17 @@ Probably the project will grow even more, my main ideas are:
    
 - [ ] Write a brief PDF manual about the six perl wireless-security module
 
+**Other suggested Perl libraries**
+
+unfortunately perl doesn't have the same number of libraries as python, but some exists!
+for starting I suggest to learn:
+
+* [Socket]({{<mcpan "Socket" >}})
+* [Net::Pcap]({{<mcpan "Net::Pcap" >}})
+* [Net::Frame]({{<mcpan "Net::Frame" >}})
+* [NetPacket]({{<mcpan "NetPacket" >}})
+* [Net::Write]({{<mcpan "Net::Write" >}})
+
 **Requests and collaborations**
 
 Feel free to email me at <EdoardoMantovani@Lorcon2.com>
