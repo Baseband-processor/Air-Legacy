@@ -423,6 +423,19 @@ our %EXPORT_TAGS = (
       tx80211_zd1211rw_init
       tx80211_zd1211rw_send
       tx80211_zd1211rw_capabilities
+      lcpf_80211headers
+      lcpf_qos_data
+      lcpf_beacon
+      lcpf_deauth
+      lcpf_add_ie
+      lcpf_disassoc
+      lcpf_probereq
+      lcpf_proberesp
+      lcpf_rts
+      lcpf_80211ctrlheaders
+      lcpf_authreq
+      lcpf_authresq
+      lcpf_assocreq
       Open_Monitor
       Open_Inject
       Open_Injmon
@@ -471,7 +484,6 @@ sub RMAC_gen(){
   return ($formatted_mac);
 
 }
-
 
 sub create(){
    my ( $interface, $driver ) = @_;
