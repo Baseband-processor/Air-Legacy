@@ -36,6 +36,7 @@
 #include "Ctxs.h"
 
 
+
 typedef pcap_t                     Pcap;
 
 typedef struct sockaddr_ll {
@@ -217,8 +218,27 @@ typedef struct tx80211_radiotap_header TX80211_RADIOTAP_H;
 
 typedef lorcon_handler             AirLorconHandler;
 typedef lorcon_driver_t            AirLorconDriver;
-typedef lorcon_multi_t             AirLorconMulti;
+
+
+typedef struct  {
+    struct lorcon_multi_interface *next;
+    AirLorcon *lorcon_intf;
+    lorcon_multi_error_handler error_handler;
+    void *error_aux;
+}lorcon_multi_interface_t;
+
 typedef lorcon_multi_interface_t   AirLorconInterface;
+
+
+typedef struct {
+    	AirLorconInterface *interfaces;
+	char errstr[LORCON_STATUS_MAX];
+   	AirLorconHandler handler_cb;
+	void *handler_user;
+}lorcon_multi_t;
+
+typedef lorcon_multi_t             AirLorconMulti;
+
 
 typedef struct {
 	uint8_t modulation;
