@@ -4,7 +4,7 @@ require  v5.22.1;
 use strict;
 use warnings;
 
-our $VERSION = '10.5';
+our $VERSION = '17.6';
 use base qw(Exporter DynaLoader);
 
 use constant {
@@ -447,7 +447,30 @@ sub kill_lorcon(){
 
    }
 
+sub Open_monitor(){
 
+
+
+}
+
+sub Open_Inject(){
+
+
+}
+
+sub Open_Injmon(){
+
+
+
+}
+
+sub Send_Frame{
+    my $context = @_;
+    
+
+
+
+}
    
    
 sub setSSID(){
