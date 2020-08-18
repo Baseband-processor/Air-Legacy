@@ -100,6 +100,8 @@ Air::Lorcon2::lorcon_ifup( $context ) or die Air::Lorcon2::lorcon_get_error( $co
 
 my $channel = 2;
 
+Air::Lorcon2::lorcon_set_channel( $context, $channel ) or die Air::Lorcon2::lorcon_get_error( $context ); # set channel to 2
+Air::Lorcon2::lorcon_get_channel( $context ) or die Air::Lorcon2::lorcon_get_error( $context ); # return the channel, in this case 2
 
 Air::Lorcon2::lorcon_open_inject (  $context ) or die Air::Lorcon2::lorcon_get_error( $context ); # set the injection mode
 Air::Lorcon2::lorcon_open_monitor(  $context ) or die Air::Lorcon2::lorcon_get_error( $context ); # set the monitor mode
