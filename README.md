@@ -146,7 +146,7 @@ for starting I suggest to learn:
 **Requests and collaborations**
 
 Feel free to email me at <EdoardoMantovani@Lorcon2.com>
-- [x] I am open for suggestions, code improvement, collaboration and other requests
+- [x] I am open to suggestions, code improvement, collaboration and other requests
 
 **COPYRIGHT AND LICENCE**
 
