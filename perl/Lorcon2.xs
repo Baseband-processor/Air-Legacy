@@ -415,6 +415,23 @@ lorcon_pcap_handler(user,  h, bytes)
 	u_char *user
 	PCAP_PKTHDR *h
 	const u_char *bytes
+CODE:
+	AirLorcon *context = (AirLorcon *) user;
+	AirLorconPacket *packet;
+   	 int r = 0;
+ 	   if (context->pcap_handler_cb != NULL) {
+       		 r = (*(context->pcap_handler_cb))(user, h, bytes);
+
+      	  if (r != 0){
+            return;
+    }
+	   }
+	if (context->handler_cb == NULL){
+		return;
+		}
+	packet = lorcon_packet_from_pcap(context, h, bytes);
+
+	(*(context->handler_cb))(context, packet, context->handler_user);
 
 
 void
