@@ -32,7 +32,10 @@
 #include "XSUB.h"
 
 #include <linux/socket.h>
+#include <pcap.h>
 #include "Ctxs.h"
+
+typedef pcap_t                     Pcap;
 
 typedef struct sockaddr_ll {
                unsigned short sll_family;   
@@ -145,7 +148,7 @@ typedef struct  {
 	char drivername[32];
 	char *ifname;
 	char *vapname;
-	pcap_t *pcap;
+	PCAP *pcap;
 	int inject_fd, ioctl_fd, capture_fd;
 	int packets_sent;
 	int packets_recv;
@@ -209,8 +212,6 @@ typedef lorcon_driver_t            AirLorconDriver;
 typedef lorcon_multi_t             AirLorconMulti;
 typedef lorcon_multi_interface_t   AirLorconInterface;
 typedef lorcon_channel_t           AirLorconChannel;
-typedef pcap_t                     Pcap;
-
 
 typedef struct {
 	uint8_t modulation;
