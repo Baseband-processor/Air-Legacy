@@ -379,6 +379,11 @@ our %EXPORT_TAGS = (
       tx80211_zd1211rw_init
       tx80211_zd1211rw_send
       tx80211_zd1211rw_capabilities
+      Open_Monitor
+      Open_Inject
+      Open_Injmon
+      Inject_Frame
+      Send_Bytes
    )],
 );
 
@@ -447,7 +452,7 @@ sub kill_lorcon(){
 
    }
 
-sub Open_monitor { # Open monitor mode
+sub Open_Monitor { # Open monitor mode
     my $context = @_;
     if(! ( Air::Lorcon2::lorcon_open_monitor( $context ) ) ){
         return -1; # Bad 
@@ -474,15 +479,17 @@ sub Open_Injmon { # Open both
     }
 }
 
-sub Send_Frame{
-    my $context = @_;
-    
-
-
-
+sub Inject_Frame {
+    my ($context, $packet) = @_;
+    return(Air::Lorcon2::lorcon_inject($context, $packet);
 }
    
-   
+sub Send_Bytes {
+    my ($context, $packet ) = @_;
+    my $length = length($packet);
+    return(Air::Lorcon2::lorcon_send_bytes($context, $length, $packet);
+}
+
 sub setSSID(){
   my ( $input_device, $error_string, $essid ) = @_; 
   return( Air::Lorcon2::iwconfig_set_ssid(\$input_device, \$error_string, \$essid) );
