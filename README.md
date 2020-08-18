@@ -4,6 +4,20 @@ Air::Lorcon2
 ![image of wireless_security_protocols_bg](./wireless.jpg)
 
 
+**WHO I AM?**
+
+Read the Github description :)
+
+
+**WHY PERL AND WHY LORCON?**
+
+Since my first day as (self-taught) "computer science student"  I found the Perl language even better than Python,I spent the last 3 years studying Computer Security, especially Wireless security (this includes also the WLAN security).
+
+One day, while I was browsing on metacpan I found Net::Lorcon2, an old library with little documentation and limited support to the original Lorcon2 library, at first I didn't consider it and I continued to study, but a few months ago I had the desire to design something which actually lacks in the perl community:
+The theme of cybersecurity and its related applications.
+
+This is just the beginning, the project is long and the road much longer but I hope that, with the help of the community it would be possible to bring the world of cybersecurity into Perl, a language that now boasts very few tools (one of the few that comes to mind is Nikto), and which is still centered only in the automation and in the CGI programming.
+
 **REQUIREMENTS**
 
 - [x] perl 
