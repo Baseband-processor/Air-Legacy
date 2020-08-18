@@ -777,6 +777,17 @@ void
 lorcon_multi_remove_interface_error_handler(ctx, lorcon_interface)
   AirLorconMulti *ctx
   AirLorcon *lorcon_interface
+CODE:
+    lorcon_multi_interface_t *intf = NULL;
+
+    while ((intf = lorcon_multi_get_next_interface(ctx, intf))) {
+        if (intf->lorcon_intf == lorcon_interface) {
+            intf->error_handler = NULL;
+            intf->error_aux = NULL;
+            return;
+        }
+    }
+
 
 int
 lorcon_multi_loop(ctx, counter, callback, user)
