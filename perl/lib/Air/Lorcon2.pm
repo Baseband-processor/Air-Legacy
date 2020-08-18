@@ -347,6 +347,8 @@ our %EXPORT_TAGS = (
       aj_setchannel
       aj_setmode
       aj_setmonitor
+      lorcon_set_channel
+      lorcon_get_channel
       lorcon_airjack_listdriver
       lorcon_airjack_init
       iwconfig_set_mode
