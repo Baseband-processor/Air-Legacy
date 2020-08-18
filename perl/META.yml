@@ -1,7 +1,7 @@
 ---
-abstract: 'Raw wireless packet injection using the Lorcon2 library'
+abstract: 'A fast, portable and efficient library based on Lorcon2. Written in XS for perl penetration tester and wireless-security experts'
 author:
-  - 'BASEBAND <BASEBAND_at_cpan.org>'
+  - 'Edoardo Mantovani, aka BASEBAND <BASEBAND_at_cpan.org>'
 build_requires:
   ExtUtils::MakeMaker: '0'
 configure_requires:
@@ -20,4 +20,4 @@ no_index:
 requires:
   Net::MAc: '0'
   perl: '5.22.1'
-version: '10.5'
+version: '17.6'
