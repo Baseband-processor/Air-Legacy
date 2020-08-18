@@ -1479,8 +1479,19 @@ CODE:
 
 
 void 
-lcpf_proberesp(struct lcpa_metapack *pack, uint8_t *dst, uint8_t *src,  uint8_t *bssid, int framecontrol, int duration, int fragment, int sequence, uint64_t timestamp, int beaconint,  int capabilities)
-
+lcpf_proberesp(pack, dst, src, bssid, framecontrol, duration, fragment, sequence,  timestamp,  beaconint,  capabilities)
+	LCPA_META *pack
+	uint8_t *dst
+	uint8_t *src
+	uint8_t *bssid
+	int framecontrol
+	int duration
+	int fragment
+	int sequence
+	uint64_t timestamp
+	int beaconint
+	int capabilities
+CODE:
 	uint8_t chunk[8];
 	uint16_t *sixptr = (uint16_t *) chunk;
 	uint64_t *ch64 = (uint64_t *) chunk;
@@ -1499,21 +1510,21 @@ lcpf_proberesp(struct lcpa_metapack *pack, uint8_t *dst, uint8_t *src,  uint8_t 
 
 
 void 
-lcpf_rts(struct lcpa_metapack *pack, uint8_t *recvmac, uint8_t *transmac, 
-		int framecontrol, int duration)
+lcpf_rts(struct lcpa_metapack *pack, uint8_t *recvmac, uint8_t *transmac, int framecontrol, int duration)
 
 	lcpf_80211ctrlheaders(pack, 1, 11, framecontrol, duration, recvmac);
 	pack = lcpa_append_copy(pack, "TRANSMITTERMAC", 6, transmac);
 
 
-void lcpf_authreq(struct lcpa_metapack *pack, uint8_t *dst, uint8_t *src, 
+void 
+lcpf_authreq(struct lcpa_metapack *pack, uint8_t *dst, uint8_t *src, 
 		uint8_t *bssid, int framecontrol, int duration, int fragment,
 		int sequence, uint16_t authalgo, uint16_t auth_seq,
 		uint16_t auth_status)
-{
+
 	uint8_t chunk[2];
 	uint16_t *sixptr = (uint16_t *) chunk;
-	
+
 	lcpf_80211headers(pack, WLAN_FC_TYPE_MGMT, WLAN_FC_SUBTYPE_AUTH, framecontrol, duration,
 					  dst, src, bssid, NULL,
 					  fragment, sequence);
@@ -1525,31 +1536,30 @@ void lcpf_authreq(struct lcpa_metapack *pack, uint8_t *dst, uint8_t *src,
 	*sixptr = auth_status;
 	pack = lcpa_append_copy(pack, "AUTHSTATUS", 2, chunk);
 
-}
 
-/* Authentication response is the same for open networks, with IE tags */
-void lcpf_authresq(struct lcpa_metapack *pack, uint8_t *dst, uint8_t *src, 
+
+void 
+lcpf_authresq(struct lcpa_metapack *pack, uint8_t *dst, uint8_t *src, 
 		uint8_t *bssid, int framecontrol, int duration, int fragment,
 		int sequence, uint16_t authalgo, uint16_t auth_seq,
 		uint16_t auth_status)
-{
+
 	lcpf_authreq(pack, dst, src, bssid, framecontrol, duration, fragment,
 			sequence, authalgo, auth_seq, auth_status);
-}
 
-void lcpf_assocreq(struct lcpa_metapack *pack, uint8_t *dst, uint8_t *src, 
+
+void 
+lcpf_assocreq(struct lcpa_metapack *pack, uint8_t *dst, uint8_t *src, 
 		uint8_t *bssid, int framecontrol, int duration, int fragment,
 		int sequence, uint16_t capabilities, uint16_t listenint)
-{
+
 	uint8_t chunk[2];
 	uint16_t *sixptr = (uint16_t *) chunk;
 
-	lcpf_80211headers(pack, WLAN_FC_TYPE_MGMT, WLAN_FC_SUBTYPE_ASSOCREQ, framecontrol, duration,
-					  dst, src, bssid, NULL,
-					  fragment, sequence);
+	lcpf_80211headers(pack, WLAN_FC_TYPE_MGMT, WLAN_FC_SUBTYPE_ASSOCREQ, framecontrol, duration, dst, src, bssid, NULL, fragment, sequence);
 
 	*sixptr = capabilities;
 	pack = lcpa_append_copy(pack, "ASSOCREQCAPAB", 2, chunk);
 	*sixptr = listenint;
 	pack = lcpa_append_copy(pack, "ASSOCREQLI", 2, chunk);
-}
+
