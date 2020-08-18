@@ -7,6 +7,37 @@ use warnings;
 our $VERSION = '17.6';
 use base qw(Exporter DynaLoader);
 
+my %channel_to_frequency = (
+    1 => 2412,
+    2 => 2417,
+    3 => 2422,
+    4 => 2427,
+    5 => 2432,
+    6 => 2437,
+    7 => 2442,
+    8 => 2447,
+    9 => 2452,
+   10 => 2457,
+   11 => 2462,
+   12 => 2467,
+   13 => 2472,
+   14 => 2484,
+   36 => 5180,
+   38 => 5190,
+   40 => 5200,
+   42 => 5210,
+   44 => 5220,
+   46 => 5230,
+   48 => 5240,
+   50 => 5250,
+   52 => 5260,
+   54 => 5270,
+   56 => 5280,
+   58 => 5290,
+   60 => 5300,
+   
+);
+
 use constant {
     WEP_CRC_TABLE =>[ qw /   
     0x00000000 0x77073096 0xee0e612c 0x990951ba 0x076dc419
@@ -61,6 +92,8 @@ use constant {
     0xcdd70693 0x54de5729 0x23d967bf 0xb3667a2e 0xc4614ab8
     0x5d681b02 0x2a6f2b94 0xb40bbe37 0xc30c8ea1 0x5a05df1b
     0x2d02ef8d / ],
+    
+    CHANNELS_TO_FREQ => [qw(%channel_to_frequency)],
 };
 
 
@@ -158,6 +191,7 @@ our %EXPORT_TAGS = (
       LORCON_ENOTSUPP
       LORCON_STATUS_MAX
       LORCON_MAX_PACKET_LEN
+      CHANNELS_TO_FREQ
    )],
   radiotap => [qw(
       LORCON_RTAP_CHAN_TURBO
