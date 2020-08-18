@@ -141,6 +141,43 @@ typedef struct {
 
 typedef lorcon_dot3_extra*         Lorcon_DOT3;
 
+typedef struct  {
+	char drivername[32];
+	char *ifname;
+	char *vapname;
+	pcap_t *pcap;
+	int inject_fd, ioctl_fd, capture_fd;
+	int packets_sent;
+	int packets_recv;
+	int dlt;
+	int channel;
+    	int channel_ht_flags;
+	char errstr[LORCON_STATUS_MAX];
+	uint8_t original_mac[6];
+	int timeout_ms;
+	void *auxptr;
+    	void *userauxptr;
+	lorcon_handler handler_cb;
+	void *handler_user;
+	int (*close_cb)(lorcon_t *context);
+	int (*openinject_cb)(lorcon_t *context);
+	int (*openmon_cb)(lorcon_t *context);
+	int (*openinjmon_cb)(lorcon_t *context);
+	int (*ifconfig_cb)(lorcon_t *context, int state);
+	int (*setchan_cb)(lorcon_t *context, int chan);
+	int (*getchan_cb)(lorcon_t *context);
+    	int (*setchan_ht_cb)(lorcon_t *context, lorcon_channel_t *channel);
+	int (*getchan_ht_cb)(lorcon_t *context, lorcon_channel_t *ret_channel);
+	int (*sendpacket_cb)(lorcon_t *context, lorcon_packet_t *packet);
+	int (*getpacket_cb)(lorcon_t *context, lorcon_packet_t **packet);
+	int (*setdlt_cb)(lorcon_t *context, int dlt);
+	int (*getdlt_cb)(lorcon_t *context);
+	lorcon_wep_t *wepkeys;
+	int (*getmac_cb)(lorcon_t *context, uint8_t **mac);
+	int (*setmac_cb)(lorcon_t *context, int len, uint8_t *mac);
+    	int (*pcap_handler_cb)(u_char *user, const struct pcap_pkthdr *h, const u_char *bytes);
+}lorcon_t;
+
 typedef lorcon_t                   AirLorcon;
 
 typedef struct {
