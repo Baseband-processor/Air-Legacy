@@ -143,6 +143,10 @@ WLAN_FC_SUBTYPE_DISASSOC => 10,
 WLAN_FC_SUBTYPE_AUTH => 11,
 WLAN_FC_SUBTYPE_DEAUTH => 12,
 
+WIFI_WIDTH_MASK => 0x0000FFFF,
+WIFI_HT_MASK => 0x00FF0000,
+WIFI_OTHER_MASK => 0xFF000000
+
 };
 
 # status and requests tags are from ie80211 file 
@@ -239,6 +243,12 @@ our %EXPORT_TAGS = (
       LORCON_CHANNEL_VHT8080
 )],
 
+  wifi_mask => [qw(
+      WIFI_WIDTH_MASK 
+      WIFI_HT_MASK 
+      WIFI_OTHER_MASK 
+
+)],
    lorcon => [qw(
       lorcon_list_drivers
       lorcon_find_driver
@@ -396,7 +406,7 @@ our @EXPORT = (
    @{ $EXPORT_TAGS{status} },
    @{ $EXPORT_TAGS{radiotap} },
    @{ $EXPORT_TAGS{requests} },
-
+   @{ $EXPORT_TAGS{wifi_mask} },
 );
 
 #sperimental tools
