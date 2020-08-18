@@ -119,6 +119,12 @@ my $Packet = "\xdd\x09\x00\x50\xf2\x04\x10\x4a\x00\x01\x10"; # WPS probe packet 
 
 Air::Lorcon2::lorcon_send_bytes( $context, length($Packet), \$Packet ); # this will send the raw bytes though the network
 
+# NOTE:
+# Since version 17.6 is possible to use also this simplified function:
+
+print Air::Lorcon2::Send_Bytes( $context, \$Packet); 
+# The $Packet length is processed in the Back-End.
+
 ```
 
 **SPECIAL THANKS**
