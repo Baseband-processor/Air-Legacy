@@ -20,6 +20,8 @@
 #define TX80211_IFUP 1
 #define TX80211_IFDOWN 0
 
+#define lorcon_hton16(x) (x)
+
 #define ETH_P_ECONET	0x0018
 #define ETH_P_80211_RAW (ETH_P_ECONET + 1)
 #define ARPHDR_RADIOTAP "803"
@@ -1317,5 +1319,203 @@ tx80211_zd1211rw_init(in_tx)
 #	in_tx->txpacket_callthrough = tx80211_zd1211rw_send;
 #	in_tx->setfuncmode_callthrough = wtinj_setfuncmode;
 
+void 
+lcpf_80211headers(pack, type, subtype, fcflags, duration, mac1, mac2, mac3, mac4, fragment, sequence) 
+	LCPA_META *pack
+	unsigned int type
+	unsigned int subtype
+	unsigned int fcflags
+	unsigned int duration
+	uint8_t *mac1
+	uint8_t *mac2
+	uint8_t *mac3
+	uint8_t *mac4
+	unsigned int fragment
+	unsigned int sequence
+CODE:
+	uint8_t chunk[2];
+	uint16_t *sixptr;
+
+	chunk[0] = ((type << 2) | (subtype << 4));
+	chunk[1] = (uint8_t) fcflags;
+	pack = lcpa_append_copy(pack, "80211FC", 2, chunk);
+
+	sixptr = (uint16_t *) chunk;
+	*sixptr = lorcon_hton16((uint16_t) duration);
+	pack = lcpa_append_copy(pack, "80211DUR", 2, chunk);
+
+	if (mac1 != NULL){
+		pack = lcpa_append_copy(pack, "80211MAC1", 6, mac1);
+	}
+	if (mac2 != NULL){
+		pack = lcpa_append_copy(pack, "80211MAC2", 6, mac2);
+	}
+	if (mac3 != NULL){
+		pack = lcpa_append_copy(pack, "80211MAC3", 6, mac3);
+	}
+	*sixptr = ((sequence << 4) | fragment);
+	pack = lcpa_append_copy(pack, "80211FRAGSEQ", 2, chunk);
+	
+	if (mac4 != NULL){
+		pack = lcpa_append_copy(pack, "80211MAC4", 6, mac4);
+}
 
 
+void 
+lcpf_qos_data(struct lcpa_metapack *pack, unsigned int fcflags, 
+		unsigned int duration, uint8_t *mac1, uint8_t *mac2, 
+		uint8_t *mac3, uint8_t *mac4, unsigned int fragment, 
+		unsigned int sequence) {
+
+	lcpf_80211headers(pack, WLAN_FC_TYPE_DATA, WLAN_FC_SUBTYPE_QOSDATA,
+		fcflags, duration, mac1, mac2, mac3, mac4, fragment, sequence);
+}
+
+
+
+void lcpf_beacon(struct lcpa_metapack *pack, uint8_t *src, uint8_t *bssid, 
+				 int framecontrol, int duration, int fragment, int sequence, 
+				 uint64_t timestamp, int beacon, int capabilities) {
+	uint8_t chunk[8];
+	uint16_t *sixptr = (uint16_t *) chunk;
+	uint64_t *ch64 = (uint64_t *) chunk;
+
+	memcpy(chunk, "\xFF\xFF\xFF\xFF\xFF\xFF", 6);
+	lcpf_80211headers(pack, WLAN_FC_TYPE_MGMT, WLAN_FC_SUBTYPE_BEACON, framecontrol, duration,
+					  chunk, src, bssid, NULL,
+					  fragment, sequence);
+
+	*ch64 = timestamp;
+	pack = lcpa_append_copy(pack, "BEACONBSSTIME", 8, chunk);
+
+	*sixptr = beacon;
+	pack = lcpa_append_copy(pack, "BEACONINT", 2, chunk);
+
+	*sixptr = capabilities;
+	pack = lcpa_append_copy(pack, "BEACONCAP", 2, chunk);
+
+}
+
+void lcpf_add_ie(struct lcpa_metapack *pack, uint8_t num, uint8_t len, uint8_t *data) {
+	uint8_t chunk[257];
+
+	chunk[0] = num;
+	chunk[1] = len;
+	memcpy(&(chunk[2]), data, len);
+
+	lcpa_append_copy(pack, "IETAG", len + 2, chunk);
+}
+
+void lcpf_deauth(struct lcpa_metapack *pack, uint8_t *src, uint8_t *dst,
+				   uint8_t *bssid, int framecontrol, 
+				   int duration, int fragment,
+				   int sequence, int reasoncode) {
+	uint8_t chunk[2];
+	uint16_t *ch16 = (uint16_t *) chunk;
+
+	lcpf_80211headers(pack, WLAN_FC_TYPE_MGMT, WLAN_FC_SUBTYPE_DEAUTH, framecontrol, duration,
+					  dst, src, bssid, NULL, fragment, sequence);
+
+	*ch16 = reasoncode;
+	lcpa_append_copy(pack, "REASONCODE", 2, chunk);
+}
+
+void lcpf_disassoc(struct lcpa_metapack *pack, uint8_t *src, uint8_t *dst,
+				   uint8_t *bssid, int framecontrol, int duration, int fragment,
+				   int sequence, int reasoncode) {
+	uint8_t chunk[2];
+	uint16_t *ch16 = (uint16_t *) chunk;
+
+	lcpf_80211headers(pack, WLAN_FC_TYPE_MGMT, WLAN_FC_SUBTYPE_DISASSOC, framecontrol, duration,
+					  dst, src, bssid, NULL, fragment, sequence);
+
+	*ch16 = reasoncode;
+	lcpa_append_copy(pack, "REASONCODE", 2, chunk);
+}
+
+void lcpf_probereq(struct lcpa_metapack *pack, uint8_t *src, int framecontrol,
+		int duration, int fragment, int sequence) {
+
+	uint8_t chunk[6] = "\xFF\xFF\xFF\xFF\xFF\xFF";
+	lcpf_80211headers(pack, WLAN_FC_TYPE_MGMT, WLAN_FC_SUBTYPE_PROBEREQ, framecontrol, duration,
+			chunk, src, chunk, NULL, fragment, sequence);
+}
+
+void lcpf_proberesp(struct lcpa_metapack *pack, uint8_t *dst, uint8_t *src, 
+		uint8_t *bssid, int framecontrol, int duration, int fragment,
+		int sequence, uint64_t timestamp, int beaconint, 
+		int capabilities)
+{
+	uint8_t chunk[8];
+	uint16_t *sixptr = (uint16_t *) chunk;
+	uint64_t *ch64 = (uint64_t *) chunk;
+
+	lcpf_80211headers(pack, WLAN_FC_TYPE_MGMT, WLAN_FC_SUBTYPE_PROBERESP, framecontrol, duration,
+					  dst, src, bssid, NULL,
+					  fragment, sequence);
+
+	*ch64 = timestamp;
+	pack = lcpa_append_copy(pack, "BEACONBSSTIME", 8, chunk);
+
+	*sixptr = beaconint;
+	pack = lcpa_append_copy(pack, "BEACONINT", 2, chunk);
+
+	*sixptr = capabilities;
+	pack = lcpa_append_copy(pack, "BEACONCAP", 2, chunk);
+
+}
+
+void lcpf_rts(struct lcpa_metapack *pack, uint8_t *recvmac, uint8_t *transmac, 
+		int framecontrol, int duration)
+{
+	lcpf_80211ctrlheaders(pack, 1, 11, framecontrol, duration, recvmac);
+	pack = lcpa_append_copy(pack, "TRANSMITTERMAC", 6, transmac);
+}
+
+void lcpf_authreq(struct lcpa_metapack *pack, uint8_t *dst, uint8_t *src, 
+		uint8_t *bssid, int framecontrol, int duration, int fragment,
+		int sequence, uint16_t authalgo, uint16_t auth_seq,
+		uint16_t auth_status)
+{
+	uint8_t chunk[2];
+	uint16_t *sixptr = (uint16_t *) chunk;
+	
+	lcpf_80211headers(pack, WLAN_FC_TYPE_MGMT, WLAN_FC_SUBTYPE_AUTH, framecontrol, duration,
+					  dst, src, bssid, NULL,
+					  fragment, sequence);
+
+	*sixptr = authalgo;
+	pack = lcpa_append_copy(pack, "AUTHALGO", 2, chunk);
+	*sixptr = auth_seq;
+	pack = lcpa_append_copy(pack, "AUTHSEQ", 2, chunk);
+	*sixptr = auth_status;
+	pack = lcpa_append_copy(pack, "AUTHSTATUS", 2, chunk);
+
+}
+
+/* Authentication response is the same for open networks, with IE tags */
+void lcpf_authresq(struct lcpa_metapack *pack, uint8_t *dst, uint8_t *src, 
+		uint8_t *bssid, int framecontrol, int duration, int fragment,
+		int sequence, uint16_t authalgo, uint16_t auth_seq,
+		uint16_t auth_status)
+{
+	lcpf_authreq(pack, dst, src, bssid, framecontrol, duration, fragment,
+			sequence, authalgo, auth_seq, auth_status);
+}
+
+void lcpf_assocreq(struct lcpa_metapack *pack, uint8_t *dst, uint8_t *src, 
+		uint8_t *bssid, int framecontrol, int duration, int fragment,
+		int sequence, uint16_t capabilities, uint16_t listenint)
+{
+	uint8_t chunk[2];
+	uint16_t *sixptr = (uint16_t *) chunk;
+
+	lcpf_80211headers(pack, WLAN_FC_TYPE_MGMT, WLAN_FC_SUBTYPE_ASSOCREQ, framecontrol, duration,
+					  dst, src, bssid, NULL,
+					  fragment, sequence);
+
+	*sixptr = capabilities;
+	pack = lcpa_append_copy(pack, "ASSOCREQCAPAB", 2, chunk);
+	*sixptr = listenint;
+	pack = lcpa_append_copy(pack, "ASSOCREQLI", 2, chunk);
+}
