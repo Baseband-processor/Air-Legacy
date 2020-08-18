@@ -1336,7 +1336,7 @@ CODE:
 	uint8_t chunk[2];
 	uint16_t *sixptr;
 
-	chunk[0] = ((type << 2) | (subtype << 4));
+	chunk[0] = ( (type << 2) | (subtype << 4) );
 	chunk[1] = (uint8_t) fcflags;
 	pack = lcpa_append_copy(pack, "80211FC", 2, chunk);
 
@@ -1375,7 +1375,6 @@ lcpf_qos_data(pack, fcflags, duration, mac1, mac2, mac3, mac4, fragment,  sequen
 		
 CODE:
 	lcpf_80211headers(pack, WLAN_FC_TYPE_DATA, WLAN_FC_SUBTYPE_QOSDATA, fcflags, duration, mac1, mac2, mac3, mac4, fragment, sequence);
-
 
 
 
@@ -1510,16 +1509,26 @@ CODE:
 
 
 void 
-lcpf_rts(struct lcpa_metapack *pack, uint8_t *recvmac, uint8_t *transmac, int framecontrol, int duration)
-
+lcpf_rts(pack, recvmac, transmac, framecontrol,  duration)
+	LCPA_META *pack
+	uint8_t *recvmac
+	uint8_t *transmac
+	int framecontrol
+	int duration
+CODE:	
+	
 	lcpf_80211ctrlheaders(pack, 1, 11, framecontrol, duration, recvmac);
 	pack = lcpa_append_copy(pack, "TRANSMITTERMAC", 6, transmac);
 
 void 
-lcpf_80211ctrlheaders(struct lcpa_metapack *pack, 
-		unsigned int type, unsigned int subtype, unsigned int fcflags, 
-		unsigned int duration, uint8_t *mac1)
-
+lcpf_80211ctrlheaders(pack, type, subtype, fcflags,  duration, mac1)
+	LCPA_META *pack
+	unsigned int type
+	unsigned int subtype
+	unsigned int fcflags
+	unsigned int duration
+	uint8_t *mac1
+CODE:
 	uint8_t chunk[2];
 	uint16_t *sixptr;
 
@@ -1534,23 +1543,25 @@ lcpf_80211ctrlheaders(struct lcpa_metapack *pack,
 	if (mac1 != NULL) {
 		pack = lcpa_append_copy(pack, "80211MAC1", 6, mac1);
 	}
-
-	return;
 	
 
 void 
-lcpf_authreq(struct lcpa_metapack *pack, uint8_t *dst, uint8_t *src, 
-		uint8_t *bssid, int framecontrol, int duration, int fragment,
-		int sequence, uint16_t authalgo, uint16_t auth_seq,
-		uint16_t auth_status)
-
+lcpf_authreq(pack, dst, src, bssid, framecontrol, duration, fragment, sequence, authalgo, auth_seq, auth_status)
+	LCPA_META *pack
+	uint8_t *dst
+	uint8_t *src
+	uint8_t *bssid
+	int framecontrol
+	int duration
+	int fragment
+	int sequence
+	uint16_t authalgo
+	uint16_t auth_seq
+	uint16_t auth_status
+CODE:
 	uint8_t chunk[2];
 	uint16_t *sixptr = (uint16_t *) chunk;
-
-	lcpf_80211headers(pack, WLAN_FC_TYPE_MGMT, WLAN_FC_SUBTYPE_AUTH, framecontrol, duration,
-					  dst, src, bssid, NULL,
-					  fragment, sequence);
-
+	lcpf_80211headers(pack, WLAN_FC_TYPE_MGMT, WLAN_FC_SUBTYPE_AUTH, framecontrol, duration, dst, src, bssid, NULL, fragment, sequence);
 	*sixptr = authalgo;
 	pack = lcpa_append_copy(pack, "AUTHALGO", 2, chunk);
 	*sixptr = auth_seq;
@@ -1561,25 +1572,40 @@ lcpf_authreq(struct lcpa_metapack *pack, uint8_t *dst, uint8_t *src,
 
 
 void 
-lcpf_authresq(struct lcpa_metapack *pack, uint8_t *dst, uint8_t *src, 
-		uint8_t *bssid, int framecontrol, int duration, int fragment,
-		int sequence, uint16_t authalgo, uint16_t auth_seq,
-		uint16_t auth_status)
-
-	lcpf_authreq(pack, dst, src, bssid, framecontrol, duration, fragment,
-			sequence, authalgo, auth_seq, auth_status);
+lcpf_authresq(pack, dst, src, bssid, framecontrol, duration, fragment, sequence, authalgo, auth_seq, auth_status)
+	LCPA_META *pack
+	uint8_t *dst
+	uint8_t *src
+	uint8_t *bssid
+	int framecontrol
+	int duration
+	int fragment
+	int sequence
+	uint16_t authalgo
+	uint16_t auth_seq
+	uint16_t auth_status
+CODE:
+	lcpf_authreq(pack, dst, src, bssid, framecontrol, duration, fragment, sequence, authalgo, auth_seq, auth_status);
 
 
 void 
-lcpf_assocreq(struct lcpa_metapack *pack, uint8_t *dst, uint8_t *src, 
-		uint8_t *bssid, int framecontrol, int duration, int fragment,
-		int sequence, uint16_t capabilities, uint16_t listenint)
+lcpf_assocreq(pack, dst, src, bssid, framecontrol, duration, fragment, sequence, capabilities, listenint)	
+	LCPA_META *pack
+	uint8_t *dst
+	uint8_t *src
+	uint8_t *bssid
+	int framecontrol
+	int duration
+	int fragment
+	int sequence
+	uint16_t capabilities
+	uint16_t listenint
 
+CODE:
 	uint8_t chunk[2];
 	uint16_t *sixptr = (uint16_t *) chunk;
 
 	lcpf_80211headers(pack, WLAN_FC_TYPE_MGMT, WLAN_FC_SUBTYPE_ASSOCREQ, framecontrol, duration, dst, src, bssid, NULL, fragment, sequence);
-
 	*sixptr = capabilities;
 	pack = lcpa_append_copy(pack, "ASSOCREQCAPAB", 2, chunk);
 	*sixptr = listenint;
