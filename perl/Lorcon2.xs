@@ -1515,6 +1515,28 @@ lcpf_rts(struct lcpa_metapack *pack, uint8_t *recvmac, uint8_t *transmac, int fr
 	lcpf_80211ctrlheaders(pack, 1, 11, framecontrol, duration, recvmac);
 	pack = lcpa_append_copy(pack, "TRANSMITTERMAC", 6, transmac);
 
+void 
+lcpf_80211ctrlheaders(struct lcpa_metapack *pack, 
+		unsigned int type, unsigned int subtype, unsigned int fcflags, 
+		unsigned int duration, uint8_t *mac1)
+
+	uint8_t chunk[2];
+	uint16_t *sixptr;
+
+	chunk[0] = ((type << 2) | (subtype << 4));
+	chunk[1] = (uint8_t) fcflags;
+	pack = lcpa_append_copy(pack, "80211FC", 2, chunk);
+
+	sixptr = (uint16_t *) chunk;
+	*sixptr = lorcon_hton16((uint16_t) duration);
+	pack = lcpa_append_copy(pack, "80211DUR", 2, chunk);
+
+	if (mac1 != NULL) {
+		pack = lcpa_append_copy(pack, "80211MAC1", 6, mac1);
+	}
+
+	return;
+	
 
 void 
 lcpf_authreq(struct lcpa_metapack *pack, uint8_t *dst, uint8_t *src, 
