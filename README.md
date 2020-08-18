@@ -16,7 +16,7 @@ Since my first day as (self-taught) "computer science student"  I found the Perl
 One day, while I was browsing on metacpan I found Net::Lorcon2, an old library with little documentation and limited support to the original Lorcon2 library, at first I didn't consider it and I continued to study, but a few months ago I had the desire to design something which actually lacks in the perl community:
 The theme of cybersecurity and its related applications.
 
-This is just the beginning, the project is long and the road is much longer but I hope that, with the help of the community, it would be possible to bring the world of cybersecurity into Perl, a language that now boasts very few tools (one of the few that comes to mind is Nikto), and which is still focused only in the automation and in the CGI programming.
+This is just the beginning, the project is long and the road is much longer but I hope that, with the help of the community, it would be possible to bring the world of cybersecurity into Perl, a language that now boasts very few tools (one of the few that comes to mind is Nikto), and which is still focused only both on automation and on CGI programming.
 
 **REQUIREMENTS**
 
@@ -154,16 +154,20 @@ Probably the project will grow even more, my main ideas are:
    
 - [ ] Write a brief PDF manual about the six perl wireless-security module
 
-**Other suggested Perl libraries**
+**Other suggested Perl libraries for network security**
 
 unfortunately perl doesn't have the same number of libraries as python, but some exists!
 for starting I suggest to learn:
 
 * [Socket](https://metacpan.org/pod/Socket)
 * [Net::Pcap](https://metacpan.org/pod/Net::Pcap)
+* [Net::Ncap](https://metacpan.org/pod/Net::Ncap)
 * [Net::Frame](https://metacpan.org/pod/Net::Frame)
 * [NetPacket](https://metacpan.org/pod/NetPacket)
 * [Net::Write](https://metacpan.org/pod/Net::Write)
+* [Net::Analysis](https://metacpan.org/pod/Net::Analysis)
+* [Net::Silk](https://metacpan.org/pod/Net::Silk)
+* [Net::Inspect](https://metacpan.org/pod/Net::Inspect)
 
 **Requests and collaborations**
 
