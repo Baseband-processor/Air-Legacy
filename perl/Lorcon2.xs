@@ -200,14 +200,14 @@ typedef struct  {
 	int (*getchan_cb)(lorcon_t *context);
     	int (*setchan_ht_cb)(lorcon_t *context, AirLorconChannel *channel);
 	int (*getchan_ht_cb)(lorcon_t *context, AirLorconChannel *ret_channel);
-	int (*sendpacket_cb)(lorcon_t *context, AirLorconChannel *packet);
-	int (*getpacket_cb)(lorcon_t *context, AirLorconChannel **packet);
+	int (*sendpacket_cb)(lorcon_t *context, AirLorconPacket *packet);
+	int (*getpacket_cb)(lorcon_t *context, AirLorconPacket **packet);
 	int (*setdlt_cb)(lorcon_t *context, int dlt);
 	int (*getdlt_cb)(lorcon_t *context);
 	LORCON_WEP *wepkeys;
 	int (*getmac_cb)(lorcon_t *context, uint8_t **mac);
 	int (*setmac_cb)(lorcon_t *context, int len, uint8_t *mac);
-    	int (*pcap_handler_cb)(u_char *user, const struct pcap_pkthdr *h, const u_char *bytes);
+    	int (*pcap_handler_cb)(u_char *user, PCAP_PKTHDR *h, const u_char *bytes);
 }lorcon_t;
 
 typedef lorcon_t                   AirLorcon;
