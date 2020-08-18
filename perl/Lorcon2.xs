@@ -484,11 +484,30 @@ int
 lorcon_set_channel(context, channel)
       AirLorcon *context
       int channel
+  CODE:
+if (context->setchan_cb == NULL) {
+	snprintf(context->errstr, LORCON_STATUS_MAX,  "Driver %s does not support setting channel", context->drivername);
+		return LORCON_ENOTSUPP;
+	}
+
+	return (*(context->setchan_cb))(context, channel);
 
 int
 lorcon_get_channel(context)
       AirLorcon *context
+CODE:
+if (context->getchan_cb == NULL) {
+		snprintf(context->errstr, LORCON_STATUS_MAX,  "Driver %s does not support getting channel", context->drivername);
+		return LORCON_ENOTSUPP;
+	}
+	return (*(context->getchan_cb))(context);
 
+
+int 
+lorcon_set_complex_channel(context, channel) 
+	AirLorcon *context
+	AirLorconChannel *channel
+	
 int 
 lorcon_get_hwmac(context, mac)
       AirLorcon *context
