@@ -447,21 +447,31 @@ sub kill_lorcon(){
 
    }
 
-sub Open_monitor(){
-
-
-
+sub Open_monitor { # Open monitor mode
+    my $context = @_;
+    if(! ( Air::Lorcon2::lorcon_open_monitor( $context ) ) ){
+        return -1; # Bad 
+     }else{
+        return 1;   # Good
 }
-
-sub Open_Inject(){
-
-
+    }
+    
+sub Open_Inject { # Open inject mode
+    my $context = @_;
+    if(! ( Air::Lorcon2::lorcon:open_inject( $context ) ) ){
+        return -1; # Bad
+    }else{
+        return 1; # Good
 }
-
-sub Open_Injmon(){
-
-
-
+    }
+    
+sub Open_Injmon { # Open both
+    my $context = @_;
+    if(! ( Air::Lorcon2::lorcon:open_injmon( $context ) ) ){
+        return -1; # Bad
+    }else{
+        return 1; # Good
+    }
 }
 
 sub Send_Frame{
