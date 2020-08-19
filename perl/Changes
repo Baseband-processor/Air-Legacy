@@ -1,7 +1,19 @@
 Revision history for Perl extension Net::Lorcon2.
 
-[*ALPHA]
+17.6    Wed Aug 19 10:00::00 CET 2020
 
+  - added packet forging capabilities
+  - fixed bug related to the Lorcon2 compiling phase, now more functions have personalized code
+  - added "wifi_mask" and "channel_to_freq" constants
+  - added perl OOP instead of the raw XS commands
+  - fixed "lorcon_get_channel" and "lorcon_set_channel" problem: now they work.
+  - added struct for AirLorcon, AirLorconPacket and other..
+  - added WEP_CRC_TABLE constants
+  - added Socket and Pcap compatibility
+  - added stable C code for the "build_vap"
+  - added stable C code for every "lorcon_open"..
+  
+  
 10.5    Tue Aug 11 6:00:00  CET 2020
 
   - added first part of struct
