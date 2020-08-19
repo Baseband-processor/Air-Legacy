@@ -50,8 +50,7 @@
 #define WLAN_FC_MOREDATA            BIT(5)
 #define WLAN_FC_ISWEP               BIT(6)
 #define WLAN_FC_ORDER               BIT(7)
-
-
+#define PCAP_ERRBUF_SIZE 	    256
 
 #define lorcon_hton16(x) (x)
 
@@ -1853,6 +1852,14 @@ AirLorconPacket *packet
 PPCODE:
     return packet->interface;
 
+
+void
+pcap_fmt_errmsg_for_errno(errbuf, errbuflen, errnum, fmt)
+	char *errbuf
+	size_t errbuflen
+	int errnum
+	const char *fmt     
+     
 void
 pcap_set_not_initialized_message(pcap)
 	Pcap *pcap
