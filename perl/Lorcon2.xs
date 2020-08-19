@@ -1156,6 +1156,7 @@ madwifing_list_vaps(interface_name, errorstring)
 	const char *interface_name
 	char *errorstring
 
+
 void 
 madwifing_free_vaps(in_vaplist)
 	MADWIFI_VAPS *in_vaplist
