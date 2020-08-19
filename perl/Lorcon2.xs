@@ -1853,73 +1853,58 @@ AirLorconPacket *packet
 PPCODE:
     return packet->interface;
 
-static void
-pcap_set_not_initialized_message(pcap_t *pcap)
-{
+void
+pcap_set_not_initialized_message(pcap)
+	Pcap *pcap
+CODE:
 	if (pcap->activated) {
-		/* A module probably forgot to set the function pointer */
-		(void)snprintf(pcap->errbuf, sizeof(pcap->errbuf),
-		    "This operation isn't properly handled by that device");
+		(void)snprintf(pcap->errbuf, sizeof(pcap->errbuf), "This operation isn't properly handled by that device");
 		return;
 	}
-	/* in case the caller doesn't check for PCAP_ERROR_NOT_ACTIVATED */
-	(void)snprintf(pcap->errbuf, sizeof(pcap->errbuf),
-	    "This handle hasn't been activated yet");
+	(void)snprintf(pcap->errbuf, sizeof(pcap->errbuf), "This handle hasn't been activated yet");
 	
 
 	
 int
-pcap_can_set_rfmon(pcap_t *p)
-{
+pcap_can_set_rfmon(p)
+	Pcap *p
+CODE:
 	return (p->can_set_rfmon_op(p));
-}
 
 
-	int
-pcap_inject(pcap_t *p, const void *buf, size_t size)
-{
-	/*
-	 * We return the number of bytes written, so the number of
-	 * bytes to write must fit in an int.
-	 */
+
+int
+pcap_inject(p, buf, size)
+	Pcap *p
+	const void *buf
+	size_t size
+CODE:
 	if (size > INT_MAX) {
-		pcap_fmt_errmsg_for_errno(p->errbuf, PCAP_ERRBUF_SIZE,
-		    errno, "More than %d bytes cannot be injected", INT_MAX);
+		pcap_fmt_errmsg_for_errno(p->errbuf, PCAP_ERRBUF_SIZE, errno, "More than %d bytes cannot be injected", INT_MAX);
 		return (PCAP_ERROR);
 	}
-
 	if (size == 0) {
-		pcap_fmt_errmsg_for_errno(p->errbuf, PCAP_ERRBUF_SIZE,
-		    errno, "The number of bytes to be injected must not be zero");
+		pcap_fmt_errmsg_for_errno(p->errbuf, PCAP_ERRBUF_SIZE, errno, "The number of bytes to be injected must not be zero");
 		return (PCAP_ERROR);
 	}
 
 	return (p->inject_op(p, buf, (int)size));
-}
+
 	
-	
-	int
-pcap_sendpacket(pcap_t *p, const u_char *buf, int size)
-{
+int
+pcap_sendpacket(p, buf, size)
+	Pcap *p
+	const u_char *buf
+	int size
+CODE:
 	if (size <= 0) {
-		pcap_fmt_errmsg_for_errno(p->errbuf, PCAP_ERRBUF_SIZE,
-		    errno, "The number of bytes to be sent must be positive");
+		pcap_fmt_errmsg_for_errno(p->errbuf, PCAP_ERRBUF_SIZE, errno, "The number of bytes to be sent must be positive");
 		return (PCAP_ERROR);
 	}
-
-	if (p->inject_op(p, buf, size) == -1)
+	if (p->inject_op(p, buf, size) == -1){
 		return (-1);
-	return (0);
 }
 
-	
-	
-	static int
-pcap_live_dump_dead(pcap_t *p, char *filename _U_, int maxsize _U_,
-    int maxpacks _U_)
-{
-	snprintf(p->errbuf, PCAP_ERRBUF_SIZE,
-	    "Live packet dumping cannot be performed on a pcap_open_dead pcap_t");
-	return (-1);
-}
+
+
 	
