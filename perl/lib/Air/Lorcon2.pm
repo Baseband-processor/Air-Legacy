@@ -327,8 +327,6 @@ our %EXPORT_TAGS = (
       lcpf_randmac
       lorcon_packet_get_source_mac
       lorcon_ifup
-      lorcon_packet_from_dot3
-      lorcon_packet_to_dot3
       lorcon_breakloop
       lorcon_set_filter
       lorcon_next_ex
@@ -438,6 +436,15 @@ our %EXPORT_TAGS = (
       lcpf_authreq
       lcpf_authresq
       lcpf_assocreq
+      lorcon_packet_get_interface
+      lorcon_packet_get_llc_type
+      lorcon_packet_get_bssid_mac
+      lorcon_packet_get_dest_mac
+      lorcon_packet_get_source_mac
+      lorcon_packet_get_dot3_extra
+      lorcon_packet_get_dot11_extra
+      lorcon_packet_from_dot3
+      lorcon_packet_to_dot3
       Open_Monitor
       Open_Inject
       Open_Injmon
