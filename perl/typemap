@@ -53,6 +53,7 @@ uint8_t             T_U_SHORT
 uint8_t *           T_U_SHORT
 unsigned int        T_PV
 unsigned int *      T_PV
+bpf_u_int32         T_PV
 u8                  T_U_SHORT
 u16                 T_U_SHORT
 u8 *                T_U_SHORT
