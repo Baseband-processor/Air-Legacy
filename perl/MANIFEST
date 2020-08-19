@@ -1,10 +1,10 @@
 Changes
 c/lorcon_driver_t.c
-lib/Net/Lorcon2.pm
+lib/Air/Lorcon2.pm
 Lorcon2.xs
 Makefile.PL
 MANIFEST
-README
+README.md
 TODO
 t/test-consts.t
 t/test-device-init.t
