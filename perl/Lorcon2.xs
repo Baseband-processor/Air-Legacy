@@ -66,13 +66,34 @@
 #include "perl.h"
 #include "XSUB.h"
 
+#include <sys/time.h>
+#include <sys/stat.h>
 #include <linux/socket.h>
 #include <pcap.h>
 #include "Ctxs.h"
 
 
 
+typedef struct {
+    int fd;
+    int snapshot;
+    int linktype;
+    int tzoff;      
+    int offset;    
+    struct pcap_sf sf;
+    struct pcap_md md;
+    int bufsize;
+    u_char *buffer;
+    u_char *bp;
+    int cc;
+    u_char *pkt;
+    struct bpf_program fcode;
+    char errbuf[PCAP_ERRBUF_SIZE];
+}pcap_t;
+
 typedef pcap_t                     Pcap;
+
+typedef struct stat                STAT;
 
 typedef struct sockaddr_ll {
                unsigned short sll_family;   
@@ -140,7 +161,7 @@ typedef struct madwi_vaps            MADWIFI_VAPS;
 typedef lorcon_multi_error_handler   LORCON_MULTI_ERROR_HANDLER;
 
 typedef struct{
-	struct timeval ts;	
+	TIME ts;	
 	bpf_u_int32 caplen;	
 	bpf_u_int32 len;	
 }pcap_pkthdr;
@@ -155,6 +176,12 @@ typedef struct  {
 }lorcon_wep;
 
 typedef struct lorcon_wep         LORCON_WEP;
+
+typedef struct {
+    TIME last_ts;
+}rtfile_extra_lorcon;
+
+typedef rtfile_extra_lorcon RTFILE_EXTRA_LORCON;
 
 typedef struct  {
         struct lcpa_metapack *prev;
@@ -190,10 +217,15 @@ typedef lorcon_dot3_extra*         Lorcon_DOT3;
 typedef lorcon_handler             AirLorconHandler;
 typedef lorcon_channel_t           AirLorconChannel;
 
+typedef struct  {
+       unsigned int      tv_sec;    
+       unsigned int      tv_usec;    
+}timeval;
 
+typedef struct timeval TIME;
 
 typedef struct lorcon_packet_t{
-	struct timeval ts;
+	TIME ts;
 	int dlt;
 	int channel;
 	int length;
@@ -1947,5 +1979,122 @@ CODE:
 }
 
 
+int
+pcap_datalink(p)
+        Pcap *p
+ 
 
+int
+pcap_get_selectable_fd(p)
+        Pcap *p
+
+int 
+file_openmon_cb(context) 
+	AirLorcon *context
+CODE:
+    char pcaperr[PCAP_ERRBUF_SIZE];
+    STAT buf;
+
+    if (stat(context->ifname, &buf) < 0) {
+        snprintf(context->errstr, LORCON_STATUS_MAX, "%s", strerror(errno));
+    }
+	pcaperr[0] = '\0';
+	if ((context->pcap = pcap_open_offline(context->ifname, pcaperr)) == NULL) {
+		snprintf(context->errstr, LORCON_STATUS_MAX, "%s", pcaperr);
+		return -1;
+	}
+	context->capture_fd = pcap_get_selectable_fd(context->pcap);
+	context->dlt = pcap_datalink(context->pcap);
+	context->inject_fd = -1;
+	return 1;
+
+
+int 
+rtfile_pcap_handler(user, h,  bytes) 
+	u_char *user
+	PCAP_PKTHDR *h
+	const u_char *bytes
+CODE:
+    AirLorcon *context = (AirLorcon *) user;
+    RTFILE_EXTRA_LORCON *extra =  (RTFILE_EXTRA_LORCON *) context->auxptr;
+    unsigned long delay_usec = 0;
+    if (extra->last_ts.tv_sec == 0) {
+        extra->last_ts.tv_sec = h->ts.tv_sec;
+        extra->last_ts.tv_usec = h->ts.tv_usec;
+        return 0;
+    }
+
+    delay_usec = (h->ts.tv_sec - extra->last_ts.tv_sec) * 1000000L;
+
+    if (h->ts.tv_usec < extra->last_ts.tv_usec) {
+        delay_usec += (1000000L - extra->last_ts.tv_usec) + h->ts.tv_usec;
+    } else {
+        delay_usec += h->ts.tv_usec - extra->last_ts.tv_usec;
+    }
+    extra->last_ts.tv_sec = h->ts.tv_sec;
+    extra->last_ts.tv_usec = h->ts.tv_usec;
+    usleep(delay_usec);
+
+
+int 
+drv_file_probe(interface) 
+	const char *interface
+CODE:
+    STAT buf;
+    if (stat(interface, &buf) == 0) {
+        return 1;
+	}
+	return 0;
+
+
+int 
+drv_file_init(context) 
+	AirLorcon *context
+CODE:	
+	context->openmon_cb = file_openmon_cb();
+	context->openinjmon_cb = file_openmon_cb();
+	return 1;
+
+
+int 
+drv_rtfile_init(context) 
+	AirLorcon *context
+CODE:
+    RTFILE_EXTRA_LORCON *rtf_extra;
+	context->openmon_cb = file_openmon_cb();
+	context->openinjmon_cb = file_openmon_cb();
+    context->pcap_handler_cb = rtfile_pcap_handler();
+    rtf_extra =  (RTFILE_EXTRA_LORCON *) malloc(sizeof(RTFILE_EXTRA_LORCON *));
+
+    rtf_extra->last_ts.tv_sec = 0;
+    rtf_extra->last_ts.tv_usec = 0;
+    context->auxptr = rtf_extra;
+
+	return 1;
+
+
+AirLorconDriver *
+drv_file_listdriver(head) 
+	AirLorconDriver *head
+CODE:
+	AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
+	AirLorconDriver *rtd = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
+
+	d->name = strdup("file");
+	d->details = strdup("PCAP file source");
+	d->init_func = drv_file_init;
+	d->probe_func = drv_file_probe();
+	d->next = head;
+
+	rtd->name = strdup("rtfile");
+	rtd->details = strdup("Real-time PCAP file source");
+	rtd->init_func = drv_rtfile_init;
+	rtd->probe_func = drv_file_probe();
+	rtd->next = d;
+
+	RETVAL = rtd;
+OUTPUT:
+	RETVAL
 	
+
+
