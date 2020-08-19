@@ -1671,3 +1671,188 @@ CODE:
 	*sixptr = listenint;
 	pack = lcpa_append_copy(pack, "ASSOCREQLI", 2, chunk);
 
+
+int 
+lorcon_packet_to_dot3(packet, data) 
+	AirLorconPacket *packet
+	u_char **data
+CODE:
+	int length = 0, offt = 0;
+	Lorcon_DOT11 *extra = (Lorcon_DOT11 *) packet->extra_info;
+	if (packet->length_data == 0 || packet->packet_data == NULL ||
+		packet->extra_info == NULL || packet->extra_type != LORCON_PACKET_EXTRA_80211) {
+		*data = NULL;
+		return 0;
+	}
+	if (extra->dest_mac == NULL || extra->source_mac == NULL) {
+		*data = NULL;
+		return 0;
+	}
+	if (packet->length_data > 8) {
+		if (packet->packet_data[0] == 0xaa && packet->packet_data[1] == 0xaa && packet->packet_data[2] == 0x03) {
+
+			offt = 6;
+		}
+	}
+	
+	length = 12 + packet->length_data - offt;
+	*data = (u_char *) malloc(sizeof(u_char) * length);
+	memcpy(*data, extra->dest_mac, 6);
+	memcpy(*data + 6, extra->source_mac, 6);
+	memcpy(*data + 12, packet->packet_data + offt, packet->length_data - offt);
+	return length;
+
+
+
+AirLorconPacket *
+lorcon_packet_from_dot3(bssid, dot11_direction, data,  length) 
+	u_char *bssid
+	int dot11_direction
+	u_char *data
+	int length
+CODE:
+	AirLorconPacket *ret;
+	int offt = 0;
+	u_char *mac0 = NULL, *mac1 = NULL, *mac2 = NULL, llc[8];
+	uint8_t fcf_flags = 0;
+
+	if (length < 12 || dot11_direction == LORCON_DOT11_DIR_INTRADS)
+		return NULL;
+
+	ret = (AirLorconPacket *) malloc(sizeof(AirLorconPacket *));
+
+	memset(ret, 0, sizeof(AirLorconPacket));
+
+	ret->lcpa = lcpa_init();
+
+	switch (dot11_direction) {
+		case LORCON_DOT11_DIR_FROMDS:
+			fcf_flags |= WLAN_FC_FROMDS;
+			mac0 = data;
+			mac1 = bssid;
+			mac2 = data + 6;
+			break;
+		case LORCON_DOT11_DIR_TODS:
+			fcf_flags |= WLAN_FC_TODS;
+			mac0 = bssid;
+			mac1 = data + 6;
+			mac2 = data;
+			break;
+		case LORCON_DOT11_DIR_ADHOCDS:
+			mac0 = data;
+			mac1 = data + 6;
+			mac2 = bssid;
+			break;
+		default:
+			printf("debug - fall to default direction, %d\n", dot11_direction);
+			mac0 = data;
+			mac1 = data + 6;
+			mac2 = bssid;
+			break;
+	}
+
+	lcpf_80211headers(ret->lcpa,  WLAN_FC_TYPE_DATA, WLAN_FC_SUBTYPE_DATA, fcf_flags,  length,  mac0, mac1, mac2, NULL, 0, 1234);
+
+	offt += 12;
+	if (length > 14) {
+		if (data[12] != 0xaa && data[13] != 0xaa) {
+			llc[0] = 0xaa;
+			llc[1] = 0xaa;
+			llc[2] = 0x03;
+			llc[3] = 0x00;
+			llc[4] = 0x00;
+			llc[5] = 0x00;
+			llc[6] = data[12];
+			llc[7] = data[13];
+
+			ret->lcpa = lcpa_append_copy(ret->lcpa, "LLC", 8, llc);
+			offt += 2;
+		}
+	}
+
+	ret->lcpa = lcpa_append_copy(ret->lcpa, "DATA", length - offt, data + offt);
+
+	return ret;
+
+
+LORCON_DOT11 *
+lorcon_packet_get_dot11_extra(packet) 
+	AirLorconPacket *packet
+CODE:
+    if (packet->extra_info == NULL){
+        return NULL;
+    }
+    if (packet->extra_type != LORCON_PACKET_EXTRA_80211){
+        return NULL;
+    }
+    return (lorcon_dot11_extra_t *) packet->extra_info;
+
+
+LORCON_DOT3 *
+lorcon_packet_get_dot3_extra(lorcon_packet_t *packet) {
+    if (packet->extra_info == NULL)
+        return NULL;
+
+    if (packet->extra_type != LORCON_PACKET_EXTRA_8023)
+        return NULL;
+
+    return (lorcon_dot3_extra_t *) packet->extra_info;
+}
+
+
+const u_char *
+lorcon_packet_get_source_mac(lorcon_packet_t *packet) 
+    lorcon_dot11_extra_t *d11extra = NULL;
+    lorcon_dot3_extra_t *d3extra = NULL;
+
+    if ((d11extra = lorcon_packet_get_dot11_extra(packet)) != NULL) {
+        return d11extra->source_mac;
+    } else if ((d3extra = lorcon_packet_get_dot3_extra(packet)) != NULL) {
+        return d3extra->source_mac;
+    }
+
+    return NULL;
+
+
+const u_char *
+lorcon_packet_get_dest_mac(lorcon_packet_t *packet) {
+    lorcon_dot11_extra_t *d11extra = NULL;
+    lorcon_dot3_extra_t *d3extra = NULL;
+
+    if ((d11extra = lorcon_packet_get_dot11_extra(packet)) != NULL) {
+        return d11extra->dest_mac;
+    } else if ((d3extra = lorcon_packet_get_dot3_extra(packet)) != NULL) {
+        return d3extra->dest_mac;
+    }
+
+    return NULL;
+
+
+const u_char *
+lorcon_packet_get_bssid_mac(lorcon_packet_t *packet) 
+    lorcon_dot11_extra_t *d11extra = NULL;
+
+    if ((d11extra = lorcon_packet_get_dot11_extra(packet)) != NULL) {
+        return d11extra->bssid_mac;
+    } 
+
+    return NULL;
+
+
+uint16_t 
+lorcon_packet_get_llc_type(packet) 
+	AirLorconPacket *packet
+CODE:
+    lorcon_dot3_extra_t *d3extra = NULL;
+    if ((d3extra = lorcon_packet_get_dot3_extra(packet)) != NULL) {
+        return d3extra->llc_type;
+    } 
+
+
+
+AirLorcon *
+lorcon_packet_get_interface(packet)
+AirLorconPacket *packet
+PPCODE:
+    return packet->interface;
+
