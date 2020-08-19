@@ -332,6 +332,24 @@ AirLorconDriver *
 lorcon_find_driver( driver )
       const char *driver
 
+
+AirLorconDriver *
+_lorcon_copy_driver(driver) 
+	AirLorconDriver *driver
+CODE:
+	AirLorconDriver *r;
+
+	r = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
+
+	r->name = strdup(driver->name);
+	r->details = strdup(driver->details);
+	r->init_func = driver->init_func;
+	r->probe_func = driver->probe_func;
+	r->next = NULL;
+	RETVAL  = r;
+OUTPUT:
+	RETVAL
+	
 AirLorconDriver *
 lorcon_auto_driver(interface)
       const char *interface
