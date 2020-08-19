@@ -481,6 +481,7 @@ our %EXPORT_TAGS = (
       lorcon_packet_get_dot11_extra
       lorcon_packet_from_dot3
       lorcon_packet_to_dot3
+      lorcon_packet_set_mcs
       Open_Monitor
       Open_Inject
       Open_Injmon
