@@ -51,6 +51,7 @@
 #define WLAN_FC_ISWEP               BIT(6)
 #define WLAN_FC_ORDER               BIT(7)
 #define PCAP_ERRBUF_SIZE 	    256
+#define PCAP_ERROR 		    -1
 
 #define lorcon_hton16(x) (x)
 
