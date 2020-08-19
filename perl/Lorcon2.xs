@@ -1700,8 +1700,9 @@ CODE:
 	memcpy(*data, extra->dest_mac, 6);
 	memcpy(*data + 6, extra->source_mac, 6);
 	memcpy(*data + 12, packet->packet_data + offt, packet->length_data - offt);
-	return length;
-
+	RETVAL = length;
+	  OUTPUT:
+	RETVAL
 
 
 AirLorconPacket *
@@ -1771,9 +1772,10 @@ CODE:
 	}
 
 	ret->lcpa = lcpa_append_copy(ret->lcpa, "DATA", length - offt, data + offt);
-
-	return ret;
-
+	RETVAL = ret;
+	  OUTPUT:
+ 	RETVAL
+	
 
 LORCON_DOT11 *
 lorcon_packet_get_dot11_extra(packet) 
@@ -1789,21 +1791,25 @@ CODE:
 
 
 LORCON_DOT3 *
-lorcon_packet_get_dot3_extra(lorcon_packet_t *packet) {
-    if (packet->extra_info == NULL)
+lorcon_packet_get_dot3_extra(packet) 
+	AirLorconPacket *packet
+CODE:
+    if (packet->extra_info == NULL){
         return NULL;
-
-    if (packet->extra_type != LORCON_PACKET_EXTRA_8023)
-        return NULL;
-
-    return (lorcon_dot3_extra_t *) packet->extra_info;
 }
+    if (packet->extra_type != LORCON_PACKET_EXTRA_8023){
+        return NULL;
+	}
+    return (Lorcon_DOT3 *) packet->extra_info;
+
 
 
 const u_char *
-lorcon_packet_get_source_mac(lorcon_packet_t *packet) 
-    lorcon_dot11_extra_t *d11extra = NULL;
-    lorcon_dot3_extra_t *d3extra = NULL;
+lorcon_packet_get_source_mac(packet) 
+	AirLorconPacket *packet
+CODE:
+    Lorcon_DOT11 *d11extra = NULL;
+    Lorcon_DOT3 *d3extra = NULL;
 
     if ((d11extra = lorcon_packet_get_dot11_extra(packet)) != NULL) {
         return d11extra->source_mac;
@@ -1811,13 +1817,14 @@ lorcon_packet_get_source_mac(lorcon_packet_t *packet)
         return d3extra->source_mac;
     }
 
-    return NULL;
 
 
 const u_char *
-lorcon_packet_get_dest_mac(lorcon_packet_t *packet) {
-    lorcon_dot11_extra_t *d11extra = NULL;
-    lorcon_dot3_extra_t *d3extra = NULL;
+lorcon_packet_get_dest_mac(packet) {
+	AirLorconPacket *packet
+CODE:
+    Lorcon_DOT11 *d11extra = NULL;
+    Lorcon_DOT3 *d3extra = NULL;
 
     if ((d11extra = lorcon_packet_get_dot11_extra(packet)) != NULL) {
         return d11extra->dest_mac;
@@ -1825,7 +1832,6 @@ lorcon_packet_get_dest_mac(lorcon_packet_t *packet) {
         return d3extra->dest_mac;
     }
 
-    return NULL;
 
 
 const u_char *
@@ -1836,7 +1842,6 @@ lorcon_packet_get_bssid_mac(lorcon_packet_t *packet)
         return d11extra->bssid_mac;
     } 
 
-    return NULL;
 
 
 uint16_t 
