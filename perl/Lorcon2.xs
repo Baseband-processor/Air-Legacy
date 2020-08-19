@@ -436,13 +436,50 @@ AirLorconPacket *
 lorcon_packet_from_lcpa(context, lcpa)
 	AirLorcon *context							 
 	LCPA_META *lcpa
-	
+CODE:
+	AirLorconPacket *l_packet;
+	if (lcpa == NULL){
+		return NULL;
+	}
+	l_packet = (AirLorconPacket *) malloc(sizeof(AirLorconPacket *));
+
+	memset(l_packet, 0, sizeof(AirLorconPacket));
+	l_packet->lcpa = lcpa;
+	return l_packet;
+
+
 AirLorconPacket *
 lorcon_packet_from_pcap(context, h,  bytes)
 	AirLorcon *context							 
 	PCAP_PKTHDR *h
-	const u_char *bytes
+	const u_char *bytes	
+CODE:
+        AirLorconPacket *l_packet;
+	if (bytes == NULL){
+		return NULL;
+	}
+	l_packet = (AirLorconPacket *) malloc(sizeof(AirLorconPacket *));
+
+    	l_packet->interface = context;
+	l_packet->lcpa = NULL;
+	l_packet->ts.tv_sec = h->ts.tv_sec;
+	l_packet->ts.tv_usec = h->ts.tv_usec;
+	l_packet->length = h->caplen;
+	l_packet->length_header = 0;
+	l_packet->length_data = 0;
+	l_packet->channel = 0;
 	
+	l_packet->free_data = 0;
+
+	l_packet->dlt = context->dlt;
+
+	l_packet->packet_raw = bytes;
+	l_packet->packet_header = NULL;
+	l_packet->packet_data = NULL;
+	lorcon_packet_decode(l_packet);
+	return l_packet;
+
+
 void 
 lorcon_pcap_handler(user,  h, bytes)
 	u_char *user
