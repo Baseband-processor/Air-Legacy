@@ -74,24 +74,25 @@
 
 
 
-typedef struct {
+typedef struct pcap_t{
     int fd;
     int snapshot;
     int linktype;
     int tzoff;      
     int offset;    
-    struct pcap_sf sf;
-    struct pcap_md md;
+    struct pcap_sf *sf;
+    struct pcap_md *md;
     int bufsize;
     u_char *buffer;
     u_char *bp;
     int cc;
     u_char *pkt;
-    struct bpf_program fcode;
+    struct bpf_program *fcode;
     char errbuf[PCAP_ERRBUF_SIZE];
-}pcap_t;
+}Pcap;
 
-typedef pcap_t                     Pcap;
+typedef struct timeval             TIME;
+
 
 typedef struct stat                STAT;
 
