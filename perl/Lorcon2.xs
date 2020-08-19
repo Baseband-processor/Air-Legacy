@@ -22,6 +22,7 @@
 #define WLAN_FC_TYPE_MGMT 0
 #define WLAN_FC_TYPE_CTRL 1
 #define WLAN_FC_TYPE_DATA 2
+#define WLAN_FC_SUBTYPE_DATA        0
 #define WLAN_FC_SUBTYPE_ASSOCREQ    0
 #define WLAN_FC_SUBTYPE_ASSOCRESP   1
 #define WLAN_FC_SUBTYPE_REASSOCREQ  2
@@ -34,6 +35,21 @@
 #define WLAN_FC_SUBTYPE_AUTH        11
 #define WLAN_FC_SUBTYPE_DEAUTH      12
 #define WLAN_FC_SUBTYPE_QOSDATA     8
+
+#define LORCON_DOT11_DIR_FROMDS		1
+#define LORCON_DOT11_DIR_TODS		2
+#define LORCON_DOT11_DIR_INTRADS	3
+#define LORCON_DOT11_DIR_ADHOCDS	4
+
+#define BIT(x) (1 << (x))
+#define WLAN_FC_TODS                BIT(0)
+#define WLAN_FC_FROMDS              BIT(1)
+#define WLAN_FC_MOREFRAG            BIT(2)
+#define WLAN_FC_RETRY               BIT(3)
+#define WLAN_FC_PWRMGT              BIT(4)
+#define WLAN_FC_MOREDATA            BIT(5)
+#define WLAN_FC_ISWEP               BIT(6)
+#define WLAN_FC_ORDER               BIT(7)
 
 
 
@@ -748,40 +764,18 @@ lorcon_packet_set_channel(packet, channel)
   AirLorconPacket *packet
   int channel
 
-AirLorconPacket *
-lorcon_packet_from_dot3(bssid, dot11_direction, data, length)
-  u_char *bssid
-  int dot11_direction
-  u_char *data
-  int length
-
-int 
-lorcon_packet_to_dot3(packet, data)
-  AirLorconPacket *packet
-  u_char *data
-
 		
 int 
 lorcon_ifup( context )
   AirLorcon *context
 
 
-const u_char *
-lorcon_packet_get_source_mac(packet)
-  AirLorconPacket *packet
 
 void
 lcpf_randmac(addr, valid)
   uint8_t *addr
   int valid
 
-const u_char *
-lorcon_packet_get_dest_mac(packet)
-  AirLorconPacket *packet
-
-const u_char *
-lorcon_packet_get_bssid_mac(packet)
-  AirLorconPacket *packet
 
 int 
 lorcon_ifdown( context )
@@ -1684,10 +1678,6 @@ CODE:
 		*data = NULL;
 		return 0;
 	}
-	if (extra->dest_mac == NULL || extra->source_mac == NULL) {
-		*data = NULL;
-		return 0;
-	}
 	if (packet->length_data > 8) {
 		if (packet->packet_data[0] == 0xaa && packet->packet_data[1] == 0xaa && packet->packet_data[2] == 0x03) {
 
@@ -1777,7 +1767,7 @@ CODE:
  	RETVAL
 	
 
-LORCON_DOT11 *
+Lorcon_DOT11 *
 lorcon_packet_get_dot11_extra(packet) 
 	AirLorconPacket *packet
 CODE:
@@ -1787,10 +1777,10 @@ CODE:
     if (packet->extra_type != LORCON_PACKET_EXTRA_80211){
         return NULL;
     }
-    return (lorcon_dot11_extra_t *) packet->extra_info;
+    return (Lorcon_DOT11 *) packet->extra_info;
 
 
-LORCON_DOT3 *
+Lorcon_DOT3 *
 lorcon_packet_get_dot3_extra(packet) 
 	AirLorconPacket *packet
 CODE:
@@ -1820,23 +1810,25 @@ CODE:
 
 
 const u_char *
-lorcon_packet_get_dest_mac(packet) {
+lorcon_packet_get_dest_mac(packet) 
 	AirLorconPacket *packet
 CODE:
     Lorcon_DOT11 *d11extra = NULL;
-    Lorcon_DOT3 *d3extra = NULL;
+    Lorcon_DOT3 *d3extra  = NULL;
 
     if ((d11extra = lorcon_packet_get_dot11_extra(packet)) != NULL) {
         return d11extra->dest_mac;
     } else if ((d3extra = lorcon_packet_get_dot3_extra(packet)) != NULL) {
-        return d3extra->dest_mac;
+        return (d3extra->dest_mac);
     }
 
 
 
 const u_char *
-lorcon_packet_get_bssid_mac(lorcon_packet_t *packet) 
-    lorcon_dot11_extra_t *d11extra = NULL;
+lorcon_packet_get_bssid_mac(packet) 
+	AirLorconPacket *packet
+CODE:
+    Lorcon_DOT11 *d11extra = NULL;
 
     if ((d11extra = lorcon_packet_get_dot11_extra(packet)) != NULL) {
         return d11extra->bssid_mac;
@@ -1848,7 +1840,7 @@ uint16_t
 lorcon_packet_get_llc_type(packet) 
 	AirLorconPacket *packet
 CODE:
-    lorcon_dot3_extra_t *d3extra = NULL;
+    Lorcon_DOT3 *d3extra = NULL;
     if ((d3extra = lorcon_packet_get_dot3_extra(packet)) != NULL) {
         return d3extra->llc_type;
     } 
