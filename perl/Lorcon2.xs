@@ -531,12 +531,24 @@ int
 lorcon_get_hwmac(context, mac)
       AirLorcon *context
       char **mac
+CODE:
+	if (context->getmac_cb == NULL) {
+		snprintf(context->errstr, LORCON_STATUS_MAX,"Driver %s does not support fetching MAC address",context->drivername);
+		return LORCON_ENOTSUPP;
+	}
+	return (*(context->getmac_cb))(context, mac);
 
 int 
 lorcon_set_hwmac(context, mac_len, mac)
       AirLorcon *context
       int mac_len
       unsigned char *mac
+CODE:
+	if (context->setmac_cb == NULL) {
+		snprintf(context->errstr, LORCON_STATUS_MAX, "Driver %s does not support fetching MAC address", context->drivername);
+		return LORCON_ENOTSUPP;
+	}
+	return (*(context->setmac_cb))(context, mac_len, mac);
 
 Pcap *
 lorcon_get_pcap(context)
