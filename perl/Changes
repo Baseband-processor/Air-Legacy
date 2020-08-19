@@ -12,7 +12,7 @@ Revision history for Perl extension Net::Lorcon2.
   - added Socket and Pcap compatibility
   - added stable C code for the "build_vap"
   - added stable C code for every "lorcon_open"..
-  
+  - added basic support to libpcap ( functions not presents in Net::Pcap )
   
 10.5    Tue Aug 11 6:00:00  CET 2020
 
