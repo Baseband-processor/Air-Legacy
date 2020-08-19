@@ -864,6 +864,14 @@ AirLorconDriver *
 drv_madwifing_listdriver(drv)
    AirLorconDriver * drv
      
+void
+lorcon_packet_set_mcs(packet, use_mcs, mcs, short_gi, use_40mhz)
+	AirLorconPacket *packet
+	unsigned int use_mcs
+	unsigned int mcs
+	unsigned int short_gi
+	unsigned int use_40mhz
+	
 int 
 drv_madwifing_init(context) 
   AirLorcon *context
