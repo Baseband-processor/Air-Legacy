@@ -381,6 +381,7 @@ our %EXPORT_TAGS = (
       aj_setchannel
       aj_setmode
       aj_setmonitor
+      _lorcon_copy_driver
       lorcon_set_channel
       lorcon_get_channel
       lorcon_airjack_listdriver
