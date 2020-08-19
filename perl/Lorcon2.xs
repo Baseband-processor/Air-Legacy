@@ -139,6 +139,12 @@ typedef struct madwi_vaps            MADWIFI_VAPS;
 
 typedef lorcon_multi_error_handler   LORCON_MULTI_ERROR_HANDLER;
 
+typedef struct{
+	struct timeval ts;	
+	bpf_u_int32 caplen;	
+	bpf_u_int32 len;	
+}pcap_pkthdr;
+
 typedef struct pcap_pkthdr           PCAP_PKTHDR;
 
 typedef struct  {
