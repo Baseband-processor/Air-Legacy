@@ -2200,4 +2200,49 @@ OUTPUT:
 	RETVAL
 	
 
+int 
+tx80211_bcm43xx_init(in_tx)
+	TX80211 *in_tx
+	
 
+int 
+bcm43xx_open(in_tx)
+	TX80211 *in_tx
+CODE:
+	const char inject_nofcs_pname[] = "/sys/class/net/%s/device/inject_nofcs";
+	char *inject_nofcs_location = NULL;
+	int nofcs = -1;
+	if (strlen(in_tx->ifname) == 0) {
+		snprintf(in_tx->errstr, TX80211_STATUS_MAX, "No interface name\n");
+		return -1;
+	}
+
+	inject_nofcs_location = (char*) malloc(strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5); 
+	if (inject_nofcs_location==NULL) {
+		snprintf(in_tx->errstr, TX80211_STATUS_MAX, "Can't allocate memory for inject_nofcs path\n");
+		return -1;
+	snprintf(inject_nofcs_location,  strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5, inject_nofcs_pname, in_tx->ifname);
+
+	nofcs = open(inject_nofcs_location, O_WRONLY);
+	if (nofcs < 0) {
+		snprintf(in_tx->errstr, TX80211_STATUS_MAX, "Error opening file: %s. Is your bcm43xx driver patched?\n", inject_nofcs_location);
+	}
+
+	free(inject_nofcs_location);
+	if (nofcs<0) return -1;
+	else {
+		in_tx->raw_fd=nofcs;
+		return 0;
+	}
+		
+		
+int 
+bcm43xx_close(in_tx)
+	TX80211 *in_tx
+CODE:
+	int i=close(in_tx->raw_fd); 
+	in_tx->raw_fd=-1; 
+	RETVAL = i;
+OUTPUT:
+	RETVAL
+		
