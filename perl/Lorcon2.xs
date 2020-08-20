@@ -1119,6 +1119,40 @@ tx80211_hostap_init(in_tx)
 int
 tx80211_hostap_capabilities()
     
+Pcap *
+pcap_open_live(device, snaplen, promisc, to_ms, err)
+        const char *device
+        int snaplen
+        int promisc
+        int to_ms
+        SV *err;
+ 
+        CODE:
+                if (SvROK(err)) {
+            char    *errbuf = NULL;
+            SV      *err_sv = SvRV(err);
+ 
+            Newx(errbuf, PCAP_ERRBUF_SIZE+1, char);
+#ifdef _MSC_VER
+			if (to_ms == 0)
+                to_ms = 1;
+#endif
+                        RETVAL = pcap_open_live(device, snaplen, promisc, to_ms, errbuf);
+ 
+                        if (RETVAL == NULL) {
+                                sv_setpv(err_sv, errbuf);
+                        } else {
+                                err_sv = &PL_sv_undef;
+                        }
+ 
+                        safefree(errbuf);
+ 
+                } else
+                        croak("arg5 not a reference");
+        OUTPUT:
+                err
+                RETVAL
+		
 int 
 tuntap_openmon_cb(context) 
 	AirLorcon *context
@@ -1126,10 +1160,9 @@ CODE:
 	char pcaperr[PCAP_ERRBUF_SIZE];
 	AirLorcon_MAC80211 *extras = (AirLorcon_MAC80211 *) context->auxptr;
 	IFREQ *if_req;
-	 sa_ll;
+	SOCKADDR_LL *sa_ll;
 
 	pcaperr[0] = '\0';
-
 	if ((context->pcap = pcap_open_live(context->ifname, LORCON_MAX_PACKET_LEN,  1, 1000, pcaperr)) == NULL) {
 		snprintf(context->errstr, LORCON_STATUS_MAX, "%s", pcaperr);
 		return -1;
@@ -1150,8 +1183,7 @@ CODE:
 	memcpy(if_req.ifr_name, context->ifname, IFNAMSIZ);
 	if_req.ifr_name[IFNAMSIZ - 1] = 0;
 	if (ioctl(context->inject_fd, SIOCGIFINDEX, &if_req) < 0) {
-		snprintf(context->errstr, LORCON_STATUS_MAX, "failed to get interface idex: %s",
-				 strerror(errno));
+		snprintf(context->errstr, LORCON_STATUS_MAX, "failed to get interface idex: %s", strerror(errno));
 		close(context->inject_fd);
 		pcap_close(context->pcap);
 		return -1;
@@ -1161,7 +1193,7 @@ CODE:
 	sa_ll.sll_family = AF_PACKET;
 	sa_ll.sll_protocol = htons(ETH_P_80211_RAW);
 	sa_ll.sll_ifindex = if_req.ifr_ifindex;
-	if (bind(context->inject_fd, (struct sockaddr *) &sa_ll, sizeof(sa_ll)) != 0) {
+	if (bind(context->inject_fd, (SOCKADDR *) &sa_ll, sizeof(sa_ll)) != 0) {
 		snprintf(context->errstr, LORCON_STATUS_MAX, "failed to bind injection " "socket: %s", strerror(errno));
 		close(context->inject_fd);
 		pcap_close(context->pcap);
