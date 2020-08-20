@@ -488,6 +488,8 @@ our %EXPORT_TAGS = (
       Open_Injmon
       Inject_Frame
       Send_Bytes
+      tuntap_openmon_cb
+      tuntap_sendbytes
    )],
 );
 
