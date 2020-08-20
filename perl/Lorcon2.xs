@@ -1111,18 +1111,92 @@ tx80211_hostap_init(in_tx)
 
 int
 tx80211_hostap_capabilities()
+    
+int 
+tuntap_openmon_cb(context) 
+	AirLorcon *context
+CODE:
+	char pcaperr[PCAP_ERRBUF_SIZE];
+	struct mac80211_lorcon *extras = (struct mac80211_lorcon *) context->auxptr;
+	struct ifreq if_req;
+	struct sockaddr_ll sa_ll;
+
+	pcaperr[0] = '\0';
+
+	if ((context->pcap = pcap_open_live(context->ifname, LORCON_MAX_PACKET_LEN,  1, 1000, pcaperr)) == NULL) {
+		snprintf(context->errstr, LORCON_STATUS_MAX, "%s", pcaperr);
+		return -1;
+	}
+
+	context->capture_fd = pcap_get_selectable_fd(context->pcap);
+
+	context->dlt = pcap_datalink(context->pcap);
+
+	context->inject_fd = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
+	if (context->inject_fd < 0) {
+		snprintf(context->errstr, LORCON_STATUS_MAX, "failed to create injection " "socket: %s", strerror(errno));
+		pcap_close(context->pcap);
+		return -1;
+	}
+
+	memset(&if_req, 0, sizeof(if_req));
+	memcpy(if_req.ifr_name, context->ifname, IFNAMSIZ);
+	if_req.ifr_name[IFNAMSIZ - 1] = 0;
+	if (ioctl(context->inject_fd, SIOCGIFINDEX, &if_req) < 0) {
+		snprintf(context->errstr, LORCON_STATUS_MAX, "failed to get interface idex: %s",
+				 strerror(errno));
+		close(context->inject_fd);
+		pcap_close(context->pcap);
+		return -1;
+	}
+
+	memset(&sa_ll, 0, sizeof(sa_ll));
+	sa_ll.sll_family = AF_PACKET;
+	sa_ll.sll_protocol = htons(ETH_P_80211_RAW);
+	sa_ll.sll_ifindex = if_req.ifr_ifindex;
+	if (bind(context->inject_fd, (struct sockaddr *) &sa_ll, sizeof(sa_ll)) != 0) {
+		snprintf(context->errstr, LORCON_STATUS_MAX, "failed to bind injection " "socket: %s", strerror(errno));
+		close(context->inject_fd);
+		pcap_close(context->pcap);
+		return -1;
+	}
+
+
+int 
+tuntap_sendbytes(context, length, bytes) 
+	AirLorcon *context
+	int length
+	u_char *bytes
+CODE:
+	int ret;
+	if (context->inject_fd < 0) {
+		snprintf(context->errstr, LORCON_STATUS_MAX, "no inject control opened");
+		return -1;
+	}
+
+	ret = write(context->inject_fd, bytes, length);
+	if (ret < 0) {
+		snprintf(context->errstr, LORCON_STATUS_MAX, "injection write failed: %s", strerror(errno));
+		return -1;
+	}
+
+	if (ret < length) 
+		snprintf(context->errstr, LORCON_STATUS_MAX, "injection got short write");
+	RETVAL = ret;
+	OUTPUT:
+	  RETVAL
+
      
-     
-#int 
-#drv_tuntap_init(context)
-#   AirLorcon *context
-#     CODE:
-#	lorcon_open_inject(context) =  tuntap_openmon_cb;
-#	lorcon_open_monitor(context) = tuntap_openmon_cb;
-#	lorcon_open_injmon(context) =  tuntap_openmon_cb;
-#	RETVAL = 1;
-#	  OUTPUT:
-#	RETVAL
+int 
+drv_tuntap_init(context)
+   AirLorcon *context
+     CODE:
+	lorcon_open_inject(context) =  tuntap_openmon_cb;
+	lorcon_open_monitor(context) = tuntap_openmon_cb;
+	lorcon_open_injmon(context) =  tuntap_openmon_cb;
+	RETVAL = 1;
+	  OUTPUT:
+	RETVAL
 
 AirLorconDriver *
 drv_tuntap_listdriver(drv)
