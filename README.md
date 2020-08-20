@@ -168,6 +168,11 @@ for starting I suggest to learn:
 * [Net::Analysis](https://metacpan.org/pod/Net::Analysis)
 * [Net::Silk](https://metacpan.org/pod/Net::Silk)
 * [Net::Inspect](https://metacpan.org/pod/Net::Inspect)
+* [Net::Tshark](https://metacpan.org/pod/Net::Tshark)
+* [Net::Sharktools](https://metacpan.org/pod/Net::Sharktools)
+* [File::PCAP](https://metacpan.org/pod/File::PCAP)
+* [Net::P0f](https://metacpan.org/pod/Net::P0f)
+* [Net::Pcap::Reassemble](https://metacpan.org/pod/Net::Pcap::Reassemble)
 
 **Requests and collaborations**
 
