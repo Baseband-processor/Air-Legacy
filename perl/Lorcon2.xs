@@ -1143,9 +1143,9 @@ int
 drv_file_init(init)
      AirLorcon *init
 
-#int
-#drv_rtfile_init(init)
- #    AirLorcon *init
+int
+drv_rtfile_init(init)
+    AirLorcon *init
      
 AirLorconDriver *
 drv_file_listdriver(drv)
@@ -2070,7 +2070,6 @@ CODE:
     rtf_extra->last_ts.tv_sec = 0;
     rtf_extra->last_ts.tv_usec = 0;
     context->auxptr = rtf_extra;
-
 	return 1;
 
 
