@@ -175,6 +175,7 @@ for starting I suggest to learn:
 * [Net::Pcap::Reassemble](https://metacpan.org/pod/Net::Pcap::Reassemble)
 * [Nagios::NRPE](https://metacpan.org/pod/Nagios::NRPE)
 * [Net::Connection::Sniffer](https://metacpan.org/pod/Net::Connection::Sniffer)
+* [Net::ARP](https://metacpan.org/pod/Net::ARP)
 
 **Requests and collaborations**
 
