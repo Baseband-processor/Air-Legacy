@@ -632,17 +632,24 @@ sub setMode(){
 }
 
 sub autoInitialize_driver{
-	my $prefferred_driver = @_;
+	my ( $context, $prefferred_driver ) = @_;
 	if(undef($prefferred_drive)){
 		my @supported_drivers = ("madwifing", "mac80211", "bcm");
 		my @drivers_list = lorcon_list_drivers();
 		foreach (@{ $drivers_list }){
- 		
- }
-		}else{
+		  if($_ =~ $supported_drivers[0]){
+			return Air::Lorcon2::drv_madwifing_init( $context );
+ 	}elsif($_ =~ $supported_drivers[1]){
+			return Air::Lorcon2::drv_mac80211_init("");
+	}elsif($_ =~ $supported_drivers[2]){
+			return Air::Lorcon2::tx80211_bcm43xx_init("");
+		}
 	}
 	}
 
+}else{
+	if(! ( Air::Lorcon2::drv_$prefferred_driver) ){
+		return -1;
 }
 
 __PACKAGE__->bootstrap($VERSION);
