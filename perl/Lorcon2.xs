@@ -74,6 +74,13 @@
 
 
 
+
+typedef struct mac80211_lorcon {
+	void *nlhandle;
+   	int nl80211id;
+   	int ifidx;
+}AirLorcon_MAC80211;
+
 typedef struct pcap_t{
     int fd;
     int snapshot;
@@ -1117,9 +1124,9 @@ tuntap_openmon_cb(context)
 	AirLorcon *context
 CODE:
 	char pcaperr[PCAP_ERRBUF_SIZE];
-	struct mac80211_lorcon *extras = (struct mac80211_lorcon *) context->auxptr;
-	struct ifreq if_req;
-	struct sockaddr_ll sa_ll;
+	AirLorcon_MAC80211 *extras = (AirLorcon_MAC80211 *) context->auxptr;
+	IFREQ *if_req;
+	 sa_ll;
 
 	pcaperr[0] = '\0';
 
