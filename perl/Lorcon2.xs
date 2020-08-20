@@ -41,6 +41,8 @@
 #define LORCON_DOT11_DIR_INTRADS	3
 #define LORCON_DOT11_DIR_ADHOCDS	4
 
+#define TX80211_STATUS_MAX
+
 #define BIT(x) (1 << (x))
 #define WLAN_FC_TODS                BIT(0)
 #define WLAN_FC_FROMDS              BIT(1)
