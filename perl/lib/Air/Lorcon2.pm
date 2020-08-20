@@ -631,6 +631,20 @@ sub setMode(){
   return( Air::Lorcon2::iwconfig_set_mode(\$input_device, \$error_string, $mode) );
 }
 
+sub autoInitialize_driver{
+	my $prefferred_driver = @_;
+	if(undef($prefferred_drive)){
+		my @supported_drivers = ("madwifing", "mac80211", "bcm");
+		my @drivers_list = lorcon_list_drivers();
+		foreach (@{ $drivers_list }){
+ 		
+ }
+		}else{
+	}
+	}
+
+}
+
 __PACKAGE__->bootstrap($VERSION);
 
 1;
