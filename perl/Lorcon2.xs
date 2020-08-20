@@ -81,23 +81,7 @@ typedef struct mac80211_lorcon {
    	int ifidx;
 }AirLorcon_MAC80211;
 
-typedef struct pcap_t{
-    int fd;
-    int snapshot;
-    int linktype;
-    int tzoff;      
-    int offset;    
-    struct pcap_sf *sf;
-    struct pcap_md *md;
-    int bufsize;
-    u_char *buffer;
-    u_char *bp;
-    int cc;
-    u_char *pkt;
-    struct bpf_program *fcode;
-    char errbuf[PCAP_ERRBUF_SIZE];
-}Pcap;
-
+typedef struct pcap_t 		   Pcap;
 typedef struct timeval             TIME;
 
 
@@ -1153,6 +1137,11 @@ pcap_open_live(device, snaplen, promisc, to_ms, err)
                 err
                 RETVAL
 		
+void
+pcap_close(p)
+        Pcap *p
+ 
+
 int 
 tuntap_openmon_cb(context) 
 	AirLorcon *context
@@ -1230,9 +1219,9 @@ int
 drv_tuntap_init(context)
    AirLorcon *context
      CODE:
-	lorcon_open_inject(context) =  tuntap_openmon_cb;
-	lorcon_open_monitor(context) = tuntap_openmon_cb;
-	lorcon_open_injmon(context) =  tuntap_openmon_cb;
+	lorcon_open_inject(context) =  tuntap_openmon_cb(context);
+	lorcon_open_monitor(context) = tuntap_openmon_cb(context);
+	lorcon_open_injmon(context) =  tuntap_openmon_cb(context);
 	RETVAL = 1;
 	  OUTPUT:
 	RETVAL
