@@ -173,6 +173,8 @@ for starting I suggest to learn:
 * [File::PCAP](https://metacpan.org/pod/File::PCAP)
 * [Net::P0f](https://metacpan.org/pod/Net::P0f)
 * [Net::Pcap::Reassemble](https://metacpan.org/pod/Net::Pcap::Reassemble)
+* [Nagios::NRPE](https://metacpan.org/pod/Nagios::NRPE)
+* [Net::Connection::Sniffer](https://metacpan.org/pod/Net::Connection::Sniffer)
 
 **Requests and collaborations**
 
