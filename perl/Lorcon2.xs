@@ -2220,23 +2220,17 @@ CODE:
 	}
 
 	inject_nofcs_location = (char*) malloc(strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5); 
-	if (inject_nofcs_location==NULL) {
-		snprintf(in_tx->errstr, TX80211_STATUS_MAX, "Can't allocate memory for inject_nofcs path\n");
-		return -1;
 	snprintf(inject_nofcs_location,  strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5, inject_nofcs_pname, in_tx->ifname);
 
 	nofcs = open(inject_nofcs_location, O_WRONLY);
-	if (nofcs < 0) {
-		snprintf(in_tx->errstr, TX80211_STATUS_MAX, "Error opening file: %s. Is your bcm43xx driver patched?\n", inject_nofcs_location);
-	}
 
 	free(inject_nofcs_location);
-	if (nofcs<0) return -1;
+	if (nofcs<0) {return -1;}
 	else {
 		in_tx->raw_fd=nofcs;
 		return 0;
 	}
-		
+			
 		
 int 
 bcm43xx_close(in_tx)
