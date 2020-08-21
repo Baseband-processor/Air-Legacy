@@ -35,6 +35,19 @@ my %channel_to_frequency = (
    56 => 5280,
    58 => 5290,
    60 => 5300,
+   62 => 5310,
+   64 => 5320,
+  100 => 5500,
+  102 => 5510,
+  104 => 5520,
+  106 => 5530,
+  108 => 5540,
+  110 => 5550,
+  112 => 5560,
+  114 => 5570,
+  116 => 5580,
+  118 => 5590,
+  120 => 5600,
    
 );
 
@@ -401,11 +414,6 @@ our %EXPORT_TAGS = (
       nl80211_createvif
       nl80211_disconnect
       nl80211_connect
-      airpcap_setmode
-      airpcap_close
-      airpcap_setfuncmode
-      airpcap_send
-      airpcap_open
       tx80211_airpcap_capabilities
       tx80211_airpcap_init 
       drv_file_listdriver
