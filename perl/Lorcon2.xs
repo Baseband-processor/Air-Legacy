@@ -42,6 +42,7 @@
 #define LORCON_DOT11_DIR_ADHOCDS	4
 
 #define TX80211_STATUS_MAX  1
+#define AIRPCAP_ERRBUF_SIZE 512
 
 #define BIT(x) (1 << (x))
 #define WLAN_FC_TODS                BIT(0)
@@ -74,6 +75,12 @@
 #include <pcap.h>
 #include "Ctxs.h"
 
+typedef struct PAirpcapHandle  			HANDLEPAIRPCAP
+	
+typedef struct airpcap_data {
+	HANDLEPAIRPCAP ad;
+	char errstr[AIRPCAP_ERRBUF_SIZE];
+}AIRPCAP_DATA;
 
 
 typedef struct mac80211_lorcon {
@@ -1072,6 +1079,94 @@ int
 airpcap_send(in_tx,  in_pkt)
   TX80211 *in_tx
   TX80211_PACKET *in_pkt
+CODE:
+	AIRPCAP_DATA *apcap = in_tx->extra;
+	struct tx80211_radiotap_header *rtaphdr;
+	PCHAR pkt;
+	int channel;
+	ULONG len;
+
+	len = (in_pkt->plen + TX80211_RTAP_LEN);
+
+	pkt = malloc(len);
+	if (pkt == NULL) {
+		snprintf(in_tx->errstr, TX80211_STATUS_MAX, 
+				"Unable to allocate memory buffer "
+				"for send function");
+		return TX80211_ENOMEM;
+	}
+
+	memset(pkt, 0, len);
+
+	channel = tx80211_getchannel(in_tx);
+
+	/* Setup radiotap header */
+	rtaphdr = (struct tx80211_radiotap_header *)pkt;
+	rtaphdr->it_version = 0;
+	rtaphdr->it_pad = 0;
+	rtaphdr->it_len = tx80211_le16(TX80211_RTAP_LEN);
+	rtaphdr->it_present = tx80211_le32(TX80211_RTAP_PRESENT);
+	rtaphdr->wr_flags = 0;
+
+	if (in_pkt->txrate == 0) {
+		/* Airpcap can't handle a rate of 0, set to 2 Mbps as default */
+		rtaphdr->wr_rate = TX80211_RATE_2MB;
+	} else {
+		rtaphdr->wr_rate = in_pkt->txrate; 
+	}
+
+	rtaphdr->wr_chan_freq = tx80211_chan2mhz(channel);
+
+	switch(in_pkt->modulation) {
+		case TX80211_MOD_DEFAULT:
+			rtaphdr->wr_chan_flags = 0;
+			break;
+		case TX80211_MOD_DSSS:
+			rtaphdr->wr_chan_flags =
+				tx80211_le16(TX80211_RTAP_CHAN_B);
+			break;
+		case TX80211_MOD_OFDM:
+			/* OFDM can be 802.11g or 802.11a */
+			if (channel <= 14) {
+				/* 802.11g network */
+				rtaphdr->wr_chan_flags = 
+					tx80211_le16(TX80211_RTAP_CHAN_G);
+			} else {
+				rtaphdr->wr_chan_flags = 
+					tx80211_le16(TX80211_RTAP_CHAN_A);
+			}
+			break;
+		case TX80211_MOD_TURBO:
+			/* Turbo can be 802.11g or 802.11a */
+			if (channel <= 14) {
+				/* 802.11g network */
+				rtaphdr->wr_chan_flags = 
+					tx80211_le16(TX80211_RTAP_CHAN_TG);
+			} else {
+				rtaphdr->wr_chan_flags = 
+					tx80211_le16(TX80211_RTAP_CHAN_TA);
+			}
+			break;
+		default:
+			snprintf(in_tx->errstr, TX80211_STATUS_MAX, 
+					"Unsupported modulation mechanism "
+					"specified in send function.");
+			return TX80211_ENOTSUPP;
+	}
+
+	memcpy(pkt + TX80211_RTAP_LEN, in_pkt->packet, in_pkt->plen);
+
+	if (AirpcapWrite(apcap->ad, pkt, len) != 1) {
+		free(pkt);
+		snprintf(in_tx->errstr, TX80211_STATUS_MAX,
+				"Error sending packet: %s",
+				AirpcapGetLastError(apcap->ad));
+		return TX80211_ETXFAILED;
+	}
+
+	free(pkt);
+	return (len - TX80211_RTAP_LEN);
+			   
 
 int
 airpcap_setfuncmode(in_tx, funcmode)
