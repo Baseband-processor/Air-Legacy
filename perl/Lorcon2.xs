@@ -41,7 +41,7 @@
 #define LORCON_DOT11_DIR_INTRADS	3
 #define LORCON_DOT11_DIR_ADHOCDS	4
 
-#define TX80211_STATUS_MAX
+#define TX80211_STATUS_MAX  1
 
 #define BIT(x) (1 << (x))
 #define WLAN_FC_TODS                BIT(0)
@@ -2215,7 +2215,7 @@ CODE:
 	char *inject_nofcs_location = NULL;
 	int nofcs = -1;
 	if (strlen(in_tx->ifname) == 0) {
-		snprintf(in_tx->errstr, TX80211_STATUS_MAX, "No interface name\n");
+		snprintf(in_tx->errstr, TX80211_STATUS_MAX, "%s", "No interface name\n");
 		return -1;
 	}
 
