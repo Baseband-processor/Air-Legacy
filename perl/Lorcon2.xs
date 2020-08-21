@@ -1450,6 +1450,23 @@ int
 wtinj_send(wtinj, in_pkt)
 	TX80211 *wtinj
 	TX80211_PACKET *in_pkt
+CODE:
+	int ret;
+	if (!(wtinj->raw_fd > 0)) {
+		return TX80211_ENOTX;
+	}
+	ret = write(wtinj->raw_fd, in_pkt->packet, in_pkt->plen);
+	if (ret < 0) {
+		snprintf(wtinj->errstr, TX80211_STATUS_MAX, "write failed, %s", strerror(errno));
+		return TX80211_ENOTX;;
+	}
+	if (ret < (in_pkt->plen)) {
+		snprintf(wtinj->errstr, TX80211_STATUS_MAX, "incomplete write" ", %s", strerror(errno));
+		return ret;
+	}
+	RETVAL = ret;
+	OUTPUT:
+	  RETVAL
 
 int 
 wtinj_open(wtinj)
@@ -1459,14 +1476,12 @@ wtinj_open(wtinj)
 	short flags;
 	IFREQ if_req;
 	SOCKADDR_LL *sa_ll;
-
 	wtinj->raw_fd = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
 
 	if (wtinj->raw_fd < 0) {
 		snprintf(wtinj->errstr, "", "no socket fd in tx descriptor");
 		return -1;
 	}
-
 	memset(&if_req, 0, sizeof if_req);
 	memcpy(if_req.ifr_name, wtinj->ifname, IFNAMSIZ);
 	if_req.ifr_name[IFNAMSIZ - 1] = 0;
@@ -1493,11 +1508,16 @@ wtinj_open(wtinj)
 int 
 wtinj_close(wtinj)
 	TX80211 *wtinj
+CODE:
+	return close(wtinj->raw_fd);
 
 int 
 wtinj_setchannel(wtinj, channel)
 	TX80211 *wtinj
 	int channel
+CODE:
+		return (iwconfig_set_channel(wtinj->ifname, wtinj->errstr, channel));
+
 
 int 
 wtinj_getchannel(wtinj)
