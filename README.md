@@ -124,7 +124,7 @@ Air::Lorcon2::lorcon_send_bytes( $context, length($Packet), \$Packet ); # this w
 # NOTE:
 # Since version 17.6 is possible to use also this simplified function:
 
-print Air::Lorcon2::Send_Bytes( $context, \$Packet); 
+print Air::Lorcon2::Send_Bytes( $context, $Packet); 
 # The $Packet length is processed in the Back-End.
 
 ```
