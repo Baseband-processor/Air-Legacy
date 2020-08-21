@@ -76,13 +76,13 @@
 
 
 
-
 typedef struct mac80211_lorcon {
 	void *nlhandle;
    	int nl80211id;
    	int ifidx;
 }AirLorcon_MAC80211;
 
+typedef struct fd_set              FD;
 typedef struct pcap_t 		   Pcap;
 typedef struct timeval             TIME;
 
@@ -854,6 +854,18 @@ int
 lorcon_multi_add_interface(ctx, lorcon_intf)
   AirLorconMulti *ctx
   AirLorcon *lorcon_intf
+ CODE:
+ AirLorconMulti *i =  (AirLorconMulti *) malloc(sizeof(AirLorconMulti *));
+
+    if (i == NULL)  {
+        snprintf(ctx->errstr, LORCON_STATUS_MAX, "Out of memory!");
+        return -1;
+    }
+    i->next = ctx->interfaces;
+    i->lorcon_intf = lorcon_intf;
+    ctx->interfaces = i;
+    return 0;
+
 
 void 
 lorcon_multi_del_interface(ctx, lorcon_intf, free_interface)
@@ -881,6 +893,10 @@ lorcon_multi_set_interface_error_handler(ctx, lorcon_interface, handler, aux)
   LORCON_MULTI_ERROR_HANDLER handler
   void *aux
 
+void 
+FD_ZERO(set)
+	FD *set
+	
 void
 lorcon_multi_remove_interface_error_handler(ctx, lorcon_interface)
   AirLorconMulti *ctx
@@ -903,7 +919,87 @@ lorcon_multi_loop(ctx, counter, callback, user)
   int counter
   AirLorconHandler callback
   unsigned char *user
+CODE:
+    int packets = 0;
+    FD rset;
+    int maxfd = 0;
+    int r;
+    AirLorconMulti *intf = NULL;
+    if (ctx->interfaces == NULL) {
+        snprintf( ctx->errstr, LORCON_STATUS_MAX,  "Cannot multi_loop with no interfaces" );
+        return -1;
+    }
+    while (packets < count || count <= 0) {
+        FD_ZERO(&rset);
+        maxfd = 0;
+        while ((intf = lorcon_multi_get_next_interface(ctx, intf))) {
+            int fd = lorcon_get_selectable_fd(intf->lorcon_intf);
 
+            if (fd < 0) {
+                lorcon_multi_del_interface(ctx, intf->lorcon_intf, 0);
+
+                if (intf->error_handler != NULL) {
+                    (*(intf->error_handler))(ctx, intf->lorcon_intf, intf->error_aux);
+                }
+                intf = NULL;
+                continue;
+            }
+
+            FD_SET(fd, &rset);
+
+            if (maxfd < fd)
+                maxfd = fd;
+
+        }
+
+        if (maxfd == 0) {
+            fprintf(stderr, "lorcon_multi_loop no interfaces with packets left\n");
+            return 0;
+        }
+        if (select(maxfd + 1, &rset, NULL, NULL, NULL) < 0) {
+            if (errno != EINTR && errno != EAGAIN) {
+                snprintf(ctx->errstr, LORCON_STATUS_MAX, "select fail: %s", strerror(errno));
+                return -1;
+            }
+        }
+
+        intf = NULL;
+        while ((intf = lorcon_multi_get_next_interface(ctx, intf))) {
+            int fd = lorcon_get_selectable_fd(intf->lorcon_intf);
+
+            if (fd < 0) {
+                lorcon_multi_del_interface(ctx, intf->lorcon_intf, 0);
+
+                if (intf->error_handler != NULL) {
+                    (*(intf->error_handler))(ctx, intf->lorcon_intf, intf->error_aux);
+                }
+
+                intf = NULL;
+
+                continue;
+            }
+
+            if (FD_ISSET(fd, &rset)) {
+                r = lorcon_dispatch(intf->lorcon_intf, 1, callback, user);
+
+                if (r <= 0) {
+                    fprintf(stderr, "Interface stopped reporting packets, removing  "from multicap: %s\n",  lorcon_get_capiface(intf->lorcon_intf));
+                    lorcon_multi_del_interface(ctx, intf->lorcon_intf, 0);
+                    if (intf->error_handler != NULL) {
+                        (*(intf->error_handler))(ctx, intf->lorcon_intf, intf->error_aux);
+                    }
+                    intf = NULL;
+                    continue;
+                }
+
+                packets++;
+            }
+        }    
+    RETVAL = packets;
+    OUTPUT:
+	RETVAL
+
+			    
 AirLorconDriver *
 drv_madwifing_listdriver(drv)
    AirLorconDriver * drv
