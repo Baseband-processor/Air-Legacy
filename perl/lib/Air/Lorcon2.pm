@@ -593,7 +593,7 @@ sub Inject_Frame {
 sub Send_Bytes {
     my ($context, $packet ) = @_;
     my $length = length($packet);
-    return(Air::Lorcon2::lorcon_send_bytes($context, $length, $packet);
+    return(Air::Lorcon2::lorcon_send_bytes($context, $length, \$packet);
 }
 
 sub setSSID(){
