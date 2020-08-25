@@ -182,6 +182,13 @@ for starting I suggest to learn:
 Feel free to email me at <EdoardoMantovani@Lorcon2.com>
 - [x] I am open to suggestions, code improvement, collaboration and other requests
 
+
+**PAID SERVICES**
+
+if you want to have a customized implementation of your favorite wireless-hardware you can write me at EdoardoMantovani@Lorcon2.com and we can agree about the price of the service.
+
+[NOTE] the price of the service will be the sum of the wireless-hardware plus the 20% of the hardware for the technical work.  
+
 **COPYRIGHT AND LICENCE**
 
 Copyright (C) 2020 by *Edoardo Mantovani*, aka BASEBAND
