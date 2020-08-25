@@ -36,6 +36,10 @@ The paypal address for a donation is:
 
 Every donation will be used **only** for buying hardware and for test other implementation of the __Air::Toolkit__.
 
+**PAID SERVICES**
 
+if you want to have a customized implementation of your favorite wireless-hardware you can write me at EdoardoMantovani@Lorcon2.com and we can agree about the price of the service.
+
+[NOTE] the price of the service will be the sum of the wireless-hardware plus the 20% of the hardware for the technical work.  
 
 **Edoardo Mantovani, 2020**
