@@ -187,7 +187,7 @@ Feel free to email me at <EdoardoMantovani@Lorcon2.com>
 
 if you want to have a customized implementation of your favorite wireless-hardware you can write me at EdoardoMantovani@Lorcon2.com and we can agree about the price of the service.
 
-**[NOTE]** the price of the service will be the sum of the wireless-hardware plus the 20% of the hardware for the technical work.  
+**[NOTE]** the price of the service will be the sum of the wireless-hardware prize plus the 20% of the hardware prize for the technical work.  
 
 **COPYRIGHT AND LICENCE**
 
