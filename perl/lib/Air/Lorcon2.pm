@@ -4,7 +4,7 @@ require  v5.22.1;
 use strict;
 use warnings;
 
-our $VERSION = '17.6';
+our $VERSION = '17.7';
 use base qw(Exporter DynaLoader);
 
 my %channel_to_frequency = (
