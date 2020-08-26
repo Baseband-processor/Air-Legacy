@@ -189,6 +189,9 @@ if you want to have a customized implementation of your favorite wireless-hardwa
 
 More info here: https://github.com/Baseband-processor/Perl-awk-services/blob/master/README.md
 
+**FREE DROPS**
+
+Occasionally I'll drop some random hardware extension for Air::Lorcon2, the frequency is proportional to the request of the paid service.
 
 **COPYRIGHT AND LICENCE**
 
