@@ -1,5 +1,11 @@
 Revision history for Perl extension Net::Lorcon2.
 
+17.7    Wed Aug 26 13:48:00  CET 2020
+
+  - removed "lorcon_set_datalink" and "lorcon_get_datalink" cause there isn't the C code in the original Lorcon library
+  - added C Back-End code for functions without using the "pseudo-FFI"
+  - added few more constants
+  
 17.6    Wed Aug 19 10:00::00 CET 2020
 
   - added packet forging capabilities
