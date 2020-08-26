@@ -20,4 +20,4 @@ no_index:
 requires:
   Net::MAc: '0'
   perl: '5.22.1'
-version: '17.6'
+version: '17.7'
