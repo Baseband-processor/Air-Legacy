@@ -602,11 +602,15 @@ sub Open_Injmon { # Open both
 
 sub ChangeMAC {
 	my ($interface, $MAC) = @_;
-
-
-        `ip link set dev $interface address $MAC`;
+	# Prevention against malformed MAC's
+	local $control = Net::MAC->new('mac' =>  $MAC, 'die' => 0); # Die if MAC is wrong
+        if(`ip link set dev $interface address $MAC`){
+		return 0;
+	}else{
+		return -1;
 }
-
+	}
+	
 sub Inject_Frame {
     my ($context, $packet) = @_;
     return(Air::Lorcon2::lorcon_inject($context, $packet);
