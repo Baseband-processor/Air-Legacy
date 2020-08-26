@@ -40,7 +40,6 @@ Every donation will be used **only** for buying hardware and for test other impl
 
 if you want to have a customized implementation of your favorite wireless-hardware you can write me at EdoardoMantovani@Lorcon2.com and we can agree about the price of the service.
 
-**[NOTE]** the price of the service will be the sum of the wireless-hardware prize plus the 20% of the hardware prize for the technical work.  
-
+More info at: https://github.com/Baseband-processor/Perl-awk-services/blob/master/README.md
 
 **Edoardo Mantovani, 2020**
