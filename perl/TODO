@@ -2,3 +2,5 @@ Made by Edoardo Mantovani, 2020
 
 - increase the functions coverage of lorcon2
 - add some pcap functions for "upgrading" lorcon2
+- include libnl building for a more low level coverage
+- fix many compilation problems at "make" command
