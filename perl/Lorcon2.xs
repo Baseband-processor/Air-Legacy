@@ -600,14 +600,6 @@ void
 lorcon_close(context)
       AirLorcon *context
 
-int
-lorcon_get_datalink(context)
-      AirLorcon *context
-
-int
-lorcon_set_datalink(context, dlt)
-      AirLorcon *context
-      int dlt
 
 int
 lorcon_set_channel(context, channel)
