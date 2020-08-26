@@ -179,6 +179,8 @@ for starting I suggest to learn:
 
 **PERL NETWORK SECURITY RESOURCE**
 
+* _Automating System Administration with Perl_ (Probably one of the best books for the blue team field practices in Perl)
+* _Network Programming With Perl (by Lincoln Stein, 2001)_ (even if old, still remains the best networking book for Perl developers)
 * [Practical PERL for Security Practitioners](https://www.sans.org/reading-room/whitepapers/scripting/practical-perl-security-practitioners-1357)
 * [Perl for Penetration Testing](https://www.slideshare.net/kost/perl-usage-in-security-and-penetration-testing)
 
