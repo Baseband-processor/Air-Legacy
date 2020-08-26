@@ -7,6 +7,7 @@ Revision history for Perl extension Net::Lorcon2.
   - added few more constants
   - added pure-perl function ChangeMAC, which permits to change the MAC address in secure way
   - added and extended the "frequency-channel" table, which is stored as an HASH 
+  - added upper level abstraction of "lorcon_add_wepkey", the simplified function is "add_WEPKey"
   
 17.6    Wed Aug 19 10:00::00 CET 2020
 
