@@ -605,7 +605,9 @@ sub ChangeMAC {
 	my ($interface, $MAC) = @_;
 	# Prevention against malformed MAC's
 	local $control = Net::MAC->new('mac' =>  $MAC, 'die' => 0); # Die if MAC is wrong
+	`ip link set dev interface down';
         if(`ip link set dev $interface address $MAC`){
+		`ip link set dev interface up`;
 		return 0;
 	}else{
 		return -1;
