@@ -502,6 +502,7 @@ our %EXPORT_TAGS = (
       Open_Injmon
       Inject_Frame
       Send_Bytes
+      ChangeMAC
       tuntap_openmon_cb
       tuntap_sendbytes
    )],
@@ -597,6 +598,13 @@ sub Open_Injmon { # Open both
     }else{
         return 1; # Good
     }
+}
+
+sub ChangeMAC {
+	my ($interface, $MAC) = @_;
+
+
+        `ip link set dev $interface address $MAC`;
 }
 
 sub Inject_Frame {
