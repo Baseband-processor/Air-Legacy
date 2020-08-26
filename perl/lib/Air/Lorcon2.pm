@@ -503,6 +503,7 @@ our %EXPORT_TAGS = (
       Inject_Frame
       Send_Bytes
       ChangeMAC
+      add_WEPKey
       tuntap_openmon_cb
       tuntap_sendbytes
    )],
@@ -674,6 +675,11 @@ sub auto_Initialize_driver{
 	}
 }
 
+sub add_WEPKey {
+	my ($context, $bssid, $WEPkey) = @_;
+	return(lorcon_add_wepkey($context, $bssid, $WEPkey, length($WEPkey) ) );
+
+}
 
 __PACKAGE__->bootstrap($VERSION);
 
