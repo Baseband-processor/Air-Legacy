@@ -177,6 +177,12 @@ for starting I suggest to learn:
 * [Net::Connection::Sniffer](https://metacpan.org/pod/Net::Connection::Sniffer)
 * [Net::ARP](https://metacpan.org/pod/Net::ARP)
 
+**PERL NETWORK SECURITY RESOURCE**
+
+* [Practical PERL for Security Practitioners](https://www.sans.org/reading-room/whitepapers/scripting/practical-perl-security-practitioners-1357)
+* [Perl for Penetration Testing](https://www.slideshare.net/kost/perl-usage-in-security-and-penetration-testing)
+
+
 **Requests and collaborations**
 
 Feel free to email me at <EdoardoMantovani@Lorcon2.com>
