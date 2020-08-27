@@ -702,6 +702,13 @@ pcap_dispatch(p, cnt, callback, user)
         int cnt
         SV *callback
         SV *user
+
+int
+pcap_loop(p, cnt, callback, user)
+        Pcap *p
+        int cnt
+        SV *callback
+        SV *use
 	
       
 int 
