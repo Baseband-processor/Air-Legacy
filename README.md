@@ -201,6 +201,11 @@ More info here: https://github.com/Baseband-processor/Perl-awk-services/blob/mas
 
 Occasionally I'll drop some random hardware extension for Air::Lorcon2, the frequency is proportional to the request of the paid service.
 
+**CURRENT VERSION**
+
+After a long development stage, the actual version of Air::Lorcon2 is 17.7, for more about the enhancement of various functions see the _Change_ file inside the Perl directory.
+
+
 **COPYRIGHT AND LICENCE**
 
 Copyright (C) 2020 by *Edoardo Mantovani*, aka BASEBAND
