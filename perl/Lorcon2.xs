@@ -695,7 +695,14 @@ lorcon_set_compiled_filter(context, filter)
 	RETVAL = 1;
       	  OUTPUT:
 		  RETVAL
-		
+
+int
+pcap_dispatch(p, cnt, callback, user)
+        Pcap *p
+        int cnt
+        SV *callback
+        SV *user
+	
       
 int 
 lorcon_loop(context, counter,  callback, user)
