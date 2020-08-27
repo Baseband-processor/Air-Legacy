@@ -731,7 +731,22 @@ lorcon_dispatch(context, counter,  callback, user)
    int counter
    AirLorconHandler callback
    u_char *user
-   
+CODE:
+ 	int ret;
+	if (context->pcap == NULL) {
+		snprintf(context->errstr, LORCON_STATUS_MAX,  "capture driver %s did not create a pcap context", lorcon_get_driver_name(context));
+		return LORCON_ENOTSUPP;
+	}
+	context->handler_cb = callback;
+	context->handler_user = user;
+	ret = pcap_dispatch(context->pcap, count, lorcon_pcap_handler, (u_char *) context);
+    if (ret == -1) {
+        snprintf(context->errstr, LORCON_STATUS_MAX,
+                "pcap_dispatch failed: %s", pcap_geterr(context->pcap));
+    }
+	RETVAL = ret;
+OUTPUT:
+	RETVAL
 
 
 void
