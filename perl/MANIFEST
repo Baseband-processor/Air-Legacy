@@ -10,6 +10,8 @@ Ctxs.h
 t/test-consts.t
 t/test-device-init.t
 t/test-use.t
+t/test-open.t
+t/test-auto.t
 typemap
 META.yml                                 Module YAML meta-data (added by MakeMaker)
 META.json                                Module JSON meta-data (added by MakeMaker)
