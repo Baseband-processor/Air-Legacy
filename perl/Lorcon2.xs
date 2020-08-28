@@ -1250,8 +1250,7 @@ pcap_open_live(device, snaplen, promisc, to_ms, err)
 #ifdef _MSC_VER
 			if (to_ms == 0)
                 to_ms = 1;
-#endif
-                        RETVAL = pcap_open_live(device, snaplen, promisc, to_ms, errbuf);
+			RETVAL = pcap_open_live(device, snaplen, promisc, to_ms, errbuf);
  
                         if (RETVAL == NULL) {
                                 sv_setpv(err_sv, errbuf);
@@ -1382,7 +1381,26 @@ drv_rtfile_init(init)
 AirLorconDriver *
 drv_file_listdriver(drv)
      AirLorconDriver *drv
+CODE:
+	AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
+	AirLorconDriver *rtd = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
 
+	d->name = strdup("file");
+	d->details = strdup("PCAP file source");
+	d->init_func = drv_file_init;
+	d->probe_func = drv_file_probe;
+	d->next = head;
+
+	rtd->name = strdup("rtfile");
+	rtd->details = strdup("Real-time PCAP file source");
+	rtd->init_func = drv_rtfile_init;
+	rtd->probe_func = drv_file_probe;
+	rtd->next = d;
+
+	RETVAL = rtd;
+OUTPUT:
+	RETVAL
+			    
 LCPA_META *
 lcpa_init()
 
