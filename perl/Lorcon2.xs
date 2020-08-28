@@ -1420,6 +1420,45 @@ lcpa_replace(in_pack, in_type, in_length, in_data)
         const char *in_type
         int in_length
         uint8_t *in_data
+			    
+int 
+lcpa_size(in_head) 
+	LCPA_META *in_head
+CODE:
+	LCPA_META *h = NULL, *i = NULL;
+	int len = 0;
+	for (h = in_head; h->prev != NULL; h = h->prev) {
+		;
+	}
+	h = h->next;
+
+	len = 0;
+
+	for (i = h; i != NULL; i = i->next) {
+		len += i->len;
+	}
+
+	return len;
+
+
+void 
+lcpa_freeze(in_head, bytes) 
+	LCPA_META *in_head
+	u_char *bytes	    
+CODE: 
+	LCPA_META *h = NULL, *i = NULL;
+	int offt = 0;
+	for (h = in_head; h->prev != NULL; h = h->prev) {
+		;
+	}
+	h = h->next;
+
+	for (i = h; i != NULL; i = i->next) {
+		memcpy(&(bytes[offt]), i->data, i->len);
+		offt += i->len;
+	}
+
+			    
         
 MADWIFI_VAPS *
 madwifing_list_vaps(interface_name, errorstring)
