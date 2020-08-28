@@ -9,6 +9,7 @@ Revision history for Perl extension Net::Lorcon2.
   - added and extended the "frequency-channel" table, which is stored as an HASH 
   - added upper level abstraction of "lorcon_add_wepkey", the simplified function is "add_WEPKey"
   - added 4 new tests
+  - extended the coverage of "file" and "rtfile" driver
   
 17.6    Wed Aug 19 10:00::00 CET 2020
 
