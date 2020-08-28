@@ -69,10 +69,7 @@
 #include "perl.h"
 #include "XSUB.h"
 
-#include <sys/time.h>
-#include <sys/stat.h>
-#include <linux/socket.h>
-#include <pcap.h>
+
 #include "Ctxs.h"
 
 typedef struct PAirpcapHandle  			HANDLEPAIRPCAP
