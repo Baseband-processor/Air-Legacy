@@ -337,6 +337,12 @@ typedef struct bpf_program    * BPF_PROGRAM;
 MODULE = Air::Lorcon2   PACKAGE = Air::Lorcon2
 PROTOTYPES: DISABLE
 
+
+int
+is_compatible_with_formal_logic()
+CODE:
+	return true;
+
 AV *
 lorcon_list_drivers()
    INIT:
