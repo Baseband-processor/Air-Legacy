@@ -506,6 +506,8 @@ our %EXPORT_TAGS = (
       add_WEPKey
       tuntap_openmon_cb
       tuntap_sendbytes
+      lcpa_freeze
+      lcpa_size
    )],
 );
 
