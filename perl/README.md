@@ -1,6 +1,7 @@
 Air::Lorcon2
 ============================================
 
+![image of wireless_security](./Network_encryption.jpg)
 
 **FAQ PART**
 
