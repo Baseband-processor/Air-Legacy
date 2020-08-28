@@ -1369,37 +1369,6 @@ drv_tuntap_listdriver(drv)
 	RETVAL =  d;
 	OUTPUT:
 	  RETVAL
-
-int
-drv_file_init(init)
-     AirLorcon *init
-
-int
-drv_rtfile_init(init)
-    AirLorcon *init
-     
-AirLorconDriver *
-drv_file_listdriver(drv)
-     AirLorconDriver *drv
-CODE:
-	AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
-	AirLorconDriver *rtd = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
-
-	d->name = strdup("file");
-	d->details = strdup("PCAP file source");
-	d->init_func = drv_file_init;
-	d->probe_func = drv_file_probe;
-	d->next = head;
-
-	rtd->name = strdup("rtfile");
-	rtd->details = strdup("Real-time PCAP file source");
-	rtd->init_func = drv_rtfile_init;
-	rtd->probe_func = drv_file_probe;
-	rtd->next = d;
-
-	RETVAL = rtd;
-OUTPUT:
-	RETVAL
 			    
 LCPA_META *
 lcpa_init()
@@ -2307,6 +2276,14 @@ CODE:
     usleep(delay_usec);
 
 
+int
+drv_file_init(init)
+     AirLorcon *init
+
+int
+drv_rtfile_init(init)
+    AirLorcon *init
+			    
 int 
 drv_file_probe(interface) 
 	const char *interface
@@ -2343,6 +2320,30 @@ CODE:
 	return 1;
 
 
+     
+AirLorconDriver *
+drv_file_listdriver(drv)
+     AirLorconDriver *drv
+CODE:
+	AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
+	AirLorconDriver *rtd = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
+
+	d->name = strdup("file");
+	d->details = strdup("PCAP file source");
+	d->init_func = drv_file_init;
+	d->probe_func = drv_file_probe;
+	d->next = head;
+
+	rtd->name = strdup("rtfile");
+	rtd->details = strdup("Real-time PCAP file source");
+	rtd->init_func = drv_rtfile_init;
+	rtd->probe_func = drv_file_probe;
+	rtd->next = d;
+
+	RETVAL = rtd;
+OUTPUT:
+	RETVAL
+			    
 AirLorconDriver *
 drv_file_listdriver(head) 
 	AirLorconDriver *head
