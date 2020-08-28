@@ -628,6 +628,12 @@ int
 lorcon_set_complex_channel(context, channel) 
 	AirLorcon *context
 	AirLorconChannel *channel
+CODE:
+	    if (context->setchan_ht_cb == NULL) {
+        snprintf(context->errstr, LORCON_STATUS_MAX, "Driver %s does not support HT channels", context->drivername);
+        return LORCON_ENOTSUPP;
+    }
+    return (*(context->setchan_ht_cb))(context, channel);
 	
 int 
 lorcon_get_hwmac(context, mac)
