@@ -2,6 +2,7 @@
 # see if lorcon is installed by checking the "get_version" func, this will return the constant LORCON_VERSION
 
 use Test;
+use strict;
 
 BEGIN { plan tests => 5 };
 
