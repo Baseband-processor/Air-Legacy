@@ -9,4 +9,4 @@ all: CT perlT
 CT:
 	(cd ./C && chmod 755 ./configure && ./configure --prefix=$(TMP_INSTALL_DIR) && make all && make install)
 perlT:
-	(cd ./$(PERL_AIR_LORCON_DIR) && sudo perl Makefile.PL  && make && make install )
+	(cd ./$(PERL_AIR_LORCON_DIR) && sudo perl Makefile.PL  && make && make test && make install )
