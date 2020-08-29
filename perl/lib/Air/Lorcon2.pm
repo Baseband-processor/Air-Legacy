@@ -1,11 +1,13 @@
 package Air::Lorcon2;
 require  v5.22.1;
 
+# Made by Edoardo Mantovani, 2020
+
 use strict;
 use warnings;
 
 our $VERSION = '17.7';
-use base qw(Exporter DynaLoader);
+use base qw(Exporter);
 
 my %channel_to_frequency = (
     1 => 2412,
