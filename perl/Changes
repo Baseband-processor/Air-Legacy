@@ -12,6 +12,7 @@ Revision history for Perl extension Net::Lorcon2.
   - extended the coverage of "file" and "rtfile" driver
   - added lcpa_freeze and lcpa_size functions
   - added even more functions from libPcap which are not implemented in Net::Pcap
+  - fixed bad code in .pm file
   
 17.6    Wed Aug 19 10:00::00 CET 2020
 
