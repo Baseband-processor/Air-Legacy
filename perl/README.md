@@ -1,4 +1,4 @@
-Air::Lorcon2
+Air::Lorcon2 (second documentation)
 ============================================
 
 ![image of wireless_security](./Network_encryption.jpg)
