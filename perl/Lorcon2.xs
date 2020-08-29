@@ -1261,7 +1261,7 @@ pcap_open_live(device, snaplen, promisc, to_ms, err)
                                 err_sv = &PL_sv_undef;
                         }
  
-                        safefree(errbuf);
+                        Safefree(errbuf);
  
                 } else
                         croak("arg5 not a reference");
@@ -2432,7 +2432,7 @@ CODE:
 
 	nofcs = open(inject_nofcs_location, O_WRONLY);
 
-	free(inject_nofcs_location);
+	Safefree(inject_nofcs_location);
 	if (nofcs<0) {return -1;}
 	else {
 		in_tx->raw_fd=nofcs;
