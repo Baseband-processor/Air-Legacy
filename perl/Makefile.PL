@@ -1,4 +1,5 @@
-
+use strict;
+use warnings;
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
@@ -11,5 +12,6 @@ WriteMakefile(
    INC => '-I/include -I/usr/include -I/usr/local/include',
    MIN_PERL_VERSION => '5.22.1',
    PREREQ_PM => {
+      Net::MAC =>  0,
   },
 );
