@@ -119,6 +119,10 @@ Air::Lorcon2::drv_mac80211_init( $context );
 
 my $Packet = "\xdd\x09\x00\x50\xf2\x04\x10\x4a\x00\x01\x10"; # WPS probe packet taken by Air::Reaver, another my module for Reaver
 
+# || 
+
+Air::Lorcon2::Packet_to_hex("sample_packet"); # return a hexadecimal version of "sample_packet" with \x format
+
 Air::Lorcon2::lorcon_send_bytes( $context, length($Packet), \$Packet ); # this will send the raw bytes though the network
 
 # NOTE:
