@@ -13,5 +13,8 @@ WriteMakefile(
    MIN_PERL_VERSION => '5.22.1',
    PREREQ_PM => {
       Net::MAC =>  0,
+      Net::Pcap => 0,
   },
 );
+
+# NOTE: Net::Pcap is required only for tests
