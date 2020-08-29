@@ -1383,6 +1383,10 @@ lcpa_append_copy(in_pack, in_type, in_length, in_data)
               int in_length
               uint8_t *in_data
 
+void 
+lcpa_free(in_head)
+	LCPA_META *in_head
+			    
 LCPA_META *
 lcpa_append(in_pack, in_type, in_length, in_data)
               LCPA_META *in_pack
