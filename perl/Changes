@@ -1,5 +1,10 @@
 Revision history for Perl extension Net::Lorcon2.
 
+[ALPHA]
+18.1    Sat Aug 29 23:56:00 CET 2020
+
+  - added Packet_to_hex function
+
 17.7    Wed Aug 26 13:48:00  CET 2020
 
   - removed "lorcon_set_datalink" and "lorcon_get_datalink" cause there isn't the C code in the original Lorcon library
@@ -16,6 +21,7 @@ Revision history for Perl extension Net::Lorcon2.
   - added new example (beacon_flood_raw.py)
   - added new example (beacon_flood_lcpa.c)
   - added new function: lcpa_free
+ 
   
 17.6    Wed Aug 19 10:00::00 CET 2020
 
