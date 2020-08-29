@@ -1,3 +1,4 @@
+#define INT_MAX    2147483647
 #define LORCON_CHANNEL_BASIC    0
 #define LORCON_CHANNEL_HT20     1
 #define LORCON_CHANNEL_HT40P    2
