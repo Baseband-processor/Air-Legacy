@@ -665,10 +665,10 @@ sub setMode(){
 }
 
 sub auto_Initialize_driver{
-	my ( $context ) = @_;
+	my ( $context, $prefferred_drive ) = @_;
 	if(undef($prefferred_drive)){
 		my @supported_drivers = ("madwifing", "mac80211", "bcm");
-		my @drivers_list = lorcon_list_drivers();
+		my $drivers_list = lorcon_list_drivers();
 		foreach (@{ $drivers_list }){
 		  if($_ =~ $supported_drivers[0]){
 			return Air::Lorcon2::drv_madwifing_init( $context );
