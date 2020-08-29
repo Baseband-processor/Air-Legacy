@@ -14,6 +14,8 @@ Revision history for Perl extension Net::Lorcon2.
   - added even more functions from libPcap which are not implemented in Net::Pcap
   - fixed bad code in .pm file
   - added new example (beacon_flood_raw.py)
+  - added new example (beacon_flood_lcpa.c)
+  - added new function: lcpa_free
   
 17.6    Wed Aug 19 10:00::00 CET 2020
 
