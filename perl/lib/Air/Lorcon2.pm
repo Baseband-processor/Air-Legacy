@@ -511,6 +511,7 @@ our %EXPORT_TAGS = (
       tuntap_sendbytes
       lcpa_freeze
       lcpa_size
+      Packet_to_hex
    )],
 );
 
@@ -555,6 +556,16 @@ sub RMAC_gen(){
   delete $INC{'Net/MAC.pm'}; # toggle module from %INC
   return ($formatted_mac);
 
+}
+
+sub Packet_to_hex{
+	my $string = shift;
+	$string =~ s/(.)/sprintf "%4x", ord $1/seg;
+	$string =~ s/[[:space:]]/\\x/g;
+	$string =~ s/\\x\\//g;
+	$string =~ s/x/\\x/g;
+	# delete garbage from $string
+	return( $string );
 }
 
 sub create(){
