@@ -550,6 +550,7 @@ sub RMAC_gen(){
     'bit_group' => 8,  
     'delimiter' => ':'
 );
+  delete $INC{'Net/MAC.pm'}; # toggle module from %INC
   return ($formatted_mac);
 
 }
@@ -609,6 +610,7 @@ sub ChangeMAC {
 	my ($interface, $MAC) = @_;
 	# Prevention against malformed MAC's
 	local $control = Net::MAC->new('mac' =>  $MAC, 'die' => 0); # Die if MAC is wrong
+	delete $INC{'Net/MAC.pm'}; # toggle module from %INC
 	`ip link set dev interface down`;
         if(`ip link set dev $interface address $MAC`){
 		`ip link set dev $interface up`;
@@ -616,6 +618,7 @@ sub ChangeMAC {
 	}else{
 		return -1;
 }
+
 	}
 	
 sub Inject_Frame {
