@@ -588,7 +588,7 @@ sub Open_Monitor { # Open monitor mode
     
 sub Open_Inject { # Open inject mode
     my $context = @_;
-    if(! ( Air::Lorcon2::lorcon:open_inject( $context ) ) ){
+    if(! ( Air::Lorcon2::lorcon::open_inject( $context ) ) ){
         return -1; # Bad
     }else{
         return 1; # Good
@@ -597,7 +597,7 @@ sub Open_Inject { # Open inject mode
     
 sub Open_Injmon { # Open both
     my $context = @_;
-    if(! ( Air::Lorcon2::lorcon:open_injmon( $context ) ) ){
+    if(! ( Air::Lorcon2::lorcon::open_injmon( $context ) ) ){
         return -1; # Bad
     }else{
         return 1; # Good
@@ -620,13 +620,13 @@ sub ChangeMAC {
 	
 sub Inject_Frame {
     my ($context, $packet) = @_;
-    return(Air::Lorcon2::lorcon_inject($context, $packet);
+    return(Air::Lorcon2::lorcon_inject($context, $packet) );
 }
    
 sub Send_Bytes {
     my ($context, $packet ) = @_;
     my $length = length($packet);
-    return(Air::Lorcon2::lorcon_send_bytes($context, $length, \$packet);
+    return(Air::Lorcon2::lorcon_send_bytes($context, $length, \$packet) );
 }
 
 sub setSSID(){
