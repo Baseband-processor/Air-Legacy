@@ -1617,7 +1617,7 @@ CODE:
 		return TX80211_ENOTX;;
 	}
 	if (ret < (in_pkt->plen)) {
-		snprintf(wtinj->errstr, TX80211_STATUS_MAX, "incomplete write" ", %s", strerror(errno));
+		snprintf(wtinj->errstr, TX80211_STATUS_MAX, "incomplete write %s", strerror(errno));
 		return ret;
 	}
 	RETVAL = ret;
@@ -1654,8 +1654,7 @@ wtinj_open(wtinj)
 	sa_ll->sll_ifindex = if_req.ifr_ifindex;
 	err = bind(wtinj->raw_fd, (SOCKADDR *)&sa_ll, sizeof sa_ll);
 	if (err != 0) {
-		snprintf(wtinj->errstr, "", "bind() failed, %s",
-				 strerror(errno));
+		snprintf(wtinj->errstr, "", "bind() failed, %s", strerror(errno));
 		close(wtinj->raw_fd);
 		return -3;
 	}
