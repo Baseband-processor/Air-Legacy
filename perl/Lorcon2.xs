@@ -1243,16 +1243,14 @@ pcap_open_live(device, snaplen, promisc, to_ms, err)
         int snaplen
         int promisc
         int to_ms
-        SV *err;
- 
-        CODE:
-                if (SvROK(err)) {
+        SV *err
+CODE:
+             if (SvROK(err)) {
             char    *errbuf = NULL;
             SV      *err_sv = SvRV(err);
- 
             Newx(errbuf, PCAP_ERRBUF_SIZE+1, char);
 #ifdef _MSC_VER
-			if (to_ms == 0)
+		if (to_ms == 0)
                 to_ms = 1;
 			RETVAL = pcap_open_live(device, snaplen, promisc, to_ms, errbuf);
  
