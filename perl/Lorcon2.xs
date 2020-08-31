@@ -1248,8 +1248,7 @@ CODE:
              if (SvROK(err)) {
             char    *errbuf = NULL;
             SV      *err_sv = SvRV(err);
-            Newx(errbuf, PCAP_ERRBUF_SIZE+1, char);
-#ifdef _MSC_VER
+            Newx(errbuf, PCAP_ERRBUF_SIZE + 1, char);
 		if (to_ms == 0)
                 to_ms = 1;
 			RETVAL = pcap_open_live(device, snaplen, promisc, to_ms, errbuf);
