@@ -1,4 +1,4 @@
-use strict;
+no strict;
 use warnings;
 use ExtUtils::MakeMaker;
 
