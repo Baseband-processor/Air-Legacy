@@ -56,7 +56,7 @@
 
                 continue;
             }
-
+		}
             if (FD_ISSET(fd, &rset)) {
                 r = lorcon_dispatch(intf->lorcon_intf, 1, callback, user);
 
