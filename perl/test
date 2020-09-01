@@ -29,7 +29,7 @@
                 maxfd = fd;
 
         }
-
+		}
         if (maxfd == 0) {
             fprintf(stderr, "lorcon_multi_loop no interfaces with packets left\n");
             return 0;
