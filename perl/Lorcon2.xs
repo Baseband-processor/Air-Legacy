@@ -349,7 +349,7 @@ PROTOTYPES: DISABLE
 int
 is_compatible_with_formal_logic()
 CODE:
-	return true;
+	return(true);
 
 AV *
 lorcon_list_drivers()
@@ -407,8 +407,7 @@ lorcon_auto_driver(interface)
 				break;
 			}
 		}
-	i = i->next;
-		
+	i = i->next;	
 	}
 
 
@@ -488,7 +487,6 @@ lorcon_open_inject(context)
 		snprintf(context->errstr, LORCON_STATUS_MAX,  "Driver %s does not support INJECT mode", context->drivername);
 		return LORCON_ENOTSUPP;
 	}
-
 	return (*(context->openinject_cb))(context);
 
 
@@ -992,6 +990,7 @@ CODE:
         snprintf( ctx->errstr, LORCON_STATUS_MAX,  "Cannot multi_loop with no interfaces" );
         return -1;
     }
+	            int fd = lorcon_get_selectable_fd(intf->lorcon_intf);
     while (packets < counter || counter <= 0) {
         FD_ZERO(&rset);
         maxfd = 0;
@@ -1000,21 +999,19 @@ CODE:
 
             if (fd < 0) {
                 lorcon_multi_del_interface(ctx, intf->lorcon_intf, 0);
-
+			}
                 if (intf->error_handler != NULL) {
                     (*(intf->error_handler))(ctx, intf->lorcon_intf, intf->error_aux);
-                }
+                
                 intf = NULL;
                 continue;
             }
-
             FD_SET(fd, &rset);
 
-            if (maxfd < fd)
-                maxfd = fd;
+            if (maxfd < fd){ maxfd = fd; }
 
         }
-
+		}
         if (maxfd == 0) {
             fprintf(stderr, "lorcon_multi_loop no interfaces with packets left\n");
             return 0;
@@ -1024,7 +1021,7 @@ CODE:
                 snprintf(ctx->errstr, LORCON_STATUS_MAX, "select fail: %s", strerror(errno));
                 return -1;
             }
-        }
+        
 
         intf = NULL;
         while ((intf = lorcon_multi_get_next_interface(ctx, intf))) {
@@ -1032,16 +1029,15 @@ CODE:
 
             if (fd < 0) {
                 lorcon_multi_del_interface(ctx, intf->lorcon_intf, 0);
-
+		}
                 if (intf->error_handler != NULL) {
                     (*(intf->error_handler))(ctx, intf->lorcon_intf, intf->error_aux);
                 }
-
                 intf = NULL;
 
                 continue;
             }
-
+		}
             if (FD_ISSET(fd, &rset)) {
                 r = lorcon_dispatch(intf->lorcon_intf, 1, callback, user);
 
@@ -1056,7 +1052,6 @@ CODE:
                 }
 
                 packets++;
-            
         }    
     RETVAL = packets;
     OUTPUT:
