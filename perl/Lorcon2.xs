@@ -73,10 +73,10 @@
 
 #include "Ctxs.h"
 
-typedef struct PAirpcapHandle  			HANDLEPAIRPCAP
+typedef struct PAirpcapHandle  	HANDLEPAIRPCAP;
 	
 typedef struct airpcap_data {
-	HANDLEPAIRPCAP ad;
+	HANDLEPAIRPCAP *ad;
 	char errstr[AIRPCAP_ERRBUF_SIZE];
 }AIRPCAP_DATA;
 
@@ -87,7 +87,14 @@ typedef struct mac80211_lorcon {
    	int ifidx;
 }AirLorcon_MAC80211;
 
-typedef struct fd_set              FD;
+#define FD_SETSIZE 1024
+
+typedef struct fd_set {
+  u_int  fd_count;
+  SOCKET fd_array[FD_SETSIZE];
+  long fds_bits[1024 / 64];
+}FD;
+
 typedef struct pcap_t 		   Pcap;
 typedef struct timeval             TIME;
 
@@ -718,7 +725,7 @@ pcap_loop(p, cnt, callback, user)
         Pcap *p
         int cnt
         SV *callback
-        SV *use
+        SV *user
 	
       
 int 
@@ -738,7 +745,7 @@ lorcon_loop(context, counter,  callback, user)
 	context->handler_cb = callback;
 	context->handler_user = user;
 
-	ret = pcap_loop(context->pcap, count, lorcon_pcap_handler, (u_char *) context);
+	ret = pcap_loop(context->pcap, counter, lorcon_pcap_handler(user,counter, callback), (u_char *) context);
 
     if (ret == -1) {
         snprintf(context->errstr, LORCON_STATUS_MAX, "pcap_loop failed: %s", pcap_geterr(context->pcap));
@@ -763,7 +770,7 @@ CODE:
 	}
 	context->handler_cb = callback;
 	context->handler_user = user;
-	ret = pcap_dispatch(context->pcap, count, lorcon_pcap_handler, (u_char *) context);
+	ret = pcap_dispatch(context->pcap, counter, lorcon_pcap_handler(user,counter, callback), (u_char *) context);
     if (ret == -1) {
         snprintf(context->errstr, LORCON_STATUS_MAX,
                 "pcap_dispatch failed: %s", pcap_geterr(context->pcap));
@@ -911,7 +918,7 @@ lorcon_multi_add_interface(ctx, lorcon_intf)
   AirLorconMulti *ctx
   AirLorcon *lorcon_intf
  CODE:
- AirLorconMulti *i =  (AirLorconMulti *) malloc(sizeof(AirLorconMulti *));
+ AirLorconInterface *i =  (AirLorconInterface *) malloc(sizeof(AirLorconInterface *));
 
     if (i == NULL)  {
         snprintf(ctx->errstr, LORCON_STATUS_MAX, "Out of memory!");
@@ -977,15 +984,15 @@ lorcon_multi_loop(ctx, counter, callback, user)
   unsigned char *user
 CODE:
     int packets = 0;
-    FD rset;
+    FD *rset;
     int maxfd = 0;
     int r;
-    AirLorconMulti *intf = NULL;
+    AirLorconInterface *intf = NULL;
     if (ctx->interfaces == NULL) {
         snprintf( ctx->errstr, LORCON_STATUS_MAX,  "Cannot multi_loop with no interfaces" );
         return -1;
     }
-    while (packets < count || count <= 0) {
+    while (packets < counter || counter <= 0) {
         FD_ZERO(&rset);
         maxfd = 0;
         while ((intf = lorcon_multi_get_next_interface(ctx, intf))) {
@@ -1039,7 +1046,7 @@ CODE:
                 r = lorcon_dispatch(intf->lorcon_intf, 1, callback, user);
 
                 if (r <= 0) {
-                    fprintf(stderr, "Interface stopped reporting packets, removing  "from multicap: %s\n",  lorcon_get_capiface(intf->lorcon_intf));
+                    fprintf(stderr, "Interface stopped reporting packets, removing  from multicap: %s\n",  lorcon_get_capiface(intf->lorcon_intf));
                     lorcon_multi_del_interface(ctx, intf->lorcon_intf, 0);
                     if (intf->error_handler != NULL) {
                         (*(intf->error_handler))(ctx, intf->lorcon_intf, intf->error_aux);
@@ -1049,7 +1056,7 @@ CODE:
                 }
 
                 packets++;
-            }
+            
         }    
     RETVAL = packets;
     OUTPUT:
@@ -1299,8 +1306,8 @@ CODE:
 	}
 
 	memset(&if_req, 0, sizeof(if_req));
-	memcpy(if_req.ifr_name, context->ifname, IFNAMSIZ);
-	if_req.ifr_name[IFNAMSIZ - 1] = 0;
+	memcpy(if_req->ifr_name, context->ifname, IFNAMSIZ);
+	if_req->ifr_name[IFNAMSIZ - 1] = 0;
 	if (ioctl(context->inject_fd, SIOCGIFINDEX, &if_req) < 0) {
 		snprintf(context->errstr, LORCON_STATUS_MAX, "failed to get interface idex: %s", strerror(errno));
 		close(context->inject_fd);
@@ -1309,9 +1316,9 @@ CODE:
 	}
 
 	memset(&sa_ll, 0, sizeof(sa_ll));
-	sa_ll.sll_family = AF_PACKET;
-	sa_ll.sll_protocol = htons(ETH_P_80211_RAW);
-	sa_ll.sll_ifindex = if_req.ifr_ifindex;
+	sa_ll->sll_family = AF_PACKET;
+	sa_ll->sll_protocol = htons(ETH_P_80211_RAW);
+	sa_ll->sll_ifindex = if_req->ifr_ifindex;
 	if (bind(context->inject_fd, (SOCKADDR *) &sa_ll, sizeof(sa_ll)) != 0) {
 		snprintf(context->errstr, LORCON_STATUS_MAX, "failed to bind injection " "socket: %s", strerror(errno));
 		close(context->inject_fd);
