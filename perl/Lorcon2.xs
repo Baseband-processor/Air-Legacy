@@ -111,13 +111,15 @@
 
 #include "Ctxs.h"
 
-typedef struct aj_config {
+typedef struct {
 	uint16_t mode;		
 	uint8_t ownmac[6];		
 	uint8_t monitor;		
 	uint8_t channel;		
 	uint8_t essid[33];		
-}AJ_CONF;
+}aj_config;
+
+typedef struct aj_config AJ_CONF;
 
 typedef struct tx80211_cardlist{
 	char **cardnames;
