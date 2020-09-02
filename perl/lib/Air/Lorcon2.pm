@@ -752,6 +752,7 @@ our %EXPORT_TAGS = (
       iwconfig_get_name
       iwconfig_get_ssid
       iwconfig_set_ssid
+      iwconfig_set_intpriv
       nl80211_find_parent
       nl80211_setfrequency_cache
       nl80211_setfrequency
@@ -856,6 +857,11 @@ our %EXPORT_TAGS = (
       mac80211_openmon_cb
       mac80211_setchan_cb
       Detect_Driver
+      tx80211_rt61_init
+      tx80211_rt61_capabilities
+      rt61_open
+      tx80211_prism54_init
+      tx80211_prism54_capabilities
    )],
 );
 
