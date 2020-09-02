@@ -849,6 +849,9 @@ our %EXPORT_TAGS = (
       lcpa_freeze
       lcpa_size
       Packet_to_hex
+      wginj_send
+      tx80211_getcardlist
+      tx80211_freecardlist
    )],
 );
 
