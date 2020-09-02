@@ -862,6 +862,8 @@ our %EXPORT_TAGS = (
       rt61_open
       tx80211_prism54_init
       tx80211_prism54_capabilities
+      Channel_to_Frequency
+      Frequency_to_Channel      
    )],
 );
 
@@ -1067,6 +1069,19 @@ sub add_WEPKey {
 	return(lorcon_add_wepkey($context, $bssid, $WEPkey, length($WEPkey) ) );
 
 }
+
+# as their name suggest, these 2 functions permits the conversion from channel to its frequency and vice-versa, is suggested to use them with 
+# Lorcon_set_channel (or similar) functions
+sub Channel_to_Frequency{
+        my $channel = shift;
+        return $channel_to_frequency{ $channel };
+}
+
+sub Frequency_to_Channel{
+        my $Frequency = shift;
+        return (grep { $channel_to_frequency{$_} eq $Frequency } keys %channel_to_frequency );
+        }
+
 
 __PACKAGE__->bootstrap($VERSION);
 
