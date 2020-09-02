@@ -234,6 +234,22 @@ typedef struct  {
 typedef struct lcpa_metapack             LCPA_META;
 
 typedef struct {
+	uint8_t base[0];
+	uint16_t fc;
+	uint16_t dur_id;
+	uint8_t mac1[6];
+	uint8_t mac2[6];
+	uint8_t mac3[6];
+	uint16_t seq;
+	uint8_t mac4[6];
+	uint16_t data_len;
+	uint8_t null[14];
+	uint8_t data[0];
+}wg80211_frame;
+
+typedef struct wg80211_frame WG80211_FRAME;
+
+typedef struct {
         int type, subtype;
         int reason_code;
         int corrupt;
@@ -2455,3 +2471,51 @@ tx80211_getcardlist()
       tx80211_freecardlist(cardlist);
     }
 
+int 
+wginj_send(wginj, input_pkt)
+	TX80211 *wginj
+	TX80211_PACKET *input_pkt
+CODE:
+	int ret;
+	int payloadlen;
+	WG80211_FRAME *frame;
+
+	/* control packets cannot be transmitted with this driver, must be at
+	   least a full 802.11 header */
+	if (input_pkt->plen < 24) {
+		snprintf(wginj->errstr, TX80211_STATUS_MAX, "wlan-ng raw "
+				"injection only capable with fill 802.11 "
+				"frames, control frames are not possible.");
+		return TX80211_ENOTX;
+	}
+
+	payloadlen = in_pkt->plen - 24;
+	if (!(wginj->raw_fd > 0)) {
+		snprintf(wginj->errstr, TX80211_STATUS_MAX, "wlan-ng raw inject file descriptor not open");
+		return TX80211_ENOTX;
+	}
+
+	frame = malloc(sizeof(*frame) + payloadlen);
+	if (frame == NULL) {
+		snprintf(wginj->errstr, TX80211_STATUS_MAX, "wlan-ng send unable to allocate memory buffer");
+		return TX80211_ENOTX;
+	}
+
+	memset(frame, 0, sizeof(*frame));
+
+	frame->data_len = payloadlen;
+
+	memcpy(frame->base, input_pkt->packet, 24);
+	memcpy(frame->data, in_pkt->packet + 24, payloadlen);
+	ret = write(wginj->raw_fd, frame, (payloadlen + sizeof(*frame)));
+	free(frame);
+	if (ret < 0) {
+		snprintf(wginj->errstr, TX80211_STATUS_MAX, "Error transmitting frame: %s", strerror(errno));
+		return TX80211_ENOTX;
+	}
+	if (ret < (payloadlen + sizeof(*frame))) {
+		snprintf(wginj->errstr, TX80211_STATUS_MAX, "Partial frame  transmission: %s", strerror(errno));
+		return TX80211_EPARTTX;
+	}
+
+	return (ret - sizeof(*frame) + 24);
