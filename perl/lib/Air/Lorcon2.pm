@@ -852,6 +852,9 @@ our %EXPORT_TAGS = (
       wginj_send
       tx80211_getcardlist
       tx80211_freecardlist
+      drv_mac80211_probe
+      mac80211_openmon_cb
+      mac80211_setchan_cb
    )],
 );
 
