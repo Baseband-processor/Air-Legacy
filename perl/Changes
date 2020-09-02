@@ -1,11 +1,9 @@
 Revision history for Perl extension Net::Lorcon2.
 
 [ALPHA]
-18.1    Sat Aug 29 23:56:00 CET 2020
 
-  - added Packet_to_hex function
 
-17.7    Wed Aug 26 13:48:00  CET 2020
+17.7    Wed Aug 2 19:37:00  CET 2020
 
   - removed "lorcon_set_datalink" and "lorcon_get_datalink" cause there isn't the C code in the original Lorcon library
   - added C Back-End code for functions without using the "pseudo-FFI"
@@ -28,8 +26,9 @@ Revision history for Perl extension Net::Lorcon2.
   - added new documentation
   - fixed MANIFEST file problems
   - added mac80211 driver manipolation
-  
-  
+  - added Packet_to_hex function
+  - added Detect_Driver function and its back-end FindLinkage (pure perl subroutines)
+   
 17.6    Wed Aug 19 10:00::00 CET 2020
 
   - added packet forging capabilities
