@@ -108,6 +108,13 @@
 
 #include "Ctxs.h"
 
+typedef struct aj_config {
+	uint16_t mode;		
+	uint8_t ownmac[6];		
+	uint8_t monitor;		
+	uint8_t channel;		
+	uint8_t essid[33];		
+}AJ_CONF;
 
 typedef struct tx80211_cardlist{
 	char **cardnames;
@@ -1169,9 +1176,48 @@ lorcon_airjack_listdriver(drv)
    AirLorconDriver *drv
 
 int 
+tx80211_airjack_capabilities()
+CODE:
+	return (TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT | TX80211_CAP_DSSSTX);
+
+int 
+ajinj_open(ajinj)
+	TX80211 *ajinj
+CODE:
+	return(ajinj->raw_fd = aj_getsocket(ajinj->ifname));
+
+
+int 
+ajinj_close(ajinj)
+	TX80211 *ajinj
+CODE:
+	return (close(ajinj->raw_fd));
+
+
+int 
 aj_setmonitor(ifname, rfmonset)
   char *ifname
   int rfmonset
+CODE:
+	AJ_CONF ajconf;
+	IFREQ req;
+	int sock;
+
+	req.ifr_data = (char *)&ajconf;
+	strncpy(req.ifr_name, ifname, sizeof(req.ifr_name));
+
+	if (ioctl(sock, SIOCAJGMODE, &req) < 0) {
+		close(sock);
+		return (-1);
+	}
+
+	ajconf.monitor = rfmonset;
+
+	if (ioctl(sock, SIOCAJSMODE, &req) < 0) {
+		close(sock);
+		return (-1);
+	}
+
 
 int 
 aj_setmode(ifname,  mode)
