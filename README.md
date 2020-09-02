@@ -209,6 +209,15 @@ Occasionally I'll drop some random hardware extension for Air::Lorcon2, the freq
 
 After a long development stage, the actual version of Air::Lorcon2 is 17.7, for more about the enhancement of various functions see the _Change_ file inside the Perl directory.
 
+**Air::Lorcon2's Metacpan version**
+
+As you may understand, Air::Lorcon2 has an autoinstaller, which couldn't be executed normally running the classical
+
+```shell
+sudo cpanm Air::Lorcon2
+```
+So in the future I'll fork the project for a cpan compatible library.
+
 
 **COPYRIGHT AND LICENCE**
 
