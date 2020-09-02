@@ -37,6 +37,11 @@
 #define WLAN_FC_SUBTYPE_DEAUTH      12
 #define WLAN_FC_SUBTYPE_QOSDATA     8
 
+#define __FD_ISSET(d, set) \
+  ((__FDS_BITS (set)[__FD_ELT (d)] & __FD_MASK (d)) != 0)
+
+#define FD_ISSET(fd, fdsetp)    __FD_ISSET (fd, fdsetp)
+
 #define TX80211_ENOTX 0
 #define FD_ZERO(fdsetp)          __FD_ZERO (fdsetp) 
 #define LORCON_DOT11_DIR_FROMDS		1
@@ -74,6 +79,16 @@
 
 
 #include "Ctxs.h"
+
+
+typedef struct tx80211_cardlist{
+	char **cardnames;
+	char **descriptions;
+	int *capabilities;
+	int num_cards;
+	int *injnum;
+}TX80211_CARDLIST;
+
 
 typedef struct PAirpcapHandle  	HANDLEPAIRPCAP;
 	
@@ -154,20 +169,20 @@ typedef struct ifmap IFMAP;
 
 typedef sa_family_t SA_FAM;
 
-typedef struct  {
-               SA_FAM sa_family;
-               char        sa_data[14];
-           }sockaddr;
+typedef struct {
+        SA_FAM sa_family;
+	char   sa_data[14];
+}sockaddr;
 
 typedef struct sockaddr SOCKADDR;
 
 typedef struct {
-	char ifr_name[IFNAMSIZ]; 
         SOCKADDR ifr_addr;
         SOCKADDR ifr_dstaddr;
         SOCKADDR ifr_broadaddr;
         SOCKADDR ifr_netmask;
         SOCKADDR ifr_hwaddr;
+	char ifr_name[IFNAMSIZ]; 
         short           ifr_flags;
         int             ifr_ifindex;
         int             ifr_metric;
@@ -178,8 +193,8 @@ typedef struct {
         char           *ifr_data;
 }ifreq;
 
-
 typedef struct ifreq IFREQ;
+
 typedef struct madwi_vaps            MADWIFI_VAPS;
 
 typedef lorcon_multi_error_handler   LORCON_MULTI_ERROR_HANDLER;
@@ -308,7 +323,7 @@ typedef struct  lorcon_t{
 }AirLorcon;
 
 
-typedef struct   {
+typedef struct tx80211{
 	int injectortype;
 	char ifname[MAX_IFNAME_LEN];
 	uint32_t capabilities;
@@ -333,7 +348,7 @@ typedef struct   {
 	int (*getchan_callthrough) (struct tx80211 *);
 	int (*txpacket_callthrough) (struct tx80211 *, struct tx80211_packet *);
 	int (*selfack_callthrough) (struct tx80211 *, uint8_t *);
-}tx80211;
+}TX80211;
 
 
 typedef struct tx80211_radiotap_header TX80211_RADIOTAP_H;
@@ -370,10 +385,6 @@ typedef struct {
 
 typedef struct tx80211_packet * TX80211_PACKET;
 
-
-
-
-typedef struct tx80211 TX80211;
 
 
 #include "c/lorcon_driver_t.c"
@@ -1072,9 +1083,8 @@ CODE:
                 continue;
             }
 		}
-            if (FD_ISSET(fd, &rset)) {
+            if(FD_ISSET(fd, &rset)) {
                 r = lorcon_dispatch(intf->lorcon_intf, 1, callback, user);
-
                 if (r <= 0) {
                     fprintf(stderr, "Interface stopped reporting packets, removing  from multicap: %s\n",  lorcon_get_capiface(intf->lorcon_intf));
                     lorcon_multi_del_interface(ctx, intf->lorcon_intf, 0);
@@ -2411,4 +2421,37 @@ CODE:
 	RETVAL = i;
 OUTPUT:
 	RETVAL
-		
+
+void
+tx80211_freecardlist(input_list)
+	TX80211_CARDLIST *input_list
+CODE:
+	int x;
+	for( x = 0; x < input_list->num_cards; x++){
+		free(input_list->cardnames[x]);
+		free(input_list->descriptions[x]);
+}
+	free(input_list->cardnames);
+	free(input_list->descriptions);
+	free(input_list->capabilities);
+	free(input_list);
+
+
+void
+tx80211_getcardlist()
+  INIT:
+    int i;
+    TX80211_CARDLIST *cardlist;
+ 
+  PPCODE:
+    cardlist = tx80211_getcardlist();
+
+    if (cardlist){
+      EXTEND(SP, cardlist->num_cards);
+      for (i = 1; i < cardlist->num_cards; i++) {
+        PUSHs(sv_2mortal(newSVpv(cardlist->cardnames[i], 0)));
+      }
+ 
+      tx80211_freecardlist(cardlist);
+    }
+
