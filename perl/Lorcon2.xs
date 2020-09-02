@@ -228,7 +228,7 @@ typedef struct {
         uint16_t capability;
 }lorcon_dot11_extra;
 
-typedef lorcon_dot11_extra*        Lorcon_DOT11;
+typedef lorcon_dot11_extra        Lorcon_DOT11;
 
 typedef struct {
     const u_char *source_mac;
@@ -236,7 +236,7 @@ typedef struct {
     unsigned int llc_type;
 }lorcon_dot3_extra;
 
-typedef lorcon_dot3_extra*         Lorcon_DOT3;
+typedef lorcon_dot3_extra         Lorcon_DOT3;
 
 typedef lorcon_handler             AirLorconHandler;
 typedef lorcon_channel_t           AirLorconChannel;
