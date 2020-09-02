@@ -2599,20 +2599,20 @@ CODE:
 	return 0;
 	
 int 
-drv_mac80211_init(AirLorcon *context) 
+drv_mac80211_init(context) 
 	AirLorcon *context
 
      
 AirLorconDriver  *
-drv_mac80211_listdriver(AirLorconDriver *head) 
+drv_mac80211_listdriver(head) 
 	AirLorconDriver *head
 CODE:
-	AirLorconDriver *head *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
-
+	AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
+	AirLorcon *interface;
 	d->name = strdup("mac80211");
 	d->details = strdup("Linux mac80211 kernel drivers, includes all in-kernel drivers on modern systems");
-	d->init_func = drv_mac80211_init;
-	d->probe_func = drv_mac80211_probe;
+	d->init_func = drv_mac80211_init(interface);
+	d->probe_func = drv_mac80211_probe();
 	d->next = head;
 	return d;
 	
