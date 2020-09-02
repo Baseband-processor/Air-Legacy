@@ -3,9 +3,9 @@ TYPEMAP
 LCPA_META *          T_PTROBJ
 Lorcon_DOT11 *       T_PTROBJ
 Lorcon_DOT3 *        T_PTROBJ
-
+WG80211_FRAME *      T_PTROBJ
 LORCON_WEP           T_PTROBJ
-PCAP_PKTHDR	     T_PTROBJ
+PCAP_PKTHDR	         T_PTROBJ
 const PCAP_PKTHDR *  T_PTROBJ
 PCAP_PKTHDR *        T_PTROBJ
 AirLorcon *          T_PTRREF
@@ -22,8 +22,8 @@ Pcap *               T_PTRREF
 BPF_PROGRAM *        T_PTRREF
 LORCON_MULTI_ERROR_HANDLER T_PTRREF
 MADWIFI_VAPS *       T_PTRREF
-TX80211_CARDLIST *  T_PTROBJ
-FD *                T_PTROBJ
+TX80211_CARDLIST *   T_PTROBJ
+FD *                 T_PTROBJ
 
 const char *        T_PV
 const u_char *      T_PV
