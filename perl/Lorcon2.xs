@@ -109,9 +109,8 @@ typedef struct sockaddr_ll {
                unsigned char  sll_pkttype;  
                unsigned char  sll_halen;    
                unsigned char  sll_addr[8];  
-           }sockaddr_ll;
+           }SOCKADDR_LL;
 
-typedef struct sockaddr_ll SOCKADDR_LL;
 
 typedef struct  {
 		char icp_name[IFNAMSIZ];
