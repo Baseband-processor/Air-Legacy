@@ -1360,14 +1360,6 @@ iwconfig_set_mode(in_dev, errstr, in_mode)
    const char *in_dev
    char *errstr
    int in_mode
-
-int
-drv_mac80211_init(a)
-     AirLorcon *a
-     
-AirLorconDriver *
-drv_mac80211_listdriver(a)
-     AirLorconDriver *a
      
 int
 tx80211_hostap_init(in_tx)
@@ -2596,3 +2588,137 @@ CODE:
 	}
 
 	return (ret - sizeof(*frame) + 24);
+
+int 
+drv_mac80211_probe(interface) 
+	const char *interface
+CODE:
+	if (ifconfig_get_sysattr(interface, "phy80211")){
+		return 1;
+	}
+	return 0;
+	
+int 
+drv_mac80211_init(AirLorcon *context) 
+	AirLorcon *context
+
+     
+AirLorconDriver  *
+drv_mac80211_listdriver(AirLorconDriver *head) 
+	AirLorconDriver *head
+CODE:
+	AirLorconDriver *head *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
+
+	d->name = strdup("mac80211");
+	d->details = strdup("Linux mac80211 kernel drivers, includes all in-kernel drivers on modern systems");
+	d->init_func = drv_mac80211_init;
+	d->probe_func = drv_mac80211_probe;
+	d->next = head;
+	return d;
+	
+int 
+mac80211_openmon_cb(context) 
+	AirLorcon *context
+CODE:
+	char *parent;
+	char pcaperr[PCAP_ERRBUF_SIZE];
+	AirLorcon_MAC80211 *extras = (AirLorcon_MAC80211 *) context->auxptr;
+	IFREQ if_req;
+	SOCKADDR_LL sa_ll;
+	int optval;
+	socklen_t optlen;
+    	char vifname[MAX_IFNAME_LEN];
+  	unsigned int num_flags = 2;
+    	unsigned int fi;
+    	unsigned int flags[2];
+    fi = 0;
+    flags[fi++] = nl80211_mntr_flag_control;
+    flags[fi++] = nl80211_mntr_flag_otherbss;
+
+    if (context->vapname == NULL) {
+        snprintf(vifname, MAX_IFNAME_LEN, "%smon", context->ifname);
+        context->vapname = strdup(vifname);
+	}
+
+	if ((parent = nl80211_find_parent(context->vapname)) == NULL) {
+		if (nl80211_createvif(context->ifname, context->vapname, flags, 
+                    num_flags, context->errstr) < 0) {
+			free(parent);
+			return -1;
+		}
+	} 
+
+	free(parent);
+	if (ifconfig_delta_flags(context->vapname, context->errstr, (IFF_UP | IFF_RUNNING | IFF_PROMISC)) < 0) {
+		return -1;
+	}
+
+	if (nl80211_connect(context->vapname, &(extras->nlhandle), &(extras->nl80211id), &(extras->ifidx), context->errstr) < 0) {
+		return -1;
+	}
+	pcaperr[0] = '\0';
+
+	if ((context->pcap = pcap_open_live(context->vapname, LORCON_MAX_PACKET_LEN,  1, context->timeout_ms, pcaperr)) == NULL) {
+		snprintf(context->errstr, LORCON_STATUS_MAX, "%s", pcaperr);
+		return -1;
+	}
+
+	context->capture_fd = pcap_get_selectable_fd(context->pcap);
+
+	context->dlt = pcap_datalink(context->pcap);
+
+	context->inject_fd = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
+
+	if (context->inject_fd < 0) {
+		snprintf(context->errstr, LORCON_STATUS_MAX, "failed to create injection socket: %s", strerror(errno));
+		nl80211_disconnect(extras->nlhandle);
+		pcap_close(context->pcap);
+		return -1;
+	}
+	memset(&if_req, 0, sizeof(if_req));
+	memcpy(if_req.ifr_name, context->vapname, IFNAMSIZ);
+	if_req.ifr_name[IFNAMSIZ - 1] = 0;
+	if (ioctl(context->inject_fd, SIOCGIFINDEX, &if_req) < 0) {
+		snprintf(context->errstr, LORCON_STATUS_MAX, "failed to get interface idex: %s",
+				 strerror(errno));
+		close(context->inject_fd);
+		pcap_close(context->pcap);
+		nl80211_disconnect(extras->nlhandle);
+		return -1;
+	}
+
+	memset(&sa_ll, 0, sizeof(sa_ll));
+	sa_ll.sll_family = AF_PACKET;
+	sa_ll.sll_protocol = htons(ETH_P_ALL);
+	sa_ll.sll_ifindex = if_req.ifr_ifindex;
+
+	if (bind(context->inject_fd, (SOCKADDR *) &sa_ll, sizeof(sa_ll)) != 0) {
+		snprintf(context->errstr, LORCON_STATUS_MAX, "failed to bind injection socket: %s", strerror(errno));
+		close(context->inject_fd);
+		pcap_close(context->pcap);
+		nl80211_disconnect(extras->nlhandle);
+		return -1;
+	}
+
+	optlen = sizeof(optval);
+	optval = 20;
+	if (setsockopt(context->inject_fd, SOL_SOCKET, SO_PRIORITY, &optval, optlen)) {
+		snprintf(context->errstr, LORCON_STATUS_MAX, "failed to set priority on injection socket: %s", strerror(errno));
+		close(context->inject_fd);
+		pcap_close(context->pcap);
+		nl80211_disconnect(extras->nlhandle);
+		return -1;
+	}
+
+	return 1;
+
+int 
+mac80211_setchan_cb(context, channel) 
+	AirLorcon *context
+	int channel
+CODE:
+	AirLorcon_MAC80211 *extras = (AirLorcon_MAC80211 *) context->auxptr;
+	if (nl80211_setchannel_cache(extras->ifidx, extras->nlhandle, extras->nl80211id, channel, 0, context->errstr) < 0) {
+		return -1;
+	}
+	return 0;
