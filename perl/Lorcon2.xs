@@ -932,10 +932,17 @@ void
 lorcon_set_useraux(context, aux)
   AirLorcon *context
   void *aux
+CODE:
+    context->userauxptr = aux;
+    RETVAL = aux;
+OUTPUT:
+	RETVAL
 
 void  
 lorcon_get_useraux(context)
   AirLorcon *context
+CODE:
+    return context->userauxptr;
 
 void  
 lorcon_packet_free(packet)
@@ -1148,7 +1155,6 @@ CODE:
                     intf = NULL;
                     
                 }
-
                 packets++;
         }    
     RETVAL = packets;
@@ -1167,7 +1173,12 @@ lorcon_packet_set_mcs(packet, use_mcs, mcs, short_gi, use_40mhz)
 	unsigned int mcs
 	unsigned int short_gi
 	unsigned int use_40mhz
-	
+CODE:
+    packet->set_tx_mcs = use_mcs;
+    packet->tx_mcs_rate = mcs;
+    packet->tx_mcs_short_guard = short_gi;
+    packet->tx_mcs_40mhz = use_40mhz;
+
 int 
 drv_madwifing_init(context) 
   AirLorcon *context
