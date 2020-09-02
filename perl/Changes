@@ -28,6 +28,7 @@ Revision history for Perl extension Net::Lorcon2.
   - added mac80211 driver manipolation
   - added Packet_to_hex function
   - added Detect_Driver function and its back-end FindLinkage (pure perl subroutines)
+  - added partial POD documentation in lib/Air/Lorcon2.pm
    
 17.6    Wed Aug 19 10:00::00 CET 2020
 
