@@ -26,6 +26,9 @@ Revision history for Perl extension Net::Lorcon2.
   - added 220+ new constants from networking header files
   - added C back-end for unstable XS functions
   - added new documentation
+  - fixed MANIFEST file problems
+  - added mac80211 driver manipolation
+  
   
 17.6    Wed Aug 19 10:00::00 CET 2020
 
