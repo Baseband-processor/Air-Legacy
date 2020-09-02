@@ -1,6 +1,6 @@
-Revision history for Perl extension Net::Lorcon2.
+Revision history for Perl extension Air::Lorcon2.
 
-[ALPHA]
+[pre-ALPHA]
 
 
 17.7    Wed Aug 2 19:37:00  CET 2020
@@ -29,7 +29,9 @@ Revision history for Perl extension Net::Lorcon2.
   - added Packet_to_hex function
   - added Detect_Driver function and its back-end FindLinkage (pure perl subroutines)
   - added partial POD documentation in lib/Air/Lorcon2.pm
-   
+  - added new functions: tx80211_rt61_init tx80211_rt61_capabilities rt61_open tx80211_prism54_init tx80211_prism54_capabilities
+  - added new function: iwconfig_set_intpriv
+  
 17.6    Wed Aug 19 10:00::00 CET 2020
 
   - added packet forging capabilities
