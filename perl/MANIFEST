@@ -18,3 +18,4 @@ typemap
 META.yml                                 Module YAML meta-data (added by MakeMaker)
 META.json                                Module JSON meta-data (added by MakeMaker)
 Network_encryption.jpg
+new-Net-consts.txt
