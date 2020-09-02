@@ -37,6 +37,8 @@
 #define WLAN_FC_SUBTYPE_DEAUTH      12
 #define WLAN_FC_SUBTYPE_QOSDATA     8
 
+#define TX80211_ENOTX 0
+#define FD_ZERO(fdsetp)          __FD_ZERO (fdsetp) 
 #define LORCON_DOT11_DIR_FROMDS		1
 #define LORCON_DOT11_DIR_TODS		2
 #define LORCON_DOT11_DIR_INTRADS	3
@@ -95,7 +97,26 @@ typedef struct fd_set {
   long fds_bits[1024 / 64];
 }FD;
 
-typedef struct pcap_t 		   Pcap;
+typedef struct bpf_program    * BPF_PROGRAM;
+
+typedef struct pcap_t{
+    int fd;
+    int snapshot;
+    int linktype;
+    int tzoff;     
+    int offset;    
+    struct pcap_sf *sf;
+    struct pcap_md *md;
+    int bufsize;
+    u_char *buffer;
+    u_char *bp;
+    int cc;
+    u_char *pkt;
+    BPF_PROGRAM *fcode;
+    char errbuf[PCAP_ERRBUF_SIZE];
+}Pcap;
+
+
 typedef struct timeval             TIME;
 
 
@@ -141,26 +162,24 @@ typedef struct  {
 typedef struct sockaddr SOCKADDR;
 
 typedef struct {
-               char ifr_name[IFNAMSIZ]; 
-               union {
-                   SOCKADDR ifr_addr;
-                   SOCKADDR ifr_dstaddr;
-                   SOCKADDR ifr_broadaddr;
-                   SOCKADDR ifr_netmask;
-                   SOCKADDR ifr_hwaddr;
-                   short           ifr_flags;
-                   int             ifr_ifindex;
-                   int             ifr_metric;
-                   int             ifr_mtu;
-                   IFMAP           ifr_map;
-                   char            ifr_slave[IFNAMSIZ];
-                   char            ifr_newname[IFNAMSIZ];
-                   char           *ifr_data;
-               };
-           }ifreq;
+	char ifr_name[IFNAMSIZ]; 
+        SOCKADDR ifr_addr;
+        SOCKADDR ifr_dstaddr;
+        SOCKADDR ifr_broadaddr;
+        SOCKADDR ifr_netmask;
+        SOCKADDR ifr_hwaddr;
+        short           ifr_flags;
+        int             ifr_ifindex;
+        int             ifr_metric;
+        int             ifr_mtu;
+        IFMAP           ifr_map;
+        char            ifr_slave[IFNAMSIZ];
+        char            ifr_newname[IFNAMSIZ];
+        char           *ifr_data;
+}ifreq;
 
-typedef struct ifreq                 IFREQ;
 
+typedef struct ifreq IFREQ;
 typedef struct madwi_vaps            MADWIFI_VAPS;
 
 typedef lorcon_multi_error_handler   LORCON_MULTI_ERROR_HANDLER;
@@ -325,19 +344,10 @@ typedef struct {
 typedef struct tx80211_packet * TX80211_PACKET;
 
 
-typedef struct {
-	int (*open_callthrough) (struct tx80211 *);
-	int (*close_callthrough) (struct tx80211 *);
-	int (*setfuncmode_callthrough) (struct tx80211 *, int);
-	int (*setchan_callthrough) (struct tx80211 *, int);
-	int (*txpacket_callthrough) (struct tx80211 *, TX80211_PACKET *);
-	char(*ifname)(AirLorcon *interface);
-	char(*errstr)();
-}tx80211;
 
-typedef struct tx80211        TX80211;
 
-typedef struct bpf_program    * BPF_PROGRAM;
+typedef struct tx80211 TX80211;
+
 
 #include "c/lorcon_driver_t.c"
 
@@ -953,9 +963,7 @@ lorcon_multi_set_interface_error_handler(ctx, lorcon_interface, handler, aux)
   LORCON_MULTI_ERROR_HANDLER handler
   void *aux
 
-void 
-FD_ZERO(set)
-	FD *set
+
 	
 void
 lorcon_multi_remove_interface_error_handler(ctx, lorcon_interface)
@@ -991,7 +999,7 @@ CODE:
     }
 	            int fd = lorcon_get_selectable_fd(intf->lorcon_intf);
     while (packets < counter || counter <= 0) {
-        FD_ZERO(&rset);
+        # FD_ZERO(&rset);
         maxfd = 0;
         while ((intf = lorcon_multi_get_next_interface(ctx, intf))) {
             int fd = lorcon_get_selectable_fd(intf->lorcon_intf);
@@ -1005,7 +1013,7 @@ CODE:
                 intf = NULL;
                 continue;
             }
-            FD_SET(fd, &rset);
+            # FD_SET(fd, &rset);
 
             if (maxfd < fd){ maxfd = fd; }
 
@@ -1047,7 +1055,7 @@ CODE:
                         (*(intf->error_handler))(ctx, intf->lorcon_intf, intf->error_aux);
                     }
                     intf = NULL;
-                    continue;
+                    
                 }
 
                 packets++;
@@ -1350,9 +1358,9 @@ int
 drv_tuntap_init(context)
    AirLorcon *context
      CODE:
-	lorcon_open_inject(context) =  tuntap_openmon_cb(context);
-	lorcon_open_monitor(context) = tuntap_openmon_cb(context);
-	lorcon_open_injmon(context) =  tuntap_openmon_cb(context);
+	lorcon_open_inject(context) ==  tuntap_openmon_cb(context);
+	lorcon_open_monitor(context) == tuntap_openmon_cb(context);
+	lorcon_open_injmon(context) ==  tuntap_openmon_cb(context);
 	RETVAL = 1;
 	  OUTPUT:
 	RETVAL
@@ -1605,27 +1613,7 @@ ifconfig_ifupdown(in_dev, errorstring,  devup)
 	char *errorstring
 	int devup
 
-int 
-wtinj_send(wtinj, in_pkt)
-	TX80211 *wtinj
-	TX80211_PACKET *in_pkt
-CODE:
-	int ret;
-	if (!(wtinj->raw_fd > 0)) {
-		return TX80211_ENOTX;
-	}
-	ret = write(wtinj->raw_fd, in_pkt->packet, in_pkt->plen);
-	if (ret < 0) {
-		snprintf(wtinj->errstr, TX80211_STATUS_MAX, "write failed, %s", strerror(errno));
-		return TX80211_ENOTX;;
-	}
-	if (ret < (in_pkt->plen)) {
-		snprintf(wtinj->errstr, TX80211_STATUS_MAX, "incomplete write %s", strerror(errno));
-		return ret;
-	}
-	RETVAL = ret;
-	OUTPUT:
-	  RETVAL
+
 
 int 
 wtinj_open(wtinj)
@@ -2147,8 +2135,8 @@ const u_char *
 lorcon_packet_get_source_mac(packet) 
 	AirLorconPacket *packet
 CODE:
-    Lorcon_DOT11 *d11extra = NULL;
-    Lorcon_DOT3 *d3extra = NULL;
+    Lorcon_DOT11 *d11extra;
+    Lorcon_DOT3 *d3extra;
 
     if ((d11extra = lorcon_packet_get_dot11_extra(packet)) != NULL) {
         return d11extra->source_mac;
@@ -2162,8 +2150,8 @@ const u_char *
 lorcon_packet_get_dest_mac(packet) 
 	AirLorconPacket *packet
 CODE:
-    Lorcon_DOT11 *d11extra = NULL;
-    Lorcon_DOT3 *d3extra  = NULL;
+    Lorcon_DOT11 *d11extra;
+    Lorcon_DOT3 *d3extra;
 
     if ((d11extra = lorcon_packet_get_dot11_extra(packet)) != NULL) {
         return d11extra->dest_mac;
@@ -2177,8 +2165,7 @@ const u_char *
 lorcon_packet_get_bssid_mac(packet) 
 	AirLorconPacket *packet
 CODE:
-    Lorcon_DOT11 *d11extra = NULL;
-
+    Lorcon_DOT11 *d11extra;
     if ((d11extra = lorcon_packet_get_dot11_extra(packet)) != NULL) {
         return d11extra->bssid_mac;
     } 
@@ -2189,7 +2176,7 @@ uint16_t
 lorcon_packet_get_llc_type(packet) 
 	AirLorconPacket *packet
 CODE:
-    Lorcon_DOT3 *d3extra = NULL;
+    Lorcon_DOT3 *d3extra;
     if ((d3extra = lorcon_packet_get_dot3_extra(packet)) != NULL) {
         return d3extra->llc_type;
     } 
@@ -2213,20 +2200,14 @@ pcap_fmt_errmsg_for_errno(errbuf, errbuflen, errnum, fmt)
 void
 pcap_set_not_initialized_message(pcap)
 	Pcap *pcap
-CODE:
-	if (pcap->activated) {
-		(void)snprintf(pcap->errbuf, sizeof(pcap->errbuf), "This operation isn't properly handled by that device");
-		return;
-	}
-	(void)snprintf(pcap->errbuf, sizeof(pcap->errbuf), "This handle hasn't been activated yet");
+
 	
 
 	
 int
 pcap_can_set_rfmon(p)
 	Pcap *p
-CODE:
-	return (p->can_set_rfmon_op(p));
+
 
 
 
@@ -2235,17 +2216,7 @@ pcap_inject(p, buf, size)
 	Pcap *p
 	const void *buf
 	size_t size
-CODE:
-	if (size > INT_MAX) {
-		pcap_fmt_errmsg_for_errno(p->errbuf, PCAP_ERRBUF_SIZE, errno, "More than %d bytes cannot be injected", INT_MAX);
-		return (PCAP_ERROR);
-	}
-	if (size == 0) {
-		pcap_fmt_errmsg_for_errno(p->errbuf, PCAP_ERRBUF_SIZE, errno, "The number of bytes to be injected must not be zero");
-		return (PCAP_ERROR);
-	}
 
-	return (p->inject_op(p, buf, (int)size));
 
 	
 int
@@ -2253,14 +2224,6 @@ pcap_sendpacket(p, buf, size)
 	Pcap *p
 	const u_char *buf
 	int size
-CODE:
-	if (size <= 0) {
-		pcap_fmt_errmsg_for_errno(p->errbuf, PCAP_ERRBUF_SIZE, errno, "The number of bytes to be sent must be positive");
-		return (PCAP_ERROR);
-	}
-	if (p->inject_op(p, buf, size) == -1){
-		return (-1);
-}
 
 
 int
@@ -2320,14 +2283,7 @@ CODE:
     usleep(delay_usec);
 
 
-int
-drv_file_init(init)
-     AirLorcon *init
-
-int
-drv_rtfile_init(init)
-    AirLorcon *init
-			    
+	    
 int 
 drv_file_probe(interface) 
 	const char *interface
@@ -2375,42 +2331,19 @@ CODE:
 	d->name = strdup("file");
 	d->details = strdup("PCAP file source");
 	d->init_func = drv_file_init;
-	d->probe_func = drv_file_probe;
-	d->next = head;
+	d->probe_func = drv_file_probe(drv);
+	d->next = drv;
 
 	rtd->name = strdup("rtfile");
 	rtd->details = strdup("Real-time PCAP file source");
 	rtd->init_func = drv_rtfile_init;
-	rtd->probe_func = drv_file_probe;
+	rtd->probe_func = drv_file_probe(drv);
 	rtd->next = d;
 
 	RETVAL = rtd;
 OUTPUT:
 	RETVAL
 			    
-AirLorconDriver *
-drv_file_listdriver(head) 
-	AirLorconDriver *head
-CODE:
-	AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
-	AirLorconDriver *rtd = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
-
-	d->name = strdup("file");
-	d->details = strdup("PCAP file source");
-	d->init_func = drv_file_init;
-	d->probe_func = drv_file_probe();
-	d->next = head;
-
-	rtd->name = strdup("rtfile");
-	rtd->details = strdup("Real-time PCAP file source");
-	rtd->init_func = drv_rtfile_init;
-	rtd->probe_func = drv_file_probe();
-	rtd->next = d;
-
-	RETVAL = rtd;
-OUTPUT:
-	RETVAL
-	
 
 int 
 tx80211_bcm43xx_init(in_tx)
