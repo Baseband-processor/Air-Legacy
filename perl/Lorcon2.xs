@@ -37,6 +37,8 @@
 #define WLAN_FC_SUBTYPE_DEAUTH      12
 #define WLAN_FC_SUBTYPE_QOSDATA     8
 
+#define TX80211_CAP_CTRL	64
+#define TX80211_CAP_SELFACK	512
 #define SIOCDEVPRIVATE  0x89F0
 #define SIOCAJSMODE SIOCDEVPRIVATE
 
@@ -57,11 +59,11 @@
 #define INJ_MADWIFIOLD 	5
 #define INJ_MADWIFING  	6
 #define INJ_RTL8180     7
-#define INJ_RT2500		8
-#define INJ_RT2570		9
-#define INJ_RT73		10
-#define INJ_AIRPCAP		11
-#define INJ_RT61		12
+#define INJ_RT2500	8
+#define INJ_RT2570	9
+#define INJ_RT73	10
+#define INJ_AIRPCAP	11
+#define INJ_RT61	12
 #define INJ_ZD1211RW	13
 #define INJ_BCM43XX     14
 #define INJ_MAC80211	15
@@ -934,9 +936,7 @@ lorcon_set_useraux(context, aux)
   void *aux
 CODE:
     context->userauxptr = aux;
-    RETVAL = aux;
-OUTPUT:
-	RETVAL
+    return(1);
 
 void  
 lorcon_get_useraux(context)
@@ -1372,6 +1372,15 @@ iwconfig_set_mode(in_dev, errstr, in_mode)
    char *errstr
    int in_mode
      
+int 
+iwconfig_set_intpriv(in_dev, privcmd, val1, val2, errstr)
+	const char *in_dev
+	const char *privcmd
+	int val1
+	int val2	
+	char *errstr
+
+
 int
 tx80211_hostap_init(in_tx)
      TX80211 *in_tx
@@ -1832,18 +1841,18 @@ tx80211_zd1211rw_capabilities()
 
 
 int 
-tx80211_zd1211rw_init(in_tx)
-	TX80211 *in_tx
+tx80211_zd1211rw_init(input_tx)
+	TX80211 *input_tx
 	CODE:
-#	in_tx->capabilities = tx80211_zd1211rw_capabilities();
-#	in_tx->open_callthrough = wtinj_open;
-#	in_tx->close_callthrough = wtinj_close;
-#	in_tx->setmode_callthrough = wtinj_setmode;
-#	in_tx->getmode_callthrough = wtinj_getmode;
-#	in_tx->getchan_callthrough = wtinj_getchannel;
-#	in_tx->setchan_callthrough = wtinj_setchannel;
-#	in_tx->txpacket_callthrough = tx80211_zd1211rw_send;
-#	in_tx->setfuncmode_callthrough = wtinj_setfuncmode;
+	input_tx->capabilities = tx80211_zd1211rw_capabilities();
+	input_tx->open_callthrough = wtinj_open();
+	input_tx->close_callthrough = wtinj_close();
+	input_tx->setmode_callthrough = wtinj_setmode();
+	input_tx->getmode_callthrough = wtinj_getmode();
+	input_tx->getchan_callthrough = wtinj_getchannel();
+	input_tx->setchan_callthrough = wtinj_setchannel();
+	input_tx->txpacket_callthrough = tx80211_zd1211rw_send();
+	input_tx->setfuncmode_callthrough = wtinj_setfuncmode();
 
 void 
 lcpf_80211headers(pack, type, subtype, fcflags, duration, mac1, mac2, mac3, mac4, fragment, sequence) 
@@ -2733,3 +2742,62 @@ CODE:
 		return -1;
 	}
 	return 0;
+
+int 
+tx80211_prism54_capabilities()
+CODE:
+return (TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT | TX80211_CAP_SEQ | TX80211_CAP_BSSTIME | TX80211_CAP_FRAG | TX80211_CAP_DURID 
+| TX80211_CAP_SNIFFACK | TX80211_CAP_DSSSTX | TX80211_CAP_SELFACK | TX80211_CAP_CTRL);
+
+
+int 
+tx80211_prism54_init(input_tx)
+	TX80211 *input_tx
+CODE:
+	input_tx->capabilities = tx80211_prism54_capabilities();
+	input_tx->open_callthrough = wtinj_open();
+	input_tx->close_callthrough = wtinj_close();
+	input_tx->setmode_callthrough = wtinj_setmode();
+	input_tx->getmode_callthrough = wtinj_getmode();
+	input_tx->getchan_callthrough = wtinj_getchannel();
+	input_tx->setchan_callthrough = wtinj_setchannel();
+	input_tx->txpacket_callthrough = wtinj_send();
+	input_tx->setfuncmode_callthrough = wtinj_setfuncmode();
+	input_tx->selfack_callthrough = wtinj_selfack();
+	return 0;
+
+int rt61_open(input_tx)
+	TX80211 *input_tx
+CODE:
+	char errstr[TX80211_STATUS_MAX];
+	if (iwconfig_set_intpriv(input_tx->ifname, "rfmontx", 1, 0, errstr) != 0) {
+		snprintf(input_tx->errstr, TX80211_STATUS_MAX, "Error enabling rfmontx private ioctl: %s\n", errstr);
+		return -1;
+	}
+
+	return(wtinj_open(input_tx));
+
+int 
+tx80211_rt61_capabilities()
+CODE:
+	return (TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT | 
+			TX80211_CAP_BSSTIME |
+			TX80211_CAP_FRAG | TX80211_CAP_CTRL |
+			TX80211_CAP_DURID);
+
+int 
+tx80211_rt61_init(input_tx)
+	TX80211 *input_tx
+CODE:
+	input_tx->capabilities = tx80211_rt61_capabilities();
+	input_tx->open_callthrough = rt61_open();
+	input_tx->close_callthrough = wtinj_close();
+	input_tx->setmode_callthrough = wtinj_setmode();
+	input_tx->getmode_callthrough = wtinj_getmode();
+	input_tx->getchan_callthrough = wtinj_getchannel();
+	input_tx->setchan_callthrough = wtinj_setchannel();
+	input_tx->txpacket_callthrough = wtinj_send();
+	input_tx->setfuncmode_callthrough = wtinj_setfuncmode();
+	return 0;
+
+
