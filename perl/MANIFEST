@@ -13,9 +13,10 @@ t/test-use.t
 t/test-open.t
 t/test-auto.t
 t/test-version.t
+t/test-send.t
 test-send.t
 typemap
 META.yml                                 Module YAML meta-data (added by MakeMaker)
 META.json                                Module JSON meta-data (added by MakeMaker)
 Network_encryption.jpg
-new-Net-consts.txt
+new-Net-const.txt

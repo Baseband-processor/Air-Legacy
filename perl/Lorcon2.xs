@@ -37,12 +37,25 @@
 #define WLAN_FC_SUBTYPE_DEAUTH      12
 #define WLAN_FC_SUBTYPE_QOSDATA     8
 
+#define TX80211_CAP_SNIFF 1
+#define TX80211_CAP_TRANSMIT 2
+#define TX80211_CAP_SEQ 4
+#define TX80211_CAP_BSSTIME 8
+#define TX80211_CAP_FRAG 32
+#define TX80211_CAP_DURID 128
+#define TX80211_CAP_SNIFFACK 256
+#define TX80211_CAP_DSSSTX 2048
+
+
+
 #define __FD_ISSET(d, set) \
   ((__FDS_BITS (set)[__FD_ELT (d)] & __FD_MASK (d)) != 0)
 
 #define FD_ISSET(fd, fdsetp)    __FD_ISSET (fd, fdsetp)
 
-#define TX80211_ENOTX 0
+#define TX80211_ENOTX -20
+#define TX80211_EPARTTX -21
+
 #define FD_ZERO(fdsetp)          __FD_ZERO (fdsetp) 
 #define LORCON_DOT11_DIR_FROMDS		1
 #define LORCON_DOT11_DIR_TODS		2
@@ -233,7 +246,7 @@ typedef struct  {
 
 typedef struct lcpa_metapack             LCPA_META;
 
-typedef struct {
+typedef struct wg80211_frame{
 	uint8_t base[0];
 	uint16_t fc;
 	uint16_t dur_id;
@@ -245,9 +258,9 @@ typedef struct {
 	uint16_t data_len;
 	uint8_t null[14];
 	uint8_t data[0];
-}wg80211_frame;
+}WG80211_FRAME;
 
-typedef struct wg80211_frame WG80211_FRAME;
+
 
 typedef struct {
         int type, subtype;
@@ -392,14 +405,12 @@ typedef struct lorcon_multi_t{
 
 
 
-typedef struct {
+typedef struct tx80211_packet{
 	uint8_t modulation;
 	uint8_t txrate;
 	uint8_t *packet;
 	int plen;
-}tx80211_packet;
-
-typedef struct tx80211_packet * TX80211_PACKET;
+}TX80211_PACKET;
 
 
 
@@ -1743,11 +1754,11 @@ wtinj_selfack(wtinj, addr)
 
 int 
 tx80211_zd1211rw_capabilities()
-	#CODE:
-	#return (TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT |
-	#	TX80211_CAP_SEQ | TX80211_CAP_BSSTIME |
-	#	TX80211_CAP_FRAG | TX80211_CAP_DURID |
-	#	TX80211_CAP_SNIFFACK | TX80211_CAP_DSSSTX);
+	CODE:
+	return (TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT |
+		TX80211_CAP_SEQ | TX80211_CAP_BSSTIME |
+		TX80211_CAP_FRAG | TX80211_CAP_DURID |
+		TX80211_CAP_SNIFFACK | TX80211_CAP_DSSSTX);
 
 
 
@@ -2489,7 +2500,7 @@ CODE:
 		return TX80211_ENOTX;
 	}
 
-	payloadlen = in_pkt->plen - 24;
+	payloadlen = input_pkt->plen - 24;
 	if (!(wginj->raw_fd > 0)) {
 		snprintf(wginj->errstr, TX80211_STATUS_MAX, "wlan-ng raw inject file descriptor not open");
 		return TX80211_ENOTX;
@@ -2506,7 +2517,7 @@ CODE:
 	frame->data_len = payloadlen;
 
 	memcpy(frame->base, input_pkt->packet, 24);
-	memcpy(frame->data, in_pkt->packet + 24, payloadlen);
+	memcpy(frame->data, input_pkt->packet + 24, payloadlen);
 	ret = write(wginj->raw_fd, frame, (payloadlen + sizeof(*frame)));
 	free(frame);
 	if (ret < 0) {
