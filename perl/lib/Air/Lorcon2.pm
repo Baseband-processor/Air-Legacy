@@ -855,6 +855,7 @@ our %EXPORT_TAGS = (
       drv_mac80211_probe
       mac80211_openmon_cb
       mac80211_setchan_cb
+      Detect_Driver
    )],
 );
 
@@ -872,16 +873,30 @@ our @EXPORT = (
    @{ $EXPORT_TAGS{network_const} },
 );
 
-#sperimental tools
+# FindLinkage will parse the /sys/class/net/ folder and search for wireless driver folder name
 
-#sub Detect_Driver(){ # pure perl detect driver
-#  use Sed;
-#  my $comm = `ls -l /sys/class/net/wlo1/device/driver`;
-#  if(! $comm) {
-#    $comm = `ls -l /sys/class/net/wlan0/device/driver`;
-#    }
- #  return(sed {s/^.*\/\([a-zA-Z0-9_-]*\)$/\1/} $comm); 
-#}
+sub FindLinkage(){ 
+if( readlink("/sys/class/net/wlo1/device/driver") ){
+		return("/sys/class/net/wlo1/device/driver");
+}elsif( readlink("/sys/class/net/wlan0/device/driver") ){
+		return("/sys/class/net/wlan0/device/driver");
+	}else{ # plain B, search for a driver with "w" character
+		my @linked_list = ` ls /sys/class/net/ `;
+		foreach(@linked_list){
+			if($_ =~ "w"){
+				return($_);
+		}
+}
+	}
+			}
+			
+# Detect_Driver uses FindLinkage for having the good link and split the string for obtaining the driver name
+sub Detect_Driver(){
+	my $linked_drv = readlink(&FindLinkage() );
+	my @driver = split(/\//, $linked_drv);
+	return($driver[-1]); 
+}
+
 
 sub RString_Gen(){ # adapted string for MAC address
   my @chars = ("a".."f", 0 .. 9);
