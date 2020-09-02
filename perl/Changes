@@ -22,7 +22,10 @@ Revision history for Perl extension Net::Lorcon2.
   - added new example (beacon_flood_raw.py)
   - added new example (beacon_flood_lcpa.c)
   - added new function: lcpa_free
- 
+  - added tx80211_cardlist and 2 related functions: ...free_cardlist and ...getcardlist
+  - added 220+ new constants from networking header files
+  - added C back-end for unstable XS functions
+  - added new documentation
   
 17.6    Wed Aug 19 10:00::00 CET 2020
 
