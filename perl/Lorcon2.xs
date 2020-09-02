@@ -46,7 +46,22 @@
 #define TX80211_CAP_SNIFFACK 256
 #define TX80211_CAP_DSSSTX 2048
 
-
+#define INJ_NODRIVER    0
+#define INJ_WLANNG  	1
+#define INJ_HOSTAP  	2
+#define INJ_AIRJACK 	3
+#define INJ_PRISM54 	4
+#define INJ_MADWIFIOLD 	5
+#define INJ_MADWIFING  	6
+#define INJ_RTL8180     7
+#define INJ_RT2500		8
+#define INJ_RT2570		9
+#define INJ_RT73		10
+#define INJ_AIRPCAP		11
+#define INJ_RT61		12
+#define INJ_ZD1211RW	13
+#define INJ_BCM43XX     14
+#define INJ_MAC80211	15
 
 #define __FD_ISSET(d, set) \
   ((__FDS_BITS (set)[__FD_ELT (d)] & __FD_MASK (d)) != 0)
