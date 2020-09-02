@@ -308,6 +308,33 @@ typedef struct  lorcon_t{
 }AirLorcon;
 
 
+typedef struct   {
+	int injectortype;
+	char ifname[MAX_IFNAME_LEN];
+	uint32_t capabilities;
+	int raw_fd;
+	int ioctl_fd;
+	int packets_sent;
+	int packets_recv;
+	int dlt;
+	int mode;
+	int channel;
+	int rate;
+	char errstr[TX80211_STATUS_MAX];
+	uint8_t startingmacset;
+	uint8_t startingmac[6];
+	void *extra;
+	int (*open_callthrough) (struct tx80211 *);
+	int (*close_callthrough) (struct tx80211 *);
+	int (*setmode_callthrough) (struct tx80211 *, int);
+	int (*getmode_callthrough) (struct tx80211 *);
+	int (*setfuncmode_callthrough) (struct tx80211 *, int);
+	int (*setchan_callthrough) (struct tx80211 *, int);
+	int (*getchan_callthrough) (struct tx80211 *);
+	int (*txpacket_callthrough) (struct tx80211 *, struct tx80211_packet *);
+	int (*selfack_callthrough) (struct tx80211 *, uint8_t *);
+}tx80211;
+
 
 typedef struct tx80211_radiotap_header TX80211_RADIOTAP_H;
 
