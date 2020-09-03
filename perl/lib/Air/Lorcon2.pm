@@ -1204,6 +1204,8 @@ our %EXPORT_TAGS = (
       tx80211_prism54_capabilities
       Channel_to_Frequency
       Frequency_to_Channel      
+      nl80211_get_chanlist
+      nl80211_error_cb
    )],
 );
 
