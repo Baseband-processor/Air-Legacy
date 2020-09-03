@@ -240,6 +240,25 @@ typedef struct {
 
 typedef struct sockaddr SOCKADDR;
 
+//typedef struct {
+       // struct sockaddr ifr_addr;
+        //SOCKADDR ifr_dstaddr;
+       // SOCKADDR ifr_broadaddr;
+       // SOCKADDR ifr_netmask;
+       // SOCKADDR ifr_hwaddr;
+	//char 		ifr_name[IFNAMSIZ]; 
+        //short           ifr_flags;
+        //int             ifr_ifindex;
+        //int             ifr_metric;
+        //int             ifr_mtu;
+       // IFMAP           ifr_map;
+       // char            ifr_slave[IFNAMSIZ];
+       // char            ifr_newname[IFNAMSIZ];
+       // char           *ifr_data;
+//}ifreq;
+
+typedef struct ifreq IFREQ;
+
 typedef struct sockaddr_nl {
                sa_family_t     nl_family;  
                unsigned short  nl_pad;     
@@ -249,24 +268,6 @@ typedef struct sockaddr_nl {
 
 typedef struct sockaddr_nl SOCKADDR_NL;
 
-typedef struct {
-        SOCKADDR ifr_addr;
-        SOCKADDR ifr_dstaddr;
-        SOCKADDR ifr_broadaddr;
-        SOCKADDR ifr_netmask;
-        SOCKADDR ifr_hwaddr;
-	char ifr_name[IFNAMSIZ]; 
-        short           ifr_flags;
-        int             ifr_ifindex;
-        int             ifr_metric;
-        int             ifr_mtu;
-        IFMAP           ifr_map;
-        char            ifr_slave[IFNAMSIZ];
-        char            ifr_newname[IFNAMSIZ];
-        char           *ifr_data;
-}ifreq;
-
-typedef struct ifreq IFREQ;
 
 typedef struct madwi_vaps            MADWIFI_VAPS;
 
@@ -553,7 +554,7 @@ AirLorcon *
 lorcon_create(interface, driver)
       const char *interface
       AirLorconDriver *driver
-      CODE:
+CODE:
 	AirLorcon *context = NULL;
 	if (driver->init_func == NULL){
 		return NULL;
@@ -595,10 +596,6 @@ lorcon_create(interface, driver)
 		free(context);
 		return NULL;
 	}
-	RETVAL = context;
-	OUTPUT:
-	  RETVAL
-
 
 void
 lorcon_free(context)
@@ -1171,11 +1168,10 @@ CODE:
                     (*(intf->error_handler))(ctx, intf->lorcon_intf, intf->error_aux);
                 }
                 intf = NULL;
-
                 continue;
             }
 		}
-            if(FD_ISSET(fd, &rset)) {
+            //if(FD_ISSET(fd, &rset)) {
                 r = lorcon_dispatch(intf->lorcon_intf, 1, callback, user);
                 if (r <= 0) {
                     fprintf(stderr, "Interface stopped reporting packets, removing  from multicap: %s\n",  lorcon_get_capiface(intf->lorcon_intf));
@@ -1185,7 +1181,7 @@ CODE:
                     }
                     intf = NULL;
                     
-                }
+               // }
                 packets++;
         }    
     RETVAL = packets;
