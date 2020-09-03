@@ -24,13 +24,15 @@ LORCON_MULTI_ERROR_HANDLER T_PTRREF
 MADWIFI_VAPS *       T_PTRREF
 TX80211_CARDLIST *   T_PTROBJ
 FD *                 T_PTROBJ
-
+SOCKADDR_NL *       T_PTROBJ
+NLMSGERR *          T_PTROBJ
 const char *        T_PV
 const u_char *      T_PV
 u_char **           T_PV
 u_char *            T_PV
 char *              T_PV
 int *               T_PV
+int **              T_PV
 const void *        T_PV
 void                T_PV
 void *              T_PV

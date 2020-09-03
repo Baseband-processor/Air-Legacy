@@ -114,6 +114,23 @@
 #include "Ctxs.h"
 
 typedef struct {
+	__u32		nlmsg_len;	
+	__u16		nlmsg_type;	
+	__u16		nlmsg_flags;
+	__u32		nlmsg_seq;	
+	__u32		nlmsg_pid;	
+}nlmsghdr;
+
+typedef struct nlmsghdr NLMSGHDR;
+
+typedef struct nlmsgerr {
+	int	error;
+	NLMSGHDR *msg;
+};
+
+typedef struct  nlmsgerr NLMSGERR;
+
+typedef struct {
 	uint16_t mode;		
 	uint8_t ownmac[6];		
 	uint8_t monitor;		
@@ -147,6 +164,11 @@ typedef struct mac80211_lorcon {
 }AirLorcon_MAC80211;
 
 #define FD_SETSIZE 1024
+
+typedef struct nl80211_channel_list {
+    int channel;
+    struct nl80211_channel_list *next;
+}NL80211_CHAN_LIST;
 
 typedef struct fd_set {
   u_int  fd_count;
@@ -217,6 +239,15 @@ typedef struct {
 }sockaddr;
 
 typedef struct sockaddr SOCKADDR;
+
+typedef struct sockaddr_nl {
+               sa_family_t     nl_family;  
+               unsigned short  nl_pad;     
+               pid_t           nl_pid;    
+               __u32           nl_groups;  
+}sockaddr_nl;
+
+typedef struct sockaddr_nl SOCKADDR_NL;
 
 typedef struct {
         SOCKADDR ifr_addr;
@@ -1380,14 +1411,12 @@ iwconfig_set_intpriv(in_dev, privcmd, val1, val2, errstr)
 	int val2	
 	char *errstr
 
-
-int
-tx80211_hostap_init(in_tx)
-     TX80211 *in_tx
-
 int
 tx80211_hostap_capabilities()
-    
+CODE:
+	
+	return (TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT | TX80211_CAP_SELFACK | TX80211_CAP_DSSSTX);
+
 Pcap *
 pcap_open_live(device, snaplen, promisc, to_ms, err)
         const char *device
@@ -2799,5 +2828,40 @@ CODE:
 	input_tx->txpacket_callthrough = wtinj_send();
 	input_tx->setfuncmode_callthrough = wtinj_setfuncmode();
 	return 0;
+
+
+int
+tx80211_hostap_init(input_tx)
+     TX80211 *input_tx
+CODE:
+	input_tx->capabilities = tx80211_hostap_capabilities();
+	input_tx->open_callthrough = wtinj_open();
+	input_tx->close_callthrough = wtinj_close();
+	input_tx->setmode_callthrough = wtinj_setmode();
+	input_tx->getmode_callthrough = wtinj_getmode();
+	input_tx->getchan_callthrough = wtinj_getchannel();
+	input_tx->setchan_callthrough = wtinj_setchannel();
+	input_tx->txpacket_callthrough = wtinj_send();
+	input_tx->setfuncmode_callthrough = wtinj_setfuncmode();
+	input_tx->selfack_callthrough = wtinj_selfack();
+	return 0;
+
+
+int 
+nl80211_error_cb(nla, err, arg) 
+	SOCKADDR_NL *nla
+	NLMSGERR *err
+	void *arg
+CODE:
+	int *ret = (int *) arg;
+	*ret = err->error;
+	return -1;
+
+int 
+nl80211_get_chanlist(interface, ret_num_chans, ret_chan_list, errstr) 
+	const char *interface
+	int *ret_num_chans
+	int **ret_chan_list
+	char *errstr
 
 
