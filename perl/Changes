@@ -34,6 +34,7 @@ Revision history for Perl extension Air::Lorcon2.
   - added 2 new functions: Channel_to_Frequency and Frequency_to_Channel 
   - added every channel-frequency to the %channel_to_frequency hash
   - added ieee802_11 constants (150+)
+  - added 2 new functions: nl80211_error_cb and nl80211_get_chanlist
   
 17.6    Wed Aug 19 10:00::00 CET 2020
 
