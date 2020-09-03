@@ -4,10 +4,11 @@ require  v5.22.1;
 # Made by Edoardo Mantovani, 2020
 
 use strict;
+no strict 'subs';
 use warnings;
 
 our $VERSION = '17.7';
-use base qw(Exporter);
+use base qw(Exporter DynaLoader);
 
 my %channel_to_frequency = (
      1 => 2412,
@@ -288,7 +289,8 @@ use constant {
 	IEEE80211_VHT_CAP_VHT_LINK_ADAPTATION_VHT_MRQ_MFB => 0x0c000000,
 	IEEE80211_VHT_CAP_RX_ANTENNA_PATTERN => 0x10000000,
 	IEEE80211_VHT_CAP_TX_ANTENNA_PATTERN => 0x20000000,
-}
+};
+
 use constant {
 	IF_GET_IFACE => 0x0001,
 	IF_GET_PROTO => 0x0002,
@@ -349,8 +351,8 @@ use constant {
 	ICMP_REDIR_HOSTTOS => 3,
 	ICMP_EXC_TTL => 0,
 	ICMP_EXC_FRAGTIME => 1,
-	TCP_MSS_DEFAULT => 536U,
-	TCP_MSS_DESIRED => 1220U,
+	TCP_MSS_DEFAULT => "536U",
+	TCP_MSS_DESIRED => "1220U",
 	TCP_NODELAY => 1,
 	TCP_MAXSEG => 2,
 	TCP_CORK => 3,
@@ -457,7 +459,7 @@ use constant {
 	IP6_RT_PRIO_USER => 1024,
 	IP6_RT_PRIO_ADDRCONF => 256,
 
-}
+};
 
 use constant {
 
@@ -1204,8 +1206,6 @@ our %EXPORT_TAGS = (
       tx80211_prism54_capabilities
       Channel_to_Frequency
       Frequency_to_Channel      
-      nl80211_get_chanlist
-      nl80211_error_cb
    )],
 );
 
@@ -1332,7 +1332,7 @@ sub ChangeMAC {
 	require Net::MAC;
 	my ($interface, $MAC) = @_;
 	# Prevention against malformed MAC's
-	local $control = Net::MAC->new('mac' =>  $MAC, 'die' => 0); # Die if MAC is wrong
+	my $control = Net::MAC->new('mac' => $MAC, 'die' => 0); # Die if MAC is wrong
 	delete $INC{'Net/MAC.pm'}; # toggle module from %INC
 	`ip link set dev interface down`;
         if(`ip link set dev $interface address $MAC`){
@@ -1415,6 +1415,7 @@ sub add_WEPKey {
 
 # as their name suggest, these 2 functions permits the conversion from channel to its frequency and vice-versa, is suggested to use them with 
 # Lorcon_set_channel (or similar) functions
+
 sub Channel_to_Frequency{
         my $channel = shift;
         return $channel_to_frequency{ $channel };
