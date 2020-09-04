@@ -1,6 +1,7 @@
 /*
  * $Id: lorcon_driver_t.c 31 2015-02-17 07:04:36Z gomor $
  *
+	MODIFIED BY EDOARDO MANTOVANI
  * Copyright (c) 2010-2015 Patrice <GomoR> Auffret
  *
  * LICENSE
@@ -36,6 +37,31 @@ lorcon_driver_t_c2sv(AirLorconDriver *entry)
 
    return out_ref;
 }
+
+/*
+ *  struct lorcon_multi_t{
+ *    	struct lorcon_multi_t *interfaces;
+ *	char errstr[LORCON_STATUS_MAX];
+ *  	AirLorconHandler handler_cb;
+ *	void *handler_user;
+ *	};
+ *         
+ */
+
+
+SV *
+lorcon_multi_t_c2sv(AirLorconMulti *entry)
+{
+
+  HV *out = newHV();
+  SV *out_ref = newRV_noinc((SV *)out);
+
+  hv_store(out, "interface", 4, newSVpv(entry->interfaces, 0), 0);
+  hv_store(out, "handler_user", 7, newSVpv(entry->handler_user, 0), 0);
+  return out_ref;
+}
+
+
 
 //static IntfEntry *
 //intf_sv2c(SV *h, IntfEntry *ref)
