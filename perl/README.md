@@ -37,10 +37,4 @@ The paypal address for a donation is:
 
 Every donation will be used **only** for buying hardware and for test other implementation of the __Air::Toolkit__.
 
-**PAID SERVICES**
-
-if you want to have a customized implementation of your favorite wireless-hardware you can write me at EdoardoMantovani@Lorcon2.com and we can agree about the price of the service.
-
-More info at: https://github.com/Baseband-processor/Perl-awk-services/blob/master/README.md
-
 **Edoardo Mantovani, 2020**
