@@ -269,7 +269,11 @@ typedef struct sockaddr_nl {
 typedef struct sockaddr_nl SOCKADDR_NL;
 
 
-typedef struct madwi_vaps            MADWIFI_VAPS;
+typedef struct madwifi_vaps {
+	char **vaplist;
+	int vaplen;
+}MADWIFI_VAPS;
+
 
 typedef lorcon_multi_error_handler   LORCON_MULTI_ERROR_HANDLER;
 
@@ -464,8 +468,6 @@ typedef struct lorcon_multi_t{
 	void *handler_user;
 }AirLorconMulti;
 
-
-
 typedef struct tx80211_packet{
 	uint8_t modulation;
 	uint8_t txrate;
@@ -518,10 +520,10 @@ _lorcon_copy_driver(driver)
 CODE:
 	AirLorconDriver *r;
 
-	r = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
-
-	r->name = strdup(driver->name);
-	r->details = strdup(driver->details);
+	//r = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
+	//Newx(AirLorconDriver *, sizeof(AirLorconDriver *), r);
+	r->name = savepv(driver->name);
+	r->details = savepv(driver->details);
 	r->init_func = driver->init_func;
 	r->probe_func = driver->probe_func;
 	r->next = NULL;
@@ -559,10 +561,12 @@ CODE:
 	if (driver->init_func == NULL){
 		return NULL;
 	}
-	context = (AirLorcon *) malloc(sizeof(AirLorcon *));
-	memset(context, 0, sizeof(AirLorcon *));
+	//context = (AirLorcon *) malloc(sizeof(AirLorcon *));
+	//Newx(AirLorcon *, AirLorcon *, context);	
+	//zero(context, "", AirLorcon *);
+	//memset(context, 0, sizeof(AirLorcon *));
 	snprintf(context->drivername, 32, "%s", driver->name);
-   	 context->ifname = strdup(interface);
+   	 context->ifname = savepv(interface);
    	 context->vapname = NULL;
 	context->pcap = NULL;
 	context->inject_fd = context->ioctl_fd = context->capture_fd = -1;
@@ -593,9 +597,12 @@ CODE:
     	context->pcap_handler_cb = NULL;
 	context->wepkeys = NULL;
 	if ((*(driver->init_func))(context) < 0) {
-		free(context);
+		Safefree(context);
 		return NULL;
 	}
+	RETVAL = context;
+	OUTPUT:
+	  RETVAL
 
 void
 lorcon_free(context)
@@ -950,8 +957,10 @@ lorcon_add_wepkey(context, bssid, key, length)
 	}
 	LORCON_WEP *wep;
 	wep = (	LORCON_WEP *) malloc(sizeof(LORCON_WEP *) );
-	memcpy(wep->bssid, bssid, 6);
-	memcpy(wep->key, key, length);
+	//memcpy(wep->bssid, bssid, 6);
+	copy(bssid, wep->bssid, 6, 0);	
+	//memcpy(wep->key, key, length);
+	copy(key, wep->key, length, 0);	
 	wep->len = length;
 	wep->next = context->wepkeys;
 	context->wepkeys = wep;
@@ -1053,7 +1062,6 @@ lorcon_multi_add_interface(ctx, lorcon_intf)
   AirLorcon *lorcon_intf
  CODE:
  AirLorconInterface *i =  (AirLorconInterface *) malloc(sizeof(AirLorconInterface *));
-
     if (i == NULL)  {
         snprintf(ctx->errstr, LORCON_STATUS_MAX, "Out of memory!");
         return -1;
@@ -1073,6 +1081,19 @@ lorcon_multi_del_interface(ctx, lorcon_intf, free_interface)
 AirLorconInterface *
 lorcon_multi_get_interfaces(ctx)
   AirLorconMulti *ctx
+   INIT:
+      AirLorconMulti *list = lorcon_multi_get_interfaces(ctx);
+      AirLorconMulti *cur; // = NULL;
+      AV *av = newAV();
+   CODE:
+      for (cur = list; cur != NULL; cur = cur->handler_cb) {
+         SV *this = lorcon_multi_t_c2sv(cur);
+         av_push(av, this);
+      }
+      lorcon_free_driver_list(list);
+      RETVAL = av;
+   OUTPUT:
+      RETVAL
 
 AirLorconInterface *
 lorcon_multi_get_next_interface(ctx, intf)
@@ -1424,7 +1445,7 @@ CODE:
              if (SvROK(err)) {
             char    *errbuf = NULL;
             SV      *err_sv = SvRV(err);
-            Newx(errbuf, PCAP_ERRBUF_SIZE + 1, char);
+            //Newx(errbuf, PCAP_ERRBUF_SIZE + 1, char);
 		if (to_ms == 0)
                 to_ms = 1;
 			RETVAL = pcap_open_live(device, snaplen, promisc, to_ms, errbuf);
@@ -1475,7 +1496,8 @@ CODE:
 	}
 
 	memset(&if_req, 0, sizeof(if_req));
-	memcpy(if_req->ifr_name, context->ifname, IFNAMSIZ);
+	//memcpy(if_req->ifr_name, context->ifname, IFNAMSIZ);
+	copy(context->ifname, if_req->ifr_name, IFNAMSIZ, 0);	
 	if_req->ifr_name[IFNAMSIZ - 1] = 0;
 	if (ioctl(context->inject_fd, SIOCGIFINDEX, &if_req) < 0) {
 		snprintf(context->errstr, LORCON_STATUS_MAX, "failed to get interface idex: %s", strerror(errno));
@@ -1538,8 +1560,8 @@ drv_tuntap_listdriver(drv)
 	CODE:
  	AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
 
-	d->name = strdup("tuntap");
-	d->details = strdup("Linux tuntap virtual interface drivers");
+	d->name = savepv("tuntap");
+	d->details = savepv("Linux tuntap virtual interface drivers");
 	d->init_func = drv_tuntap_init;
 	d->probe_func = NULL;
 
@@ -1635,13 +1657,14 @@ CODE:
 	h = h->next;
 
 	for (i = h; i != NULL; i = i->next) {
-		memcpy(&(bytes[offt]), i->data, i->len);
+		//memcpy(&(bytes[offt]), i->data, i->len);
+		copy(i->data, (bytes[offt]), i->len, 0);		
 		offt += i->len;
 	}
 
 			    
         
-MADWIFI_VAPS *
+int 
 madwifing_list_vaps(interface_name, errorstring)
 	const char *interface_name
 	char *errorstring
@@ -1797,7 +1820,8 @@ wtinj_open(wtinj)
 		return -1;
 	}
 	memset(&if_req, 0, sizeof if_req);
-	memcpy(if_req.ifr_name, wtinj->ifname, IFNAMSIZ);
+	//memcpy(if_req.ifr_name, wtinj->ifname, IFNAMSIZ);
+	copy(wtinj->ifname, if_req.ifr_name, IFNAMSIZ, 0);
 	if_req.ifr_name[IFNAMSIZ - 1] = 0;
 	err = ioctl(wtinj->raw_fd, SIOCGIFINDEX, &if_req);
 	if (err < 0) {
@@ -1954,7 +1978,8 @@ CODE:
 	uint16_t *sixptr = (uint16_t *) chunk;
 	uint64_t *ch64 = (uint64_t *) chunk;
 
-	memcpy(chunk, "\xFF\xFF\xFF\xFF\xFF\xFF", 6);
+	//memcpy(chunk, "\xFF\xFF\xFF\xFF\xFF\xFF", 6);
+	copy("\xFF\xFF\xFF\xFF\xFF\xFF", chunk, 6, 0);
 	lcpf_80211headers(pack, WLAN_FC_TYPE_MGMT, WLAN_FC_SUBTYPE_BEACON, framecontrol, duration, chunk, src, bssid, NULL, fragment, sequence);
 
 	*ch64 = timestamp;
@@ -1978,7 +2003,8 @@ CODE:
 	uint8_t chunk[257];
 	chunk[0] = num;
 	chunk[1] = len;
-	memcpy(&(chunk[2]), data, len);
+	//memcpy(&(chunk[2]), data, len);
+	copy(data, &chunk[2], len, 0);	
 	lcpa_append_copy(pack, "IETAG", len + 2, chunk);
 
 
@@ -2191,9 +2217,12 @@ CODE:
 	
 	length = 12 + packet->length_data - offt;
 	*data = (u_char *) malloc(sizeof(u_char) * length);
-	memcpy(*data, extra->dest_mac, 6);
-	memcpy(*data + 6, extra->source_mac, 6);
-	memcpy(*data + 12, packet->packet_data + offt, packet->length_data - offt);
+	//memcpy(*data, extra->dest_mac, 6);
+	copy(extra->dest_mac, *data, 6, 0);	
+	//memcpy(*data + 6, extra->source_mac, 6);
+	copy(extra->source_mac, *data, 6, 0);	
+	//memcpy(*data + 12, packet->packet_data + offt, packet->length_data - offt);
+	copy(packet->packet_data + offt, *data + 12, packet->length_data - offt, 0);
 	RETVAL = length;
 	  OUTPUT:
 	RETVAL
@@ -2495,14 +2524,14 @@ CODE:
 	AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
 	AirLorconDriver *rtd = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
 
-	d->name = strdup("file");
-	d->details = strdup("PCAP file source");
+	d->name = savepv("file");
+	d->details = savepv("PCAP file source");
 	d->init_func = drv_file_init;
 	d->probe_func = drv_file_probe(drv);
 	d->next = drv;
 
-	rtd->name = strdup("rtfile");
-	rtd->details = strdup("Real-time PCAP file source");
+	rtd->name = savepv("rtfile");
+	rtd->details = savepv("Real-time PCAP file source");
 	rtd->init_func = drv_rtfile_init;
 	rtd->probe_func = drv_file_probe(drv);
 	rtd->next = d;
@@ -2558,13 +2587,13 @@ tx80211_freecardlist(input_list)
 CODE:
 	int x;
 	for( x = 0; x < input_list->num_cards; x++){
-		free(input_list->cardnames[x]);
-		free(input_list->descriptions[x]);
+		Safefree(input_list->cardnames[x]);
+		Safefree(input_list->descriptions[x]);
 }
-	free(input_list->cardnames);
-	free(input_list->descriptions);
-	free(input_list->capabilities);
-	free(input_list);
+	Safefree(input_list->cardnames);
+	Safefree(input_list->descriptions);
+	Safefree(input_list->capabilities);
+	Safefree(input_list);
 
 
 void
@@ -2619,10 +2648,12 @@ CODE:
 
 	frame->data_len = payloadlen;
 
-	memcpy(frame->base, input_pkt->packet, 24);
-	memcpy(frame->data, input_pkt->packet + 24, payloadlen);
+	//memcpy(frame->base, input_pkt->packet, 24);
+	copy(input_pkt->packet, frame->base, 24, 0);
+	//memcpy(frame->data, input_pkt->packet + 24, payloadlen);
+	copy(input_pkt->packet + 24, frame->data, payloadlen, 0);
 	ret = write(wginj->raw_fd, frame, (payloadlen + sizeof(*frame)));
-	free(frame);
+	Safefree(frame);
 	if (ret < 0) {
 		snprintf(wginj->errstr, TX80211_STATUS_MAX, "Error transmitting frame: %s", strerror(errno));
 		return TX80211_ENOTX;
@@ -2654,8 +2685,8 @@ drv_mac80211_listdriver(head)
 CODE:
 	AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
 	AirLorcon *interface;
-	d->name = strdup("mac80211");
-	d->details = strdup("Linux mac80211 kernel drivers, includes all in-kernel drivers on modern systems");
+	d->name = savepv("mac80211");
+	d->details = savepv("Linux mac80211 kernel drivers, includes all in-kernel drivers on modern systems");
 	d->init_func = drv_mac80211_init(interface);
 	d->probe_func = drv_mac80211_probe();
 	d->next = head;
@@ -2682,18 +2713,18 @@ CODE:
 
     if (context->vapname == NULL) {
         snprintf(vifname, MAX_IFNAME_LEN, "%smon", context->ifname);
-        context->vapname = strdup(vifname);
+        context->vapname = savepv(vifname);
 	}
 
 	if ((parent = nl80211_find_parent(context->vapname)) == NULL) {
 		if (nl80211_createvif(context->ifname, context->vapname, flags, 
                     num_flags, context->errstr) < 0) {
-			free(parent);
+			Safefree(parent);
 			return -1;
 		}
 	} 
 
-	free(parent);
+	Safefree(parent);
 	if (ifconfig_delta_flags(context->vapname, context->errstr, (IFF_UP | IFF_RUNNING | IFF_PROMISC)) < 0) {
 		return -1;
 	}
@@ -2721,7 +2752,8 @@ CODE:
 		return -1;
 	}
 	memset(&if_req, 0, sizeof(if_req));
-	memcpy(if_req.ifr_name, context->vapname, IFNAMSIZ);
+	//memcpy(if_req.ifr_name, context->vapname, IFNAMSIZ);
+	copy(context->vapname, if_req.ifr_name, IFNAMSIZ, 0);
 	if_req.ifr_name[IFNAMSIZ - 1] = 0;
 	if (ioctl(context->inject_fd, SIOCGIFINDEX, &if_req) < 0) {
 		snprintf(context->errstr, LORCON_STATUS_MAX, "failed to get interface idex: %s",
