@@ -1312,7 +1312,9 @@ tx80211_airpcap_init(in_tx)
   
 int
 tx80211_airpcap_capabilities()
-
+CODE:
+	return (TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT |
+		TX80211_CAP_SETMODULATION | TX80211_CAP_SETRATE);
 
 
 int 
