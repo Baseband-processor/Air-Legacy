@@ -1232,14 +1232,6 @@ int
 drv_madwifing_init(context) 
   AirLorcon *context
 
-int
-lorcon_airjack_init(in_tx)
-  AirLorcon *in_tx
-
-AirLorconDriver *
-lorcon_airjack_listdriver(drv)
-   AirLorconDriver *drv
-
 int 
 tx80211_airjack_capabilities()
 CODE:
