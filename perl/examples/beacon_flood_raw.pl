@@ -17,6 +17,8 @@ my $driver = shift or die "./beacon_flood_raw.pl <driver> <interface> <channel>\
 my $interface = shift or die "./beacon_flood_raw.pl <driver> <interface> <channel>\n";
 my $channel = shift or die "./beacon_flood_raw.pl <driver> <interface> <channel>\n";
 
+# consider $lorcon like context on Lorcon2
+
 sub usage() {
 	print $0," - Simple 802.11 beacon flooder";
 	print "-----------------------------------------------------\n" ;
@@ -42,7 +44,7 @@ sub usage() {
 			sleep( $sliptime );
 		
 			}
-		Air::Lorcon2::lorcon_close( $context ) or die $!;
+		Air::Lorcon2::lorcon_close( $lorcon ) or die $!;
 }
 
 &usage();
