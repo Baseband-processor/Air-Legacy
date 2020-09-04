@@ -20,7 +20,7 @@
 #include <lorcon2/lorcon_packasm.h>
 #include <sys/time.h>
 #include <sys/stat.h>
-#include <linux/socket.h>
+#include <sys/socket.h>
 #include <pcap.h>
 
 #endif /* __CTXS_H */
