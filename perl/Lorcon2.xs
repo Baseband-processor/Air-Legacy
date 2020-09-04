@@ -1751,6 +1751,9 @@ wtinj_setmode(wtinj, mode)
 int 
 wtinj_getmode(wtinj)
 	TX80211  *wtinj
+CODE:
+	return(iwconfig_get_mode(wtinj->ifname, wtinj->errstr));
+
 
 int 
 wtinj_setfuncmode(wtinj, funcmode)
