@@ -466,6 +466,7 @@ typedef struct lorcon_multi_t{
 	char errstr[LORCON_STATUS_MAX];
    	AirLorconHandler handler_cb;
 	void *handler_user;
+	struct lorcon_multi_t *next;
 }AirLorconMulti;
 
 typedef struct tx80211_packet{
@@ -1083,10 +1084,10 @@ lorcon_multi_get_interfaces(ctx)
   AirLorconMulti *ctx
    INIT:
       AirLorconMulti *list = lorcon_multi_get_interfaces(ctx);
-      AirLorconMulti *cur; // = NULL;
+      AirLorconMulti *cur = NULL;
       AV *av = newAV();
    CODE:
-      for (cur = list; cur != NULL; cur = cur->handler_cb) {
+      for (cur = list; cur != NULL; cur = cur->next) {
          SV *this = lorcon_multi_t_c2sv(cur);
          av_push(av, this);
       }
