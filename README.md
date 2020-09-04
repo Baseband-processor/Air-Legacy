@@ -140,7 +140,7 @@ A great thanks to *Andreas Hadjiprocopis* (aka *Bliako*), probably the best coll
 **other thanks**
 * perlmonks community, especially syphilis  for his initial help
 * *Mike Kershaw* (aka Dragorn), the main developer of Lorcon2, who explained some obscure part of his code
-* *GomoR*, the old version author, who never replied to my emails
+* *GomoR*, the old author, who never replied to my emails even when I sent the 10.5 Air::Lorcon2 version
 
 **Future works and directions**
 
