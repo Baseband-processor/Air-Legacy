@@ -195,15 +195,9 @@ Feel free to email me at <EdoardoMantovani@Lorcon2.com>
 - [x] I am open to suggestions, code improvement, collaboration and other requests
 
 
-**PAID SERVICES**
-
-if you want to have a customized implementation of your favorite wireless-hardware you can write me at EdoardoMantovani@Lorcon2.com and we can agree about the price of the service.
-
-More info here: https://github.com/Baseband-processor/Perl-awk-services/blob/master/README.md
-
 **FREE DROPS**
 
-Occasionally I'll drop some random hardware extension for Air::Lorcon2, the frequency is proportional to the request of the paid service.
+Occasionally I'll drop some random hardware extension for Air::Lorcon2.
 
 **CURRENT VERSION**
 
