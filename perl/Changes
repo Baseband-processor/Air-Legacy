@@ -3,8 +3,12 @@
 Revision history for Perl extension Air::Lorcon2.
 
 [pre-ALPHA]
-
-
+19.23   Fri Aug 4 22:57:00 CET 2020
+  
+  - added reason codes hashes and related functions
+  - fixed minor bugs in .pm file
+  - changed logo and toggled paid services (for now)
+  
 17.7    Wed Aug 2 19:37:00  CET 2020
 
   - removed "lorcon_set_datalink" and "lorcon_get_datalink" cause there isn't the C code in the original Lorcon library
