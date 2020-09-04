@@ -50,7 +50,7 @@
 #define TX80211_CAP_DURID 128
 #define TX80211_CAP_SNIFFACK 256
 #define TX80211_CAP_DSSSTX 2048
-#define TX80211_CAP_SETRATE 16384	
+#define TX80211_CAP_SETRATE 16384
 #define TX80211_CAP_SETMODULATION 32768
 
 #define INJ_NODRIVER    0
@@ -349,7 +349,7 @@ typedef struct {
 
 typedef lorcon_dot3_extra         Lorcon_DOT3;
 
-typedef lorcon_handler             AirLorconHandler;
+
 typedef lorcon_channel_t           AirLorconChannel;
 
 typedef struct  {
@@ -397,7 +397,7 @@ typedef struct  lorcon_t{
 	int timeout_ms;
 	void *auxptr;
     	void *userauxptr;
-	AirLorconHandler handler_cb;
+	lorcon_handler handler_cb;
 	void *handler_user;
 	int (*close_cb)(lorcon_t *context);
 	int (*openinject_cb)(lorcon_t *context);
@@ -418,6 +418,9 @@ typedef struct  lorcon_t{
     	int (*pcap_handler_cb)(u_char *user, PCAP_PKTHDR *h, const u_char *bytes);
 }AirLorcon;
 
+
+typedef void (*lorcon_handler)(lorcon_t *, lorcon_packet_t *, unsigned char *user);
+typedef lorcon_handler             AirLorconHandler;
 
 typedef struct tx80211{
 	int injectortype;
@@ -559,53 +562,6 @@ AirLorcon *
 lorcon_create(interface, driver)
       const char *interface
       AirLorconDriver *driver
-CODE:
-	AirLorcon *context = NULL;
-	if (driver->init_func == NULL){
-		return NULL;
-	}
-	//context = (AirLorcon *) malloc(sizeof(AirLorcon *));
-	//Newx(AirLorcon *, AirLorcon *, context);	
-	//zero(context, "", AirLorcon *);
-	//memset(context, 0, sizeof(AirLorcon *));
-	snprintf(context->drivername, 32, "%s", driver->name);
-   	 context->ifname = savepv(interface);
-   	 context->vapname = NULL;
-	context->pcap = NULL;
-	context->inject_fd = context->ioctl_fd = context->capture_fd = -1;
-	context->packets_sent = 0;
-	context->packets_recv = 0;
-	context->dlt = -1;
-	context->channel = -1;
-   	 context->channel_ht_flags = LORCON_CHANNEL_BASIC;
-	context->errstr[0] = 0;
-	context->timeout_ms = 0;
-	memset(context->original_mac, 0, 6);
-	context->handler_cb = NULL;
-	context->handler_user = NULL;
-	context->close_cb = NULL;
-	context->openinject_cb = NULL;
-	context->openmon_cb = NULL;
-	context->openinjmon_cb = NULL;
-	context->setchan_cb = NULL;
-	context->getchan_cb = NULL;
-   	context->setchan_ht_cb = NULL;
-   	context->getchan_ht_cb = NULL;
-	context->sendpacket_cb = NULL;
-	context->getpacket_cb = NULL;
-	context->setdlt_cb = NULL;
-	context->getdlt_cb = NULL;
-	context->getmac_cb = NULL;
-	context->setmac_cb = NULL;
-    	context->pcap_handler_cb = NULL;
-	context->wepkeys = NULL;
-	if ((*(driver->init_func))(context) < 0) {
-		Safefree(context);
-		return NULL;
-	}
-	RETVAL = context;
-	OUTPUT:
-	  RETVAL
 
 void
 lorcon_free(context)
@@ -667,6 +623,7 @@ CODE:
 	l_packet = (AirLorconPacket *) malloc(sizeof(AirLorconPacket *));
 
 	memset(l_packet, 0, sizeof(AirLorconPacket));
+	//Zero(l_packet, NULL, AirLorconPacket);
 	l_packet->lcpa = lcpa;
 	return l_packet;
 
@@ -761,7 +718,7 @@ if (context->setchan_cb == NULL) {
 		return LORCON_ENOTSUPP;
 	}
 
-	return (*(context->setchan_cb))(context, channel);
+	//return (*(context->setchan_cb))(context, channel);
 
 int
 lorcon_get_channel(context)
@@ -771,7 +728,7 @@ if (context->getchan_cb == NULL) {
 		snprintf(context->errstr, LORCON_STATUS_MAX,  "Driver %s does not support getting channel", context->drivername);
 		return LORCON_ENOTSUPP;
 	}
-	return (*(context->getchan_cb))(context);
+	return context->getchan_cb;
 
 
 int 
@@ -961,9 +918,9 @@ lorcon_add_wepkey(context, bssid, key, length)
 	LORCON_WEP *wep;
 	wep = (	LORCON_WEP *) malloc(sizeof(LORCON_WEP *) );
 	//memcpy(wep->bssid, bssid, 6);
-	copy(bssid, wep->bssid, 6, 0);	
+	Copy(bssid, wep->bssid, 6, 0);	
 	//memcpy(wep->key, key, length);
-	copy(key, wep->key, length, 0);	
+	Copy(key, wep->key, length, 0);	
 	wep->len = length;
 	wep->next = context->wepkeys;
 	context->wepkeys = wep;
@@ -1138,79 +1095,6 @@ lorcon_multi_loop(ctx, counter, callback, user)
   int counter
   AirLorconHandler callback
   unsigned char *user
-CODE:
-    int packets = 0;
-    FD *rset;
-    int maxfd = 0;
-    int r;
-    AirLorconInterface *intf = NULL;
-    if (ctx->interfaces == NULL) {
-        snprintf( ctx->errstr, LORCON_STATUS_MAX,  "Cannot multi_loop with no interfaces" );
-        return -1;
-    }
-	            int fd = lorcon_get_selectable_fd(intf->lorcon_intf);
-    while (packets < counter || counter <= 0) {
-        # FD_ZERO(&rset);
-        maxfd = 0;
-        while ((intf = lorcon_multi_get_next_interface(ctx, intf))) {
-            int fd = lorcon_get_selectable_fd(intf->lorcon_intf);
-
-            if (fd < 0) {
-                lorcon_multi_del_interface(ctx, intf->lorcon_intf, 0);
-			}
-                if (intf->error_handler != NULL) {
-                    (*(intf->error_handler))(ctx, intf->lorcon_intf, intf->error_aux);
-                
-                intf = NULL;
-                continue;
-            }
-            # FD_SET(fd, &rset);
-
-            if (maxfd < fd){ maxfd = fd; }
-
-        }
-		}
-        if (maxfd == 0) {
-            fprintf(stderr, "lorcon_multi_loop no interfaces with packets left\n");
-            return 0;
-        }
-        if (select(maxfd + 1, &rset, NULL, NULL, NULL) < 0) {
-            if (errno != EINTR && errno != EAGAIN) {
-                snprintf(ctx->errstr, LORCON_STATUS_MAX, "select fail: %s", strerror(errno));
-                return -1;
-            }
-        
-
-        intf = NULL;
-        while ((intf = lorcon_multi_get_next_interface(ctx, intf))) {
-            int fd = lorcon_get_selectable_fd(intf->lorcon_intf);
-
-            if (fd < 0) {
-                lorcon_multi_del_interface(ctx, intf->lorcon_intf, 0);
-		}
-                if (intf->error_handler != NULL) {
-                    (*(intf->error_handler))(ctx, intf->lorcon_intf, intf->error_aux);
-                }
-                intf = NULL;
-                continue;
-            }
-		}
-            //if(FD_ISSET(fd, &rset)) {
-                r = lorcon_dispatch(intf->lorcon_intf, 1, callback, user);
-                if (r <= 0) {
-                    fprintf(stderr, "Interface stopped reporting packets, removing  from multicap: %s\n",  lorcon_get_capiface(intf->lorcon_intf));
-                    lorcon_multi_del_interface(ctx, intf->lorcon_intf, 0);
-                    if (intf->error_handler != NULL) {
-                        (*(intf->error_handler))(ctx, intf->lorcon_intf, intf->error_aux);
-                    }
-                    intf = NULL;
-                    
-               // }
-                packets++;
-        }    
-    RETVAL = packets;
-    OUTPUT:
-	RETVAL
 
 			    
 AirLorconDriver *
@@ -1233,6 +1117,8 @@ CODE:
 int 
 drv_madwifing_init(context) 
   AirLorcon *context
+
+
 
 int 
 tx80211_airjack_capabilities()
@@ -1313,8 +1199,8 @@ tx80211_airpcap_init(in_tx)
 int
 tx80211_airpcap_capabilities()
 CODE:
-	return (TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT |
-		TX80211_CAP_SETMODULATION | TX80211_CAP_SETRATE);
+	return(TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT | 
+	TX80211_CAP_SETMODULATION | TX80211_CAP_SETRATE);
 
 
 int 
@@ -1494,7 +1380,7 @@ CODE:
 
 	memset(&if_req, 0, sizeof(if_req));
 	//memcpy(if_req->ifr_name, context->ifname, IFNAMSIZ);
-	copy(context->ifname, if_req->ifr_name, IFNAMSIZ, 0);	
+	Copy(context->ifname, if_req->ifr_name, IFNAMSIZ, 0);	
 	if_req->ifr_name[IFNAMSIZ - 1] = 0;
 	if (ioctl(context->inject_fd, SIOCGIFINDEX, &if_req) < 0) {
 		snprintf(context->errstr, LORCON_STATUS_MAX, "failed to get interface idex: %s", strerror(errno));
@@ -1655,7 +1541,7 @@ CODE:
 
 	for (i = h; i != NULL; i = i->next) {
 		//memcpy(&(bytes[offt]), i->data, i->len);
-		copy(i->data, (bytes[offt]), i->len, 0);		
+		Copy(i->data, (bytes[offt]), i->len, 0);		
 		offt += i->len;
 	}
 
@@ -1818,7 +1704,7 @@ wtinj_open(wtinj)
 	}
 	memset(&if_req, 0, sizeof if_req);
 	//memcpy(if_req.ifr_name, wtinj->ifname, IFNAMSIZ);
-	copy(wtinj->ifname, if_req.ifr_name, IFNAMSIZ, 0);
+	Copy(wtinj->ifname, if_req.ifr_name, IFNAMSIZ, 0);
 	if_req.ifr_name[IFNAMSIZ - 1] = 0;
 	err = ioctl(wtinj->raw_fd, SIOCGIFINDEX, &if_req);
 	if (err < 0) {
@@ -1976,7 +1862,7 @@ CODE:
 	uint64_t *ch64 = (uint64_t *) chunk;
 
 	//memcpy(chunk, "\xFF\xFF\xFF\xFF\xFF\xFF", 6);
-	copy("\xFF\xFF\xFF\xFF\xFF\xFF", chunk, 6, 0);
+	Copy("\xFF\xFF\xFF\xFF\xFF\xFF", chunk, 6, 0);
 	lcpf_80211headers(pack, WLAN_FC_TYPE_MGMT, WLAN_FC_SUBTYPE_BEACON, framecontrol, duration, chunk, src, bssid, NULL, fragment, sequence);
 
 	*ch64 = timestamp;
@@ -2001,7 +1887,7 @@ CODE:
 	chunk[0] = num;
 	chunk[1] = len;
 	//memcpy(&(chunk[2]), data, len);
-	copy(data, &chunk[2], len, 0);	
+	Copy(data, &chunk[2], len, 0);	
 	lcpa_append_copy(pack, "IETAG", len + 2, chunk);
 
 
@@ -2215,11 +2101,11 @@ CODE:
 	length = 12 + packet->length_data - offt;
 	*data = (u_char *) malloc(sizeof(u_char) * length);
 	//memcpy(*data, extra->dest_mac, 6);
-	copy(extra->dest_mac, *data, 6, 0);	
+	Copy(extra->dest_mac, *data, 6, 0);	
 	//memcpy(*data + 6, extra->source_mac, 6);
-	copy(extra->source_mac, *data, 6, 0);	
+	Copy(extra->source_mac, *data, 6, 0);	
 	//memcpy(*data + 12, packet->packet_data + offt, packet->length_data - offt);
-	copy(packet->packet_data + offt, *data + 12, packet->length_data - offt, 0);
+	Copy(packet->packet_data + offt, *data + 12, packet->length_data - offt, 0);
 	RETVAL = length;
 	  OUTPUT:
 	RETVAL
@@ -2646,9 +2532,9 @@ CODE:
 	frame->data_len = payloadlen;
 
 	//memcpy(frame->base, input_pkt->packet, 24);
-	copy(input_pkt->packet, frame->base, 24, 0);
+	Copy(input_pkt->packet, frame->base, 24, 0);
 	//memcpy(frame->data, input_pkt->packet + 24, payloadlen);
-	copy(input_pkt->packet + 24, frame->data, payloadlen, 0);
+	Copy(input_pkt->packet + 24, frame->data, payloadlen, 0);
 	ret = write(wginj->raw_fd, frame, (payloadlen + sizeof(*frame)));
 	Safefree(frame);
 	if (ret < 0) {
@@ -2750,7 +2636,7 @@ CODE:
 	}
 	memset(&if_req, 0, sizeof(if_req));
 	//memcpy(if_req.ifr_name, context->vapname, IFNAMSIZ);
-	copy(context->vapname, if_req.ifr_name, IFNAMSIZ, 0);
+	Copy(context->vapname, if_req.ifr_name, IFNAMSIZ, 0);
 	if_req.ifr_name[IFNAMSIZ - 1] = 0;
 	if (ioctl(context->inject_fd, SIOCGIFINDEX, &if_req) < 0) {
 		snprintf(context->errstr, LORCON_STATUS_MAX, "failed to get interface idex: %s",
