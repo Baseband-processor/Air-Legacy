@@ -10,8 +10,113 @@ use warnings;
 our $VERSION = '17.7';
 use base qw(Exporter DynaLoader);
 
+
+# from: http://www.emcu.eu/wifi-802-11-association-disassociation-reason-code/
+my %dissociation_reason_codes = (
+	0 => "reserved",
+	1 => "Unspecified reason",
+	2 => "Previous authentication no longer valid",
+	3 => "Deauthenticated because sending station (STA) is leaving or has left Independent Basic Service Set (IBSS) or ESS",
+	4 => "Disassociated due to inactivity",
+	5 => "Disassociated because WAP device is unable to handle all currently associated STAs",
+	6 => "Class 2 frame received from nonauthenticated STA",
+	7 => "Class 3 frame received from nonassociated STA",
+	8 => "Disassociated because sending STA is leaving or has left Basic Service Set (BSS)",
+	9 => "STA requesting (re)association is not authenticated with responding STA",
+	10 => "Disassociated because the information in the Power Capability element is unacceptable",
+	11 => "Disassociated because the information in the Supported Channels element is unacceptable",
+	12 => "Disassociated due to BSS Transition Management",
+	13 => "Invalid element, that is, an element defined in this standard for which the content does not meet the specifications in Clause 8", 
+	14 => "Message integrity code (MIC) failure", 
+	15 => "4-Way Handshake timeout",
+	16 => "Group Key Handshake timeout", 
+	17 => "Element in 4-Way Handshake different from (Re)Association Request/ Probe Response/Beacon frame",
+	18 => "Invalid group cipher",
+	19 => "Invalid pairwise cipher",
+	20 => "Invalid AKMP",
+	21 => "Unsupported RSNE version",
+	22 => "Invalid RSNE capabilities", 
+	23 => "IEEE 802.1X authentication failed",
+	24 => "Cipher suite rejected because of the security policy",
+	32 => "Disassociated for unspecified, QoS-related reason",
+	33 => "Disassociated because QAP lacks sufficient bandwidth for this QSTA",
+	34 => "Disassociated because excessive number of frames need to be acknowledged, but are not
+acknowledged due to AP transmissions and/or poor channel conditions",
+	35 => "Disassociated because QSTA is transmitting outside the limits of its TXOPs",
+	36 => "Requested from peer QSTA as the QSTA is leaving the QBSS (or resetting)",
+	37 => "Requested from peer QSTA as it does not want to use the mechanism",	
+	38 => "Requested from peer QSTA as the QSTA received frames using the mechanism for which
+a setup is required",
+	39 => "Requested from peer QSTA due to timeout",
+	40 => "Peer QSTA does not support the requested cipher suite"
+);
+
+my %association_reason_codes = (
+
+	0 => "Successful",
+	1 => "Unspecified failure",
+	10 => "Cannot support all requested capabilities in the Capability Information field",
+	11 => "Reassociation denied due to inability to confirm that association exists",
+	12 => "Association denied due to reason outside the scope of this standard",
+	13 => "Responding station does not support the specified authentication algorithm",
+	14 => "Received an Authentication frame with authentication transaction sequence number
+out of expected sequence",
+	15 => "Authentication rejected because of challenge failure",
+	16 => "Authentication rejected due to timeout waiting for next frame in sequence",
+	17 => "Association denied because AP is unable to handle additional associated stations",
+	18 => "Association denied due to requesting station not supporting all of the data rates in the
+BSSBasicRateSet parameter",
+	19 => "Association denied due to requesting station not supporting the short preamble
+option",
+	20 => "Association denied due to requesting station not supporting the PBCC modulation
+option	",
+	21 => "Association denied due to requesting station not supporting the Channel Agility
+option",
+	22 => "	Association request rejected because Spectrum Management capability is required",
+	23 => "Association request rejected because the information in the Power Capability
+element is unacceptable",
+	24 => "Association request rejected because the information in the Supported Channels
+element is unacceptable",
+	25 => "Association denied due to requesting station not supporting the Short Slot Time
+option",
+	26 => "Association denied due to requesting station not supporting the DSSS-OFDM option",
+	27 => "Reserved",
+	32 => "Unspecified, QoS-related failure",
+	33 => "Association denied because QAP has insufficient bandwidth to handle another QSTA",
+	34 => "Association denied due to excessive frame loss rates and/or poor conditions on current
+operating channel",
+	35 => "Association (with QBSS) denied because the requesting STA does not support the QoS facility",
+	36 => "Reserved in 802.11",
+	37 => "The request has been declined",
+	38 => "The request has not been successful as one or more parameters have invalid values",
+	39 => "The TS has not been created because the request cannot be honored; however, a suggested
+TSPEC is provided so that the initiating QSTA may attempt to set another TS with the suggested changes to the TSPEC",
+	40 => "Invalid information element, i.e., an information element defined in this standard for
+which the content does not meet the specifications in Clause 7",
+	41 => "Invalid group cipher",
+	42 => "Invalid pairwise cipher",
+	43 => "Invalid AKMP",
+	44 => "Unsupported RSN information element version",
+	45 => "Invalid RSN information element capabilities",
+	46 => "Cipher suite rejected because of security policy",
+	47 => "The TS has not been created; however, the HC may be capable of creating a TS, in
+response to a request, after the time indicated in the TS Delay element	",
+	48 => "Direct link is not allowed in the BSS by policy",
+	49 => "Destination STA is not present within this QBSS",
+	50 => "The Destination STA is not a QSTA",
+	51 => "Association denied because the ListenInterval is too large",
+	0xC8 => "Unspecified, QoS-related failure.
+Not defined in IEEE, defined in CCXv4",
+	0xC9 => "TSPEC request refused due to AP’s policy configuration (e.g., AP is configured to deny all TSPEC requests on this SSID). A TSPEC will not be suggested by the AP for this reason code.
+Not defined in IEEE, defined in CCXv4",
+	0xCA => "Association Denied due to AP having insufficient bandwidth to handle a new TS. This cause code will be useful while roaming only",
+	0xCB => "Invalid Parameters. The request has not been successful as one or more TSPEC parameters in the request have invalid values. A TSPEC SHALL be present in the response as a suggestion.",
+
+
+);
+
 my %channel_to_frequency = (
-     1 => 2412,
+    1 => 2412,
     2 => 2417,
     3 => 2422,
     4 => 2427,
@@ -127,7 +232,6 @@ use constant {
     0x5d681b02 0x2a6f2b94 0xb40bbe37 0xc30c8ea1 0x5a05df1b
     0x2d02ef8d / ],
     
-    CHANNELS_TO_FREQ => [qw(%channel_to_frequency)],
 };
 
 use constant {
@@ -578,7 +682,6 @@ our %EXPORT_TAGS = (
       LORCON_ENOTSUPP
       LORCON_STATUS_MAX
       LORCON_MAX_PACKET_LEN
-      CHANNELS_TO_FREQ
    )],
   radiotap => [qw(
       LORCON_RTAP_CHAN_TURBO
@@ -1206,6 +1309,9 @@ our %EXPORT_TAGS = (
       tx80211_prism54_capabilities
       Channel_to_Frequency
       Frequency_to_Channel      
+      channel_to_frequency_HASH
+      dissociation_reason_codes_HASH
+      association_reason_codes_HASH
    )],
 );
 
@@ -1413,6 +1519,19 @@ sub add_WEPKey {
 
 }
 
+# these 2 functions return a reference for the %channel_to_frequency and %reason_codes hashes
+sub channel_to_frequency_HASH(){
+	return(\%channel_to_frequency);
+}
+
+# these 2 functions drop the reference for the dissociation and association reason codes required for lcpf functions
+sub dissociation_reason_codes_HASH(){
+	return(\%dissociation_reason_codes);
+}
+
+sub association_reason_codes_HASH(){
+	return(\%association_reason_codes);
+}
 # as their name suggest, these 2 functions permits the conversion from channel to its frequency and vice-versa, is suggested to use them with 
 # Lorcon_set_channel (or similar) functions
 
