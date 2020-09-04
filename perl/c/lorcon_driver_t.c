@@ -63,6 +63,49 @@ lorcon_multi_t_c2sv(AirLorconMulti *entry)
 
 
 
+/*
+*
+* struct lorcon_packet_t{
+*	TIME ts;
+*	int dlt;
+*	int channel;
+*	int length;
+*	int length_header;
+*	int length_data;
+*	LCPA_META *lcpa;
+*	int free_data;
+*	const u_char *packet_raw;
+*	const u_char *packet_header;
+*	const u_char *packet_data;
+*	void *extra_info;
+*	int extra_type;
+*   	lorcon_t *interface;
+*   	unsigned int set_tx_mcs;
+*    	unsigned int tx_mcs_rate;
+*    	unsigned int tx_mcs_short_guard;
+*    	unsigned int tx_mcs_40mhz;
+* }AirLorconPacket;
+
+*/
+
+SV *
+lorcon_packet_t_c2sv(AirLorconPacket *entry) // print the channel, the data length, the raw_packet and the interface
+{
+
+  HV *out = newHV();
+  SV *out_ref = newRV_noinc((SV *)out);
+  printf("channel:  %s\n", entry->channel);
+  hv_store(out, "channel", 4, newSVpv(entry->channel, 0), 0);
+  printf("length data:  %s\n", entry->length_data);
+  hv_store(out, "length_data", 7, newSVpv(entry->length_data, 0), 0);
+  printf("extra_type:  %s\n", entry->extra_type);
+  hv_store(out, "length_data", 7, newSVpv(entry->extra_type, 0), 0);
+  printf("raw packet: %s\n", entry->packet_raw);
+  hv_store(out, "packet_raw", 7, newSVpv(entry->packet_raw, 0), 0);
+  hv_store(out, "interface", 7, newSVpv(entry->interface, 0), 0);
+  return out_ref;
+}
+
 //static IntfEntry *
 //intf_sv2c(SV *h, IntfEntry *ref)
 //{
