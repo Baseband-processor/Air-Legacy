@@ -220,7 +220,9 @@ So in the future I'll fork the project for a cpan compatible library.
 **CHECKSUMS**
 
 **MD5:** _c66fdd9da209e4d5ab39fd5056cb6d09_
+
 **SHA1:** _ff14e23978bcdfaa501ae4da0290f71b54efef1a_
+
 **SHA256:** _408848d7666490300423c912f36c5b67b1ed54f5101c1864d7e5a8496d1f7e6e_
 
 **NOTE:** 
