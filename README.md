@@ -225,9 +225,7 @@ So in the future I'll fork the project for a cpan compatible library.
 
 **SHA256:** _408848d7666490300423c912f36c5b67b1ed54f5101c1864d7e5a8496d1f7e6e_
 
-**NOTE:** 
-
-The checksum is related to the zipped file.
+**NOTE:**  The checksum is related to the zipped file.
 
 
 **COPYRIGHT AND LICENCE**
