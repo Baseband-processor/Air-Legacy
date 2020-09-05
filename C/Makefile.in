@@ -73,7 +73,6 @@ install:	$(LIBOUT)
 	install -m 644 drv_tuntap.h $(INCLUDE)/lorcon2/drv_tuntap.h
 	install -m 644 drv_madwifing.h $(INCLUDE)/lorcon2/drv_madwifing.h
 	install -m 644 drv_mac80211.h $(INCLUDE)/lorcon2/drv_mac80211.h
-	install -m 644 nl80211_control.h $(INCLUDE)/lorcon2/nl80211_control.h	
 	install -m 644 airpinject.h $(INCLUDE)/lorcon2/airpinject.h
 	install -m 644 drv_file.h $(INCLUDE)/lorcon2/drv_file.h
 	install -m 644 lorcon_int.h $(INCLUDE)/lorcon2/lorcon_int.h
