@@ -23,10 +23,10 @@ This is just the beginning, the project is long and the road is much longer but 
 - [x] perl 
 - [x] libpcap
 - [x] C compiler (gcc is fine)
-- [] libnl-dev (optional, required only for using nl80211 capabilities)
-- [] autoreconf (optional, required only for installing libnl-dev)
+- [ ] libnl-dev (optional, required only for using nl80211 capabilities)
+- [ ] autoreconf (optional, required only for installing libnl-dev)
 - [x] bison (required for both Lorcon and libnl)
-- [] flex (optional, required only for installing libnl-dev)
+- [ ] flex (optional, required only for installing libnl-dev)
 
 
 **INSTALLATION**
