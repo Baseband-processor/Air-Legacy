@@ -8,6 +8,8 @@ Revision history for Perl extension Air::Lorcon2.
   - added reason codes hashes and related functions
   - fixed minor bugs in .pm file
   - changed logo and toggled paid services (for now)
+  - added libnl as dependency
+  - created the libnl automatic installer (from Makefile) and uploaded the libnl folder, now nl80211_ drivers will works properly
   
 17.7    Wed Aug 2 19:37:00  CET 2020
 
