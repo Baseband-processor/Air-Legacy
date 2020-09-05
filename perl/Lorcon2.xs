@@ -172,7 +172,7 @@ typedef struct nl80211_channel_list {
     struct nl80211_channel_list *next;
 }NL80211_CHAN_LIST;
 
-typedef unsigned int SOCKET;
+// typedef unsigned int SOCKET;
 
 typedef struct fd_set {
   u_int  fd_count;
@@ -527,9 +527,8 @@ _lorcon_copy_driver(driver)
 	AirLorconDriver *driver
 CODE:
 	AirLorconDriver *r;
-
-	//r = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
-	//Newx(AirLorconDriver *, sizeof(AirLorconDriver *), r);
+//      r = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
+	Newxz(r, 1, AirLorconDriver);
 	r->name = savepv(driver->name);
 	r->details = savepv(driver->details);
 	r->init_func = driver->init_func;
@@ -622,10 +621,8 @@ CODE:
 	if (lcpa == NULL){
 		return NULL;
 	}
-	l_packet = (AirLorconPacket *) malloc(sizeof(AirLorconPacket *));
+	Newxz( l_packet, 1, AirLorconDriver );
 
-	memset(l_packet, 0, sizeof(AirLorconPacket));
-	//Zero(l_packet, NULL, AirLorconPacket);
 	l_packet->lcpa = lcpa;
 	return l_packet;
 
@@ -640,8 +637,8 @@ CODE:
 	if (bytes == NULL){
 		return NULL;
 	}
-	l_packet = (AirLorconPacket *) malloc(sizeof(AirLorconPacket *));
-
+	# l_packet = (AirLorconPacket *) malloc(sizeof(AirLorconPacket *));
+	Newx(l_packet, 1, AirLorconPacket);
     	l_packet->interface = context;
 	l_packet->lcpa = NULL;
 	l_packet->ts.tv_sec = h->ts.tv_sec;
@@ -918,7 +915,8 @@ lorcon_add_wepkey(context, bssid, key, length)
 		return -1;
 	}
 	LORCON_WEP *wep;
-	wep = (	LORCON_WEP *) malloc(sizeof(LORCON_WEP *) );
+	# wep = (	LORCON_WEP *) malloc(sizeof(LORCON_WEP *) );
+	Newx(wep, 1, LORCON_WEP);	
 	//memcpy(wep->bssid, bssid, 6);
 	Copy(bssid, wep->bssid, 6, 0);	
 	//memcpy(wep->key, key, length);
@@ -2105,6 +2103,7 @@ CODE:
 	
 	length = 12 + packet->length_data - offt;
 	*data = (u_char *) malloc(sizeof(u_char) * length);
+	# Newx(*data, 1, length);	
 	//memcpy(*data, extra->dest_mac, 6);
 	Copy(extra->dest_mac, *data, 6, 0);	
 	//memcpy(*data + 6, extra->source_mac, 6);
@@ -2395,9 +2394,9 @@ CODE:
     RTFILE_EXTRA_LORCON *rtf_extra;
 	context->openmon_cb = file_openmon_cb();
 	context->openinjmon_cb = file_openmon_cb();
-    context->pcap_handler_cb = rtfile_pcap_handler();
-    rtf_extra =  (RTFILE_EXTRA_LORCON *) malloc(sizeof(RTFILE_EXTRA_LORCON *));
-
+    	context->pcap_handler_cb = rtfile_pcap_handler();
+    # rtf_extra =  (RTFILE_EXTRA_LORCON *) malloc(sizeof(RTFILE_EXTRA_LORCON *));
+    Newx(rtf_extra, 1, RTFILE_EXTRA_LORCON);
     rtf_extra->last_ts.tv_sec = 0;
     rtf_extra->last_ts.tv_usec = 0;
     context->auxptr = rtf_extra;
@@ -2409,9 +2408,12 @@ AirLorconDriver *
 drv_file_listdriver(drv)
      AirLorconDriver *drv
 CODE:
-	AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
-	AirLorconDriver *rtd = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
-
+	AirLorconDriver *d; 
+	//d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
+	Newx(d, 1, AirLorconDriver);
+	AirLorconDriver *rtd; 
+	//rtd = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
+	Newx(rtd, 1, AirLorconDriver);
 	d->name = savepv("file");
 	d->details = savepv("PCAP file source");
 	d->init_func = drv_file_init;
