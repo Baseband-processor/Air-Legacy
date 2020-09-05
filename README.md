@@ -25,6 +25,7 @@ This is just the beginning, the project is long and the road is much longer but 
 - [x] flex
 - [x] C compiler (gcc is fine)
 - [x] libnl-dev (optional, required only for using nl80211 capabilities)
+- [x] autoreconf (optional, required only for installing libnl-dev)
 
 
 **INSTALLATION**
