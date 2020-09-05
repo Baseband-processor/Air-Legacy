@@ -60,7 +60,7 @@ char *nl80211_find_parent(const char *interface);
 int nl80211_get_chanlist(const char *interface, int *ret_num_chans,
 						 int **ret_chan_list, char *errstr);
 
-static void nl_socket_free(struct nl_sock *h); 
+void nl_socket_free(struct nl_sock *h); 
 	
 #endif
 
