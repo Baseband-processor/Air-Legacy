@@ -24,6 +24,8 @@ This is just the beginning, the project is long and the road is much longer but 
 - [x] libpcap
 - [x] flex
 - [x] C compiler (gcc is fine)
+- [x] libnl-dev (optional, required only for using nl80211 capabilities)
+
 
 **INSTALLATION**
 
