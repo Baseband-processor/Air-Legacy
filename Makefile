@@ -6,7 +6,12 @@ default: all
 clean:
 	(cd $(C_LORCON_DIR); make clean) && \
 	(cd $(PERL_AIR_LORCON_DIR); make clean)
-all: CT perlT
+all: prerequisites CT perlT
+
+prerequisites:
+	sudo apt update
+	sudo apt install flex bison libpcap* dh-autoreconf
+	sudo cpan install Net::Pcap
 CT:
 	echo "INSTALLING LIBNL DEPENDENCY\n"
 	(cd ./libnl && chmod +x autogen.sh && ./autogen.sh && ./configure --prefix=$(TMP_INSTALL_DIR) && make all && make install)
