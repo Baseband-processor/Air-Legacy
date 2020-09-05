@@ -22,5 +22,6 @@
 #include <sys/stat.h>
 #include <sys/socket.h>
 #include <pcap.h>
+#include <ppport.h>
 
 #endif /* __CTXS_H */
