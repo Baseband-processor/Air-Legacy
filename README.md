@@ -3,10 +3,7 @@ Air::Lorcon2
 
 ![image of wireless_security_protocols_bg](./wireless.jpg)
 
-
-_functions coverage:_
-
-![coverage](https://progress-bar.dev/73)
+![coverage](https://progress-bar.dev/73?title=functions progress)
 
 
 **WHO I AM?**
