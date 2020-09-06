@@ -4,6 +4,9 @@ Air::Lorcon2
 ![image of wireless_security_protocols_bg](./wireless.jpg)
 
 
+![73%](https://progress-bar.dev/73)
+
+
 **WHO I AM?**
 
 Read the Github description :)
