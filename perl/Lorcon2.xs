@@ -1750,7 +1750,7 @@ wtinj_setmode(wtinj, mode)
 
 int 
 wtinj_getmode(wtinj)
-	TX80211  *wtinj
+	TX80211 *wtinj
 CODE:
 	return(iwconfig_get_mode(wtinj->ifname, wtinj->errstr));
 
@@ -2515,6 +2515,7 @@ tx80211_getcardlist()
       tx80211_freecardlist(cardlist);
     }
 
+
 int 
 wginj_send(wginj, input_pkt)
 	TX80211 *wginj
@@ -2523,9 +2524,6 @@ CODE:
 	int ret;
 	int payloadlen;
 	WG80211_FRAME *frame;
-
-	/* control packets cannot be transmitted with this driver, must be at
-	   least a full 802.11 header */
 	if (input_pkt->plen < 24) {
 		snprintf(wginj->errstr, TX80211_STATUS_MAX, "wlan-ng raw "
 				"injection only capable with fill 802.11 "
@@ -2792,5 +2790,54 @@ nl80211_get_chanlist(interface, ret_num_chans, ret_chan_list, errstr)
 	int *ret_num_chans
 	int **ret_chan_list
 	char *errstr
+
+
+
+int 
+wginj_open(wginj)
+	TX80211 *wginj
+CODE:
+	int err;
+	struct ifreq if_req;
+	SOCKADDR_LL sa_ll;
+
+	wginj->raw_fd = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
+
+	if (wginj->raw_fd < 0){
+		return -1;
+		}
+
+	memset(&if_req, 0, sizeof if_req);
+	memcpy(if_req.ifr_name, wginj->ifname, IFNAMSIZ);
+	if_req.ifr_name[IFNAMSIZ - 1] = 0;
+	err = ioctl(wginj->raw_fd, SIOCGIFINDEX, &if_req);
+	if (err < 0) {
+		snprintf(wginj->errstr, TX80211_STATUS_MAX, "wlan-ng unable to find interface index (SIOCGIFINDEX): %s", strerror(errno));
+		close(wginj->raw_fd);
+		return -2;
+	}
+
+	memset(&sa_ll, 0, sizeof sa_ll);
+	sa_ll.sll_family = AF_PACKET;
+	sa_ll.sll_protocol = htons(ETH_P_80211_RAW);
+	sa_ll.sll_ifindex = if_req.ifr_ifindex;
+	err = bind(wginj->raw_fd, (struct sockaddr *)&sa_ll, sizeof sa_ll);
+	if (err != 0) {
+		snprintf(wginj->errstr, TX80211_STATUS_MAX, "wlan-ng unable to bind() socket: %s",
+				 strerror(errno));
+		close(wginj->raw_fd);
+		return -3;
+	}
+
+	return 0;
+
+
+int 
+wginj_close(wginj)
+	TX80211 *wginj
+CODE:	
+	return close(wginj->raw_fd);
+
+
 
 
