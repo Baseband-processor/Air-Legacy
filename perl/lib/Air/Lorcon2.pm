@@ -1312,6 +1312,8 @@ our %EXPORT_TAGS = (
       channel_to_frequency_HASH
       dissociation_reason_codes_HASH
       association_reason_codes_HASH
+      wginj_close
+      wginj_open
    )],
 );
 
