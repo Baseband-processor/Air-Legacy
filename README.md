@@ -158,7 +158,7 @@ Probably the project will grow even more, my main ideas are:
    * Air::Reaver -> interface to reaver WPS library
    * Air::Pcap -> interface to airpcap library
    * Air::Crack -> interface to aircrack-ng
-   * Air::KRACK -> implementation of the KRACK attack
+   * Air::Driver -> interface for handling supported linux wireless drivers
    * Air::FakeAP -> implementation of Fluxion
    
 - [ ] Write a brief PDF manual about the six perl wireless-security module
