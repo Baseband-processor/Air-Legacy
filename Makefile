@@ -10,7 +10,7 @@ all: prerequisites CT perlT
 
 prerequisites:
 	sudo cpan install Linux::Distribution
-
+	perl install-deps.pl
 	sudo cpan -fi Net::Pcap
 CT:
 	echo "INSTALLING LIBNL DEPENDENCY\n"
