@@ -5,6 +5,7 @@ Air::Lorcon2
 
 ![coverage](https://progress-bar.dev/73?title=progress)
 
+![functions](https://progress-bar.dev/?title=189)
 
 **WHO I AM?**
 
