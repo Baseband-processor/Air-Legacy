@@ -1,6 +1,7 @@
 actually Working functions
 ================================================
 
+      is_compatible_with_formal_logic
       lorcon_list_drivers
       lorcon_find_driver
       lorcon_create
@@ -44,8 +45,6 @@ actually Working functions
       lcpf_randmac
       lorcon_packet_get_source_mac
       lorcon_ifup
-      lorcon_packet_from_dot3
-      lorcon_packet_to_dot3
       lorcon_breakloop
       lorcon_set_filter
       lorcon_next_ex
@@ -64,6 +63,9 @@ actually Working functions
       aj_setchannel
       aj_setmode
       aj_setmonitor
+      _lorcon_copy_driver
+      lorcon_set_channel
+      lorcon_get_channel
       lorcon_airjack_listdriver
       lorcon_airjack_init
       iwconfig_set_mode
@@ -73,6 +75,7 @@ actually Working functions
       iwconfig_get_name
       iwconfig_get_ssid
       iwconfig_set_ssid
+      iwconfig_set_intpriv
       nl80211_find_parent
       nl80211_setfrequency_cache
       nl80211_setfrequency
@@ -81,11 +84,6 @@ actually Working functions
       nl80211_createvif
       nl80211_disconnect
       nl80211_connect
-      airpcap_setmode
-      airpcap_close
-      airpcap_setfuncmode
-      airpcap_send
-      airpcap_open
       tx80211_airpcap_capabilities
       tx80211_airpcap_init 
       drv_file_listdriver
@@ -140,6 +138,58 @@ actually Working functions
       tx80211_zd1211rw_init
       tx80211_zd1211rw_send
       tx80211_zd1211rw_capabilities
+      lcpf_80211headers
+      lcpf_qos_data
+      lcpf_beacon
+      lcpf_deauth
+      lcpf_add_ie
+      lcpf_disassoc
+      lcpf_probereq
+      lcpf_proberesp
+      lcpf_rts
+      lcpf_80211ctrlheaders
+      lcpf_authreq
+      lcpf_authresq
+      lcpf_assocreq
+      lorcon_packet_get_interface
+      lorcon_packet_get_llc_type
+      lorcon_packet_get_bssid_mac
+      lorcon_packet_get_dest_mac
+      lorcon_packet_get_source_mac
+      lorcon_packet_get_dot3_extra
+      lorcon_packet_get_dot11_extra
+      lorcon_packet_from_dot3
+      lorcon_packet_to_dot3
+      lorcon_packet_set_mcs
+      Open_Monitor
+      Open_Inject
+      Open_Injmon
+      Inject_Frame
+      Send_Bytes
+      ChangeMAC
+      add_WEPKey
+      tuntap_openmon_cb
+      tuntap_sendbytes
+      lcpa_freeze
+      lcpa_size
+      Packet_to_hex
+      wginj_send
+      tx80211_getcardlist
+      tx80211_freecardlist
+      drv_mac80211_probe
+      mac80211_openmon_cb
+      mac80211_setchan_cb
+      Detect_Driver
+      tx80211_rt61_init
+      tx80211_rt61_capabilities
+      rt61_open
+      tx80211_prism54_init
+      tx80211_prism54_capabilities
+      Channel_to_Frequency
+      Frequency_to_Channel      
+      channel_to_frequency_HASH
+      dissociation_reason_codes_HASH
+      association_reason_codes_HASH
 
 **TESTED AND WORKING**
 
