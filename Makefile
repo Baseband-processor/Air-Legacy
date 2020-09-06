@@ -9,8 +9,8 @@ clean:
 all: prerequisites CT perlT
 
 prerequisites:
-	sudo apt update
-	sudo apt install flex bison libpcap* dh-autoreconf
+	sudo cpan install Linux::Distribution
+
 	sudo cpan -fi Net::Pcap
 CT:
 	echo "INSTALLING LIBNL DEPENDENCY\n"
