@@ -1,4 +1,4 @@
-#!perl
+#!/usr/bin/perl
 
 # Detect OS and Install deps for Air::Lorcon2
 # Made by Edoardo Mantovani, 2020
