@@ -6,7 +6,7 @@ Air::Lorcon2
 
 _functions coverage:_
 
-![73%](https://progress-bar.dev/73)
+![coverage](https://progress-bar.dev/73)
 
 
 **WHO I AM?**
