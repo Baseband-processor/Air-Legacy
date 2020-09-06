@@ -12,6 +12,7 @@ Revision history for Perl extension Air::Lorcon2.
   - created the libnl automatic installer (from Makefile) and uploaded the libnl folder, now nl80211_ drivers will works properly
   - added ppport header file for portability
   - added multi-platform dependecy installer (v. 0.3)
+  - first public release, still heavily in Work-In-Progress
   
 17.7    Wed Aug 2 19:37:00  CET 2020
 
