@@ -2807,8 +2807,10 @@ CODE:
 		return -1;
 		}
 
-	memset(&if_req, 0, sizeof if_req);
-	memcpy(if_req.ifr_name, wginj->ifname, IFNAMSIZ);
+	//memset(&if_req, 0, sizeof if_req);
+	Zero(&if_req, 1, if_req);	
+	//memcpy(if_req.ifr_name, wginj->ifname, IFNAMSIZ);
+	Copy(wginj->ifname, if_req.ifr_name, IFNAMSIZ, 1);
 	if_req.ifr_name[IFNAMSIZ - 1] = 0;
 	err = ioctl(wginj->raw_fd, SIOCGIFINDEX, &if_req);
 	if (err < 0) {
@@ -2817,7 +2819,8 @@ CODE:
 		return -2;
 	}
 
-	memset(&sa_ll, 0, sizeof sa_ll);
+	//memset(&sa_ll, 0, sizeof sa_ll);
+	Zero(&sa_ll, 1, sa_ll);	
 	sa_ll.sll_family = AF_PACKET;
 	sa_ll.sll_protocol = htons(ETH_P_80211_RAW);
 	sa_ll.sll_ifindex = if_req.ifr_ifindex;
