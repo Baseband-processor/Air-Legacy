@@ -7,7 +7,7 @@ Air::Lorcon2
 
 **WHO I AM?**
 
-Read the Github description :)
+Read https://github.com/Baseband-processor/Baseband-processor
 
 
 **WHY PERL AND WHY LORCON?**
