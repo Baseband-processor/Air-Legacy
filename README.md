@@ -76,6 +76,13 @@ but, as *Mike Kershaw* said:
 
 so take advantage of the C open source code.
 
+
+some resources about libnl library are here:
+   - https://www.infradead.org/~tgr/libnl/
+   - https://workshop.netfilter.org/2010/wiki/images/0/0d/Libmnl.pdf
+   - https://github.com/thom311/libnl
+   
+
 **PERL DOCUMENTATION**
 
 if interested in more advanced examples for the perl library please go under the *examples/* directory.
