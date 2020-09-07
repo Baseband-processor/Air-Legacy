@@ -7,3 +7,6 @@ Made by Edoardo Mantovani, 2020
 REALTODO:
 - write full documentation
 - write small pdf about every module with the help of community
+- fix libnl headers
+- fix some C code wich still crash
+- add some libnl functions
