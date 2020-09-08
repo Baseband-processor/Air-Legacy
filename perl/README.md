@@ -14,7 +14,7 @@ Python nowadays is a top language for the CyberSecurity (and it is used also in 
 
 **how can I contribute?**
 
-If you want to become a contributor please, start contacting me on <EdoardoMantovani@Lorcon2.com>
+If you want to become a contributor please, start contacting me on <Baseband@cpan.org>
 
 **what I can't do with this module?**
 
