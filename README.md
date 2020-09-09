@@ -42,6 +42,14 @@ for installing the *Air::Lorcon2* and *Lorcon2* libraries you just need to type:
 this will start the Makefile outside the C and perl directories, Lorcon2 Headers will be automatically installed in */usr/include*.
 directory.
 
+Since version 17.7 the Makefile has 2 installing options:
+
+* full
+
+* minimal
+
+the difference stands in the _libnl_ and its dependencies, which won't be installed in the _minimal_ installer.
+
 **TEST IF LORCON2 SUPPORTS LOCAL ADAPTERS**
 
 for veryfing that everything works just start typing 
