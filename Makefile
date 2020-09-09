@@ -2,11 +2,13 @@ C_LORCON_DIR=C
 C_LIBNL_DIR=libnl
 PERL_AIR_LORCON_DIR=perl
 TMP_INSTALL_DIR=${PWD}/usr
-default: all
+default: minimal
 clean:
 	(cd $(C_LORCON_DIR); make clean) && \
 	(cd $(PERL_AIR_LORCON_DIR); make clean)
-all: prerequisites CT perlT
+minimal: CT perlT
+
+full: prerequisites CT perlT
 
 prerequisites:
 	sudo cpan install Linux::Distribution
