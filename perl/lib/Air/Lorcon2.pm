@@ -7,7 +7,7 @@ use strict;
 no strict 'subs';
 use warnings;
 
-our $VERSION = '17.7';
+our $VERSION = '19.23';
 use base qw(Exporter DynaLoader);
 
 
