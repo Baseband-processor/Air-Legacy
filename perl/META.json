@@ -34,9 +34,11 @@
          "requires" : {
             "perl" : "5.22.1"
             "Net::MAC" : "0"
+            "Net::Pcap" : "0"
+            "strict" : "0"
          }
       }
    },
    "release_status" : "stable",
-   "version" : "17.7"
+   "version" : "19.23"
 }
