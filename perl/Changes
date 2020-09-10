@@ -13,6 +13,11 @@ Revision history for Perl extension Air::Lorcon2.
   - added ppport header file for portability
   - added multi-platform dependecy installer (v. 0.3)
   - first public release, still heavily in Work-In-Progress
+  - added libnl search script, this will add libnl3 headers to Ctxs.h file
+  - minor buf fixes
+  - extendend documentation 
+  - added checksums time-table
+  
   
 17.7    Wed Aug 2 19:37:00  CET 2020
 
