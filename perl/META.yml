@@ -18,6 +18,8 @@ no_index:
     - t
     - inc
 requires:
-  Net::MAc: '0'
+  Net::MAC: '0'
+  Net::Pcap: '0'
+  strict: '0'
   perl: '5.22.1'
-version: '17.7'
+version: '19.23'
