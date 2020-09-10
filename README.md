@@ -92,7 +92,7 @@ some resources about libnl library are here:
    
  Resources about various aspect of wireless protocols:
    - https://www.cwnp.com/uploads/802-11i_key_management.pdf            
-   - [Cisco Documentation] (https://www.cisco.com/c/en/us/td/docs/wireless/controller/technotes/5700/software/release/ios_xe_33/11rkw_DeploymentGuide/b_802point11rkw_deployment_guide_cisco_ios_xe_release33/b_802point11rkw_deployment_guide_cisco_ios_xe_release33_chapter_0100.html)
+   - [Official Wi-fi standard specifications ](https://www.wi-fi.org/discover-wi-fi/specifications)
    
 **PERL DOCUMENTATION**
 
