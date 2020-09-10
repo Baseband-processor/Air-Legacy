@@ -3,7 +3,7 @@ Air::Lorcon2
 
 ![image of wireless_security_protocols_bg](./wireless.jpg)
 
-![coverage](https://progress-bar.dev/73?title=progress)  ![functions](https://progress-bar.dev/189?title=functions)
+![coverage](https://progress-bar.dev/75?title=progress)  ![functions](https://progress-bar.dev/189?title=functions)
 
 **WHO I AM?**
 
@@ -169,12 +169,16 @@ Probably the project will grow even more, my main ideas are:
 
 - [ ] offer a full coverage for the Lorcon2 library
 - [ ] develop a big amount of perl-based-subroutines, despite the function-avaiability, lorcon2 is a finite project, it's our work to make it infinite.
-- [ ] Integrate Air::Lorcon2 with other modules, those are
+- [ ] Integrate Air::Lorcon2 with other modules, those are:
+
    * Air::Reaver -> interface to reaver WPS library
    * Air::Pcap -> interface to airpcap library
    * Air::Crack -> interface to aircrack-ng
    * Air::Driver -> interface for handling supported linux wireless drivers
    * Air::FakeAP -> implementation of Fluxion
+   * Air::Writer -> write your own wireless driver
+   * Air::Wireless -> pure perl subroutines for managing basic wireless operations
+   
    
 - [ ] Write a brief PDF manual about the six perl wireless-security module
 
@@ -217,7 +221,7 @@ Feel free to email me at <Baseband@cpan.org>
 
 **FREE DROPS**
 
-Occasionally I'll drop some random hardware extension for Air::Lorcon2.
+Occasionally I'll drop some random hardware extension for Air::Lorcon2, this will include specific hardware, customized extension and new working modes.
 
 **CURRENT VERSION**
 
@@ -234,6 +238,8 @@ So in the future I'll fork the project for a cpan compatible library.
 
 
 **CHECKSUMS**
+
+_the checksum will be updated every 14 days_
 
 **MD5:** _c66fdd9da209e4d5ab39fd5056cb6d09_
 
