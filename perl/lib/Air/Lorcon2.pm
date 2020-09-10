@@ -114,6 +114,15 @@ Not defined in IEEE, defined in CCXv4",
 
 
 );
+# Defining cipher suites and akm suites
+use constant {
+	WEP40 => "00-0F-AC-01",
+ 	WEP104 => "00-0F-AC-05",
+	CCMP => "00-0F-AC-04",
+	TKIP => "00-0F-AC-02",
+	EAP => "00-0F-AC-01",
+	PSK => "00-0F-AC-02",
+};
 
 my %channel_to_frequency = (
     1 => 2412,
@@ -1315,21 +1324,30 @@ our %EXPORT_TAGS = (
       wginj_close
       wginj_open
    )],
+   suites => [qw(
+       WEP40
+       WEP104
+       CCMP
+       TKIP
+       EAP
+       PSK
+   )]
 );
 
 our @EXPORT = (
-   @{ $EXPORT_TAGS{consts} },
-   @{ $EXPORT_TAGS{lorcon} },
-   @{ $EXPORT_TAGS{channel} },
-   @{ $EXPORT_TAGS{extrapacket} },
-   @{ $EXPORT_TAGS{rate} },
-   @{ $EXPORT_TAGS{status} },
-   @{ $EXPORT_TAGS{radiotap} },
-   @{ $EXPORT_TAGS{requests} },
-   @{ $EXPORT_TAGS{wifi_mask} },
-   @{ $EXPORT_TAGS{tx_80211} },
-   @{ $EXPORT_TAGS{network_const} },
-   @{ $EXPORT_TAGS{ieee802_11} },
+   @{ $EXPORT_TAGS{ consts } },
+   @{ $EXPORT_TAGS{ lorcon } },
+   @{ $EXPORT_TAGS{ channel } },
+   @{ $EXPORT_TAGS{ extrapacket } },
+   @{ $EXPORT_TAGS{ rate } },
+   @{ $EXPORT_TAGS{ status } },
+   @{ $EXPORT_TAGS{ radiotap } },
+   @{ $EXPORT_TAGS{ requests } },
+   @{ $EXPORT_TAGS{ wifi_mask } },
+   @{ $EXPORT_TAGS{ tx_80211 } },
+   @{ $EXPORT_TAGS{ network_const } },
+   @{ $EXPORT_TAGS{ ieee802_11 } },
+   @{ $EXPORT_TAGS{ suites } },
 );
 
 # FindLinkage will parse the /sys/class/net/ folder and search for wireless driver folder name
