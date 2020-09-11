@@ -779,7 +779,7 @@ Pcap *
 lorcon_get_pcap(context)
       AirLorcon *context
       	CODE:
-	  RETVAL = (context->pcap);
+	  RETVAL = newSVpv(context->pcap);
 	OUTPUT:
 	  RETVAL
 
