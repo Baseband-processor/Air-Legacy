@@ -1204,12 +1204,59 @@ int
 aj_setchannel(ifname,channel)
   char *ifname
   int channel
+CODE:
+    struct aj_config ajconf;
+    struct ifreq req;
+    int    sock;
+    if((sock = aj_getsocket(ifname)) < 0) {
+        perror("aj_getsocket");
+        close(sock);
+        return(-1);
+    }
+
+    req.ifr_data = (char *)&ajconf;
+    strncpy(req.ifr_name, ifname, sizeof(req.ifr_name)); //TO MODIFY
+    /* populate the structure */
+    if (ioctl(sock, SIOCAJGMODE, &req) < 0) {
+        close(sock); 
+        return(-1);
+    }
+    ajconf.channel = channel;
+    if (ioctl(sock, SIOCAJSMODE, &req) < 0) {
+        close(sock); 
+        return(-1);
+    }
+    close(sock); 
+    return(0);
+
 
 int 
 aj_setmac(ifname, mac)
   char *ifname
   uint8_t *mac
-
+CODE:
+	struct aj_config ajconf;
+	struct ifreq req;
+	int sock;
+	if ((sock = aj_getsocket(ifname)) < 0) {
+		close(sock);
+		return (-1);
+	}
+	req.ifr_data = (char *)&ajconf;
+	strnNE(req.ifr_name, ifname, sizeof(req.ifr_name));
+	/* populate the structure */
+	if (ioctl(sock, SIOCAJGMODE, &req) < 0) {
+		close(sock);
+		return (-1);
+	}
+	//memcpy(ajconf.ownmac, mac, 6);
+	StructCopy(mac, ajconf.ownmac, 6);
+	if (ioctl(sock, SIOCAJSMODE, &req) < 0) {
+		close(sock);
+		return (-1);
+	}
+	close(sock);
+	return (0);	
 int 
 aj_xmitframe(ifname, xmit, len, errstr)
   char *ifname
