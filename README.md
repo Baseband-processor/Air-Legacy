@@ -254,6 +254,12 @@ _the checksum will be updated every 14 days_
 
 **NOTE:**  The checksum is related to the zipped file.
 
+WARNINGS
+======================
+
+Many functions are still under heavy development cause the high number of buffers overflow,
+for a detailed list of working functions, please refer to the list in the "working_functions" folder.
+
 
 **COPYRIGHT AND LICENCE**
 
