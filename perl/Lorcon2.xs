@@ -37,6 +37,7 @@
 #define WLAN_FC_SUBTYPE_DEAUTH      12
 #define WLAN_FC_SUBTYPE_QOSDATA     8
 
+#define IEEE80211_RADIOTAP_F_FRAG	0x08
 #define TX80211_CAP_CTRL	64
 #define TX80211_CAP_SELFACK	512
 #define SIOCDEVPRIVATE  0x89F0
@@ -1113,14 +1114,14 @@ AirLorconDriver *
 drv_madwifing_listdriver(drv)
    AirLorconDriver * drv
 CODE:
-	//AirLorconDriver *d;
+	AirLorconDriver *d;
 	//AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(lorcon_driver_t));
-	Newxz(AirLorconDriver *d, 1, AirLorconDriver)
+	Newxz(d, 1, AirLorconDriver);
 	d->name = savepv("madwifing"); // toggled strdup
 	d->details = savepv("Linux madwifi-ng drivers, deprecated by ath5k and ath9k"); // toggled strdup
-	d->init_func = drv_madwifing_init();
+	d->init_func = drv_madwifing_init(drv);
 	d->probe_func = drv_madwifing_probe();
-	d->next = head;
+	d->next = drv;
 	RETVAL = d;
 OUTPUT:
 	RETVAL
@@ -2590,42 +2591,75 @@ CODE:
 		return 1;
 	}
 	return 0;
-	
-int 
-drv_mac80211_init(context) 
-	AirLorcon *context
-CODE:
-	//struct mac80211_lorcon *extras =  (struct mac80211_lorcon *) malloc(sizeof(struct mac80211_lorcon));
-	Newxz(AirLorcon_MAC80211 *extras, 1, AirLorcon_MAC80211);
-	//memset(extras, 0, sizeof(struct mac80211_lorcon));
-	Zero(extras, 1, AirLorcon_MAC80211);
-	context->openinject_cb = mac80211_openmon_cb;
-	context->openmon_cb = mac80211_openmon_cb;
-	context->openinjmon_cb = mac80211_openmon_cb;
-	context->ifconfig_cb = mac80211_ifconfig_cb;
-	context->sendpacket_cb = mac80211_sendpacket;
-	context->setchan_cb = mac80211_setchan_cb;
-	context->getchan_cb = mac80211_getchan_cb;
-    	context->setchan_ht_cb = mac80211_setchan_ht_cb;
-	context->getmac_cb = mac80211_getmac_cb;
-	context->setmac_cb = mac80211_setmac_cb;
-	context->auxptr = extras;
-	return 1;
 
-     
-AirLorconDriver  *
-drv_mac80211_listdriver(head) 
-	AirLorconDriver *head
+
+int 
+mac80211_sendpacket(context, packet) 
+	AirLorcon *context
+	AirLorconPacket *packet
 CODE:
-	AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
-	AirLorcon *interface;
-	d->name = savepv("mac80211");
-	d->details = savepv("Linux mac80211 kernel drivers, includes all in-kernel drivers on modern systems");
-	d->init_func = drv_mac80211_init(interface);
-	d->probe_func = drv_mac80211_probe();
-	d->next = head;
-	return d;
-	
+	int ret;
+	u_char rtap_hdr[] = {
+		/* rt version */
+		0x00, 0x00, 
+		/* rt len */
+		0x0e, 0x00, 
+		/* rt bitmap, flags, tx, rx */
+		0x02, 0xc0, 0x00, 0x00, 
+		/* Allow frgmentation */
+		IEEE80211_RADIOTAP_F_FRAG,
+		/* pad */
+		0x00,
+		/* rx and tx set to inject */
+		0x00, 0x00,
+		0x00, 0x00,
+	};
+
+	u_char *bytes;
+	int len, freebytes;
+	struct iovec iov[2];
+
+	struct msghdr msg = {
+		.msg_name = NULL,
+		.msg_namelen = 0,
+		.msg_iov = iov,
+		.msg_iovlen = 2,
+		.msg_control = NULL,
+		.msg_controllen = 0,
+		.msg_flags = 0,
+	};
+
+	if (packet->lcpa != NULL) {
+		len = lcpa_size(packet->lcpa);
+		freebytes = 1;
+		bytes = (u_char *) malloc(sizeof(u_char) * len);
+		lcpa_freeze(packet->lcpa, bytes);
+	} else if (packet->packet_header != NULL) {
+		freebytes = 0;
+		len = packet->length_header;
+		bytes = (u_char *) packet->packet_header;
+	} else {
+		freebytes = 0;
+		len = packet->length;
+		bytes = (u_char *) packet->packet_raw;
+	}
+
+	iov[0].iov_base = &rtap_hdr;
+	iov[0].iov_len = sizeof(rtap_hdr);
+	iov[1].iov_base = bytes;
+	iov[1].iov_len = len;
+
+	ret = sendmsg(context->inject_fd, &msg, 0); // sendmsg to a socket
+
+	snprintf(context->errstr, LORCON_STATUS_MAX, "drv_mac80211 failed to send packet: %s", strerror(errno));
+
+	if (freebytes){
+		free(bytes);
+	}
+	RETVAL = ret;
+OUTPUT:
+	RETVAL
+
 int 
 mac80211_openmon_cb(context) 
 	AirLorcon *context
@@ -2724,6 +2758,14 @@ CODE:
 	return 1;
 
 int 
+mac80211_ifconfig_cb(context, up) 
+	AirLorcon *context
+	int up
+CODE:
+	return ifconfig_ifupdown(context->vapname, context->errstr, up);
+
+
+int 
 mac80211_setchan_cb(context, channel) 
 	AirLorcon *context
 	int channel
@@ -2733,6 +2775,45 @@ CODE:
 		return -1;
 	}
 	return 0;
+
+int 
+drv_mac80211_init(context) 
+	AirLorcon *context
+CODE:
+	AirLorcon_MAC80211 *extras; // declare extras
+	//struct mac80211_lorcon *extras =  (struct mac80211_lorcon *) malloc(sizeof(struct mac80211_lorcon));
+	Newxz(extras, 1, AirLorcon_MAC80211);
+	//memset(extras, 0, sizeof(struct mac80211_lorcon));
+	Zero(extras, 1, AirLorcon_MAC80211);
+	context->openinject_cb = mac80211_openmon_cb(context);
+	context->openmon_cb = mac80211_openmon_cb(context);
+	context->openinjmon_cb = mac80211_openmon_cb(context);
+	context->ifconfig_cb = mac80211_ifconfig_cb();
+	context->sendpacket_cb = mac80211_sendpacket();
+	context->setchan_cb = mac80211_setchan_cb();
+	context->getchan_cb = mac80211_getchan_cb();
+    	context->setchan_ht_cb = mac80211_setchan_ht_cb();
+	context->getmac_cb = mac80211_getmac_cb();
+	context->setmac_cb = mac80211_setmac_cb();
+	context->auxptr = extras;
+	return 1;
+
+     
+AirLorconDriver  *
+drv_mac80211_listdriver(head) 
+	AirLorconDriver *head
+CODE:
+	AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
+	AirLorcon *interface;
+	d->name = savepv("mac80211");
+	d->details = savepv("Linux mac80211 kernel drivers, includes all in-kernel drivers on modern systems");
+	d->init_func = drv_mac80211_init(interface);
+	d->probe_func = drv_mac80211_probe();
+	d->next = head;
+	return d;
+	
+
+
 
 int 
 tx80211_prism54_capabilities()
