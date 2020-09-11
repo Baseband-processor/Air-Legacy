@@ -1293,6 +1293,7 @@ our %EXPORT_TAGS = (
       lorcon_packet_from_dot3
       lorcon_packet_to_dot3
       lorcon_packet_set_mcs
+      lorcon_packet_from_lcpa
       Open_Monitor
       Open_Inject
       Open_Injmon
