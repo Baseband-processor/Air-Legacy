@@ -1182,6 +1182,7 @@ our %EXPORT_TAGS = (
       lorcon_parse_ht_channel
       lorcon_get_selectable_fd
       lorcon_packet_set_freedata
+      lorcon_set_compiled_filter
       lorcon_get_pcap
       drv_madwifing_init
       drv_madwifing_listdriver
