@@ -162,6 +162,13 @@ lorcon_send_bytes( $context, length($Packet), \$Packet ); # this will send the r
 print Send_Bytes( $context, $Packet); 
 # The $Packet length is processed in the Back-End.
 
+
+my $lcpa = lcpa_init();
+my $Packet = packet_from_lcpa( $context, $lcpa ); # return a AirLorconPacket variable
+
+# decode the packet
+lorcon_packet_decode( $Packet );
+
 ```
 
 **SPECIAL THANKS**
