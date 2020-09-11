@@ -51,6 +51,7 @@ actually Working functions
       lorcon_parse_ht_channel
       lorcon_get_selectable_fd
       lorcon_packet_set_freedata
+      lorcon_set_compiled_filter
       lorcon_get_pcap
       drv_madwifing_init
       drv_madwifing_listdriver
@@ -161,6 +162,7 @@ actually Working functions
       lorcon_packet_from_dot3
       lorcon_packet_to_dot3
       lorcon_packet_set_mcs
+      lorcon_packet_from_lcpa
       Open_Monitor
       Open_Inject
       Open_Injmon
@@ -190,6 +192,9 @@ actually Working functions
       channel_to_frequency_HASH
       dissociation_reason_codes_HASH
       association_reason_codes_HASH
+      wginj_close
+      wginj_open
+      mac80211_sendpacket
 
 **TESTED AND WORKING**
 
