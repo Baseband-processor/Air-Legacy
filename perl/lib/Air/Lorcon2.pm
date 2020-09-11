@@ -1323,6 +1323,7 @@ our %EXPORT_TAGS = (
       association_reason_codes_HASH
       wginj_close
       wginj_open
+      mac80211_sendpacket
    )],
    suites => [qw(
        WEP40
