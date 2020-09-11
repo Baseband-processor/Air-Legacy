@@ -2594,6 +2594,23 @@ CODE:
 int 
 drv_mac80211_init(context) 
 	AirLorcon *context
+CODE:
+	//struct mac80211_lorcon *extras =  (struct mac80211_lorcon *) malloc(sizeof(struct mac80211_lorcon));
+	Newxz(AirLorcon_MAC80211 *extras, 1, AirLorcon_MAC80211);
+	//memset(extras, 0, sizeof(struct mac80211_lorcon));
+	Zero(extras, 1, AirLorcon_MAC80211);
+	context->openinject_cb = mac80211_openmon_cb;
+	context->openmon_cb = mac80211_openmon_cb;
+	context->openinjmon_cb = mac80211_openmon_cb;
+	context->ifconfig_cb = mac80211_ifconfig_cb;
+	context->sendpacket_cb = mac80211_sendpacket;
+	context->setchan_cb = mac80211_setchan_cb;
+	context->getchan_cb = mac80211_getchan_cb;
+    	context->setchan_ht_cb = mac80211_setchan_ht_cb;
+	context->getmac_cb = mac80211_getmac_cb;
+	context->setmac_cb = mac80211_setmac_cb;
+	context->auxptr = extras;
+	return 1;
 
      
 AirLorconDriver  *
