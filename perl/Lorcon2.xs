@@ -227,7 +227,13 @@ typedef struct  {
 		uint16_t icp_flags;
 }ieee80211_clone_params;
 
-typedef struct ieee80211_clone_params IEE80211_CLONE_PARAMS;
+typedef struct  ieee80211_clone_params{
+		char icp_name[IFNAMSIZ];
+		uint16_t icp_opmode;
+		uint16_t icp_flags;
+}IEE80211_CLONE_PARAMS;
+
+
 
 typedef struct  {
                       unsigned long   mem_start;
@@ -1629,9 +1635,9 @@ madwifing_build_vap(interface_name, errorstring, vapname, retvapname, vapmode, v
 	}
 
 	//memset(&ifr, 0, sizeof(ifr));
-	Zero(ifr, 1, ifr); 
+	Zero(&ifr, 1, ifr); 
 	//memset(&cp, 0, sizeof(cp));
-	Zero(cp, 1, cp);
+	Zero(&cp, 1, cp);
 	//strncpy(cp->icp_name, tnam, IFNAMSIZ);
 	//cp->icp_opmode = vapmode;
 	//cp->icp_flags = vapflags;
@@ -1732,7 +1738,7 @@ wtinj_open(wtinj)
 		return -1;
 	}
 	//memset(&if_req, 0, sizeof if_req);
-	Zero(if_req, 1, if_req);
+	Zero(&if_req, 1, if_req);
 	//memcpy(if_req.ifr_name, wtinj->ifname, IFNAMSIZ);
 	Copy(wtinj->ifname, if_req.ifr_name, IFNAMSIZ, 0);
 	if_req.ifr_name[IFNAMSIZ - 1] = 0;
@@ -2133,9 +2139,8 @@ CODE:
 	}
 	
 	length = 12 + packet->length_data - offt;
-	//*data = (u_char *) malloc(sizeof(u_char) * length);
-	u_char *data;
-	Newx(data, 1, length);	
+	*data = (u_char *) malloc(sizeof(u_char) * length);
+	//Newx(data, 1, length);	
 	//memcpy(*data, extra->dest_mac, 6);
 	Copy(extra->dest_mac, *data, 6, 0);	
 	//memcpy(*data + 6, extra->source_mac, 6);
@@ -2457,7 +2462,6 @@ CODE:
 	rtd->init_func = drv_rtfile_init;
 	rtd->probe_func = drv_file_probe(drv);
 	rtd->next = d;
-
 	RETVAL = rtd;
 OUTPUT:
 	RETVAL
@@ -2490,14 +2494,11 @@ CODE:
 		snprintf(in_tx->errstr, TX80211_STATUS_MAX, "%s", "No interface name\n");
 		return -1;
 	}
-
-	//inject_nofcs_location  = (char*) malloc(strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5); 
-	int ifname_l = strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5;
-	Newxz(inject_nofcs_location , 1, ifname_l);
+	inject_nofcs_location  = (char*) malloc(strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5); 
+	//int ifname_l = strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5;
+	//Newxz(inject_nofcs_location , 1, (strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5) );
 	snprintf(inject_nofcs_location,  strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5, inject_nofcs_pname, in_tx->ifname);
-
 	nofcs = open(inject_nofcs_location, O_WRONLY);
-
 	Safefree(inject_nofcs_location);
 	if (nofcs<0) {return -1;}
 	else {
@@ -2571,9 +2572,9 @@ CODE:
 		return TX80211_ENOTX;
 	}
 
-	//frame = malloc(sizeof(*frame) + payloadlen);
-	int frame_l = sizeof(*frame)+ payloadlen;
-	Newxz(frame, 1, frame_l);
+	frame = malloc(sizeof(*frame) + payloadlen);
+	//int frame_l = sizeof(*frame)+ payloadlen;
+	//Newxz(frame, 1, frame + payloadlen);
 	if (frame == NULL) {
 		snprintf(wginj->errstr, TX80211_STATUS_MAX, "wlan-ng send unable to allocate memory buffer");
 		return TX80211_ENOTX;
@@ -2649,8 +2650,8 @@ CODE:
 	if (packet->lcpa != NULL) {
 		len = lcpa_size(packet->lcpa);
 		freebytes = 1;
-		//bytes = (u_char *) malloc(sizeof(u_char) * len);
-		Newxz(bytes, 1, len);
+		bytes = (u_char *) malloc(sizeof(u_char) * len);
+		//Newxz(bytes, 1, len);
 		lcpa_freeze(packet->lcpa, bytes);
 	} else if (packet->packet_header != NULL) {
 		freebytes = 0;
@@ -2738,7 +2739,7 @@ CODE:
 		return -1;
 	}
 	//memset(&if_req, 0, sizeof(if_req));
-	Zero(if_req, 1, if_req);
+	Zero(&if_req, 1, if_req);
 	//memcpy(if_req.ifr_name, context->vapname, IFNAMSIZ);
 	Copy(context->vapname, if_req.ifr_name, IFNAMSIZ, 0);
 	if_req.ifr_name[IFNAMSIZ - 1] = 0;
@@ -2752,7 +2753,7 @@ CODE:
 	}
 
 	//memset(&sa_ll, 0, sizeof(sa_ll));
-	Zero(sa_ll, 1, sa_ll);
+	Zero(&sa_ll, 1, sa_ll);
 	sa_ll.sll_family = AF_PACKET;
 	sa_ll.sll_protocol = htons(ETH_P_ALL);
 	sa_ll.sll_ifindex = if_req.ifr_ifindex;
