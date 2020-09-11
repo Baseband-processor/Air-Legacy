@@ -1096,11 +1096,35 @@ lorcon_multi_loop(ctx, counter, callback, user)
   AirLorconHandler callback
   unsigned char *user
 
+
+int 
+drv_madwifing_probe(interface) 
+	const char *interface
+CODE:
+	return 0;
+
+	
+int 
+drv_madwifing_init(context) 
+  AirLorcon *context
+  
 			    
 AirLorconDriver *
 drv_madwifing_listdriver(drv)
    AirLorconDriver * drv
-     
+CODE:
+	//AirLorconDriver *d;
+	//AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(lorcon_driver_t));
+	Newxz(AirLorconDriver *d, 1, AirLorconDriver)
+	d->name = savepv("madwifing"); // toggled strdup
+	d->details = savepv("Linux madwifi-ng drivers, deprecated by ath5k and ath9k"); // toggled strdup
+	d->init_func = drv_madwifing_init();
+	d->probe_func = drv_madwifing_probe();
+	d->next = head;
+	RETVAL = d;
+OUTPUT:
+	RETVAL
+	
 void
 lorcon_packet_set_mcs(packet, use_mcs, mcs, short_gi, use_40mhz)
 	AirLorconPacket *packet
@@ -1113,12 +1137,6 @@ CODE:
     packet->tx_mcs_rate = mcs;
     packet->tx_mcs_short_guard = short_gi;
     packet->tx_mcs_40mhz = use_40mhz;
-
-int 
-drv_madwifing_init(context) 
-  AirLorcon *context
-
-
 
 int 
 tx80211_airjack_capabilities()
