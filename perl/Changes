@@ -20,6 +20,7 @@ Revision history for Perl extension Air::Lorcon2.
   - added internal mac80211 functions, added drv_mac80211_init() function and
   - added other links
   - fixed SOCKET typedef bug
+  - added documentation for lorcon_set_filter
   
 17.7    Wed Aug 2 19:37:00  CET 2020
 
