@@ -1351,6 +1351,12 @@ our @EXPORT = (
    @{ $EXPORT_TAGS{ suites } },
 );
 
+# NOTE:
+# for lorcon_set_filter & co is extremely suggested  refer to the following links:
+#	https://wiki.infinetwireless.com/display/DR/PCAP-filters
+#	https://www.ibm.com/support/knowledgecenter/SS9H2Y_7.7.0/com.ibm.dp.doc/pcap_filterexpressionsyntax.html
+#	https://man.openbsd.org/pcap-filter.5
+
 # FindLinkage will parse the /sys/class/net/ folder and search for wireless driver folder name
 
 sub FindLinkage(){ 
