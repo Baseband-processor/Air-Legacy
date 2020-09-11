@@ -1403,7 +1403,8 @@ CODE:
 		return -1;
 	}
 
-	memset(&if_req, 0, sizeof(if_req));
+	//memset(&if_req, 0, sizeof(if_req));
+	Zero(if_req, 1, if_req);
 	//memcpy(if_req->ifr_name, context->ifname, IFNAMSIZ);
 	Copy(context->ifname, if_req->ifr_name, IFNAMSIZ, 0);	
 	if_req->ifr_name[IFNAMSIZ - 1] = 0;
@@ -1414,7 +1415,8 @@ CODE:
 		return -1;
 	}
 
-	memset(&sa_ll, 0, sizeof(sa_ll));
+	//memset(&sa_ll, 0, sizeof(sa_ll));
+	Zero(sa_ll, 1, sa_ll);
 	sa_ll->sll_family = AF_PACKET;
 	sa_ll->sll_protocol = htons(ETH_P_80211_RAW);
 	sa_ll->sll_ifindex = if_req->ifr_ifindex;
@@ -1626,9 +1628,10 @@ madwifing_build_vap(interface_name, errorstring, vapname, retvapname, vapmode, v
 		return -1;
 	}
 
-	memset(&ifr, 0, sizeof(ifr));
-	memset(&cp, 0, sizeof(cp));
-
+	//memset(&ifr, 0, sizeof(ifr));
+	Zero(ifr, 1, ifr); 
+	//memset(&cp, 0, sizeof(cp));
+	Zero(cp, 1, cp);
 	//strncpy(cp->icp_name, tnam, IFNAMSIZ);
 	//cp->icp_opmode = vapmode;
 	//cp->icp_flags = vapflags;
@@ -1728,7 +1731,8 @@ wtinj_open(wtinj)
 		snprintf(wtinj->errstr, "", "no socket fd in tx descriptor");
 		return -1;
 	}
-	memset(&if_req, 0, sizeof if_req);
+	//memset(&if_req, 0, sizeof if_req);
+	Zero(if_req, 1, if_req);
 	//memcpy(if_req.ifr_name, wtinj->ifname, IFNAMSIZ);
 	Copy(wtinj->ifname, if_req.ifr_name, IFNAMSIZ, 0);
 	if_req.ifr_name[IFNAMSIZ - 1] = 0;
@@ -1739,7 +1743,8 @@ wtinj_open(wtinj)
 		return -2;
 	}
 
-	memset(&sa_ll, 0, sizeof sa_ll);
+	//memset(&sa_ll, 0, sizeof sa_ll);
+	Zero(sa_ll, 1, sa_ll);
 	sa_ll->sll_family = AF_PACKET;
 	sa_ll->sll_protocol = htons(ETH_P_80211_RAW);
 	sa_ll->sll_ifindex = if_req.ifr_ifindex;
@@ -2159,8 +2164,8 @@ CODE:
 
 	//ret = (AirLorconPacket *) malloc(sizeof(AirLorconPacket *));
 	Newxz(ret, 1, AirLorconPacket);
-	memset(ret, 0, sizeof(AirLorconPacket));
-
+	//memset(ret, 0, sizeof(AirLorconPacket));
+	Zero(ret, 1, AirLorconPacket);
 	ret->lcpa = lcpa_init();
 
 	switch (dot11_direction) {
@@ -2574,8 +2579,8 @@ CODE:
 		return TX80211_ENOTX;
 	}
 
-	memset(frame, 0, sizeof(*frame));
-
+	//memset(frame, 0, sizeof(*frame));
+	Zero(frame, 1, frame);
 	frame->data_len = payloadlen;
 
 	//memcpy(frame->base, input_pkt->packet, 24);
@@ -2732,7 +2737,8 @@ CODE:
 		pcap_close(context->pcap);
 		return -1;
 	}
-	memset(&if_req, 0, sizeof(if_req));
+	//memset(&if_req, 0, sizeof(if_req));
+	Zero(if_req, 1, if_req);
 	//memcpy(if_req.ifr_name, context->vapname, IFNAMSIZ);
 	Copy(context->vapname, if_req.ifr_name, IFNAMSIZ, 0);
 	if_req.ifr_name[IFNAMSIZ - 1] = 0;
@@ -2745,7 +2751,8 @@ CODE:
 		return -1;
 	}
 
-	memset(&sa_ll, 0, sizeof(sa_ll));
+	//memset(&sa_ll, 0, sizeof(sa_ll));
+	Zero(sa_ll, 1, sa_ll);
 	sa_ll.sll_family = AF_PACKET;
 	sa_ll.sll_protocol = htons(ETH_P_ALL);
 	sa_ll.sll_ifindex = if_req.ifr_ifindex;
