@@ -173,6 +173,10 @@ typedef struct nl80211_channel_list {
     struct nl80211_channel_list *next;
 }NL80211_CHAN_LIST;
 
+#ifndef SOCKET
+typedef unsigned int SOCKET;
+#endif
+
 // typedef unsigned int SOCKET;
 
 typedef struct fd_set {
