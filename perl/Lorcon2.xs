@@ -642,7 +642,7 @@ CODE:
 	if (bytes == NULL){
 		return NULL;
 	}
-	# l_packet = (AirLorconPacket *) malloc(sizeof(AirLorconPacket *));
+	//l_packet = (AirLorconPacket *) malloc(sizeof(AirLorconPacket *));
 	Newx(l_packet, 1, AirLorconPacket);
     	l_packet->interface = context;
 	l_packet->lcpa = NULL;
@@ -920,7 +920,7 @@ lorcon_add_wepkey(context, bssid, key, length)
 		return -1;
 	}
 	LORCON_WEP *wep;
-	# wep = (	LORCON_WEP *) malloc(sizeof(LORCON_WEP *) );
+	//wep = (	LORCON_WEP *) malloc(sizeof(LORCON_WEP *) );
 	Newx(wep, 1, LORCON_WEP);	
 	//memcpy(wep->bssid, bssid, 6);
 	Copy(bssid, wep->bssid, 6, 0);	
@@ -1026,8 +1026,10 @@ lorcon_multi_add_interface(ctx, lorcon_intf)
   AirLorconMulti *ctx
   AirLorcon *lorcon_intf
  CODE:
- AirLorconInterface *i =  (AirLorconInterface *) malloc(sizeof(AirLorconInterface *));
-    if (i == NULL)  {
+   AirLorconInterface *i;
+   //AirLorconInterface *i =  (AirLorconInterface *) malloc(sizeof(AirLorconInterface *));
+   Newxz(i, 1, AirLorconInterface);
+   if (i == NULL)  {
         snprintf(ctx->errstr, LORCON_STATUS_MAX, "Out of memory!");
         return -1;
     }
@@ -1464,8 +1466,9 @@ AirLorconDriver *
 drv_tuntap_listdriver(drv)
    AirLorconDriver *drv
 	CODE:
- 	AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
-
+ 	AirLorconDriver *d;
+	//AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
+	Newxz(d, 1, AirLorconDriver);
 	d->name = savepv("tuntap");
 	d->details = savepv("Linux tuntap virtual interface drivers");
 	d->init_func = drv_tuntap_init;
@@ -1601,9 +1604,9 @@ madwifing_build_vap(interface_name, errorstring, vapname, retvapname, vapmode, v
 	int vapmode
 	int vapflags
   CODE:
-
-
-	IEE80211_CLONE_PARAMS *cp = malloc(sizeof(IEE80211_CLONE_PARAMS *));
+	IEE80211_CLONE_PARAMS *cp;
+	//IEE80211_CLONE_PARAMS *cp = malloc(sizeof(IEE80211_CLONE_PARAMS *));
+	Newxz(cp, 1, IEE80211_CLONE_PARAMS);
 	IFREQ ifr;
 	int sock;
 	char tnam[IFNAMSIZ];
@@ -2125,8 +2128,9 @@ CODE:
 	}
 	
 	length = 12 + packet->length_data - offt;
-	*data = (u_char *) malloc(sizeof(u_char) * length);
-	# Newx(*data, 1, length);	
+	//*data = (u_char *) malloc(sizeof(u_char) * length);
+	u_char *data;
+	Newx(data, 1, length);	
 	//memcpy(*data, extra->dest_mac, 6);
 	Copy(extra->dest_mac, *data, 6, 0);	
 	//memcpy(*data + 6, extra->source_mac, 6);
@@ -2153,8 +2157,8 @@ CODE:
 	if (length < 12 || dot11_direction == LORCON_DOT11_DIR_INTRADS)
 		return NULL;
 
-	ret = (AirLorconPacket *) malloc(sizeof(AirLorconPacket *));
-
+	//ret = (AirLorconPacket *) malloc(sizeof(AirLorconPacket *));
+	Newxz(ret, 1, AirLorconPacket);
 	memset(ret, 0, sizeof(AirLorconPacket));
 
 	ret->lcpa = lcpa_init();
@@ -2418,7 +2422,7 @@ CODE:
 	context->openmon_cb = file_openmon_cb();
 	context->openinjmon_cb = file_openmon_cb();
     	context->pcap_handler_cb = rtfile_pcap_handler();
-    # rtf_extra =  (RTFILE_EXTRA_LORCON *) malloc(sizeof(RTFILE_EXTRA_LORCON *));
+    //rtf_extra =  (RTFILE_EXTRA_LORCON *) malloc(sizeof(RTFILE_EXTRA_LORCON *));
     Newx(rtf_extra, 1, RTFILE_EXTRA_LORCON);
     rtf_extra->last_ts.tv_sec = 0;
     rtf_extra->last_ts.tv_usec = 0;
@@ -2482,7 +2486,9 @@ CODE:
 		return -1;
 	}
 
-	inject_nofcs_location = (char*) malloc(strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5); 
+	//inject_nofcs_location  = (char*) malloc(strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5); 
+	int ifname_l = strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5;
+	Newxz(inject_nofcs_location , 1, ifname_l);
 	snprintf(inject_nofcs_location,  strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5, inject_nofcs_pname, in_tx->ifname);
 
 	nofcs = open(inject_nofcs_location, O_WRONLY);
@@ -2560,7 +2566,9 @@ CODE:
 		return TX80211_ENOTX;
 	}
 
-	frame = malloc(sizeof(*frame) + payloadlen);
+	//frame = malloc(sizeof(*frame) + payloadlen);
+	int frame_l = sizeof(*frame)+ payloadlen;
+	Newxz(frame, 1, frame_l);
 	if (frame == NULL) {
 		snprintf(wginj->errstr, TX80211_STATUS_MAX, "wlan-ng send unable to allocate memory buffer");
 		return TX80211_ENOTX;
@@ -2636,7 +2644,8 @@ CODE:
 	if (packet->lcpa != NULL) {
 		len = lcpa_size(packet->lcpa);
 		freebytes = 1;
-		bytes = (u_char *) malloc(sizeof(u_char) * len);
+		//bytes = (u_char *) malloc(sizeof(u_char) * len);
+		Newxz(bytes, 1, len);
 		lcpa_freeze(packet->lcpa, bytes);
 	} else if (packet->packet_header != NULL) {
 		freebytes = 0;
@@ -2807,7 +2816,9 @@ AirLorconDriver  *
 drv_mac80211_listdriver(head) 
 	AirLorconDriver *head
 CODE:
-	AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
+	AirLorconDriver *d;
+	//AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
+	Newxz(d, 1, AirLorconDriver);
 	AirLorcon *interface;
 	d->name = savepv("mac80211");
 	d->details = savepv("Linux mac80211 kernel drivers, includes all in-kernel drivers on modern systems");
