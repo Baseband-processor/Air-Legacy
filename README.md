@@ -50,6 +50,9 @@ Since version 17.7 the Makefile has 2 installing options:
 
 the difference stands in the _libnl_ and its dependencies, which won't be installed in the _minimal_ installer.
 
+_the suggested installation remains the **minimal** for now, is highly suggested to install requirements automatically with your distro package-manager._
+
+
 **TEST IF LORCON2 SUPPORTS LOCAL ADAPTERS**
 
 for veryfing that everything works just start typing 
