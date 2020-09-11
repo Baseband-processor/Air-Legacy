@@ -15,14 +15,14 @@ my @Interested_H = ( "libnl.h" ); # TODO: add other
 my @PossibleDirs = ( "/usr/include/", "/usr/local/include" ); # possible position of header files
 
 foreach ( @PossibleDirs ){
-  foreach ( readdir( $PossibleDirs[$i] ) ){
+  foreach ( opendir( FOLDER, $PossibleDirs[$i] ) ){
     if( $_ =~ "libnl" ){
-      push ( $_, @libnl );
+      push ( @libnl, $_,  );
   }
 
   $i++ if ( $i <= $#PossibleDirs );
   }
-  
+  	}
   if( undef( @libnl )  or ($#libnl <= 0 ) ){
     die "Error searching the libnl headers, control  the installation!\n";
     }
@@ -37,4 +37,4 @@ foreach ( @PossibleDirs ){
 close(HEADER);
 
 print "Everything went well, return code: 0\n";
-exit(1);
+die 1;
