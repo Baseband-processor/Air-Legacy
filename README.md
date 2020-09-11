@@ -70,8 +70,11 @@ if this return no drivers or if in the output there isn't any wireless card try 
 
 - drv_madwifing_init
 - drv_mac80211_init
+- drv_file_init
+- drv_rtfile_init
+- drv_tuntap_init
 
-for now only the mac80211 and madwifing drivers are avaiable, more on future.
+for now only few network drivers are implemented (i.e mac80211 and madwifing), more on future.
 
 **C DOCUMENTATION**
  
