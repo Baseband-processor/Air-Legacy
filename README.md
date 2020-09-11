@@ -93,6 +93,8 @@ some resources about libnl library are here:
  Resources about various aspect of wireless protocols:
    - https://www.cwnp.com/uploads/802-11i_key_management.pdf            
    - [Official Wi-fi standard specifications ](https://www.wi-fi.org/discover-wi-fi/specifications)
+   - [LDPA 802.11 guide, 2700+ pages](https://legal.vvv.enseirb-matmeca.fr/download/amichel/%5BStandard%20LDPC%5D%20802.11-2012.pdf)
+   
    
 **PERL DOCUMENTATION**
 
