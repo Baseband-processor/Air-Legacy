@@ -1439,7 +1439,7 @@ sub Open_Monitor { # Open monitor mode
     
 sub Open_Inject { # Open inject mode
     my $context = @_;
-    if(! ( Air::Lorcon2::lorcon::open_inject( $context ) ) ){
+    if(! ( Air::Lorcon2::lorcon_open_inject( $context ) ) ){
         return -1; # Bad
     }else{
         return 1; # Good
@@ -1448,7 +1448,7 @@ sub Open_Inject { # Open inject mode
     
 sub Open_Injmon { # Open both
     my $context = @_;
-    if(! ( Air::Lorcon2::lorcon::open_injmon( $context ) ) ){
+    if(! ( Air::Lorcon2::lorcon_open_injmon( $context ) ) ){
         return -1; # Bad
     }else{
         return 1; # Good
