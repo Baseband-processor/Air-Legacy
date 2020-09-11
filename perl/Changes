@@ -19,6 +19,7 @@ Revision history for Perl extension Air::Lorcon2.
   - added checksums time-table
   - added internal mac80211 functions, added drv_mac80211_init() function and
   - added other links
+  - fixed SOCKET typedef bug
   
 17.7    Wed Aug 2 19:37:00  CET 2020
 
