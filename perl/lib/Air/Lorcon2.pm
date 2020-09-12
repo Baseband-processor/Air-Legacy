@@ -1318,6 +1318,7 @@ our %EXPORT_TAGS = (
       mac80211_openmon_cb
       mac80211_setchan_cb
       Detect_Driver
+      rtfile_pcap_handler
       tx80211_rt61_init
       tx80211_rt61_capabilities
       rt61_open
