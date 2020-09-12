@@ -33,6 +33,7 @@ u_char *            T_PV
 char *              T_PV
 int *               T_PV
 int **              T_PV
+uint8_t **          T_PV
 const void *        T_PV
 void                T_PV
 void *              T_PV
