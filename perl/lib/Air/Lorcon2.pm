@@ -1329,6 +1329,7 @@ our %EXPORT_TAGS = (
       wginj_close
       wginj_open
       mac80211_sendpacket
+      nl80211_get_chanlist
    )],
    suites => [qw(
        WEP40
