@@ -21,6 +21,9 @@ Revision history for Perl extension Air::Lorcon2.
   - added other links
   - fixed SOCKET typedef bug
   - added documentation for lorcon_set_filter
+  - officially added 20 functions to Lorcon2.pm file
+  - updated function list
+  - fixed xsubp bugs (x2)
   
 17.7    Wed Aug 2 19:37:00  CET 2020
 
