@@ -1314,6 +1314,7 @@ our %EXPORT_TAGS = (
       tx80211_getcardlist
       tx80211_freecardlist
       drv_mac80211_probe
+      drv_file_probe
       mac80211_openmon_cb
       mac80211_setchan_cb
       Detect_Driver
