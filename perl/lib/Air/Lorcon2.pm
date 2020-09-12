@@ -1338,6 +1338,7 @@ our %EXPORT_TAGS = (
       bcm43xx_close
       bcm43xx_open
       tx80211_bcm43xx_init
+      pcap_get_selectable_fd
    )],
    suites => [qw(
        WEP40
