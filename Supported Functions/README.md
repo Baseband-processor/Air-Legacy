@@ -9,6 +9,7 @@ actually Working functions
       lorcon_set_timeout
       lorcon_get_timeout
       lorcon_open_monitor
+      lorcon_packet_from_pcap
       lorcon_open_injmon
       lorcon_set_vap
       lorcon_get_vap
