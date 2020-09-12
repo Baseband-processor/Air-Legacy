@@ -32,7 +32,7 @@ No, the entire _Air::Toolkit_ is designed for a more in-dept type of wireless-se
 
 **how can I donate?**
 
-The paypal address for a donation is:
+The paypal address for a donation is: /[none for now]
 
 
 Every donation will be used **only** for buying hardware and for test other implementation of the __Air::Toolkit__.
