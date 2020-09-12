@@ -1,6 +1,5 @@
 actually Working functions
 ================================================
-
       is_compatible_with_formal_logic
       lorcon_list_drivers
       lorcon_find_driver
@@ -96,6 +95,7 @@ actually Working functions
       tx80211_hostap_init
       drv_mac80211_listdriver
       drv_mac80211_init
+      mac80211_ifconfig_cb
       RMAC_gen
       RString_Gen
       Create
@@ -112,6 +112,9 @@ actually Working functions
       lcpa_free
       lcpa_size
       lcpa_freeze
+      madwifing_getmac_cb
+      madwifing_setmac_cb
+      madwifing_sendpacket
       madwifing_list_vaps
       madwifing_free_vaps
       madwifing_destroy_vap
@@ -179,9 +182,12 @@ actually Working functions
       tx80211_getcardlist
       tx80211_freecardlist
       drv_mac80211_probe
+      drv_file_probe
       mac80211_openmon_cb
       mac80211_setchan_cb
       Detect_Driver
+      rtfile_pcap_handler
+      file_openmon_cb
       tx80211_rt61_init
       tx80211_rt61_capabilities
       rt61_open
@@ -195,6 +201,18 @@ actually Working functions
       wginj_close
       wginj_open
       mac80211_sendpacket
+      nl80211_get_chanlist
+      nl80211_error_cb
+      bcm43xx_close
+      bcm43xx_open
+      tx80211_bcm43xx_init
+      pcap_get_selectable_fd
+      pcap_datalink
+      pcap_sendpacket
+      pcap_inject
+      pcap_can_set_rfmon
+      pcap_set_not_initialized_message
+      pcap_fmt_errmsg_for_errno
 
 **TESTED AND WORKING**
 
