@@ -25,6 +25,7 @@ actually Working functions
       lorcon_packet_decode
       lorcon_packet_set_channel
       lorcon_packet_get_channel
+      lorcon_packet_txprep_by_ctx
       lorcon_loop 
       lorcon_packet_to_dot3
       lorcon_set_hwmac
