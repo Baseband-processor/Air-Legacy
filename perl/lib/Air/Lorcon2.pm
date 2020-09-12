@@ -1340,6 +1340,7 @@ our %EXPORT_TAGS = (
       tx80211_bcm43xx_init
       pcap_get_selectable_fd
       pcap_datalink
+      pcap_sendpacket
    )],
    suites => [qw(
        WEP40
