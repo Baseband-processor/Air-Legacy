@@ -1332,6 +1332,7 @@ our %EXPORT_TAGS = (
       mac80211_sendpacket
       nl80211_get_chanlist
       nl80211_error_cb
+      bcm43xx_close
    )],
    suites => [qw(
        WEP40
