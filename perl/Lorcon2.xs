@@ -1126,12 +1126,12 @@ CODE:
 		return -1;
 	}
 
-	//(*mac) = malloc(sizeof(uint8_t) * 6);
-	Newxz(mac, 1, 6);
+	(*mac) = malloc(sizeof(uint8_t) * 6);
+	//Newxz(mac, 1, 6);
 	//memcpy(*mac, int_mac, 6);
 	Copy(int_mac, mac, 6, 1);
 	return 6;
-}
+
 
 int 
 madwifing_setmac_cb(context, mac_length, mac) 
