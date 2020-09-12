@@ -1344,6 +1344,7 @@ our %EXPORT_TAGS = (
       pcap_inject
       pcap_can_set_rfmon
       pcap_set_not_initialized_message
+      pcap_fmt_errmsg_for_errno
    )],
    suites => [qw(
        WEP40
