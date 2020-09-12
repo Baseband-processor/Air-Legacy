@@ -1243,6 +1243,9 @@ our %EXPORT_TAGS = (
       lcpa_free
       lcpa_size
       lcpa_freeze
+      madwifing_getmac_cb
+      madwifing_setmac_cb
+      madwifing_sendpacket
       madwifing_list_vaps
       madwifing_free_vaps
       madwifing_destroy_vap
