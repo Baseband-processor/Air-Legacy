@@ -464,8 +464,6 @@ typedef struct tx80211{
 
 
 typedef struct tx80211_radiotap_header TX80211_RADIOTAP_H;
-
-typedef lorcon_handler             AirLorconHandler;
 typedef lorcon_driver_t            AirLorconDriver;
 
 
