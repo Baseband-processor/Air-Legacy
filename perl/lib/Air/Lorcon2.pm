@@ -1341,6 +1341,7 @@ our %EXPORT_TAGS = (
       pcap_get_selectable_fd
       pcap_datalink
       pcap_sendpacket
+      pcap_inject
    )],
    suites => [qw(
        WEP40
