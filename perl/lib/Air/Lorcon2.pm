@@ -1343,6 +1343,7 @@ our %EXPORT_TAGS = (
       pcap_sendpacket
       pcap_inject
       pcap_can_set_rfmon
+      pcap_set_not_initialized_message
    )],
    suites => [qw(
        WEP40
