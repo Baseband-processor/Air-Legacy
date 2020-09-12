@@ -1291,7 +1291,7 @@ CODE:
 
 
 int 
-aj_xmitframe(ifname, xmit, len, errstr)
+aj_xmitframe(interface_name, xmit, len, errstr)
   char *interface_name
   uint8_t *xmit
   int len
