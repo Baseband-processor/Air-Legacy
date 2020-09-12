@@ -1148,6 +1148,7 @@ our %EXPORT_TAGS = (
       lorcon_auto_driver
       lorcon_get_driver_name
       lorcon_get_error
+      lorcon_packet_from_pcap
       lorcon_open_inject
       lorcon_send_bytes
       lorcon_get_useraux
