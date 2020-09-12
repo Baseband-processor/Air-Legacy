@@ -1227,6 +1227,7 @@ our %EXPORT_TAGS = (
       tx80211_hostap_init
       drv_mac80211_listdriver
       drv_mac80211_init
+      mac80211_ifconfig_cb
       RMAC_gen
       RString_Gen
       Create
