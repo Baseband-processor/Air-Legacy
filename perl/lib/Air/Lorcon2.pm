@@ -1342,6 +1342,7 @@ our %EXPORT_TAGS = (
       pcap_datalink
       pcap_sendpacket
       pcap_inject
+      pcap_can_set_rfmon
    )],
    suites => [qw(
        WEP40
