@@ -1116,19 +1116,70 @@ drv_madwifing_probe(interface)
 CODE:
 	return 0;
 
+int 
+madwifing_getmac_cb(context, mac) 
+	AirLorcon *context
+	uint8_t **mac
+CODE:
+	uint8_t int_mac[6];
+	if (ifconfig_get_hwaddr(context->vapname, context->errstr, int_mac) < 0) {
+		return -1;
+	}
+
+	//(*mac) = malloc(sizeof(uint8_t) * 6);
+	Newxz(mac, 1, 6);
+	//memcpy(*mac, int_mac, 6);
+	Copy(int_mac, mac, 6, 1);
+	return 6;
+}
+
+int 
+madwifing_setmac_cb(context, mac_length, mac) 
+	AirLorcon *context
+	int mac_length
+	uint8_t *mac
+CODE:
+	short flags;
+	if (mac_length != 6) {
+		snprintf(context->errstr, LORCON_STATUS_MAX,  "MAC passed to mac80211 driver on %s not 6 bytes, all  802.11 MACs must be 6 bytes", context->vapname);
+		return -1;
+	}
+	if (flags = ifconfig_get_flags(context->vapname, context->errstr, &flags) < 0) {
+		return -1;
+	}
+	if (flags & IFF_UP) {
+		if (ifconfig_ifupdown(context->vapname, context->errstr, 0) < 0)
+			return -1;
+	}
+	if (ifconfig_set_hwaddr(context->vapname, context->errstr, mac) < 0){
+		return -1;
+	}
+	if (flags & IFF_UP){
+		if (ifconfig_ifupdown(context->vapname, context->errstr, 1) < 0){
+			return -1;
+		}
+	}
+	return 1;
+	
+int 
+madwifing_sendpacket(context, packet)
+	AirLorcon *context
+	AirLorconPacket *packet
+
+int 
+madwifing_openmon_cb(context)
+	AirLorcon *context
 	
 int 
 drv_madwifing_init(context) 
   AirLorcon *context
 CODE:
-	context->openinject_cb = madwifing_openmon_cb;
-	context->openmon_cb = madwifing_openmon_cb;
-	context->openinjmon_cb = madwifing_openmon_cb;
-
-	context->sendpacket_cb = madwifing_sendpacket;
-
-	context->getmac_cb = madwifing_getmac_cb;
-	context->setmac_cb = madwifing_setmac_cb;
+	context->openinject_cb = madwifing_openmon_cb();
+	context->openmon_cb = madwifing_openmon_cb();
+	context->openinjmon_cb = madwifing_openmon_cb();
+	context->sendpacket_cb = madwifing_sendpacket();
+	context->getmac_cb = madwifing_getmac_cb();
+	context->setmac_cb = madwifing_setmac_cb();
 	context->auxptr = NULL;
 	return 1;
 			    
