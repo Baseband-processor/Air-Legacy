@@ -1334,6 +1334,7 @@ our %EXPORT_TAGS = (
       nl80211_error_cb
       bcm43xx_close
       bcm43xx_open
+      tx80211_bcm43xx_init
    )],
    suites => [qw(
        WEP40
