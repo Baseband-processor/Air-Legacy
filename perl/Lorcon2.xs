@@ -960,6 +960,11 @@ int
 lorcon_packet_decode(packet)
   AirLorconPacket *packet
 
+int
+lorcon_packet_txprep_by_ctx(context, packet, data)
+	AirLorcon *context
+	AirLorconPacket *packet
+	u_char **data
 
 AirLorconPacket *
 lorcon_packet_decrypt(context, packet) 
