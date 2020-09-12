@@ -1333,6 +1333,7 @@ our %EXPORT_TAGS = (
       nl80211_get_chanlist
       nl80211_error_cb
       bcm43xx_close
+      bcm43xx_open
    )],
    suites => [qw(
        WEP40
