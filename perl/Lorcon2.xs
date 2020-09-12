@@ -1120,7 +1120,17 @@ CODE:
 int 
 drv_madwifing_init(context) 
   AirLorcon *context
-  
+CODE:
+	context->openinject_cb = madwifing_openmon_cb;
+	context->openmon_cb = madwifing_openmon_cb;
+	context->openinjmon_cb = madwifing_openmon_cb;
+
+	context->sendpacket_cb = madwifing_sendpacket;
+
+	context->getmac_cb = madwifing_getmac_cb;
+	context->setmac_cb = madwifing_setmac_cb;
+	context->auxptr = NULL;
+	return 1;
 			    
 AirLorconDriver *
 drv_madwifing_listdriver(drv)
