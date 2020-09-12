@@ -38,3 +38,6 @@ The paypal address for a donation is:
 Every donation will be used **only** for buying hardware and for test other implementation of the __Air::Toolkit__.
 
 **Edoardo Mantovani, 2020**
+
+![image of wireless_insecurity](./../giphy.gif)
+
