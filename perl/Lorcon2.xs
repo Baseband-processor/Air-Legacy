@@ -1292,7 +1292,7 @@ CODE:
 
 int 
 aj_xmitframe(ifname, xmit, len, errstr)
-  char *ifname
+  char *interface_name
   uint8_t *xmit
   int len
   char *errstr
@@ -2397,10 +2397,12 @@ lorcon_packet_get_bssid_mac(packet)
 CODE:
     Lorcon_DOT11 *d11extra;
     if ((d11extra = lorcon_packet_get_dot11_extra(packet)) != NULL) {
-        return d11extra->bssid_mac;
-    } 
-
-
+        //return d11extra->bssid_mac;
+ 	  HV *out = newHV();
+ 	  SV *out_ref = newRV_noinc((SV *)out);
+ 	  hv_store(out, "bssid_mac",    4, newSVpv(d11extra->bssid_mac, 0), 0);
+	  return(out_ref);
+    }
 
 uint16_t 
 lorcon_packet_get_llc_type(packet) 
