@@ -25,6 +25,8 @@ Revision history for Perl extension Air::Lorcon2.
   - updated function list
   - fixed xsubp bugs (x2)
   - added new function: lorcon_packet_txprep_by_ctx 
+  - added new pure-perl function: Hex_to_packet
+  
   
 17.7    Wed Aug 2 19:37:00  CET 2020
 
