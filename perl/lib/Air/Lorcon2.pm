@@ -1,5 +1,4 @@
 package Air::Lorcon2;
-require  v5.22.1;
 
 # Made by Edoardo Mantovani, 2020
 
