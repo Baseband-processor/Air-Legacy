@@ -180,6 +180,7 @@ actually Working functions
       lcpa_freeze
       lcpa_size
       Packet_to_hex
+      Hex_to_packet
       wginj_send
       tx80211_getcardlist
       tx80211_freecardlist
