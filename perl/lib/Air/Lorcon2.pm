@@ -1438,7 +1438,7 @@ sub Packet_to_hex{
 # Decode an hex string to an ascii value, consider the hex a possible Network Packet
 sub Hex_to_packet{
 	my $HEX = shift;
-	$HEX =~ s/\\x(?:[0-9a-fA-F]{2})+)/pack 'H*', $1/ge;
+	$HEX =~ s/\\x((?:[0-9a-fA-F]{2})+)/pack 'H*', $1/ge;
 	return( $HEX );
 }
 
