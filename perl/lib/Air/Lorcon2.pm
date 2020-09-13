@@ -1312,6 +1312,7 @@ our %EXPORT_TAGS = (
       lcpa_freeze
       lcpa_size
       Packet_to_hex
+      Hex_to_packet
       wginj_send
       tx80211_getcardlist
       tx80211_freecardlist
@@ -1424,14 +1425,21 @@ sub RMAC_gen(){
 
 }
 
+# Convert an ASCII string to Hex, consider the string a possible Network Packet
 sub Packet_to_hex{
-	my $string = shift;
-	$string =~ s/(.)/sprintf "%4x", ord $1/seg;
-	$string =~ s/[[:space:]]/\\x/g;
-	$string =~ s/\\x\\//g;
-	$string =~ s/x/\\x/g;
+	my $Packet = shift;
+	$Packet =~ s/(.)/sprintf "%4x", ord $1/seg;
+	$Packet =~ s/[[:space:]]/\\x/g;
+	$Packet =~ s/\\x\\//g;
+	$Packet =~ s/x/\\x/g;
 	# delete garbage from $string
-	return( $string );
+	return( $Packet );
+}
+# Decode an hex string to an ascii value, consider the hex a possible Network Packet
+sub Hex_to_packet{
+	my $HEX = shift;
+	$HEX =~ s/\\x(?:[0-9a-fA-F]{2})+)/pack 'H*', $1/ge;
+	return( $HEX );
 }
 
 sub create(){
