@@ -23,6 +23,7 @@
 
 #ifndef __AJINJECT_H__
 #define __AJINJECT_H__
+#endif 
 
 #ifdef SYS_LINUX
 
