@@ -23,7 +23,6 @@
 #endif
 
 #ifdef SYS_CYGWIN
-
 #include <windows.h>
 #include <airpcap.h>
 #include "tx80211.h"
