@@ -30,6 +30,8 @@
 #include "tx80211_errno.h"
 #include "ifcontrol_linux.h"
 
+#define TX80211_VERSION 1
+
 unsigned int tx80211_getversion() {
 	return TX80211_VERSION;
 }
