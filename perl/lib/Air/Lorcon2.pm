@@ -1132,6 +1132,7 @@ our %EXPORT_TAGS = (
 )],
    lorcon => [qw(
       is_compatible_with_formal_logic
+      lorcon_get_version
       lorcon_list_drivers
       lorcon_find_driver
       lorcon_create
