@@ -482,6 +482,12 @@ int drv_mac80211_probe(const char *interface) {
 	return 0;
 }
 
+int tx80211_mac80211_capabilities()
+{
+	return (TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT |
+			TX80211_CAP_SELFACK | TX80211_CAP_DSSSTX);
+}
+
 lorcon_driver_t *drv_mac80211_listdriver(lorcon_driver_t *head) {
 	lorcon_driver_t *d = (lorcon_driver_t *) malloc(sizeof(lorcon_driver_t));
 
