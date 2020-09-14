@@ -22,8 +22,6 @@
 #include "config.h"
 #endif
 
-#ifdef SYS_LINUX
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -417,4 +415,6 @@ int aj_getsocket(char *ifname)
 	return (sock);
 }
 
-#endif /* linux */
+
+
+

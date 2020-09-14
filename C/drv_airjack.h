@@ -22,13 +22,10 @@
 #include "lorcon_int.h"
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.h
 #endif
 
-#ifndef __AJINJECT_H__
-#define __AJINJECT_H__
 
-#ifdef SYS_LINUX
 
 #define USE_DRV_AIRJACK		1
 
@@ -65,7 +62,5 @@ struct aj_config {
 	uint8_t essid[33];		/* first byte is length */
 };
 
-#endif
 
-#endif
 
