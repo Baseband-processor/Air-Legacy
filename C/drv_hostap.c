@@ -24,7 +24,7 @@
 
 #ifdef SYS_LINUX 
 
-#include "hapinject.h"
+#include "drv_hostap.h"
 #include "wtinject.h"
 
 int tx80211_hostap_init(struct tx80211 *in_tx)
