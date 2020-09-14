@@ -40,7 +40,6 @@ int aj_setchannel(char *ifname, int channel);
 int aj_setessid(char *ifname, char *essid, int len);
 int aj_setmac(char *ifname, uint8_t * mac);
 int aj_xmitframe(char *ifname, uint8_t * xmit, int len, char * errstr);
-int aj_recvframe(char *ifname, uint8_t * buf, int len);
 int aj_ifupdown(char *ifname, int devup);
 int aj_getsocket(char *ifname);
 
