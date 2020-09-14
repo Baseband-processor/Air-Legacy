@@ -24,7 +24,7 @@
 
 #ifdef SYS_LINUX
 
-#include "rt2500inject.h"
+#include "drv_rt2500.h"
 #include "wtinject.h"
 
 int rt2500_open(struct tx80211 *in_tx);
