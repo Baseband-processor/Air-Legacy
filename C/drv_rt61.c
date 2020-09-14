@@ -24,7 +24,7 @@
 
 #ifdef SYS_LINUX
 
-#include "rt61inject.h"
+#include "drv_rt61.h"
 #include "wtinject.h"
 
 int tx80211_rt61_init(struct tx80211 *in_tx)
