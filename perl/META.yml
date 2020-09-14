@@ -21,5 +21,6 @@ requires:
   Net::MAC: '0'
   Net::Pcap: '0'
   strict: '0'
+  Data::Dumper: '0'
   perl: '5.22.1'
 version: '19.23'
