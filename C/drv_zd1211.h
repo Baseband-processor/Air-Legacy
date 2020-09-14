@@ -52,7 +52,7 @@
 
 #include <net/ethernet.h>
 #include <netpacket/packet.h>
-
+#include "tx80211.h"
 
 
 int tx80211_zd1211rw_init(struct tx80211 *in_tx);
