@@ -24,7 +24,7 @@
 
 #ifdef SYS_LINUX
 
-#include "zd1211rwinject.h"
+#include "drv_zd1211.h"
 #include "wtinject.h"
 
 int tx80211_zd1211rw_init(struct tx80211 *in_tx)
