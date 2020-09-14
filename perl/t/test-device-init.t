@@ -1,10 +1,10 @@
 use Test;
-BEGIN { plan tests => 2 };
+BEGIN { plan tests => 1 };
 use Air::Lorcon2 qw(:lorcon);
-my @cards = lorcon_list_drivers();
-if( $#cards < 1 ){
-  return -1;
+use Data::Dumper;
+my $cards = Dumper( lorcon_list_drivers() );
+if(( undef $cards ) ){
+  ok(0);
   }else{
-  return 1;
-  }
   ok(1);
+	}

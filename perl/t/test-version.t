@@ -4,11 +4,12 @@
 use Test;
 use strict;
 
-BEGIN { plan tests => 5 };
+BEGIN { plan tests => 1 };
 
-use Air::Lorcon2; 
-if(undef( Air::Lorcon2::lorcon_get_version() ) ){
-  return -1;
+use Air::Lorcon2 qw(:lorcon);
+my $version = lorcon_get_version(); 
+if(undef( $version ) ){
+	ok(0);
 }
 
 ok(1);
