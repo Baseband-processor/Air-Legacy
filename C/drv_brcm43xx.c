@@ -5,7 +5,7 @@
 #ifdef SYS_LINUX
 
 #include <fcntl.h>
-#include "bcm43xxinject.h"
+#include "drv_brcm43xx.h"
 #include "wtinject.h"
 
 int tx80211_bcm43xx_init(struct tx80211 *in_tx)
