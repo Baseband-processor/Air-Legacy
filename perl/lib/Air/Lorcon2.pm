@@ -1190,7 +1190,6 @@ our %EXPORT_TAGS = (
       lorcon_close
       lorcon_inject
       lorcon_add_wepkey
-      aj_recvframe
       aj_xmitframe
       aj_setmac
       aj_setchannel
