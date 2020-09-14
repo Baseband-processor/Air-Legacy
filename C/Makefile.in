@@ -32,7 +32,7 @@ DEPEND = .depend
 LIBOBJ = ifcontrol_linux.lo iwcontrol.lo madwifing_control.lo nl80211_control.lo \
 		wifi_ht_channels.lo \
 		 lorcon_packet.lo lorcon_packasm.lo lorcon_forge.lo \
-		 drv_mac80211.lo drv_tuntap.lo drv_madwifing.lo drv_file.lo drv_wtgeneric.lo drv_wlanng.lo drv_airjack.lo drv_brcm43xx.lo\
+		 drv_mac80211.lo drv_tuntap.lo drv_madwifing.lo drv_file.lo drv_wtgeneric.lo drv_wlanng.lo drv_airjack.lo drv_brcm43xx.lo drv_zd1211.lo\
 		 sha1.lo  \
 		 lorcon.lo lorcon_multi.lo 
 LIBOUT = liblorcon2.la
