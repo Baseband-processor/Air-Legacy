@@ -36,6 +36,7 @@
             "Net::MAC" : "0"
             "Net::Pcap" : "0"
             "strict" : "0"
+            "Data::Dumper" : "0"
          }
       }
    },
