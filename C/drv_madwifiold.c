@@ -24,7 +24,7 @@
 
 #ifdef SYS_LINUX
 
-#include "mwoldinject.h"
+#include "drv_madwifiold.h"
 #include "wtinject.h"
 
 #define ENABLE_ATHRAWDEV 1
