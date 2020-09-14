@@ -33,7 +33,7 @@ LIBOBJ = ifcontrol_linux.lo iwcontrol.lo madwifing_control.lo nl80211_control.lo
 		wifi_ht_channels.lo \
 		 lorcon_packet.lo lorcon_packasm.lo lorcon_forge.lo \
 		 drv_mac80211.lo drv_tuntap.lo drv_madwifing.lo drv_file.lo drv_wtgeneric.lo drv_wlanng.lo\
-		 sha1.lo \
+		 sha1.lo wtinject \
 		 lorcon.lo lorcon_multi.lo 
 LIBOUT = liblorcon2.la
 
@@ -69,7 +69,6 @@ install:	$(LIBOUT)
 	install -d -m 755 $(INCLUDE)
 	install -d -m 755 $(INCLUDE)/lorcon2/
 	install -m 644 lorcon.h $(INCLUDE)/lorcon2/lorcon.h
-	install -m 644 drv_wtgeneric.h $(INCLUDE)/lorcon2/drv_wtgeneric.h
 	install -m 644 drv_tuntap.h $(INCLUDE)/lorcon2/drv_tuntap.h
 	install -m 644 drv_madwifing.h $(INCLUDE)/lorcon2/drv_madwifing.h
 	install -m 644 drv_mac80211.h $(INCLUDE)/lorcon2/drv_mac80211.h
@@ -91,6 +90,7 @@ install:	$(LIBOUT)
 	install -m 644 ieee80211.h $(INCLUDE)/lorcon2/ifcontrol_linux.h
 	install -m 644 ifcontrol_linux.h $(INCLUDE)/lorcon2/lorcon_ieee80211.h
 	install -m 644 drv_wtgeneric.h $(INCLUDE)/lorcon2/drv_wtgeneric.h
+	install -m 644 wtinject.h $(INCLUDE)/lorcon2/wtinject.h
 	install -m 644 drv_zd1211.h $(INCLUDE)/lorcon2/drv_zd1211.h
 	install -d -m 755 $(MAN)/man3
 	install  -m 644 lorcon.3 $(MAN)/man3/lorcon.3
