@@ -367,7 +367,7 @@ int tx80211_init(struct tx80211 *in_tx, const char *in_ifname, int in_injector)
 		break;
 
 	case INJ_MADWIFING:
-		ret = tx80211_madwifing_init(in_tx);
+		ret = drv_madwifing_init(in_tx);
 		break;
 
 	case INJ_HOSTAP:
@@ -399,7 +399,7 @@ int tx80211_init(struct tx80211 *in_tx, const char *in_ifname, int in_injector)
 		break;
 
 	case INJ_MAC80211:
-		ret = tx80211_mac80211_init(in_tx);
+		ret = drv_mac80211_init(in_tx);
 		break;
 
 #endif /* SYS_LINUX */
