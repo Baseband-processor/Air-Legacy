@@ -355,11 +355,7 @@ int aj_xmitframe(char *ifname, u8 *xmit, int len) {
    TODO: Add a timeval struct to the ifname struct for use in the select() on
    the socket for receiving data, instead of a fixed timeout duration. 
    TODO: Write this function. */
-int aj_recvframe(char *ifname, u8 *buf, int len) {
 
-    return(-1);
-
-}
 
 int aj_ifupdown(char *ifname, int devup) {
 
