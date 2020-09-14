@@ -205,6 +205,7 @@ actually Working functions
       mac80211_sendpacket
       nl80211_get_chanlist
       nl80211_error_cb
+      tx80211_mac80211_capabilities
       bcm43xx_close
       bcm43xx_open
       tx80211_bcm43xx_init
