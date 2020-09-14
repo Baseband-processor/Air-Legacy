@@ -261,11 +261,11 @@ So in the future I'll fork the project for a cpan compatible library.
 
 Version 21.08
 =========================
-**MD5:** _c66fdd9da209e4d5ab39fd5056cb6d09_
+**MD5:** _bb4b09d805d9fbda75a29f9e8f9b9801_
 
-**SHA1:** _ff14e23978bcdfaa501ae4da0290f71b54efef1a_
+**SHA1:** _795f43fb895f344ee4f7ab12ba4df3dac1263aa1_
 
-**SHA256:** _408848d7666490300423c912f36c5b67b1ed54f5101c1864d7e5a8496d1f7e6e_
+**SHA256:** _fdbcff2273549a665948c840b5edabd57dee6e7aa915a554a5da154a933968fe_
 
 Version 17.7
 =================================
