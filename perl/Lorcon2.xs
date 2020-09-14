@@ -2420,18 +2420,6 @@ PPCODE:
     return packet->interface;
 
 
-void
-pcap_fmt_errmsg_for_errno(errbuf, errbuflen, errnum, fmt)
-	char *errbuf
-	size_t errbuflen
-	int errnum
-	const char *fmt     
-     
-void
-pcap_set_not_initialized_message(pcap)
-	Pcap *pcap
-
-	
 
 	
 int
