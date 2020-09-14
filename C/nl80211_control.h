@@ -39,7 +39,6 @@ int nl80211_createvif(const char *interface, const char *newinterface,
 
 /* Set channel or frequency.  Callers should prefer the cache_ option using nl80211_connect 
  * when setting multiple channels */
-int nl80211_setchannel(const char *interface, int channel, unsigned int chmode, char *errstr);
 int nl80211_setchannel_cache(int ifidx, void *nl_sock, int nl80211_id,
         int channel, unsigned int chmode, char *errstr);
 
