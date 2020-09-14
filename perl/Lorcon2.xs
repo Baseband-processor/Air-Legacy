@@ -1331,10 +1331,6 @@ CODE:
     close(sock); 
     return(0);
 
-
-int 
-tx80211_airpcap_init(in_tx)
-  TX80211 *in_tx
   
 int
 tx80211_airpcap_capabilities()
