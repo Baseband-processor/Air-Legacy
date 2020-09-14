@@ -1330,11 +1330,6 @@ CODE:
     close(sock); 
     return(0);
 
-int
-aj_recvframe(ifname, buf, len)
-  char *ifname
-  uint8_t *buf
-  int len
 
 int 
 tx80211_airpcap_init(in_tx)
