@@ -24,7 +24,7 @@
 
 #ifdef SYS_LINUX
 
-#include "rtlinject.h"
+#include "drv_rtl.h"
 #include "wtinject.h"
 
 int tx80211_rtl8180_init(struct tx80211 *in_tx)
