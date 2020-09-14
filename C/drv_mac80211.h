@@ -29,6 +29,7 @@
 #define USE_DRV_MAC80211		1
 
 int drv_mac80211_init(lorcon_t *);
+int tx80211_mac80211_capabilities();
 lorcon_driver_t *drv_mac80211_listdriver(lorcon_driver_t *);
 
 #endif /* big test */
