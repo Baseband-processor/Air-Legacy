@@ -11,7 +11,9 @@ Revision history for Perl extension Air::Lorcon2.
   - deleted main compatibility problems
   - fixed various bug
   - code cleaning
-  
+  - added new function: lorcon_get_version
+  - added new function: tx80211_mac80211_capabilities
+  - fixed airpcap functions
   
 19.23   Fri Aug 4 22:57:00 CET 2020
   
