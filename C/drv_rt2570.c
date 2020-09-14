@@ -24,7 +24,7 @@
 
 #ifdef SYS_LINUX
 
-#include "rt2570inject.h"
+#include "drv_rt2570.h"
 #include "wtinject.h"
 
 int tx80211_rt2570_init(struct tx80211 *in_tx)
