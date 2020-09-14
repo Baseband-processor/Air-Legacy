@@ -22,8 +22,8 @@
 #include <string.h>
 #include <unistd.h>
 
-#include <tx80211_packet.h>
-#include <tx80211_errno.h>
+#include "tx80211_packet.h"
+#include "tx80211_errno.h"
 
 /* Error string length */
 #define TX80211_STATUS_MAX		1024
