@@ -43,7 +43,7 @@
 #define SIOCDEVPRIVATE  0x89F0
 #define SIOCAJSMODE SIOCDEVPRIVATE
 
-#define XS_unpack_charPtrPtr ___something___never___defined
+#define XS_unpack_charPtrPtr 
 #define TX80211_CAP_SNIFF 1
 #define TX80211_CAP_TRANSMIT 2
 #define TX80211_CAP_SEQ 4
