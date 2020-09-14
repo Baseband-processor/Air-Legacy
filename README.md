@@ -48,10 +48,10 @@ Since version 17.7 the Makefile has 2 installing options:
 
 * minimal
 
-the difference stands in the _libnl_ and its dependencies, which won't be installed in the _minimal_ installer.
+the difference stands in the _libnl_ and its dependencies, which won't be installed using the _minimal_ installer.
 
-_the suggested installation remains the **minimal** for now, is highly suggested to install requirements automatically with your distro package-manager._
-
+_The suggested installation remains the **minimal** for now, is highly suggested to install requirements automatically with your distro package-manager._
+_Note that you must have an internet connection for using the full installation_
 
 **TEST IF LORCON2 SUPPORTS LOCAL ADAPTERS**
 
@@ -173,10 +173,10 @@ lorcon_packet_decode( $Packet );
 
 **SPECIAL THANKS**
 
-A great thanks to *Andreas Hadjiprocopis* (aka *Bliako*), probably the best collaborator I ever had, without him the biggest part related to the C code would be broken.
+A great thanks to *Andreas Hadjiprocopis* (aka *Bliako*), probably the best collaborator I ever had, without him, the biggest part related to the C code won't work.
 
 **other thanks**
-* perlmonks community, especially syphilis  for his initial help
+* perlmonks community, especially *syphilis*  for his initial help
 * *Mike Kershaw* (aka Dragorn), the main developer of Lorcon2, who explained some obscure part of his code
 * *GomoR*, the old author, who never replied to my emails even when I sent the 10.5 Air::Lorcon2 version
 
@@ -257,13 +257,25 @@ So in the future I'll fork the project for a cpan compatible library.
 
 **CHECKSUMS**
 
-_the checksum will be updated every 14 days_
+**NOTE:** _the checksum will be updated every 14 days_
 
+Version 21.08
+=========================
 **MD5:** _c66fdd9da209e4d5ab39fd5056cb6d09_
 
 **SHA1:** _ff14e23978bcdfaa501ae4da0290f71b54efef1a_
 
 **SHA256:** _408848d7666490300423c912f36c5b67b1ed54f5101c1864d7e5a8496d1f7e6e_
+
+Version 17.7
+=================================
+**MD5:** _c66fdd9da209e4d5ab39fd5056cb6d09_
+
+**SHA1:** _ff14e23978bcdfaa501ae4da0290f71b54efef1a_
+
+**SHA256:** _408848d7666490300423c912f36c5b67b1ed54f5101c1864d7e5a8496d1f7e6e_
+
+
 
 **NOTE:**  The checksum is related to the zipped file.
 
