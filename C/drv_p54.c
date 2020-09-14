@@ -24,7 +24,7 @@
 
 #ifdef SYS_LINUX
 
-#include "p54inject.h"
+#include "drv_p54.h"
 #include "wtinject.h"
 
 int tx80211_prism54_init(struct tx80211 *in_tx)
