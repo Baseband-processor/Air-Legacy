@@ -80,7 +80,6 @@ actually Working functions
       nl80211_find_parent
       nl80211_setfrequency_cache
       nl80211_setfrequency
-      nl80211_setchannel
       nl80211_setchannel_cache
       nl80211_createvif
       nl80211_disconnect
