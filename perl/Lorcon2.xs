@@ -1363,12 +1363,6 @@ nl80211_createvif(interface, newinterface, in_flags, flags_sz, errstr)
      unsigned int * flags_sz
      char *errstr
 
-int
-nl80211_setchannel(interface, channel, chmode, errstr)
-     const char *interface
-     int channel
-     unsigned int chmode
-     char *errstr
 
 int
 nl80211_setchannel_cache(ifidx, nl_sock, nl80211_id, channel, chmode, errstr)
