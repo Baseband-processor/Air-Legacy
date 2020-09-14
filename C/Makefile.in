@@ -32,7 +32,7 @@ DEPEND = .depend
 LIBOBJ = ifcontrol_linux.lo iwcontrol.lo madwifing_control.lo nl80211_control.lo \
 		wifi_ht_channels.lo \
 		 lorcon_packet.lo lorcon_packasm.lo lorcon_forge.lo \
-		 drv_mac80211.lo drv_tuntap.lo drv_madwifing.lo drv_file.lo drv_wtgeneric.lo drv_wlanng.lo drv_airjack.lo drv_brcm43xx.lo drv_zd1211.lo drv_rt2570.lo drv_rt73.lo drv_rt61.lo\
+		 drv_mac80211.lo drv_tuntap.lo drv_madwifing.lo drv_file.lo drv_wtgeneric.lo drv_wlanng.lo drv_airjack.lo drv_brcm43xx.lo drv_zd1211.lo drv_rt2570.lo drv_rt73.lo drv_rt61.lo drv_rt2500.lo\
 		 sha1.lo  tx80211.lo \
 		 lorcon.lo lorcon_multi.lo 
 LIBOUT = liblorcon2.la
@@ -94,6 +94,7 @@ install:	$(LIBOUT)
 	install -m 644 drv_zd1211.h $(INCLUDE)/lorcon2/drv_zd1211.h
 	install -m 644 drv_brcm43xx.h $(INCLUDE)/lorcon2/drv_brcm43xx.h
 	install -m 644 tx80211.h $(INCLUDE)/lorcon2/tx80211.h
+	install -m 644 drv_rt2500.h  $(INCLUDE)/lorcon2/drv_rt2500.h
 	install -m 644 drv_rt2570.h $(INCLUDE)/lorcon2/drv_rt2570.h
 	install -m 644 drv_rt61.h $(INCLUDE)/lorcon2/drv_rt61.h
 	install -m 644 drv_rt73.h $(INCLUDE)/lorcon2/drv_rt73.h
