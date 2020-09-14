@@ -24,7 +24,7 @@
 
 #ifdef SYS_LINUX
 
-#include "rt73inject.h"
+#include "drv_rt73.h"
 #include "wtinject.h"
 
 int tx80211_rt73_init(struct tx80211 *in_tx)
