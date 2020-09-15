@@ -30,6 +30,8 @@
 #include "tx80211_errno.h"
 #include "ifcontrol_linux.h"
 
+#include "drv_mac80211.h"
+
 #define TX80211_VERSION 1
 
 unsigned int tx80211_getversion() {
