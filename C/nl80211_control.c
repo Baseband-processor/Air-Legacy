@@ -60,13 +60,7 @@
 
 #define nl_sock nl_handle
 
-static inline void nl_socket_free(struct nl_sock *h) {
-#ifdef HAVE_LINUX_NETLINK
-	nl_handle_destroy(h);
-#else
-    return;
-#endif
-}
+
 
 static inline struct nl_handle *nl_socket_alloc(void) {
 #ifdef HAVE_LINUX_NETLINK
@@ -79,6 +73,13 @@ static inline struct nl_handle *nl_socket_alloc(void) {
 
 #endif
 
+static inline void nl_socket_free(struct nl_sock *h) {
+#ifdef HAVE_LINUX_NETLINK
+	nl_handle_destroy(h);
+#else
+    return;
+#endif
+}
 
 int ChanToFreq(int in_chan) {
     /* 802.11 channels to frequency; if it looks like a frequency, return as
