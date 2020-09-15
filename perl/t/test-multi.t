@@ -13,18 +13,26 @@ my $loop = lorcon_multi_create();
 
 if( undef( $loop ) ) {
   ok(0);
-  }else{
+}else{
   ok(1);
   }
 
-my @interfaces = lorcon_multi_get_interfaces( $loop );
+my $interfaces = lorcon_multi_get_interfaces( $loop );
 
 
-if( undef( @interfaces ) ) {
+if( undef( $interfaces ) ) {
   ok(0);
-  }else{
+}else{
   ok(1);
   }
+
+my $lorcon = lorcon_multi_interface_get_lorcon( $interfaces );
+
+if( undef( $lorcon ) ) {
+  ok(0);
+}else{
+  ok(1);
+}
 
 ok(1);
   
