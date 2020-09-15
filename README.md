@@ -51,6 +51,7 @@ Since version 17.7 the Makefile has 2 installing options:
 the difference stands in the _libnl_ and its dependencies, which won't be installed using the _minimal_ installer.
 
 _The suggested installation remains the **minimal** for now, is highly suggested to install requirements automatically with your distro package-manager._
+
 _Note that you must have an internet connection for using the full installation while for the minimal you just need Net::Pcap pre-installed on your host_
 
 **TEST IF LORCON2 SUPPORTS LOCAL ADAPTERS**
