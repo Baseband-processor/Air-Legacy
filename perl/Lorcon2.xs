@@ -117,6 +117,8 @@
 
 #include "Ctxs.h"
 
+typedef struct nl_sock NL_SOCK;
+
 typedef struct {
 	__u32		nlmsg_len;	
 	__u16		nlmsg_type;	
