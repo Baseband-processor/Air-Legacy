@@ -1925,6 +1925,12 @@ tx80211_zd1211rw_init(input_tx)
 	input_tx->txpacket_callthrough = tx80211_zd1211rw_send();
 	input_tx->setfuncmode_callthrough = wtinj_setfuncmode();
 
+int 
+tx80211_mac80211_capabilities()
+CODE:
+return (TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT | TX80211_CAP_SELFACK | TX80211_CAP_DSSSTX);
+
+
 void 
 lcpf_80211headers(pack, type, subtype, fcflags, duration, mac1, mac2, mac3, mac4, fragment, sequence) 
 	LCPA_META *pack
