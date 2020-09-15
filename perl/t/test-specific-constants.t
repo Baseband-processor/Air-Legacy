@@ -439,7 +439,7 @@ my $consts_cardinality = $#Lorcon_Costants;
 my $Rand_value = rand( $consts_cardinality ); # set the maximun random number the Costants array dimension
 my $x = 0;
 while( $x <= 100 ) {
-  if( ! undef( $consts_cardinality[$Rand_value] ) ){
+  if( ! undef( $Lorcon_Costants[$Rand_value] ) ){
       ok(1);
   }else{
       ok(0);

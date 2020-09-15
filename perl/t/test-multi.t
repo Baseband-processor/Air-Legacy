@@ -17,7 +17,7 @@ if( undef( $loop ) ) {
   ok(1);
   }
 
-my $interfaces = lorcon_multi_get_interfaces( $loop );
+my $interfaces = lorcon_multi_get_interfaces( \$loop );
 
 
 if( undef( $interfaces ) ) {

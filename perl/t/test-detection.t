@@ -13,8 +13,10 @@ use Air::Lorcon2 qw( :lorcon );
 
 my $driver = Detect_Driver();
 
-if(undef ( $driver ) || ( length( $driver) <= 2 ) ){ # Driver name too short
+if( undef( $driver ) ){ 
   ok(0);
 }
+
+
 
 ok(1);
