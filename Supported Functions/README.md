@@ -28,6 +28,7 @@ actually Working functions
       lorcon_packet_txprep_by_ctx
       lorcon_loop 
       lorcon_packet_to_dot3
+      lorcon_multi_loop
       lorcon_set_hwmac
       lorcon_get_hwmac
       lorcon_multi_remove_interface_error_handler
