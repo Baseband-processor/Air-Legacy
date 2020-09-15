@@ -1226,6 +1226,7 @@ our %EXPORT_TAGS = (
       drv_tuntap_init
       tx80211_hostap_capabilities
       tx80211_hostap_init
+      tx80211_mac80211_capabilities
       drv_mac80211_listdriver
       drv_mac80211_init
       mac80211_ifconfig_cb
