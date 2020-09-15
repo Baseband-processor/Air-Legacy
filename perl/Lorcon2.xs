@@ -3077,15 +3077,3 @@ wginj_close(wginj)
 CODE:	
 	return close(wginj->raw_fd);
 
-
-
-void 
-nl_socket_free(h) 
-	NL_SOCK *h
-CODE:
-#ifdef HAVE_LINUX_NETLINK
-	nl_handle_destroy(h);
-#else
-    return;
-#endif
-
