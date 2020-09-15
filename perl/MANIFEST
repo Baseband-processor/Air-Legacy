@@ -14,6 +14,7 @@ t/test-open.t
 t/test-auto.t
 t/test-version.t
 t/test-send.t
+t/test-multi.t
 typemap
 META.yml                                 Module YAML meta-data (added by MakeMaker)
 META.json                                Module JSON meta-data (added by MakeMaker)
