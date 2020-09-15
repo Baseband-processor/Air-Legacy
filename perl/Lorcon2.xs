@@ -3077,4 +3077,13 @@ CODE:
 
 
 
+void 
+nl_socket_free(h) 
+	NL_SOCK *h
+CODE:
+#ifdef HAVE_LINUX_NETLINK
+	nl_handle_destroy(h);
+#else
+    return;
+#endif
 
