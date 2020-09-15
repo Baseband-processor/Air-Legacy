@@ -17,6 +17,7 @@ Revision history for Perl extension Air::Lorcon2.
   - officially added new function: lorcon_multi_loop
   - added new test: test-multi.t
   - added new test: test-loop.t
+  - added new test: test-packet.t
   
 19.23   Fri Aug 4 22:57:00 CET 2020
   
