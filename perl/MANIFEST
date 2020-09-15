@@ -17,6 +17,7 @@ t/test-send.t
 t/test-multi.t
 t/test-loop.t
 t/test-packet.t
+t/test-inspect-packet.t
 typemap
 META.yml                                 Module YAML meta-data (added by MakeMaker)
 META.json                                Module JSON meta-data (added by MakeMaker)
