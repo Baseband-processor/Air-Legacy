@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use Test;
 
-BEGIN{ plan tests => 5 };
+BEGIN{ plan tests => 1 };
 
 use Air::Lorcon2 qw( :lorcon );
 
@@ -19,5 +19,5 @@ sub print_ok(){
   
 my $nmbrs = 10;
 
-lorcon_multi_loop( $loop, $nmbrs, &print_ok(), \"this is only a try" );
+Air::Lorcon2::lorcon_multi_loop( $loop, $nmbrs, &print_ok(), \"this is only a try" );
 ok(1);

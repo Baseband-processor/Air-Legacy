@@ -5,12 +5,13 @@
 use Test;
 use strict;
 no strict 'subs';
-use Net::Pcap qw( pcap_lookupdev );
-use Air::Lorcon2 qw( :lorcon ); 
-use Data::Dumper qw(Dumper);
+
 
 BEGIN { plan tests => 1 };
 
+use Air::Lorcon2 qw( :lorcon ); 
+use Net::Pcap qw( pcap_lookupdev );
+use Data::Dumper qw(Dumper);
 
 my $pcap_err = '';
 my $pcap_intf = pcap_lookupdev( \$pcap_err );
@@ -42,7 +43,16 @@ if(! ( $context ) ){
   ok(0);
 }
 
-if( ( lorcon_open_inject( $context ) == -1 ) || ( lorcon_open_monitor( $context ) == -1 ) || ( lorcon_open_injmon( $context ) == -1 ) ){
+if( lorcon_open_inject( $context ) == -1 ) {
+	ok(0);
+}
+
+if( lorcon_open_monitor( $context ) == -1 ) {
+	ok(0);
+}
+
+if( lorcon_open_injmon( $context ) == -1  ) {
   ok(0);
  }
+
 ok(1);

@@ -10,6 +10,10 @@ use Test;
 
 BEGIN{ plan tests => 1 };
 
+if ($<) {
+    die "Error: test not executed as root\n";
+}
+
 use Air::Lorcon2 qw( :lorcon );
 use Net::Pcap qw( pcap_lookupdev );
 
@@ -45,7 +49,7 @@ if(undef( $drv ) ){
   ok(1);
 }
 
-my $context = lorcon_create( $pcap_interface, $drv );
+my $context = lorcon_create( $pcap_interface, \$drv );
 
 if(undef( $context ) ){
   ok(0);

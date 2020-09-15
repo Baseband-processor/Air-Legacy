@@ -5,9 +5,10 @@
 
 use strict;
 no strict 'subs';
+use Data::Dumper qw( Dumper );
 use Test;
 
-BEGIN{ plan tests => 3 };
+BEGIN{ plan tests => 1 };
 
 use Air::Lorcon2 qw( :lorcon );
 use Net::Pcap qw( pcap_lookupdev );
@@ -22,13 +23,31 @@ my $pcap_device = pcap_lookupdev( \$pcap_err );
 
 # Air::Lorcon2 runtimes
 
-my $context = lorcon_create( $pcap_device, "mac80211" );
+my $driver;
 
-if( undef( $context ) ){
-  ok(0);
-}else{
-  ok(1);
+my @list = lorcon_list_drivers();
+foreach ( @list ){
+        if ( Dumper( $_ ) =~ "mac80211"){
+                $driver = "mac80211";
+                break;
+        }elsif ( Dumper( $_ ) =~ "madwifing" ){
+                $driver = "madwifing";
+                break;
+        }elsif( Dumper( $_ ) =~ "file" ){
+                $driver = "file";
+                break;
+        }
+
 }
+
+
+my $drv = lorcon_find_driver( $driver );
+
+if( undef( $drv ) ){
+	ok(0);
+}
+
+my $context = lorcon_create( $pcap_device, \$drv );
 
 # craft an empty packet
 
