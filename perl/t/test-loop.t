@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use Test;
 
-BEGIN{ plain tests => 5 };
+BEGIN{ plan tests => 5 };
 
 use Air::Lorcon2 qw( :lorcon );
 

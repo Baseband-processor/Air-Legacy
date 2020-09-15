@@ -4,10 +4,11 @@
 # Main test for Air::Lorcon2's packet capabilities
 
 use strict;
-use warnings;
+no strict 'subs';
+use Data::Dumper qw(Dumper);
 use Test;
 
-BEGIN{ plain tests => 1 };
+BEGIN{ plan tests => 1 };
 
 use Air::Lorcon2 qw( :lorcon );
 use Net::Pcap qw( pcap_lookupdev );
