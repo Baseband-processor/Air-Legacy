@@ -60,6 +60,14 @@
 
 #define nl_sock nl_handle
 
+static inline void nl_socket_free(struct nl_sock *h) {
+#ifdef HAVE_LINUX_NETLINK
+	nl_handle_destroy(h);
+#else
+    return;
+#endif
+}
+
 static inline struct nl_handle *nl_socket_alloc(void) {
 #ifdef HAVE_LINUX_NETLINK
 	return nl_handle_alloc();
