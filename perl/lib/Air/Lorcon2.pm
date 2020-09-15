@@ -1346,6 +1346,8 @@ our %EXPORT_TAGS = (
       pcap_sendpacket
       pcap_inject
       pcap_can_set_rfmon      
+      lorcon_multi_loop
+      
    )],
    suites => [qw(
        WEP40
