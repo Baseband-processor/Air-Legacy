@@ -8,6 +8,7 @@ LORCON_WEP           T_PTROBJ
 PCAP_PKTHDR	         T_PTROBJ
 const PCAP_PKTHDR *  T_PTROBJ
 PCAP_PKTHDR *        T_PTROBJ
+NL_SOCK *            T_PTRREF
 AirLorcon *          T_PTRREF
 AirLorconHandler     T_PV
 AirLorconHandler *   T_PTRREF
