@@ -1,3 +1,5 @@
+#!/usr/bin/perl
+
 # Made by Edoardo Mantovani, 2020
 
 # main test routine for Air::Lorcon2
