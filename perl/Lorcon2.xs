@@ -117,16 +117,6 @@
 
 #include "Ctxs.h"
 
-typedef  struct  {
-	struct sockaddr_nl 	s_local; 
-	struct sockaddr_nl 	s_peer;
-	int 	s_fd;
-	int 	s_proto;
-	unsigned int 	s_seq_next;
-	unsigned int 	s_seq_expect;
-	int 	s_flags;
-	struct nl_cb * 	s_cb;
-}nl_sock;
  
 typedef struct nl_sock NL_SOCK;
 
@@ -288,7 +278,6 @@ typedef struct sockaddr SOCKADDR;
 
 typedef struct ifreq IFREQ;
 
-typedef struct pthread_rwlock_t pthread_rwlock_t;
 
 typedef struct sockaddr_nl {
                sa_family_t     nl_family;  
