@@ -19,5 +19,9 @@ sub print_ok(){
   
 my $nmbrs = 10;
 
-Air::Lorcon2::lorcon_multi_loop( $loop, $nmbrs, &print_ok(), \"this is only a try" );
+if( ! Air::Lorcon2::lorcon_multi_loop( $loop, $nmbrs, &print_ok(), \"this is only a try" ) ){
+  ok(0);
+}else{
+  ok(1);
+}
 ok(1);
