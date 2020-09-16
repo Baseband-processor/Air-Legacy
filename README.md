@@ -231,12 +231,6 @@ for starting I suggest to learn:
 * [Perl for Penetration Testing](https://www.slideshare.net/kost/perl-usage-in-security-and-penetration-testing)
 
 
-**Requests and collaborations**
-
-Feel free to email me at <Baseband@cpan.org>
-- [x] I am open to suggestions, code improvement, collaboration and other requests
-
-
 **FREE DROPS**
 
 Occasionally I'll drop some random hardware extension for Air::Lorcon2, this will include specific hardware, customized extension and new working modes.
@@ -279,11 +273,6 @@ Version 17.7
 
 **NOTE:**  The checksum is related to the zipped file.
 
-WARNINGS
-======================
-
-Many functions are still under heavy development cause the high number of buffers overflow,
-for a detailed list of working functions, please refer to the list in the "working_functions" folder.
 
 
 
@@ -294,6 +283,21 @@ _Air::Pcap_ is an additional special support library for Air::Lorcon2, it uses t
 
 For now is still under heavy development, will released soon!
 
+
+
+
+**Requests and collaborations**
+
+Feel free to email me at <Baseband@cpan.org>
+- [x] I am open to suggestions, code improvement, collaboration and other requests
+
+
+
+WARNINGS
+======================
+
+Many functions are still under heavy development cause the high number of buffers overflow,
+for a detailed list of working functions, please refer to the list in the "working_functions" folder.
 
 **COPYRIGHT AND LICENCE**
 
