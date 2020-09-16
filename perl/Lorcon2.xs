@@ -1060,19 +1060,9 @@ lorcon_multi_del_interface(ctx, lorcon_intf, free_interface)
 AirLorconInterface *
 lorcon_multi_get_interfaces(ctx)
   AirLorconMulti *ctx
-   INIT:
-      AirLorconMulti *list = lorcon_multi_get_interfaces(ctx);
-      AirLorconMulti *cur = NULL;
-      AV *av = newAV();
-   CODE:
-      for (cur = list; cur != NULL; cur = cur->next) {
-         SV *this = lorcon_multi_t_c2sv(cur);
-         av_push(av, this);
-      }
-      lorcon_free_driver_list(list);
-      RETVAL = av;
-   OUTPUT:
-      RETVAL
+CODE:
+	return( newSVpv(ctx->interfaces, 0) );
+   
 
 AirLorconInterface *
 lorcon_multi_get_next_interface(ctx, intf)
