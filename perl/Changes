@@ -21,6 +21,7 @@ Revision history for Perl extension Air::Lorcon2.
   - added new test: test-inspect-packet.t
   - added new test: test-specific-constants.t
   - added new test: test-detection.t
+  - added new test: test-drivers-utils.t
   
 19.23   Fri Aug 4 22:57:00 CET 2020
   
