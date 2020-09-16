@@ -1,8 +1,12 @@
 #!/usr/bin/perl
 
 # Made by Edoardo Mantovani, 2020
+# test lorcon_multi capabilities
+
 use strict;
-use warnings;
+no strict 'subs';
+no strict 'refs';
+no warnings;
 
 use Test;
 BEGIN{ plan tests => 1 };
