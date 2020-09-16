@@ -29,7 +29,6 @@ This is just the beginning, the project is long and the road is much longer but 
 - [x] bison (required for both Lorcon and libnl)
 - [ ] flex (optional, required only for installing libnl-dev)
 
-
 **INSTALLATION**
 
 for installing the *Air::Lorcon2* and *Lorcon2* libraries you just need to type:
@@ -285,6 +284,15 @@ WARNINGS
 
 Many functions are still under heavy development cause the high number of buffers overflow,
 for a detailed list of working functions, please refer to the list in the "working_functions" folder.
+
+
+
+Air::Pcap
+========================
+
+_Air::Pcap_ is an additional special support library for Air::Lorcon2, it uses the nl80211 layer for enabling the airpcap packet inject driver.
+
+For now is still under heavy development, will released soon!
 
 
 **COPYRIGHT AND LICENCE**
