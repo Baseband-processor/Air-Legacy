@@ -73,7 +73,7 @@ static inline struct nl_handle *nl_socket_alloc(void) {
 
 #endif
 
-static inline void nl_socket_free(struct nl_sock *h) {
+void nl_socket_free(struct nl_sock *h) {
 #ifdef HAVE_LINUX_NETLINK
 	nl_handle_destroy(h);
 #else
