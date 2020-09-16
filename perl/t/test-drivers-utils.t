@@ -40,7 +40,7 @@ foreach ( @list ){
 }
 
 my $drv = lorcon_find_driver( $driver ); 
-my $context = lorcon_create( $pcap_device, $driver );
+my $context = lorcon_create( $pcap_device, $drv );
 
 ## test madwifing device
 
