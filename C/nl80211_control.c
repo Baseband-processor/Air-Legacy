@@ -73,6 +73,24 @@ static inline struct nl_handle *nl_socket_alloc(void) {
 
 #endif
 
+
+void nl_handle_destroy(struct nl_handle * handle ) {
+#ifdef HAVE_LINUX_NETLINK
+	if (!handle){
+                 return;
+	}
+         if (handle->h_fd >= 0){
+                 close(handle->h_fd);
+	 }
+         if (!(handle->h_flags & NL_OWN_PORT)){
+                 release_local_port(handle->h_local.nl_pid);
+	 }
+         nl_cb_put(handle->h_cb);
+         free(handle);
+	#endif
+}
+
+	
 void nl_socket_free(struct nl_sock *h) {
 #ifdef HAVE_LINUX_NETLINK
 	nl_handle_destroy(h);
