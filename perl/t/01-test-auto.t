@@ -1,5 +1,7 @@
 # Made by Edoardo Mantovani, 2020
 
+# Simple lorcon_auto_driver tester
+
 use Test;
 use strict;
 use Net::Pcap qw( pcap_lookupdev );
