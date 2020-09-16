@@ -4,6 +4,15 @@ Revision history for Perl extension Air::Lorcon2.
 
 [first official release]
 
+25.17   Wed Set 16 18:32:00 CET 2020
+  - initial support for libnl
+  - added new function: genl_send_simple
+  - added new function: genl_connect
+  - added new function: nl_socket_alloc
+  - added new function: nl_socket_get_local_port
+  - added new function: nl_socket_set_local_port
+  - added new function: release_local_port
+  
 21.08   Mon Set 14 17:01:00 CET 2020
   - fixed tests, now works properly
   - eliminated useless pcap functions
