@@ -7,20 +7,20 @@ MANIFEST
 README.md
 TODO
 Ctxs.h
-t/test-consts.t
-t/test-device-init.t
-t/test-use.t
-t/test-open.t
-t/test-auto.t
-t/test-version.t
-t/test-send.t
-t/test-multi.t
-t/test-loop.t
-t/test-packet.t
-t/test-inspect-packet.t
-t/test-specific-constants.t
-t/test-detection.t
-t/test-drivers-utils.t
+t/01-test-auto.t
+t/02-test-consts.t
+t/03-test-detection.t
+t/04-test-device-init.t
+t/05-test-drivers-utils.t
+t/06-test-inspect-packet.t
+t/07-test-loop.t
+t/08-test-multi.t
+t/09-test-open.t
+t/10-test-packet.t
+t/11-test-send.t
+t/12-test-specific-constants.t
+t/13-test-use.t
+t/14-test-version.t
 typemap
 META.yml                                 Module YAML meta-data (added by MakeMaker)
 META.json                                Module JSON meta-data (added by MakeMaker)
