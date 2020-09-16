@@ -48,7 +48,7 @@ Since version 17.7 the Makefile has 2 installing options:
 
 * minimal
 
-the difference stands in the _libnl_ and its dependencies, which won't be installed using the _minimal_ installer.
+the difference stands in the Air::Pcap library, _libnl_ and its related dependencies, which won't be installed using the _minimal_ installer.
 
 _The suggested installation remains the **minimal** for now, is highly suggested to install requirements automatically with your distro package-manager._
 
