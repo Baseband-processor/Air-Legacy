@@ -1,3 +1,5 @@
+#!/usr/bin/perl
+
 # Made by Edoardo Mantovani, 2020
 
 # test sending bytes
@@ -39,8 +41,11 @@ if(! ( $context ) ){
 	ok(0);
 }
 
-my $Packet = "\x00\x00\x00\x00\x00\x00";
+my $Packet = "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"; # craft a null packet
 my $LPacket = length( $Packet );
-lorcon_send_bytes($context, $LPacket, $Packet);
-
+if( ! lorcon_send_bytes($context, $LPacket, $Packet) ){
+	ok(0);
+}else{
+	ok(1);
+}
 ok(1);
