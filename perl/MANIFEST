@@ -20,6 +20,7 @@ t/test-packet.t
 t/test-inspect-packet.t
 t/test-specific-constants.t
 t/test-detection.t
+t/test-drivers-utils.t
 typemap
 META.yml                                 Module YAML meta-data (added by MakeMaker)
 META.json                                Module JSON meta-data (added by MakeMaker)
