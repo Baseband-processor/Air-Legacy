@@ -1,6 +1,7 @@
 package Air::Lorcon2;
 
 # Made by Edoardo Mantovani, 2020
+# main Air::Lorcon2 file
 
 use strict;
 no strict 'subs';
@@ -1347,7 +1348,7 @@ our %EXPORT_TAGS = (
       pcap_inject
       pcap_can_set_rfmon      
       lorcon_multi_loop
-      
+      madwifing_openmon_cb      
    )],
    suites => [qw(
        WEP40
