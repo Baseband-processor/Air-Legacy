@@ -12,6 +12,8 @@ Revision history for Perl extension Air::Lorcon2.
   - added new function: nl_socket_get_local_port
   - added new function: nl_socket_set_local_port
   - added new function: release_local_port
+  - added new test: 15-test-pure-subs.t
+  
   
 21.08   Mon Set 14 17:01:00 CET 2020
   - fixed tests, now works properly
