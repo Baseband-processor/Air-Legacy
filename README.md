@@ -173,7 +173,9 @@ lorcon_packet_decode( $Packet );
 
 **SPECIAL THANKS**
 
-A great thanks to *Andreas Hadjiprocopis* (aka *Bliako*), probably the best collaborator I ever had, without him, the biggest part related to the C code won't work.
+A great thanks to Andreas Hadjiprocopis (aka bliako at Perlmonks.org, email: bliako@cpan.org , andreashad2@gmail.com, git: https://github.com/hadjiprocopis),
+
+probably the best collaborator I ever had, without him, the biggest part related to the C code won't work.
 
 **other thanks**
 * perlmonks community, especially *syphilis*  for his initial help
