@@ -23,6 +23,5 @@
 #include <sys/socket.h>
 #include <pcap.h>
 #include "ppport.h"
-#include <pthread.h>
 
 #endif /* __CTXS_H */
