@@ -40,20 +40,17 @@ foreach ( @list ){
 
 
 my $drv = lorcon_find_driver( $driver );
-my $context = lorcon_create( $pcap_intf, $drv );
-if(! ( $context ) ){
-  ok(0);
-}
+my $context = lorcon_create( $pcap_intf, $drv ) or die;
 
-if( lorcon_open_inject( $context ) == -1 ) {
+if( ! lorcon_open_inject( $context )  ) {
 	ok(0);
 }
 
-if( lorcon_open_monitor( $context ) == -1 ) {
+if( ! lorcon_open_monitor( $context )  ) {
 	ok(0);
 }
 
-if( lorcon_open_injmon( $context ) == -1  ) {
+if( ! lorcon_open_injmon( $context )  ) {
   ok(0);
  }
 
