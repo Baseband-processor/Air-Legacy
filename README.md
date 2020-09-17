@@ -243,7 +243,7 @@ After a long development stage, the actual version of Air::Lorcon2 is 17.7, for 
 
 **Air::Lorcon2's Metacpan version**
 
-As you may understand, Air::Lorcon2 has an autoinstaller, which couldn't be executed normally running the classical
+As you may understand, Air::Lorcon2 has an autoinstaller, which couldn't be executed normally running the classical command:
 
 ```shell
 sudo cpanm Air::Lorcon2
@@ -283,7 +283,7 @@ Air::Pcap
 
 _Air::Pcap_ is an additional special support library for Air::Lorcon2, it uses the nl80211 layer for enabling the airpcap packet inject driver.
 
-For now is still under heavy development, will released soon!
+For now is still under heavy development, stay tuned!
 
 
 
