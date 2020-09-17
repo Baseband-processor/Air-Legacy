@@ -1,6 +1,8 @@
 actually Working functions
 ================================================
+
       is_compatible_with_formal_logic
+      lorcon_get_version
       lorcon_list_drivers
       lorcon_find_driver
       lorcon_create
@@ -9,7 +11,6 @@ actually Working functions
       lorcon_set_timeout
       lorcon_get_timeout
       lorcon_open_monitor
-      lorcon_packet_from_pcap
       lorcon_open_injmon
       lorcon_set_vap
       lorcon_get_vap
@@ -17,6 +18,7 @@ actually Working functions
       lorcon_auto_driver
       lorcon_get_driver_name
       lorcon_get_error
+      lorcon_packet_from_pcap
       lorcon_open_inject
       lorcon_send_bytes
       lorcon_get_useraux
@@ -28,7 +30,6 @@ actually Working functions
       lorcon_packet_txprep_by_ctx
       lorcon_loop 
       lorcon_packet_to_dot3
-      lorcon_multi_loop
       lorcon_set_hwmac
       lorcon_get_hwmac
       lorcon_multi_remove_interface_error_handler
@@ -81,6 +82,7 @@ actually Working functions
       nl80211_find_parent
       nl80211_setfrequency_cache
       nl80211_setfrequency
+      nl80211_setchannel
       nl80211_setchannel_cache
       nl80211_createvif
       nl80211_disconnect
@@ -94,6 +96,7 @@ actually Working functions
       drv_tuntap_init
       tx80211_hostap_capabilities
       tx80211_hostap_init
+      tx80211_mac80211_capabilities
       drv_mac80211_listdriver
       drv_mac80211_init
       mac80211_ifconfig_cb
@@ -205,7 +208,6 @@ actually Working functions
       mac80211_sendpacket
       nl80211_get_chanlist
       nl80211_error_cb
-      tx80211_mac80211_capabilities
       bcm43xx_close
       bcm43xx_open
       tx80211_bcm43xx_init
@@ -213,7 +215,9 @@ actually Working functions
       pcap_datalink
       pcap_sendpacket
       pcap_inject
-      pcap_can_set_rfmon
+      pcap_can_set_rfmon      
+      lorcon_multi_loop
+      madwifing_openmon_cb  
 
 
 **TESTED AND WORKING**
