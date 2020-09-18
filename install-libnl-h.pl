@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+#### FILE DEPRECATED, FOR NOW NO USES ####
+
 # Made by Edoardo Mantovani, 2020
 # This simple script will search for any libnl installation, find the interested headers and modify the Cthxs.h file, inserting the headers
 
