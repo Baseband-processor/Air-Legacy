@@ -275,4 +275,4 @@ it under the same terms as Perl itself, either Perl version 5.8.8 or,
 at your option, any later version of Perl 5 you may have available.
 
 
-![](https://i.ibb.co/hdfjFKq/giphy-1.gif)
+<div style="width:100%;height:0;padding-bottom:29%;position:relative;"><iframe src="https://giphy.com/embed/ADiOs8AqeverrAuT4Q" width="150%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/ADiOs8AqeverrAuT4Q">via GIPHY</a></p>
