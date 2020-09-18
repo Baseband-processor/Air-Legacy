@@ -275,4 +275,4 @@ it under the same terms as Perl itself, either Perl version 5.8.8 or,
 at your option, any later version of Perl 5 you may have available.
 
 
-<a href="https://giphy.com/embed/ADiOs8AqeverrAuT4Q" width="150%" height="100%">wireless</a>
+<img src="https://giphy.com/embed/ADiOs8AqeverrAuT4Q" width="150%" height="100%"</>
