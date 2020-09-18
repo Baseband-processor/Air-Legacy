@@ -39,5 +39,5 @@ Every donation will be used **only** for buying hardware and for test other impl
 
 **Edoardo Mantovani, 2020**
 
-![image of wireless_insecurity](./../giphy.gif)
+<img src="https://media3.giphy.com/media/ADiOs8AqeverrAuT4Q/giphy.gif" alt="drawing" width="99999"/>
 
