@@ -41,18 +41,6 @@ for installing the *Air::Lorcon2* and *Lorcon2* libraries you just need to type:
 this will start the Makefile outside the C and perl directories, Lorcon2 Headers will be automatically installed in */usr/include*.
 directory.
 
-Since version 17.7 the Makefile has 2 installing options:
-
-* full
-
-* minimal
-
-the difference stands in the Air::Pcap library, _libnl_ and its related dependencies, which won't be installed using the _minimal_ installer.
-
-_The suggested installation remains the **minimal** for now, is highly suggested to install requirements automatically with your distro package-manager._
-
-_Note that you must have an internet connection for using the full installation while for the minimal you just need Net::Pcap pre-installed on your host_
-
 **TEST IF LORCON2 SUPPORTS LOCAL ADAPTERS**
 
 for veryfing that everything works just start typing 
