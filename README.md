@@ -251,7 +251,8 @@ sudo cpanm Air::Lorcon2
 So in the future I'll fork the project for a cpan compatible library.
 
 
-**CHECKSUMS**
+CHECKSUMS
+=====================
 
 **NOTE:** _the checksum will be updated every 14 days_
 
