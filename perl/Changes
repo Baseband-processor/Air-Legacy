@@ -5,7 +5,7 @@ Revision history for Perl extension Air::Lorcon2.
 [first official release]
 
 25.17   Wed Set 16 18:32:00 CET 2020
-  - initial support for libnl
+  - deleted libnl dependency, for now no uses.
   - added new function: genl_send_simple
   - added new function: genl_connect
   - added new function: nl_socket_alloc
