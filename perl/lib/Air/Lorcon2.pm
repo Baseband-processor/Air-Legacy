@@ -1520,37 +1520,37 @@ sub Send_Bytes {
     return(Air::Lorcon2::lorcon_send_bytes($context, $length, \$packet) );
 }
 
-sub setSSID(){
+sub setSSID{
   my ( $input_device, $error_string, $essid ) = @_; 
   return( Air::Lorcon2::iwconfig_set_ssid(\$input_device, \$error_string, \$essid) );
 }
   
-sub getSSID(){
+sub getSSID{
   my ( $input_device, $error_string, $essid ) = @_; 
   return( Air::Lorcon2::iwconfig_get_ssid(\$input_device, \$error_string, \$essid) );
 }
 
-sub getNetworkName(){
+sub getNetworkName{
   my ( $input_device, $error_string, $input_name ) = @_; 
   return (Air::Lorcon2::iwconfig_get_name( \$input_device, \$error_string, \$input_name) );
 }
 
-sub getChannel(){
+sub getChannel{
   my ( $input_device, $error_string ) = @_; 
   return( Air::Lorcon2::iwconfig_get_channel( \$input_device, \$error_string) );
 }
 
-sub setChannel(){
+sub setChannel{
   my ( $input_device, $error_string, $channel ) = @_; 
   return(Air::Lorcon2::iwconfig_set_channel(\$input_device, \$error_string, $channel) );
 }
 
-sub getMode(){
+sub getMode{
   my ( $input_device, $error_string ) = @_; 
   return(Air::Lorcon2::iwconfig_get_mode(\$input_device, \$error_string) );
 }
 
-sub setMode(){
+sub setMode{
   my ( $input_device, $error_string, $mode ) = @_; 
   return( Air::Lorcon2::iwconfig_set_mode(\$input_device, \$error_string, $mode) );
 }
