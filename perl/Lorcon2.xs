@@ -2618,6 +2618,7 @@ CODE:
 	Safefree(input_list->cardnames);
 	Safefree(input_list->descriptions);
 	Safefree(input_list->capabilities);
+	Safefree(input_list->injnum);
 	Safefree(input_list);
 
 
@@ -2634,6 +2635,9 @@ tx80211_getcardlist()
       EXTEND(SP, cardlist->num_cards);
       for (i = 1; i < cardlist->num_cards; i++) {
         PUSHs(sv_2mortal(newSVpv(cardlist->cardnames[i], 0)));
+	PUSHs(sv_2mortal(newSVpv(cardlist->descriptions[i], 0)));
+	PUSHs(sv_2mortal(newSVpv(cardlist->capabilities[i], 0)));
+	PUSHs(sv_2mortal(newSVpv(cardlist->injnum[i], 0)));
       }
  
       tx80211_freecardlist(cardlist);
@@ -3069,4 +3073,208 @@ wginj_close(wginj)
 CODE:	
 	return close(wginj->raw_fd);
 
+
+int 
+wginj_getchannel(wginj)
+	TX80211 *wginj
+CODE: 	
+	char errstr[TX80211_STATUS_MAX];	/* Not used for now */
+	return (iwconfig_get_channel(wginj->ifname, errstr));
+
+
+int 
+wginj_setchannel(wginj, channel)
+	TX80211 *wginj
+	int channel
+CODE:
+	char cmdline[2048];
+	int ret;
+
+	snprintf(cmdline, sizeof(cmdline), "wlanctl-ng %s lnxreq_wlansniff channel=%d enable=true >/dev/null 2>&1", wginj->ifname, channel);
+	ret = system(cmdline);
+	if (ret != 0) {
+		return -1;
+	}else{	return 0; }
+
+int 
+wginj_getmode(wginj)
+	TX80211 *wginj
+CODE:
+	char errstr[TX80211_STATUS_MAX];
+	return ( iwconfig_get_mode(wginj->ifname, errstr) );
+
+#define TX80211_MODE_MONITOR	6 
+#define TX80211_MODE_INFRA	2
+#define TX80211_MODE_AUTO	0  
+#define TX80211_MODE_ADHOC	1 
+#define TX80211_MODE_MASTER	3   
+#define TX80211_MODE_REPEAT	4   
+#define TX80211_MODE_SECOND	5   
+
+int 
+wginj_setmode(wginj, mode)
+	TX80211 *wginj
+	int mode
+CODE:
+	char cmdline[2048];
+	int currentchan = 0;
+
+	switch (mode) {
+	case TX80211_MODE_MONITOR:
+		currentchan = wginj_getchannel(wginj);
+		snprintf(cmdline, sizeof(cmdline), "wlanctl-ng %s lnxreq_wlansniff channel=%d enable=true >/dev/null 2>&1", 
+			wginj->ifname, currentchan);
+		return (system(cmdline));
+
+	case TX80211_MODE_INFRA:
+		currentchan = wginj_getchannel(wginj);
+		snprintf(cmdline, sizeof(cmdline), "wlanctl-ng %s lnxreq_wlansniff channel=%d enable=false >/dev/null 2>&1", 
+			wginj->ifname, currentchan);
+		return (system(cmdline));
+
+	case TX80211_MODE_AUTO:
+	case TX80211_MODE_ADHOC:
+	case TX80211_MODE_MASTER:
+	case TX80211_MODE_REPEAT:
+	case TX80211_MODE_SECOND:
+	default:
+		return -1;	
+	}
+
+
+int 
+tx80211_wlanng_capabilities()
+CODE:
+	return (TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT | TX80211_CAP_DSSSTX);
+
+
+
+int 
+tx80211_wlanng_init(input_tx)
+	TX80211 *input_tx
+CODE:
+	input_tx->capabilities = tx80211_wlanng_capabilities();
+	input_tx->open_callthrough = wginj_open();
+	input_tx->close_callthrough = wginj_close();
+	input_tx->setmode_callthrough = wginj_setmode();
+	input_tx->getmode_callthrough = wginj_getmode();
+	input_tx->getchan_callthrough = wginj_getchannel();
+	input_tx->setchan_callthrough = wginj_setchannel();
+	input_tx->txpacket_callthrough = wginj_send();
+	input_tx->setfuncmode_callthrough = NULL;
+	return 0;
+
+
+void 
+tx80211_initpacket(input_packet) 
+	TX80211_PACKET *input_packet
+CODE:
+	//memset(in_packet, 0, sizeof(TX80211_PACKET));
+	Zero(input_packet, 1, TX80211_PACKET);
+
+void 
+tx80211_setlocaldlt(input_tx, in_dlt)
+	TX80211 *input_tx
+	int in_dlt
+CODE:
+	input_tx->dlt = in_dlt;
+
+
+int 
+tx80211_getdlt(input_tx)
+	TX80211 *input_tx
+CODE:	
+	int ret_val = input_tx->dlt;
+	return( ret_val );
+
+char *
+tx80211_getdrivername(in_inj)
+	int in_inj
+CODE:
+	TX80211_CARDLIST *cardlist = NULL;
+	int i;
+	char *ret;
+
+	cardlist = tx80211_getcardlist();
+
+	for (i = 1; i < cardlist->num_cards; i++) {
+		if (cardlist->injnum[i] == in_inj) {
+			ret = savepv(cardlist->cardnames[i]);
+			tx80211_freecardlist(cardlist);
+			return ret;
+		}
+	}
+
+	tx80211_freecardlist(cardlist);
+	return NULL;
+
+
+#define TX80211_ENOERR			0
+
+
+int 
+tx80211_init(input_tx, input_ifname, input_injector)
+	TX80211 *input_tx
+	char *input_ifname
+	int input_injector
+CODE:
+	int ret = TX80211_ENOERR;
+	//memset(in_tx, 0, sizeof(struct tx80211));
+	Zero(input_tx, 1, TX80211);
+	strncpy(input_tx->ifname, input_ifname, MAX_IFNAME_LEN);
+	input_tx->injectortype = input_injector;
+
+	switch (input_injector) {
+	case INJ_WLANNG:
+		ret = tx80211_wlanng_init(input_tx);
+		break;
+
+	case INJ_AIRJACK:
+		ret = tx80211_airjack_init(input_tx);
+		break;
+
+	case INJ_PRISM54:
+		ret = tx80211_prism54_init(input_tx);
+		break;
+
+	case INJ_MADWIFIOLD:
+		ret = tx80211_madwifiold_init(input_tx);
+		break;
+
+	case INJ_MADWIFING:
+		ret = drv_madwifing_init(input_tx);
+		break;
+
+	case INJ_HOSTAP:
+		ret = tx80211_hostap_init(input_tx);
+		break;
+
+	case INJ_RT2500:
+		ret = tx80211_rt2500_init(input_tx);
+		break;
+
+	case INJ_RT2570:
+		ret = tx80211_rt2570_init(input_tx);
+		break;
+
+	case INJ_RT73:
+		ret = tx80211_rt73_init(input_tx);
+		break;
+
+	case INJ_RTL8180:
+		ret = tx80211_rtl8180_init(input_tx);
+		break;
+
+	case INJ_ZD1211RW:
+		ret = tx80211_zd1211rw_init(input_tx);
+		break;
+
+	case INJ_BCM43XX:
+		ret = tx80211_bcm43xx_init(input_tx);
+		break;
+
+	case INJ_MAC80211:
+		ret = drv_mac80211_init(input_tx);
+		break;
+}
 
