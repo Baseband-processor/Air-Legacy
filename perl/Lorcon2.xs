@@ -2636,8 +2636,8 @@ tx80211_getcardlist()
       for (i = 1; i < cardlist->num_cards; i++) {
         PUSHs(sv_2mortal(newSVpv(cardlist->cardnames[i], 0)));
 	PUSHs(sv_2mortal(newSVpv(cardlist->descriptions[i], 0)));
-	PUSHs(sv_2mortal(newSVpv(cardlist->capabilities[i], 0)));
-	PUSHs(sv_2mortal(newSVpv(cardlist->injnum[i], 0)));
+	//PUSHs(sv_2mortal(newSVpv(cardlist->capabilities[i], 0)));
+	//PUSHs(sv_2mortal(newSVpv(cardlist->injnum[i], 0)));
       }
  
       tx80211_freecardlist(cardlist);
