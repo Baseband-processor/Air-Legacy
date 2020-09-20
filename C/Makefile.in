@@ -34,7 +34,7 @@ LIBOBJ = ifcontrol_linux.lo iwcontrol.lo madwifing_control.lo nl80211_control.lo
 		 lorcon_packet.lo lorcon_packasm.lo lorcon_forge.lo \
 		 drv_mac80211.lo drv_tuntap.lo drv_madwifing.lo drv_hostap.lo drv_file.lo drv_wtgeneric.lo drv_wlanng.lo drv_airjack.lo drv_brcm43xx.lo drv_zd1211.lo drv_rt2570.lo drv_rt73.lo drv_rt61.lo drv_rt2500.lo drv_rtl.lo drv_madwifiold.lo drv_p54.lo \
 		 sha1.lo  tx80211.lo \
-		 lorcon.lo lorcon_multi.lo 
+		 lorcon.lo lorcon_multi.lo wginject.lo wtinject.lo
 LIBOUT = liblorcon2.la
 
 TXTESTOBJ = tx.o
