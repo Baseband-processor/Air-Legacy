@@ -37,6 +37,13 @@ The paypal address for a donation is: /[none for now]
 
 Every donation will be used **only** for buying hardware and for test other implementation of the __Air::Toolkit__.
 
+
+CURRENT VERSION
+====================
+
+The newest version of Air::Lorcon2 is: 26.01
+
+
 **Edoardo Mantovani, 2020**
 
 <img src="https://media3.giphy.com/media/ADiOs8AqeverrAuT4Q/giphy.gif" alt="drawing" width="99999"/>
