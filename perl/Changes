@@ -20,6 +20,8 @@ Revision history for Perl extension Air::Lorcon2.
   - added new function: tx80211_init
   - minor bug fix
   - extended tx80211_getcardlist output, now also card's description is avaiable
+  - added  new test: 16-test-tx80211.t
+  
   
 25.17   Wed Set 16 18:32:00 CET 2020
   - deleted libnl dependency, for now no uses.
