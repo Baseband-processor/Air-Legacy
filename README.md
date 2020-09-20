@@ -256,8 +256,10 @@ VERSION 26.01
 
 **NOTE:**  The checksum is related to the zipped file.
 
-**Requests and collaborations**
 
+
+Requests and collaborations
+====================================
 Feel free to email me at <Baseband@cpan.org>
 - [x] I am open to suggestions, code improvement, collaboration and other requests
 
