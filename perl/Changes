@@ -4,6 +4,23 @@ Revision history for Perl extension Air::Lorcon2.
 
 [first official release]
 
+26.01   Sat Set 20 16:21:00 CET 2020
+  - inauguration of 900th contribution for Air::Lorcon2
+  - added new function: wginj_getchannel
+  - added new function: wginj_setchannel
+  - added new function: wginj_getmode
+  - added new function: wginj_setmode
+  - added new function: tx80211_wlanng_capabilities
+  - added new function: tx80211_wlanng_init
+  - added new function: tx80211_initpacket
+  - added new function: tx80211_initpacket
+  - added new function: tx80211_setlocaldlt
+  - added new function: tx80211_getdlt
+  - added new function: tx80211_getdrivername
+  - added new function: tx80211_init
+  - minor bug fix
+  - extended tx80211_getcardlist output, now also card's description is avaiable
+  
 25.17   Wed Set 16 18:32:00 CET 2020
   - deleted libnl dependency, for now no uses.
   - added new function: genl_send_simple
