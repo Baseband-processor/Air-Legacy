@@ -21,7 +21,7 @@ t/11-test-send.t
 t/12-test-specific-constants.t
 t/13-test-use.t
 t/14-test-version.t
-15-test-pure-subs.t
+t/15-test-pure-subs.t
 typemap
 META.yml                                 Module YAML meta-data (added by MakeMaker)
 META.json                                Module JSON meta-data (added by MakeMaker)
