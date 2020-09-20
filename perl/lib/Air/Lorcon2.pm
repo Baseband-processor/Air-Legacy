@@ -1348,8 +1348,19 @@ our %EXPORT_TAGS = (
       pcap_inject
       pcap_can_set_rfmon      
       lorcon_multi_loop
-      madwifing_openmon_cb      
-   )],
+      madwifing_openmon_cb   
+      wginj_getchannel
+      wginj_setchannel
+      wginj_getmode
+      wginj_setmode
+      tx80211_wlanng_capabilities
+      tx80211_wlanng_init     
+      tx80211_initpacket
+      tx80211_setlocaldlt
+      tx80211_getdlt
+      tx80211_getdrivername
+      tx80211_init
+ )],
    suites => [qw(
        WEP40
        WEP104
