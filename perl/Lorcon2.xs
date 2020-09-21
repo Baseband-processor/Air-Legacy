@@ -1251,7 +1251,7 @@ CODE:
 		close(sock);
 		return (-1);
 	}
-	//memcpy(ajconf.ownmac, mac, 6);
+	memcpy(ajconf.ownmac, mac, 6);
 	//StructCopy(mac, ajconf.ownmac, 6);
 	if (ioctl(sock, SIOCAJSMODE, &req) < 0) {
 		close(sock);
