@@ -22,6 +22,7 @@ Revision history for Perl extension Air::Lorcon2.
   - various tests fix
   - extended tx80211_getcardlist output, now also card's description is avaiable
   - added  new test: 16-test-tx80211.t
+  - added new documentation's part ( in the code example )
   
   
 25.17   Wed Set 16 18:32:00 CET 2020
