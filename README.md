@@ -157,6 +157,22 @@ my $Packet = packet_from_lcpa( $context, $lcpa ); # return a AirLorconPacket var
 # decode the packet
 lorcon_packet_decode( $Packet );
 
+# Get a valid Pcap object, usefull for built-in (or with Net::Pcap) routines
+
+my $pcap = lorcon_get_pcap( $context );
+
+# Set frequency using libpcap
+
+pcap_can_set_rfmon( $pcap );
+
+# Send packet using libpcap
+
+pcap_sendpacket( $pcap, $Packet, length( $Packet ) );
+
+# Note: pcap_sendpacket and pcap_inject are almost the same function, the only difference stands in the output: for pcap_inject it will be the packet's number of bytes
+
+# For more info see: https://linux.die.net/man/3/pcap_inject
+
 ```
 
 **SPECIAL THANKS**
