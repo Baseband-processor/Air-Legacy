@@ -782,9 +782,7 @@ Pcap *
 lorcon_get_pcap(context)
       AirLorcon *context
       	CODE:
-	  RETVAL = newSVpv(context->pcap, 0);
-	OUTPUT:
-	  RETVAL
+	  return(context->pcap);
 
 void 
 lorcon_packet_set_freedata(packet, freedata)
