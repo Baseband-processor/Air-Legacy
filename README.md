@@ -100,12 +100,16 @@ the most basic usage is:
 use strict;
 use Net::Pcap qw( pcap_lookupdev );
 use Data::Dumper qw(Dumper);
-use Air::Lorcon2 qw(:lorcon); # This will export every lorcon2 subroutines
+use Air::Lorcon2 qw(:lorcon); # This will export every lorcon2's subroutines
 
 my $pcap_err = '';
 my $pcap_interface = pcap_lookupdev( \$pcap_err ); # This will give us the best interface avaiable for sniffing 
 
 print Dumper( lorcon_list_drivers() ) or die $!;
+
+# NOTE: lorcon_list_drivers will show supported drivers avaiable in the current host, while tx80211_getcardlist function
+# will show the lorcon's supported network cards list
+
 my $driver = <STDIN>;
 chomp( $driver ); # Delete the 'ret' character from the $driver string
 my $drv = lorcon_find_driver( $driver );
