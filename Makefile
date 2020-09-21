@@ -12,7 +12,7 @@ full: prerequisites  perlT
 
 prerequisites:
 	sudo cpan install Linux::Distribution
-	perl install-deps.pl
+	sudo perl install-deps.pl
 	sudo cpan -fi Net::Pcap
 perlT:
 	sudo cpan -fi Net::Pcap
