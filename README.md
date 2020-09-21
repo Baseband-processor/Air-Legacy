@@ -148,6 +148,8 @@ my $Packet = Packet_to_hex("sample_packet"); # return a hexadecimal version of "
 
 lorcon_send_bytes( $context, length($Packet), \$Packet ); # this will send the raw bytes though the network
 
+$Packet = undef;
+
 # NOTE:
 # Since version 17.6 is possible to use also this simplified function:
 
@@ -156,7 +158,7 @@ print Send_Bytes( $context, $Packet);
 
 
 my $lcpa = lcpa_init();
-my $Packet = packet_from_lcpa( $context, $lcpa ); # return a AirLorconPacket variable
+$Packet = packet_from_lcpa( $context, $lcpa ); # return a AirLorconPacket variable
 
 # decode the packet
 lorcon_packet_decode( $Packet );
@@ -176,6 +178,16 @@ pcap_sendpacket( $pcap, $Packet, length( $Packet ) );
 # Note: pcap_sendpacket and pcap_inject are almost the same function, the only difference stands in the output: for pcap_inject it will be the packet's number of bytes
 
 # For more info see: https://linux.die.net/man/3/pcap_inject
+
+# Lorcon2 offers also the possibility of sending bytes using specific drivers, some example are as follow:
+
+madwifing_sendpacket( $context, $Packet );
+mac80211_sendpacket( $context, $Packet );
+
+# Note that $Packet has _lorcon_packet_t_ type
+
+my $raw_bytes = "\x00\x00\x00\x00\x00";
+tuntap_sendbytes( $context, length( $raw_bytes ), \$raw_bytes );
 
 ```
 
