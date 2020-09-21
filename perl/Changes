@@ -19,6 +19,7 @@ Revision history for Perl extension Air::Lorcon2.
   - added new function: tx80211_getdrivername
   - added new function: tx80211_init
   - minor bug fix
+  - various tests fix
   - extended tx80211_getcardlist output, now also card's description is avaiable
   - added  new test: 16-test-tx80211.t
   
