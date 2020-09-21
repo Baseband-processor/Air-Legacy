@@ -10,7 +10,7 @@ no strict 'subs';
 use Air::Lorcon2 qw( :lorcon ); 
 use Data::Dumper qw( Dumper );
 
-BEGIN { plan tests => 1 };
+BEGIN { plan tests => 2 };
 
 use Net::Pcap qw(pcap_lookupdev);
 
