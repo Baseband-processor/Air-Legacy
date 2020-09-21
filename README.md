@@ -184,7 +184,7 @@ pcap_sendpacket( $pcap, $Packet, length( $Packet ) );
 madwifing_sendpacket( $context, $Packet );
 mac80211_sendpacket( $context, $Packet );
 
-# Note that $Packet has _lorcon_packet_t_ type
+# Note that $Packet has lorcon_packet_t type
 
 my $raw_bytes = "\x00\x00\x00\x00\x00";
 tuntap_sendbytes( $context, length( $raw_bytes ), \$raw_bytes );
