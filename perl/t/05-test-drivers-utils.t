@@ -105,46 +105,20 @@ if( %{ lorcon_list_drivers() } =~ "mac80211" ){
 
 ## TEST CAPABILITIES ##
 
-if( ! tx80211_airjack_capabilities() ){
-    ok(0);
-}else{
-  ok(1);
-}
+tx80211_airjack_capabilities();
 
-if( ! tx80211_airpcap_capabilities() ){
-  ok(0);
-}else{
-  ok(1);
-}
+tx80211_airpcap_capabilities();
 
-if( ! tx80211_hostap_capabilities() ){
-  ok(0);
-}else{
-  ok(1);
-}
 
-if( ! tx80211_zd1211rw_capabilities() ){
-  ok(0);
-}else{
-  ok(1);
-}
+tx80211_hostap_capabilities();
 
-if( ! tx80211_mac80211_capabilities() ){
-  ok(0);
-}else{
-  ok(1);
-}
+tx80211_zd1211rw_capabilities();
 
-if( ! tx80211_prism54_capabilities() ){
-  ok(0);
-}else{
-  ok(1);
-}
+tx80211_mac80211_capabilities();
+  
+tx80211_prism54_capabilities();
 
-if( ! tx80211_rt61_capabilities() ){
-  ok(0);
-}else{
-  ok(1);
-}
+tx80211_rt61_capabilities();
+
 
 ok(1);
