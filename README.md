@@ -48,9 +48,9 @@ for veryfing that everything works just start typing
 
 ```perl
 
-use Air::Lorcon2;
+use Air::Lorcon2 qw( :lorcon );
 use Data::Dumper;
-print Dumper( Air::Lorcon2::lorcon_list_drivers() );
+print Dumper( lorcon_list_drivers() );
 
 ```
 
