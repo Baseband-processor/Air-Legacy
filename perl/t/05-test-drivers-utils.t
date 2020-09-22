@@ -22,23 +22,7 @@ my $pcap_device = pcap_lookupdev( \$pcap_error );
 
 # initialize Air::Lorcon2
 
-my $driver;
-my @list = lorcon_list_drivers();
-
-foreach ( @list ){
-        if ( Dumper( $_ ) =~ "mac80211"){
-                $driver = "mac80211";
-                break;
-        }elsif ( Dumper( $_ ) =~ "madwifing" ){
-                $driver = "madwifing";
-                break;
-        }elsif( Dumper( $_ ) =~ "file" ){
-                $driver = "file";
-                break;
-        }
-
-}
-
+my $driver = "madwifing";
 my $drv = lorcon_find_driver( $driver ); 
 my $context = lorcon_create( $pcap_device, $drv );
 
@@ -58,6 +42,13 @@ if( ! drv_madwifing_init( $context ) ){
 
 ## test tuntap device
 
+$context = undef;
+$drv = undef;
+
+$driver = "tuntap";
+$drv = lorcon_find_driver( $driver );
+$context = lorcon_create( $pcap_device, $drv );
+
 if( ! drv_tuntap_init( $context ) ){
   ok(0);
 }else{
@@ -65,6 +56,13 @@ if( ! drv_tuntap_init( $context ) ){
 }
 
 ## test file device
+
+$context = undef;
+$drv = undef;
+
+$driver = "file";
+$drv = lorcon_find_driver( $driver );
+$context = lorcon_create( $pcap_device, $drv );
 
 if( ! drv_file_init( $context ) ){
   ok(0);
@@ -74,6 +72,13 @@ if( ! drv_file_init( $context ) ){
 
 ## test rtfile device
 
+$context = undef;
+$drv = undef;
+
+$driver = "rtfile";
+$drv = lorcon_find_driver( $driver );
+$context = lorcon_create( $pcap_device, $drv );
+
 if( ! drv_rtfile_init( $context ) ){
   ok(0);
 }else{
@@ -82,10 +87,20 @@ if( ! drv_rtfile_init( $context ) ){
 
 ## test mac80211 device
 
-if( ! drv_mac80211_init( $context ) ){
-  ok(0);
-}else{
-  ok(1);
+$context = undef;
+$drv = undef;
+
+if( %{ lorcon_list_drivers() } =~ "mac80211" ){
+        $driver = "mac80211";
+        $drv = lorcon_find_driver( $driver );
+        $context = lorcon_create( $pcap_device, $drv );
+
+        if( ! drv_mac80211_init( $context ) ){
+                  ok(0);
+        }else{
+                 ok(1);
+        }
+
 }
 
 ## TEST CAPABILITIES ##
