@@ -26,20 +26,6 @@ my $driver = "madwifing";
 my $drv = lorcon_find_driver( $driver ); 
 my $context = lorcon_create( $pcap_device, $drv );
 
-## test madwifing device
-
-if( ! madwifing_openmon_cb( $context ) ){
-  ok(0);
-}else{
-  ok(1);
-}
-
-if( ! drv_madwifing_init( $context ) ){
-  ok(0);
-}else{
-  ok(1);
-}
-
 ## test tuntap device
 
 $context = undef;
