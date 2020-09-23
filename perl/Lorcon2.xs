@@ -575,7 +575,7 @@ lorcon_free_driver_list(list)
 
 AirLorcon *
 lorcon_create(interface, driver)
-      const char *interface
+      char *interface
       AirLorconDriver *driver
 
 void
@@ -816,9 +816,7 @@ lorcon_set_compiled_filter(context, filter)
 		snprintf(context->errstr, LORCON_STATUS_MAX, "%s", pcap_geterr(context->pcap));
 		return -1;
 	}
-	RETVAL = 1;
-      	  OUTPUT:
-		  RETVAL
+	return 1;
 
 int
 pcap_dispatch(p, cnt, callback, user)
@@ -2493,7 +2491,7 @@ CODE:
 	    
 int 
 drv_file_probe(interface) 
-	const char *interface
+	char *interface
 CODE:
     STAT buf;
     if (stat(interface, &buf) == 0) {
@@ -2582,7 +2580,7 @@ CODE:
 		return -1;
 	}
 	inject_nofcs_location  = (char*) malloc(strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5); 
-	//int ifname_l = strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5;
+	int ifname_l = strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5;
 	//Newxz(inject_nofcs_location , 1, (strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5) );
 	snprintf(inject_nofcs_location,  strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5, inject_nofcs_pname, in_tx->ifname);
 	nofcs = open(inject_nofcs_location, O_WRONLY);
@@ -2664,7 +2662,7 @@ CODE:
 	}
 
 	frame = malloc(sizeof(*frame) + payloadlen);
-	//int frame_l = sizeof(*frame)+ payloadlen;
+	int frame_l = sizeof(*frame)+ payloadlen;
 	//Newxz(frame, 1, frame + payloadlen);
 	if (frame == NULL) {
 		snprintf(wginj->errstr, TX80211_STATUS_MAX, "wlan-ng send unable to allocate memory buffer");
