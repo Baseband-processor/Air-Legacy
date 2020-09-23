@@ -1,2 +1,2 @@
-Unstable
-Version 17.7 ![pre-beta]
+Stable
+Version 26.01 ![first official version]
