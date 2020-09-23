@@ -209,6 +209,8 @@ typedef struct pcap_opt {
 #endif
 } PCAP_OPT;
 
+typedef int (*can_set_rfmon_op_t)(pcap_t *);
+
 typedef struct pcap_t{
     int fd;
     int snapshot;
@@ -230,6 +232,7 @@ typedef struct pcap_t{
     BPF_PROGRAM *fcode;
     char errbuf[PCAP_ERRBUF_SIZE];
     PCAP_OPT *opt;
+    can_set_rfmon_op_t can_set_rfmon_op;
 }Pcap;
 
 
