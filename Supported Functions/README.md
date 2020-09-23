@@ -232,7 +232,6 @@ actually Working functions
       tx80211_rtl8180_init
       tx80211_get_capabilities
       pcap_set_rfmon
-      _pcap_check_activate
 
 **TESTED AND WORKING**
 
