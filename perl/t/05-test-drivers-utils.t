@@ -50,8 +50,6 @@ if( ! drv_file_init( $context ) ){
 }
 
 
-
-
 ## TEST CAPABILITIES ##
 
 tx80211_airjack_capabilities();
@@ -67,7 +65,5 @@ tx80211_mac80211_capabilities();
 tx80211_prism54_capabilities();
 
 tx80211_rt61_capabilities();
-
-tx80211_get_capabilities();
 
 ok(1);
