@@ -3,7 +3,7 @@ Air::Lorcon2
 
 ![image of wireless_security_protocols_bg](./wireless.jpg)
 
-![coverage](https://progress-bar.dev/91?title=progress)  ![functions](https://progress-bar.dev/232?title=functions)  ![size](https://img.shields.io/github/languages/code-size/Baseband-processor/Air-Lorcon2)
+![coverage](https://progress-bar.dev/91?title=progress)  ![functions](https://progress-bar.dev/231?title=functions)  ![size](https://img.shields.io/github/languages/code-size/Baseband-processor/Air-Lorcon2)
 
 **WHO I AM?**
 
