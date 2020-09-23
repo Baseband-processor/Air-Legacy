@@ -1,6 +1,5 @@
 actually Working functions
 ================================================
-
       is_compatible_with_formal_logic
       lorcon_get_version
       lorcon_list_drivers
@@ -217,18 +216,19 @@ actually Working functions
       pcap_inject
       pcap_can_set_rfmon      
       lorcon_multi_loop
-      madwifing_openmon_cb  
+      madwifing_openmon_cb   
       wginj_getchannel
       wginj_setchannel
       wginj_getmode
-      wginj_setmode 
+      wginj_setmode
       tx80211_wlanng_capabilities
-      tx80211_wlanng_init
+      tx80211_wlanng_init     
       tx80211_initpacket
       tx80211_setlocaldlt
       tx80211_getdlt
-      tx80211_getdrivername 
+      tx80211_getdrivername
       tx80211_init
+      tx80211_airjack_capabilities
 
 
 **TESTED AND WORKING**
