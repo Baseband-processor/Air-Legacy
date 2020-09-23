@@ -3336,6 +3336,10 @@ CODE:
 		break;
 }
 
+#define TX80211_ENOINIT	-12
+#define TX80211_ENOHANDLER	-11
+#define TX80211_ENOTCAPAB	-13
+
 int 
 tx80211_txpacket(input_tx, input_packet )
 	TX80211 *input_tx
@@ -3379,7 +3383,7 @@ tx80211_setfunctionalmode(input_tx, in_fmode)
 	int in_fmode
 PPCODE:
 	if (input_tx->setfuncmode_callthrough == NULL)  {
-		snprintf(in_tx->errstr, TX80211_STATUS_MAX,  "Setfunctionalmode callthrough handler not implemented");
+		snprintf(input_tx->errstr, TX80211_STATUS_MAX,  "Setfunctionalmode callthrough handler not implemented");
 		return TX80211_ENOHANDLER;
 	}
 
