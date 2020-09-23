@@ -3352,6 +3352,12 @@ CODE:
 	return (input_tx->txpacket_callthrough) (input_tx, input_packet);
 
 int 
+tx80211_get_capabilities(input_tx)
+	TX80211 *input_tx
+CODE:
+	return input_tx->capabilities;
+	
+int 
 tx80211_setmodulation(input_tx,  input_packet, modulation)
 	TX80211 *input_tx
 	TX80211_PACKET *input_packet
@@ -3362,7 +3368,7 @@ CODE:
 		return TX80211_ENOINIT;
 	}
 
-	if ((tx80211_getcapabilities(input_tx) & TX80211_CAP_SETMODULATION) == 0) {
+	if ((tx80211_get_capabilities(input_tx) & TX80211_CAP_SETMODULATION) == 0) {
 		snprintf(input_tx->errstr, TX80211_STATUS_MAX, "setmodulation: driver does not support setting  the modulation mechanism.");
 		return TX80211_ENOTCAPAB;
 	}
