@@ -2439,25 +2439,17 @@ pcap_can_set_rfmon(p)
 
 #define PCAP_ERROR_ACTIVATED		-4
 
-int
-_pcap_check_activated(p)
-	Pcap *p
-CODE:
-	if (p->activated) {
-		snprintf(p->errbuf, PCAP_ERRBUF_SIZE, "can't perform  operation on activated capture");
-		return (-1);
-	}
-	return (0);
+
 	
 int
 pcap_set_rfmon(p, rfmon)
 	Pcap *p
 	int rfmon
 CODE:
-	if (_pcap_check_activated(p)){
+	if (p->activated){
 		return (PCAP_ERROR_ACTIVATED);
 	}
-	p->opt.rfmon = rfmon;
+	p->opt->rfmon = rfmon;
 	return (0);
 
 int
