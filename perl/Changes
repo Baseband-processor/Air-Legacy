@@ -28,7 +28,7 @@ Revision history for Perl extension Air::Lorcon2.
   - added new function: tx80211_rtl8180_init 
   - added new function: tx80211_get_capabilities
   - added new function: pcap_set_rfmon
-  - added new (internal) function: _pcap_check_activate
+  - added new (internal) function: _pcap_check_activate [now deleted due to debug errors]
 
 25.17   Wed Set 16 18:32:00 CET 2020
   - deleted libnl dependency, for now no uses.
