@@ -3336,3 +3336,95 @@ CODE:
 		break;
 }
 
+int 
+tx80211_txpacket(input_tx, input_packet )
+	TX80211 *input_tx
+	TX80211_PACKET *input_packet
+CODE:
+	if (input_tx->txpacket_callthrough == NULL) {
+		snprintf(input_tx->errstr, TX80211_STATUS_MAX,  "txpacket callthrough handler not implemented");
+		return TX80211_ENOHANDLER;
+	}
+	return (input_tx->txpacket_callthrough) (input_tx, input_packet);
+
+int 
+tx80211_setmodulation(input_tx,  input_packet, modulation)
+	TX80211 *input_tx
+	TX80211_PACKET *input_packet
+	int modulation
+CODE:
+	if (input_tx->injectortype == INJ_NODRIVER) {
+		snprintf(input_tx->errstr, TX80211_STATUS_MAX, "setmodulation: driver type not intialized");
+		return TX80211_ENOINIT;
+	}
+
+	if ((tx80211_getcapabilities(input_tx) & TX80211_CAP_SETMODULATION) == 0) {
+		snprintf(input_tx->errstr, TX80211_STATUS_MAX, "setmodulation: driver does not support setting  the modulation mechanism.");
+		return TX80211_ENOTCAPAB;
+	}
+	input_packet->modulation = modulation;
+	return TX80211_ENOERR;
+
+
+int 
+tx80211_getmodulation(input_packet) 
+	TX80211_PACKET *input_packet
+CODE:
+	return(input_packet->modulation);
+
+
+int 
+tx80211_setfunctionalmode(input_tx, in_fmode)
+	TX80211 *input_tx
+	int in_fmode
+PPCODE:
+	if (input_tx->setfuncmode_callthrough == NULL)  {
+		snprintf(in_tx->errstr, TX80211_STATUS_MAX,  "Setfunctionalmode callthrough handler not implemented");
+		return TX80211_ENOHANDLER;
+	}
+
+	return (input_tx->setfuncmode_callthrough) (input_tx, in_fmode);
+
+
+int 
+tx80211_setchannel(input_tx, input_channel)
+	TX80211 *input_tx
+	int input_channel
+CODE:
+	if (input_tx->setchan_callthrough == NULL)
+	{
+		snprintf(input_tx->errstr, TX80211_STATUS_MAX,  "Setchannel callthrough handler not implemented");
+		return TX80211_ENOHANDLER;
+	}
+
+	return (input_tx->setchan_callthrough) (input_tx, input_channel);
+}
+
+int 
+tx80211_getchannel(input_tx)
+	TX80211 *input_tx
+CODE:
+	if (input_tx->getchan_callthrough == NULL){
+		snprintf(input_tx->errstr, TX80211_STATUS_MAX,  "Getchannel callthrough handler not implemented");
+		return TX80211_ENOHANDLER;
+	}
+	return (input_tx->getchan_callthrough) (input_tx);
+
+int 
+tx80211_open(input_tx)
+	TX80211 *input_tx
+CODE:
+	if (input_tx->open_callthrough == NULL){
+		return TX80211_ENOHANDLER;
+	}
+	return (input_tx->open_callthrough) (input_tx);
+
+
+int 
+tx80211_close(input_tx)
+	TX80211 *input_tx
+CODE:
+	if (input_tx->close_callthrough == NULL) {
+		snprintf(input_tx->errstr, TX80211_STATUS_MAX,  "Close callthrough handler not implemented");
+		return TX80211_ENOHANDLER;
+	}
