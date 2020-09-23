@@ -232,6 +232,14 @@ actually Working functions
       tx80211_rtl8180_init
       tx80211_get_capabilities
       pcap_set_rfmon
+      tx80211_txpacket
+      tx80211_setmodulation
+      tx80211_getmodulation
+      tx80211_setfunctionalmode
+      tx80211_setchannel
+      tx80211_getchannel
+      tx80211_open
+      tx80211_close
 
 **TESTED AND WORKING**
 
