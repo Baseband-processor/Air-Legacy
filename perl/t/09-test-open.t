@@ -46,15 +46,15 @@ my $context = lorcon_create( $pcap_intf, $drv ) or die;
 
 my $pcap = lorcon_get_pcap( $context );
 
-if( pcap_can_set_rfmon( $pcap ) == -1){
+#if( pcap_can_set_rfmon( $pcap ) == -1){
 
-ok(1);
+#ok(1);
 
-}else{
+#}else{
 	#  Test for both injection and monitor mode by "injmon"
 	if( ! lorcon_open_injmon( $context )  ) {
   	ok(0);
  }
 
 ok(1);
-	}
+	#}
