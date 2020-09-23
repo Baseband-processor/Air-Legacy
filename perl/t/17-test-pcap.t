@@ -41,7 +41,7 @@ my $lorcon_to_pcap = lorcon_get_pcap( $context ); # drop the pcap object
 
 # Set various pcap functions
 
-pcap_can_set_rfmon( $lorcon_to_pcap ) or die $!;
+# pcap_can_set_rfmon( $lorcon_to_pcap ) or die $!;
 
 my $Packet = "\x00\x00\x00\x12";
 
