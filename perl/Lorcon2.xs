@@ -2657,7 +2657,7 @@ CODE:
 	Safefree(input_list);
 
 
-void
+TX80211_CARDLIST *
 tx80211_getcardlist()
   INIT:
     int i;
