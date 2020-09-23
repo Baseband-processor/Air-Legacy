@@ -191,12 +191,35 @@ typedef struct fd_set {
 
 typedef struct bpf_program    * BPF_PROGRAM;
 
+typedef struct pcap_opt {
+	char	*device;
+	int	timeout;	
+	u_int	buffer_size;
+	int	promisc;
+	int	rfmon;	
+	int	immediate;	
+	int	nonblock;	
+	int	tstamp_type;
+	int	tstamp_precision;
+#ifdef __linux__
+	int	protocol;	
+#endif
+#ifdef _WIN32
+	int	nocapture_local;
+#endif
+} PCAP_OPT;
+
 typedef struct pcap_t{
     int fd;
     int snapshot;
     int linktype;
-    int tzoff;     
-    int offset;    
+    int tzoff; 
+    int offset;  
+    int version_major;
+    int version_minor;
+    int linktype_ext;
+    int activated;	
+    int oldstyle;
     struct pcap_sf *sf;
     struct pcap_md *md;
     int bufsize;
@@ -206,6 +229,7 @@ typedef struct pcap_t{
     u_char *pkt;
     BPF_PROGRAM *fcode;
     char errbuf[PCAP_ERRBUF_SIZE];
+    PCAP_OPT *opt;
 }Pcap;
 
 
