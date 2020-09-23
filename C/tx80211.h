@@ -417,7 +417,7 @@ char *tx80211_geterrstr(struct tx80211 *in_tx);
 int tx80211_init(struct tx80211 *in_tx, const char *in_ifname, int in_injector);
 
 /* Get the capabilities */
-int tx80211_getcapabilities(struct tx80211 *in_tx);
+int tx80211_get_capabilities(struct tx80211 *in_tx);
 
 /* Open and close an interface */
 int tx80211_open(struct tx80211 *in_tx);
