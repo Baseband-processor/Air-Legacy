@@ -1480,14 +1480,19 @@ sub kill_lorcon(){
 
    }
 
-sub Open_Monitor { # Open monitor mode
+sub Open_Monitor { # Open monitor mode, tries with both libpcap and lorcon2
     my $context = @_;
+    my $pcap = lorcon_get_pcap( $context );
+    if( pcap_can_set_rfmon( $pcap ) == -1 ){
+    	return -1;
+    }else{
     if(! ( Air::Lorcon2::lorcon_open_monitor( $context ) ) ){
-        return -1; # Bad 
+	return -1; # Bad 
      }else{
         return 1;   # Good
 }
     }
+    	}
     
 sub Open_Inject { # Open inject mode
     my $context = @_;
@@ -1572,16 +1577,14 @@ sub setMode{
 sub auto_Initialize_driver{
 	my ( $context, $prefferred_drive ) = @_;
 	if(undef($prefferred_drive)){
-		my @supported_drivers = ("madwifing", "mac80211", "bcm");
+		my @supported_drivers = ("madwifing", "mac80211");
 		my $drivers_list = lorcon_list_drivers();
 		foreach (@{ $drivers_list }){
 		  if($_ =~ $supported_drivers[0]){
 			return Air::Lorcon2::drv_madwifing_init( $context );
  	}elsif($_ =~ $supported_drivers[1]){
-			return Air::Lorcon2::drv_mac80211_init("");
-	}elsif($_ =~ $supported_drivers[2]){
-			return Air::Lorcon2::tx80211_bcm43xx_init("");
-		}
+			return Air::Lorcon2::drv_mac80211_init( $context );
+}
 	}
 	}
 }
