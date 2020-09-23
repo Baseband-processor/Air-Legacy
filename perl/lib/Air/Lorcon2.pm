@@ -1361,6 +1361,8 @@ our %EXPORT_TAGS = (
       tx80211_getdrivername
       tx80211_init
       tx80211_airjack_capabilities
+      tx80211_rtl8180_init
+      tx80211_get_capabilities
  )],
    suites => [qw(
        WEP40
