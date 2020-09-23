@@ -95,7 +95,6 @@ tx80211_airjack_capabilities();
 
 tx80211_airpcap_capabilities();
 
-
 tx80211_hostap_capabilities();
 
 tx80211_zd1211rw_capabilities();
@@ -106,5 +105,6 @@ tx80211_prism54_capabilities();
 
 tx80211_rt61_capabilities();
 
+tx80211_get_capabilities();
 
 ok(1);
