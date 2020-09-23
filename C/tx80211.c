@@ -420,7 +420,7 @@ int tx80211_init(struct tx80211 *in_tx, const char *in_ifname, int in_injector)
 	return ret;
 }
 
-int tx80211_getcapabilities(struct tx80211 *in_tx)
+int tx80211_get_capabilities(struct tx80211 *in_tx)
 {
 	return in_tx->capabilities;
 }
@@ -550,7 +550,7 @@ int tx80211_setmodulation(struct tx80211 *in_tx,
 		return TX80211_ENOINIT;
 	}
 
-	if ((tx80211_getcapabilities(in_tx) & TX80211_CAP_SETMODULATION) == 0) {
+	if ((tx80211_get_capabilities(in_tx) & TX80211_CAP_SETMODULATION) == 0) {
 		snprintf(in_tx->errstr, TX80211_STATUS_MAX,
 				"setmodulation: driver does not support setting"
 				" the modulation mechanism.");
@@ -575,7 +575,7 @@ int tx80211_settxrate(struct tx80211 *in_tx, struct tx80211_packet *in_packet,
 		return TX80211_ENOINIT;
 	}
 
-	if ((tx80211_getcapabilities(in_tx) & TX80211_CAP_SETRATE) == 0) {
+	if ((tx80211_get_capabilities(in_tx) & TX80211_CAP_SETRATE) == 0) {
 		snprintf(in_tx->errstr, TX80211_STATUS_MAX,
 				"setmodulation: driver does not support setting"
 				" the TX data rate.");
@@ -613,7 +613,7 @@ int tx80211_selfack(struct tx80211 *in_tx, uint8_t *addr)
 	}
 
 	/* See if this card supports the SelfACK capability */
-	if ((tx80211_getcapabilities(in_tx) & TX80211_CAP_SELFACK) > 0) {
+	if ((tx80211_get_capabilities(in_tx) & TX80211_CAP_SELFACK) > 0) {
 
 #ifdef SYS_LINUX
 		/* If we haven't already stored it, retrieve the local MAC */
