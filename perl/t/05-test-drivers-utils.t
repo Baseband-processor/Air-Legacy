@@ -71,23 +71,7 @@ if( ! drv_rtfile_init( $context ) ){
   ok(1);
 }
 
-## test mac80211 device
 
-$context = undef;
-$drv = undef;
-
-if( %{ lorcon_list_drivers() } =~ "mac80211" ){
-        $driver = "mac80211";
-        $drv = lorcon_find_driver( $driver );
-        $context = lorcon_create( $pcap_device, $drv );
-
-        if( ! drv_mac80211_init( $context ) ){
-                  ok(0);
-        }else{
-                 ok(1);
-        }
-
-}
 
 ## TEST CAPABILITIES ##
 
