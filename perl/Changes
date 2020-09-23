@@ -38,7 +38,8 @@ Revision history for Perl extension Air::Lorcon2.
   - added new function: tx80211_getchannel
   - added new function: tx80211_open
   - added new function: tx80211_close
-          
+  - added code size in github's front-end
+  
 25.17   Wed Set 16 18:32:00 CET 2020
   - deleted libnl dependency, for now no uses.
   - added new function: genl_send_simple
