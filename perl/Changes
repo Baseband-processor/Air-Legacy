@@ -29,7 +29,16 @@ Revision history for Perl extension Air::Lorcon2.
   - added new function: tx80211_get_capabilities
   - added new function: pcap_set_rfmon
   - added new (internal) function: _pcap_check_activate [now deleted due to debug errors]
-
+  - added new function: tx80211_txpacket
+  - added new function: tx80211_setmodulation
+  - added new function: tx80211_getmodulation
+  - added new function: tx80211_setfunctionalmode
+  - added new function: tx80211_setchannel
+  - added new function: tx80211_getchannel
+  - added new function: tx80211_getchannel
+  - added new function: tx80211_open
+  - added new function: tx80211_close
+          
 25.17   Wed Set 16 18:32:00 CET 2020
   - deleted libnl dependency, for now no uses.
   - added new function: genl_send_simple
