@@ -51,17 +51,9 @@ if( pcap_can_set_rfmon( $pcap ) == -1){
 ok(1);
 
 }else{
-
-if( ! lorcon_open_inject( $context )  ) {
-	ok(0);
-}
-
-if( ! lorcon_open_monitor( $context )  ) {
-	ok(0);
-}
-
-if( ! lorcon_open_injmon( $context )  ) {
-  ok(0);
+	#  Test for both injection and monitor mode by "injmon"
+	if( ! lorcon_open_injmon( $context )  ) {
+  	ok(0);
  }
 
 ok(1);
