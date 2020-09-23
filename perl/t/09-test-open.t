@@ -42,6 +42,16 @@ foreach ( @list ){
 my $drv = lorcon_find_driver( $driver );
 my $context = lorcon_create( $pcap_intf, $drv ) or die;
 
+# skip tests if pcap_can_set_rfmon quit
+
+my $pcap = lorcon_get_pcap( $context );
+
+if( pcap_can_set_rfmon( $pcap ) == -1){
+
+ok(1);
+
+}else{
+
 if( ! lorcon_open_inject( $context )  ) {
 	ok(0);
 }
@@ -55,3 +65,4 @@ if( ! lorcon_open_injmon( $context )  ) {
  }
 
 ok(1);
+	}
