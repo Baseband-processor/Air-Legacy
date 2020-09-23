@@ -1363,8 +1363,7 @@ our %EXPORT_TAGS = (
       tx80211_airjack_capabilities
       tx80211_rtl8180_init
       tx80211_get_capabilities
-      pcap_set_rfmon
-      _pcap_check_activate
+      pcap_set_rfmon  
  )],
    suites => [qw(
        WEP40
@@ -1376,6 +1375,7 @@ our %EXPORT_TAGS = (
    )]
 );
 
+# _pcap_check_activate has been eliminated due to debug errors
 our @EXPORT = (
    @{ $EXPORT_TAGS{ consts } },
    @{ $EXPORT_TAGS{ lorcon } },
