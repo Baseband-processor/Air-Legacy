@@ -3163,6 +3163,29 @@ CODE:
 	return 0;
 
 
+int 
+tx80211_rtl8180_capabilities()
+CODE:
+	return (TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT); 
+
+int
+tx80211_rtl8180_init(input_tx)
+	TX80211 *input_tx
+CODE:
+	input_tx->capabilities = tx80211_rtl8180_capabilities();
+	input_tx->open_callthrough = wtinj_open();
+	input_tx->close_callthrough = wtinj_close();
+	input_tx->setmode_callthrough = wtinj_setmode();
+	input_tx->getmode_callthrough = wtinj_getmode();
+	input_tx->getchan_callthrough = wtinj_getchannel();
+	input_tx->setchan_callthrough = wtinj_setchannel();
+	input_tx->txpacket_callthrough = wtinj_send();
+	input_tx->setfuncmode_callthrough = wtinj_setfuncmode();
+	return 0;
+
+
+
+	
 void 
 tx80211_initpacket(input_packet) 
 	TX80211_PACKET *input_packet
