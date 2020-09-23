@@ -3402,7 +3402,7 @@ CODE:
 	}
 
 	return (input_tx->setchan_callthrough) (input_tx, input_channel);
-}
+
 
 int 
 tx80211_getchannel(input_tx)
