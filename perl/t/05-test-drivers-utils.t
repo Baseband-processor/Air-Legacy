@@ -22,18 +22,10 @@ my $pcap_device = pcap_lookupdev( \$pcap_error );
 
 # initialize Air::Lorcon2
 
-my $driver = "madwifing";
-my $drv = lorcon_find_driver( $driver ); 
-my $context = lorcon_create( $pcap_device, $drv );
-
 ## test tuntap device
-
-$context = undef;
-$drv = undef;
-
-$driver = "tuntap";
-$drv = lorcon_find_driver( $driver );
-$context = lorcon_create( $pcap_device, $drv );
+my $driver = "tuntap";
+my $drv = lorcon_find_driver( $driver );
+my $context = lorcon_create( $pcap_device, $drv );
 
 if( ! drv_tuntap_init( $context ) ){
   ok(0);
@@ -43,6 +35,7 @@ if( ! drv_tuntap_init( $context ) ){
 
 ## test file device
 
+lorcon_free( $context ); # free $context
 $context = undef;
 $drv = undef;
 
@@ -56,20 +49,6 @@ if( ! drv_file_init( $context ) ){
   ok(1);
 }
 
-## test rtfile device
-
-$context = undef;
-$drv = undef;
-
-$driver = "rtfile";
-$drv = lorcon_find_driver( $driver );
-$context = lorcon_create( $pcap_device, $drv );
-
-if( ! drv_rtfile_init( $context ) ){
-  ok(0);
-}else{
-  ok(1);
-}
 
 
 
