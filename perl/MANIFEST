@@ -24,6 +24,7 @@ t/14-test-version.t
 t/15-test-pure-subs.t
 t/16-test-tx80211.t
 t/17-test-pcap.t
+t/18-test-android.t
 typemap
 META.yml                                 Module YAML meta-data (added by MakeMaker)
 META.json                                Module JSON meta-data (added by MakeMaker)
