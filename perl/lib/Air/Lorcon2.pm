@@ -1372,6 +1372,7 @@ our %EXPORT_TAGS = (
       tx80211_getchannel
       tx80211_open
       tx80211_close
+      tx80211_decodepkt
  )],
    suites => [qw(
        WEP40
