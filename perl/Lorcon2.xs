@@ -527,7 +527,7 @@ typedef struct tx80211_packet{
 
 
 #include "c/lorcon_driver_t.c"
-#include "c/tx80211_decode.c"
+//#include "c/tx80211_decode.c"
 	
 MODULE = Air::Lorcon2   PACKAGE = Air::Lorcon2
 PROTOTYPES: DISABLE
