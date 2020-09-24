@@ -36,9 +36,8 @@
 #include <lorcon2/tx80211.h>
 
 /* for DLT_PRISM_HEADER */
-#ifndef DLT_PRISM_HEADER
 #define WLAN_DEVNAMELEN_MAX	16
-#endif
+
 
 /* Define linktype headers if we don't have them in our includes for some  reason */
 #ifndef DLT_IEEE802_11
