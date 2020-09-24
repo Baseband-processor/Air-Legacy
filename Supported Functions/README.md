@@ -240,6 +240,7 @@ actually Working functions
       tx80211_getchannel
       tx80211_open
       tx80211_close
+      tx80211_decodepkt
 
 **TESTED AND WORKING**
 
