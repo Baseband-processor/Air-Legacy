@@ -102,6 +102,8 @@ install:	$(LIBOUT)
 	install -m 644 drv_madwifiold.h $(INCLUDE)/lorcon2/drv_madwifiold.h 
 	install -m 644 drv_p54.h $(INCLUDE)/lorcon2/drv_p54.h
 	install -m 644 ajinject.h $(INCLUDE)/lorcon2/ajinject.h
+	install -m 644 tx80211_packet.h $(INCLUDE)/lorcon2/tx80211_packet.h
+	install -m 644 tx80211_errno.h $(INCLUDE)/lorcon2/tx80211_errno.h
 	install -d -m 755 $(MAN)/man3
 	install  -m 644 lorcon.3 $(MAN)/man3/lorcon.3
 
