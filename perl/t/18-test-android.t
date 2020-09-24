@@ -11,7 +11,7 @@ use Test;
 BEGIN{ plan tests => 1 };
 use Config;
 
-if( $Config{osname} =~ "android){
+if( $Config{osname} =~ "android"){
   # detect if it's possible to use tcpdump
   if (!`tcpdump -v` ){
     ok(0);
