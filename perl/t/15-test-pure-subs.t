@@ -1,5 +1,8 @@
 #!/usr/bin/perl
 
+# Made by Edoardo Mantovani, 2020
+# test pure-perl subroutines
+
 use strict;
 no strict 'subs';
 use Test;
