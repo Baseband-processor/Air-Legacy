@@ -271,24 +271,6 @@ sudo cpanm Air::Lorcon2
 So in the future I'll fork the project for a cpan compatible library.
 
 
-CHECKSUMS
-=====================
-
-**NOTE:** _the checksum will be updated every 14 days_
-
-VERSION 26.01
-=====================
-
-**MD5:** _09adcfe57e980f16e3f3ff3f5d6694c3_
-
-**SHA160:** _28729dd31ace2d4bb6084a62f432e175efbfef7a_
-
-**SHA256:** _b734229907b06ff9a60a148147b6417d826cfd530f2aea86c7b1c914362c3797_
-
-
-**NOTE:**  The checksum is related to the zipped file.
-
-
 
 Requests and collaborations
 ====================================
