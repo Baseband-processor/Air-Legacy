@@ -29,9 +29,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <arpa/inet.h>
-#include <lorcon2/lorcon_ieee80211.h>
-#include <lorcon2/lorcon_packet.h>
-#include <lorcon2/lorcon.h>
+
 
 #include <lorcon2/tx80211.h>
 
