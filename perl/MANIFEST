@@ -32,3 +32,9 @@ Network_encryption.jpg
 new-Net-const.txt
 ppport.h
 examples/capture_example.pl
+examples/Readme-Example.pl
+examples/SendBytes.pl
+examples/beacon_flood_lcpa.pl
+examples/beacon_flood_raw.pl
+examples/getdriverlist.pl
+examples/tx.pl
