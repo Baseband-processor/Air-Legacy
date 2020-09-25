@@ -1,12 +1,10 @@
 Made by Edoardo Mantovani, 2020
 
 - increase the functions coverage of lorcon2 (almost done)
-- include libnl building for a more low level coverage (?)
-- fix many compilation problems at "make" command (+90% success)
+- fix many compilation problems at "make" command (+99% success)
 
 REALTODO:
-- write full documentation
+- write full documentation ( 70% )
 - write small pdf about every module with the help of community
-- fix libnl headers
 - fix some C code wich still crash
-- add some libnl functions
+
