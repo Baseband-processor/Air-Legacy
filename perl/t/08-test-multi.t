@@ -13,8 +13,8 @@ BEGIN{ plan tests => 1 };
 
 use Air::Lorcon2 qw(:lorcon);
 
-my $loop = lorcon_multi_create();
-my $interfaces = Air::Lorcon2::lorcon_multi_get_interfaces( $loop ) or die;
+my $loop = lorcon_multi_create(); # create lorcon_multi_t type
+my $interfaces = lorcon_multi_get_interfaces( $loop ) or die;
 
 my $lorcon = lorcon_multi_interface_get_lorcon( \$interfaces ) or die;
 
