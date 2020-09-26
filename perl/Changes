@@ -42,6 +42,7 @@ Revision history for Perl extension Air::Lorcon2.
   - added new function: tx80211_decodepkt
   - added new test: 18-test-android.t
   - added new example: capture_example.pl
+  - added new function: nl80211_ack_cb
   
 25.17   Wed Set 16 18:32:00 CET 2020
   - deleted libnl dependency, for now no uses.
