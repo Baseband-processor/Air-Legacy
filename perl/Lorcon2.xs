@@ -702,7 +702,7 @@ void
 lorcon_pcap_handler(user,  h, bytes)
 	u_char *user
 	PCAP_PKTHDR *h
-	const u_char *bytes
+	u_char *bytes
 CODE:
 	AirLorcon *context = (AirLorcon *) user;
 	AirLorconPacket *packet;
@@ -718,8 +718,7 @@ CODE:
 		return;
 		}
 	packet = lorcon_packet_from_pcap(context, h, bytes);
-
-	(*(context->handler_cb))(context, packet, context->handler_user);
+	return(*(context->handler_cb))(context, packet, context->handler_user);
 
 
 void
