@@ -118,7 +118,6 @@
 #include "Ctxs.h"
 
  
-typedef struct nl_sock NL_SOCK;
 
 typedef struct {
 	__u32		nlmsg_len;	
@@ -136,6 +135,19 @@ typedef struct nlmsgerr {
 };
 
 typedef struct  nlmsgerr NLMSGERR;
+
+typedef struct {
+	int 	nm_protocol;
+	int 	nm_flags;
+	struct sockaddr_nl 	nm_src;
+	struct sockaddr_nl 	nm_dst;
+	struct ucred 	nm_creds;
+	NLMSGHDR * 	nm_nlh;
+	size_t 	nm_size;
+	int 	nm_refcnt;
+ }nl_msg;
+
+typedef struct nl_msg NL_MSG;
 
 typedef struct {
 	uint16_t mode;		
@@ -3431,8 +3443,13 @@ CODE:
 		return TX80211_ENOHANDLER;
 	}
 
+#define NL_STOP 00071
+
 int 
-nl80211_ack_cb(struct nl_msg *msg, void *arg) {
+nl80211_ack_cb(msg, arg) 
+	NL_MSG *msg
+	void *arg
+CODE:
     int *ret = arg;
     *ret = 0;
     return NL_STOP;
