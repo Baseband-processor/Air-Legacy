@@ -867,23 +867,16 @@ lorcon_loop(context, counter,  callback, user)
 	CODE:
 	int ret;
 	if (context->pcap == NULL) {
-		snprintf(context->errstr, LORCON_STATUS_MAX,  "capture driver %s did not create a pcap context",
-				 lorcon_get_driver_name(context));
+		snprintf(context->errstr, LORCON_STATUS_MAX,  "capture driver %s did not create a pcap context", lorcon_get_driver_name(context));
 		return LORCON_ENOTSUPP;
 	}
-
 	context->handler_cb = callback;
 	context->handler_user = user;
-
 	ret = pcap_loop(context->pcap, counter, lorcon_pcap_handler(user,counter, callback), (u_char *) context);
-
     if (ret == -1) {
         snprintf(context->errstr, LORCON_STATUS_MAX, "pcap_loop failed: %s", pcap_geterr(context->pcap));
     }
-
-        RETVAL = ret;
-	OUTPUT:
-	RETVAL
+	return( ret );
 
       
 int 
