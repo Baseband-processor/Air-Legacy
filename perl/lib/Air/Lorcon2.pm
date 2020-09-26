@@ -1373,6 +1373,7 @@ our %EXPORT_TAGS = (
       tx80211_open
       tx80211_close
       tx80211_decodepkt
+      nl80211_ack_cb
  )],
    suites => [qw(
        WEP40
