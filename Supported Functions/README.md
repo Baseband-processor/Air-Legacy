@@ -241,6 +241,7 @@ actually Working functions
       tx80211_open
       tx80211_close
       tx80211_decodepkt
+      nl80211_ack_cb
 
 **TESTED AND WORKING**
 
