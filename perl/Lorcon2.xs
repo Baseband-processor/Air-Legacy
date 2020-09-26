@@ -2429,6 +2429,8 @@ PPCODE:
 int
 pcap_can_set_rfmon(p)
 	Pcap *p
+CODE:
+	return (p->can_set_rfmon_op(p));
 
 #define PCAP_ERROR_ACTIVATED		-4
 
