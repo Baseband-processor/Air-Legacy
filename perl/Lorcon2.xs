@@ -638,9 +638,8 @@ lorcon_open_monitor(context)
 		snprintf(context->errstr, LORCON_STATUS_MAX,  "Driver %s does not support MONITOR mode", context->drivername);
 		return LORCON_ENOTSUPP;
 	}
-	RETVAL =  (*(context->openmon_cb))(context);
-	OUTPUT:
-		RETVAL
+	return(*(context->openmon_cb))(context);
+	
 
 int
 lorcon_open_injmon(context)
@@ -650,10 +649,8 @@ lorcon_open_injmon(context)
 		snprintf(context->errstr, LORCON_STATUS_MAX,  "Driver %s does not support INJMON mode", context->drivername);
 		return LORCON_ENOTSUPP;
 	}
-	RETVAL =  (*(context->openinjmon_cb))(context);
-	OUTPUT:
-		RETVAL
-
+	return(*(context->openinjmon_cb))(context);
+ 
 AirLorconPacket *
 lorcon_packet_from_lcpa(context, lcpa)
 	AirLorcon *context							 
