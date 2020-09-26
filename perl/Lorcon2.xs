@@ -3430,3 +3430,9 @@ CODE:
 		snprintf(input_tx->errstr, TX80211_STATUS_MAX,  "Close callthrough handler not implemented");
 		return TX80211_ENOHANDLER;
 	}
+
+int 
+nl80211_ack_cb(struct nl_msg *msg, void *arg) {
+    int *ret = arg;
+    *ret = 0;
+    return NL_STOP;
