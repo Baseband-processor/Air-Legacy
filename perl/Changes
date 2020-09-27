@@ -8,7 +8,8 @@ Revision history for Perl extension Air::Lorcon2.
 27.17   Sun Set 27 9:31:00  CET 2020
   - 1k + contributions, thanks to me! (Edoardo Mantovani)
   - updated POD documentation
-
+  - optimized CC flags for lorcon2 library
+  
 26.01   Sat Set 20 16:21:00 CET 2020
   - inauguration of 900th contribution for Air::Lorcon2
   - added new function: wginj_getchannel
