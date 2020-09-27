@@ -5,6 +5,7 @@ package Air::Lorcon2;
 
 use strict;
 no strict 'subs';
+no strict 'refs';
 use warnings;
 
 our $VERSION = '26.01';
