@@ -11,6 +11,7 @@ Revision history for Perl extension Air::Lorcon2.
   - optimized CC flags for lorcon2 library
   - rewritten Makefile.PL using XS::Install
   - modified Makefile: { deleted END block, modified dependencies: now XS::Install will be automatically force-installed in every linux distribution }
+  - added optimization flags for liblorcon2.so perl's shared object library
   
 26.01   Sat Set 20 16:21:00 CET 2020
   - inauguration of 900th contribution for Air::Lorcon2
