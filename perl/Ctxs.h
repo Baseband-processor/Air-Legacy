@@ -16,6 +16,7 @@
 #include <lorcon2/drv_mac80211.h>
 #include <lorcon2/drv_tuntap.h>
 #include <lorcon2/iwcontrol.h>
+#include <lorcon2/ifcontrol.h>
 #include <lorcon2/lorcon_int.h>
 #include <lorcon2/nl80211_control.h>
 #include <lorcon2/lorcon_packasm.h>
