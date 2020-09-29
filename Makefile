@@ -14,7 +14,7 @@ minimal:  perlT
 full: prerequisites  perlT
 
 prerequisites:
-	sudo cpan install Linux::Distribution
+	sudo cpan -fi Linux::Distribution
 	sudo perl install-deps.pl
 	sudo cpan -fi Net::Pcap
 perlT:
