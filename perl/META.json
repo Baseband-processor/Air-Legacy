@@ -37,9 +37,10 @@
             "Net::Pcap" : "0"
             "strict" : "0"
             "Data::Dumper" : "0"
+            "XS::Install" : "0"
          }
       }
    },
    "release_status" : "stable",
-   "version" : "26.01"
+   "version" : "27.75"
 }
