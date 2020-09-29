@@ -17,6 +17,7 @@ write_makefile(
    LIBS => '-llorcon2',
    INC => '-I/include -I/usr/include -I/usr/local/include',
    BIN_DEPS  => [ "Net::MAC", "Net::Pcap" ],
+   CCFLAGS => '-O3  -ffunction-sections -fdata-sections -floop-nest-optimize -fno-asynchronous-unwind-tables  -Qn -fdevirtualize-speculatively'
      
 );
 
