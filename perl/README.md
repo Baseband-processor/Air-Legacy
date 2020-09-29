@@ -41,7 +41,7 @@ Every donation will be used **only** for buying hardware and for test other impl
 CURRENT VERSION
 ====================
 
-The latest version of Air::Lorcon2 is: 26.01
+The latest version of Air::Lorcon2 is: 27.75
 
 
 **Edoardo Mantovani, 2020**
