@@ -123,6 +123,8 @@ use constant {
 	TKIP => "00-0F-AC-02",
 	EAP => "00-0F-AC-01",
 	PSK => "00-0F-AC-02",
+	WPA3 => "00-0F-AC-08",
+	PSK_SHA256 => "00-0F-AC-06",
 };
 
 my %channel_to_frequency = (
