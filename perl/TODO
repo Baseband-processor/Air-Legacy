@@ -7,4 +7,5 @@ REALTODO:
 - write full documentation ( 70% )
 - write small pdf about every module with the help of community
 - fix some C code wich still crash
+- implement tx80211_decodepkt function
 
