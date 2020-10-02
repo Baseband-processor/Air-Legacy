@@ -46,6 +46,7 @@ for veryfing that everything works just start typing
 *perl -e '*
 
 ```perl
+#!/usr/bin/perl
 
 use Air::Lorcon2 qw( :lorcon );
 use Data::Dumper;
@@ -96,6 +97,8 @@ if interested in more advanced examples for the perl library please go under the
 the most basic usage is:
 
 ```perl
+#!/usr/bin/perl
+
 use strict;
 use Net::Pcap qw( pcap_lookupdev );
 use Data::Dumper qw(Dumper);
