@@ -4,7 +4,7 @@ Air::Lorcon2
 ![image of wireless_security_protocols_bg](./wireless.jpg)
 
 ![coverage](https://progress-bar.dev/93?title=progress)  ![functions](https://progress-bar.dev/240?title=functions)  ![size](https://img.shields.io/github/languages/code-size/Baseband-processor/Air-Lorcon2) ![license](https://img.shields.io/github/license/Baseband-processor/Air-Lorcon2) ![Lcommits](https://img.shields.io/github/last-commit/Baseband-processor/Air-Lorcon2)  ![toplang](https://img.shields.io/github/languages/top/Baseband-processor/Air-Lorcon2) 
-![n-commits](https://img.shields.io/github/commits-since/Baseband-processor/Air-Lorcon2/26.01)
+![n-commits](https://img.shields.io/github/commits-since/Baseband-processor/Air-Lorcon2/26.01) ![release-date](https://img.shields.io/github/release-date/Baseband-processor/Air-Lorcon2)
 
 **WHO I AM?**
 
