@@ -1444,7 +1444,7 @@ sub RString_Gen(){ # adapted string for MAC address
 }
 
 sub RMAC_gen(){
-  require Net::MAC;
+  require Net::MAC; # require Net::MAC library for MAC manipulation
   my $raw_mac = (Net::MAC->new('mac' => &RString_Gen(), 'die' => 0) );
   my $formatted_mac = $raw_mac->convert(
     'bit_group' => 8,  
@@ -1474,20 +1474,20 @@ sub Hex_to_packet{
 
 sub create(){
    my ( $interface, $driver ) = @_;
-   my $drv = Air::Lorcon2::lorcon_find_driver( $driver ) or die $!;
-   if( ( Air::Lorcon2::lorcon_create( $interface, $drv ) ) == -1 ){
+   my $drv = lorcon_find_driver( $driver ) or die $!;
+   if( ( lorcon_create( $interface, $drv ) ) == -1 ){
       return -1; 
    }else{
       return 0;
 }
    }
 sub version(){
-   return ( Air::Lorcon2::lorcon_get_version() );
+   return ( lorcon_get_version() );
 }
 
 sub kill_lorcon(){
    my $context = @_;
-   if( ( Air::Lorcon2::lorcon_close( $context ) ) == -1 ){
+   if( ( lorcon_close( $context ) ) == -1 ){
       return -1;
    }else{
       return 0;   
@@ -1501,7 +1501,7 @@ sub Open_Monitor { # Open monitor mode, tries with both libpcap and lorcon2
     if( pcap_can_set_rfmon( $pcap ) == -1 ){
     	return -1;
     }else{
-    if(! ( Air::Lorcon2::lorcon_open_monitor( $context ) ) ){
+    if(! ( lorcon_open_monitor( $context ) ) ){
 	return -1; # Bad 
      }else{
         return 1;   # Good
@@ -1511,7 +1511,7 @@ sub Open_Monitor { # Open monitor mode, tries with both libpcap and lorcon2
     
 sub Open_Inject { # Open inject mode
     my $context = @_;
-    if(! ( Air::Lorcon2::lorcon_open_inject( $context ) ) ){
+    if(! ( lorcon_open_inject( $context ) ) ){
         return -1; # Bad
     }else{
         return 1; # Good
@@ -1520,7 +1520,7 @@ sub Open_Inject { # Open inject mode
     
 sub Open_Injmon { # Open both
     my $context = @_;
-    if(! ( Air::Lorcon2::lorcon_open_injmon( $context ) ) ){
+    if(! ( lorcon_open_injmon( $context ) ) ){
         return -1; # Bad
     }else{
         return 1; # Good
@@ -1533,60 +1533,59 @@ sub ChangeMAC {
 	# Prevention against malformed MAC's
 	my $control = Net::MAC->new('mac' => $MAC, 'die' => 0); # Die if MAC is wrong
 	delete $INC{'Net/MAC.pm'}; # toggle module from %INC
-	`ip link set dev interface down`;
+	`ip link set dev interface down`; # set interface to down (0)
         if(`ip link set dev $interface address $MAC`){
 		`ip link set dev $interface up`;
 		return 0;
 	}else{
 		return -1;
 }
-
 	}
 	
 sub Inject_Frame {
     my ($context, $packet) = @_;
-    return(Air::Lorcon2::lorcon_inject($context, $packet) );
+    return( lorcon_inject($context, $packet) );
 }
    
 sub Send_Bytes {
     my ($context, $packet ) = @_;
     my $length = length($packet);
-    return(Air::Lorcon2::lorcon_send_bytes($context, $length, \$packet) );
+    return( lorcon_send_bytes($context, $length, \$packet) );
 }
 
 sub setSSID{
   my ( $input_device, $error_string, $essid ) = @_; 
-  return( Air::Lorcon2::iwconfig_set_ssid(\$input_device, \$error_string, \$essid) );
+  return( iwconfig_set_ssid(\$input_device, \$error_string, \$essid) );
 }
   
 sub getSSID{
   my ( $input_device, $error_string, $essid ) = @_; 
-  return( Air::Lorcon2::iwconfig_get_ssid(\$input_device, \$error_string, \$essid) );
+  return( iwconfig_get_ssid(\$input_device, \$error_string, \$essid) );
 }
 
 sub getNetworkName{
   my ( $input_device, $error_string, $input_name ) = @_; 
-  return (Air::Lorcon2::iwconfig_get_name( \$input_device, \$error_string, \$input_name) );
+  return ( iwconfig_get_name( \$input_device, \$error_string, \$input_name) );
 }
 
 sub getChannel{
   my ( $input_device, $error_string ) = @_; 
-  return( Air::Lorcon2::iwconfig_get_channel( \$input_device, \$error_string) );
+  return( iwconfig_get_channel( \$input_device, \$error_string ) );
 }
 
 sub setChannel{
   my ( $input_device, $error_string, $channel ) = @_; 
-  return(Air::Lorcon2::iwconfig_set_channel(\$input_device, \$error_string, $channel) );
+  return( iwconfig_set_channel(\$input_device, \$error_string, $channel ) );
 }
 
 sub getMode{
   my ( $input_device, $error_string ) = @_; 
-  return(Air::Lorcon2::iwconfig_get_mode(\$input_device, \$error_string) );
+  return( iwconfig_get_mode(\$input_device, \$error_string ) );
 }
 
 sub setMode{
   my ( $input_device, $error_string, $mode ) = @_; 
-  return( Air::Lorcon2::iwconfig_set_mode(\$input_device, \$error_string, $mode) );
+  return( iwconfig_set_mode(\$input_device, \$error_string, $mode ) );
 }
 
 sub auto_Initialize_driver{
@@ -1596,9 +1595,9 @@ sub auto_Initialize_driver{
 		my $drivers_list = lorcon_list_drivers();
 		foreach (@{ $drivers_list }){
 		  if($_ =~ $supported_drivers[0]){
-			return Air::Lorcon2::drv_madwifing_init( $context );
+			return drv_madwifing_init( $context );
  	}elsif($_ =~ $supported_drivers[1]){
-			return Air::Lorcon2::drv_mac80211_init( $context );
+			return drv_mac80211_init( $context );
 }
 	}
 	}
@@ -1606,7 +1605,7 @@ sub auto_Initialize_driver{
 
 sub add_WEPKey {
 	my ($context, $bssid, $WEPkey) = @_;
-	return(lorcon_add_wepkey($context, $bssid, $WEPkey, length($WEPkey) ) );
+	return( lorcon_add_wepkey($context, $bssid, $WEPkey, length($WEPkey) ) );
 
 }
 
