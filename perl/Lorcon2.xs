@@ -1491,46 +1491,256 @@ char *
 nl80211_find_parent(interface)
    const char *interface
 
-int
-iwconfig_set_ssid(in_dev, errstr, in_essid)
-   const char *in_dev
-   char *errstr
-   char *in_essid
-                         
-int
-iwconfig_get_ssid(in_dev, errstr, in_essid)
-   const char *in_dev   
-   char *errstr
-   char *in_essid
+#define IW_ESSID_MAX_SIZE   32
+#define	SIOCSIWESSID   0x8B1A
 
 int
-iwconfig_get_name(in_dev, errstr, in_name)
-   const char *in_dev
+iwconfig_set_ssid(input_dev, errstr, input_essid)
+   const char *input_dev
    char *errstr
-   char *in_name
-   
-int
-iwconfig_get_channel(in_dev, errstr)
-   const char *in_dev
-   char *errstr
+   char *input_essid
+CODE:
+	struct iwreq wrq;
+	int skfd;
+	char essid[IW_ESSID_MAX_SIZE + 1];
+
+	if (in_essid == NULL) {
+		essid[0] = '\0';
+	} else {
+		snprintf(essid, IW_ESSID_MAX_SIZE + 1, "%s", input_essid);
+	}
+	if ((skfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
+		snprintf(errstr, LORCON_STATUS_MAX, "Failed to create ioctl socket to set SSID on %s: %s", input_dev, strerror(errno));
+		return -1;
+	}
+	strncpy(wrq.ifr_name, in_dev, IFNAMSIZ);
+	wrq.u.essid.pointer = (caddr_t) essid;
+	wrq.u.essid.length = sv_len(essid) + 1;
+	wrq.u.essid.flags = 1;
+	if (ioctl(skfd, SIOCSIWESSID, &wrq) < 0) {
+		snprintf(errstr, LORCON_STATUS_MAX, "Failed to set SSID on %s: %s", in_dev, strerror(errno));
+		close(skfd);
+		return -1;
+	}
+	close(skfd);
+	return 0;
+
+#define SIOCGIWESSID  0x8B1B
 
 int
-iwconfig_set_channel(in_dev, errstr, in_ch)
-   const char *in_dev
+iwconfig_get_ssid(input_dev, errstr, input_essid)
+   const char *input_dev   
    char *errstr
-   int in_ch
+   char *input_essid
+CODE:
+	struct iwreq wrq;
+	int skfd;
+	char essid[IW_ESSID_MAX_SIZE + 1];
+
+	if ((skfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
+		snprintf(errstr, LORCON_STATUS_MAX,"Failed to create socket to fetch SSID on %s: %s", input_dev, strerror(errno));
+		return -1;
+	}
+	strncpy(wrq.ifr_name, input_dev, IFNAMSIZ);
+	wrq.u.essid.pointer = (caddr_t) essid;
+	wrq.u.essid.length = IW_ESSID_MAX_SIZE + 1;
+	wrq.u.essid.flags = 0;
+
+	if (ioctl(skfd, SIOCGIWESSID, &wrq) < 0) {
+		snprintf(errstr, LORCON_STATUS_MAX, "Failed to fetch SSID from %s: %s", in_dev, strerror(errno));
+		close(skfd);
+		return -1;
+	}
+
+	snprintf(in_essid, min(IW_ESSID_MAX_SIZE, wrq.u.essid.length) + 1, "%s", (char *)wrq.u.essid.pointer);
+	close(skfd);
+	return 0;
+
+
+#define SIOCGIWNAME   0x8B01
+
+int
+iwconfig_get_name(input_dev, errstr, input_name)
+   const char *input_dev
+   char *errstr
+   char *input_name
+CODE:
+	struct iwreq wrq;
+	int skfd;
+
+	if ((skfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
+		snprintf(errstr, LORCON_STATUS_MAX, "Failed to create socket to get name on %s: %s", input_dev, strerror(errno));
+		return -1;
+	}
+
+	strncpy(wrq.ifr_name, input_dev, IFNAMSIZ);
+
+	if (ioctl(skfd, SIOCGIWNAME, &wrq) < 0) {
+		snprintf(errstr, LORCON_STATUS_MAX, "Failed to get name on %s :%s", input_dev, strerror(errno));
+		close(skfd);
+		return -1;
+	}
+
+	snprintf(in_name, IFNAMSIZ, "%s", wrq.u.name);
+
+	close(skfd);
+	return 0;
 
 int 
-iwconfig_get_mode(in_dev, errstr)
-   const char *in_dev
-   char *errstr
-                         
+_floatchan2int(input_chan)
+	float input_chan
+{
+    if (input_chan == 0){
+        return 0;
+	}
+    if (input_chan == 2484){
+        return 14;
+	}
+    else if (input_chan < 2484){
+        return (input_chan - 2407) / 5;
+	}
+    else if (input_chan >= 4910 && input_chan <= 4980){
+        return (input_chan - 4000) / 5;
+	}
+    else if (input_chan <= 45000){
+        return (input_chan - 5000) / 5;
+	}
+    else if (input_chan >= 58320 && input_chan <= 64800){
+        return (input_chan - 56160) / 2160;
+	}
+    return input_chan;
+	
+float 
+_iwfreq2float(inreq)
+	iwreq *inreq
+CODE:
+	return ((float)inreq->u.freq.m) * pow(10, inreq->u.freq.e);
+	
+	
+#define SIOCGIWFREQ   0x8B05
+
 int
-iwconfig_set_mode(in_dev, errstr, in_mode)
-   const char *in_dev
+iwconfig_get_channel(input_dev, errstr)
+   const char *input_dev
    char *errstr
-   int in_mode
-     
+CODE:
+	struct iwreq wrq;
+	int skfd;
+
+	if ((skfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
+		snprintf(in_err, LORCON_STATUS_MAX, "Failed to create AF_INET DGRAM socket %d:%s", errno, strerror(errno));
+		return -1;
+	}
+
+	//memset(&wrq, 0, sizeof(struct iwreq));
+	Zero(&wrq, 1, iwreq);
+	strncpy(wrq.ifr_name, input_dev, IFNAMSIZ);
+
+	if (ioctl(skfd, SIOCGIWFREQ, &wrq) < 0) {
+		snprintf(in_err, LORCON_STATUS_MAX, "channel get ioctl failed %d:%s", errno, strerror(errno));
+		close(skfd);
+		return -1;
+	}
+
+	close(skfd);
+	return newSVpv((_floatchan2int(_iwfreq2float(&wrq))), 0);
+
+#define IW_FREQ_FIXED   0x01
+
+int
+iwconfig_set_channel(input_dev, errstr, input_channel)
+   const char *input_dev
+   char *errstr
+   int input_channel
+CODE:
+	struct iwreq wrq;
+	int skfd;
+
+	if ((skfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
+		snprintf(in_err, LORCON_STATUS_MAX, "Failed to create AF_INET DGRAM socket %d:%s", errno, strerror(errno));
+		return -1;
+	}
+	//memset(&wrq, 0, sizeof(struct iwreq));
+	Zero(&wrq, 1, iwreq);
+	strncpy(wrq.ifr_name, input_dev, IFNAMSIZ);
+#ifdef IW_FREQ_FIXED
+	wrq.u.freq.flags = IW_FREQ_FIXED;
+#endif
+
+	if (input_channel > 1024) {
+		_iwfloat2freq(input_channel * 1e6, &wrq.u.freq);
+	}else{
+		_iwfloat2freq(input_channel, &wrq.u.freq);
+	}
+
+	if (ioctl(skfd, SIOCSIWFREQ, &wrq) < 0) {
+		struct timeval tm;
+		tm.tv_sec = 0;
+		tm.tv_usec = 5000;
+		select(0, NULL, NULL, NULL, &tm);
+
+		if (ioctl(skfd, SIOCSIWFREQ, &wrq) < 0) {
+			snprintf(errstr, LORCON_STATUS_MAX, "Failed to set channel %d %d:%s", input_channel, errno, strerror(errno));
+			close(skfd);
+			return -1;
+		}
+	}
+	close(skfd);
+	return 0;
+	
+int 
+iwconfig_get_mode(input_dev, errstr)
+   const char *input_dev
+   char *errstr
+CODE:
+        struct iwreq wrq;
+	int skfd;
+	if ((skfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
+		snprintf(input_err, LORCON_STATUS_MAX, "Failed to create AF_INET DGRAM socket %d:%s", errno, strerror(errno));
+		return -1;
+	}
+
+	//memset(&wrq, 0, sizeof(struct iwreq));
+	Zero(&wrq, 1, iwreq);
+	strncpy(wrq.ifr_name, input_dev, IFNAMSIZ);
+
+	if (ioctl(skfd, SIOCGIWMODE, &wrq) < 0) {
+		snprintf(errstr, LORCON_STATUS_MAX, "mode get ioctl failed %d:%s", errno, strerror(errno));
+		close(skfd);
+		return -1;
+	}
+	close(skfd);
+	return (wrq.u.mode);
+	
+int
+iwconfig_set_mode(input_dev, in_err, tx80211_mode)
+	const char *input_dev
+	char *in_err
+	int tx80211_mode
+CODE:
+	struct iwreq wrq;
+	int skfd;
+
+	if ((skfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
+		snprintf(in_err, LORCON_STATUS_MAX, "Failed to create AF_INET DGRAM socket %d:%s", errno, strerror(errno));
+		return -1;
+	}
+
+	//memset(&wrq, 0, sizeof(struct iwreq));
+	Zero(&wrq, 1, iwreq);
+	strncpy(wrq.ifr_name, input_dev, IFNAMSIZ);
+
+	wrq.u.mode = tx80211_mode;
+
+	if (ioctl(skfd, SIOCSIWMODE, &wrq) < 0) {
+		snprintf(in_err, LORCON_STATUS_MAX, "mode set ioctl failed %d:%s", errno, strerror(errno));
+		close(skfd);
+		return -1;
+	}
+
+	close(skfd);
+	return 0;
+	
 int 
 iwconfig_set_intpriv(in_dev, privcmd, val1, val2, errstr)
 	const char *in_dev
