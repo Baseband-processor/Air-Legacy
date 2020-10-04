@@ -4,7 +4,9 @@ Revision history for Perl extension Air::Lorcon2.
 
 [first official release]
 
-[BETA]
+28.00   Sun Opt 04 16:00:00 CET 2020
+  - toggled donation tag and modified markdown graphic
+  
 27.75   Sun Set 27 9:31:00  CET 2020
   - 1k + contributions, thanks to me! (Edoardo Mantovani)
   - updated POD documentation
