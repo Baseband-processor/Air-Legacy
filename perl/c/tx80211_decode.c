@@ -28,8 +28,10 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
-#include <arpa/inet.h>
 
+#ifdef _ARPA_INET_H
+#include <arpa/inet.h>
+#endif
 
 #include <lorcon2/tx80211.h>
 
