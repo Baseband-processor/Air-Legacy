@@ -229,6 +229,7 @@ typedef struct pcap_opt {
 } PCAP_OPT;
 
 typedef int (*can_set_rfmon_op_t)(pcap_t *);
+typedef int	(*inject_op_t)(pcap_t *, const void *, int);
 
 typedef struct pcap_t{
     int fd;
@@ -251,6 +252,7 @@ typedef struct pcap_t{
     BPF_PROGRAM *fcode;
     char errbuf[PCAP_ERRBUF_SIZE];
     PCAP_OPT *opt;
+    inject_op_t inject_op;
     can_set_rfmon_op_t can_set_rfmon_op;
 }Pcap;
 
@@ -1511,7 +1513,7 @@ CODE:
 	int skfd;
 	char essid[IW_ESSID_MAX_SIZE + 1];
 
-	if (in_essid == NULL) {
+	if (input_essid == NULL) {
 		essid[0] = '\0';
 	} else {
 		snprintf(essid, IW_ESSID_MAX_SIZE + 1, "%s", input_essid);
@@ -1520,12 +1522,12 @@ CODE:
 		snprintf(errstr, LORCON_STATUS_MAX, "Failed to create ioctl socket to set SSID on %s: %s", input_dev, strerror(errno));
 		return -1;
 	}
-	strncpy(wrq.ifr_name, in_dev, IFNAMSIZ);
+	strncpy(wrq.ifr_name, input_dev, IFNAMSIZ);
 	wrq.u.essid.pointer = (caddr_t) essid;
 	wrq.u.essid.length = sv_len(essid) + 1;
 	wrq.u.essid.flags = 1;
 	if (ioctl(skfd, SIOCSIWESSID, &wrq) < 0) {
-		snprintf(errstr, LORCON_STATUS_MAX, "Failed to set SSID on %s: %s", in_dev, strerror(errno));
+		snprintf(errstr, LORCON_STATUS_MAX, "Failed to set SSID on %s: %s", input_dev, strerror(errno));
 		close(skfd);
 		return -1;
 	}
@@ -1554,12 +1556,12 @@ CODE:
 	wrq.u.essid.flags = 0;
 
 	if (ioctl(skfd, SIOCGIWESSID, &wrq) < 0) {
-		snprintf(errstr, LORCON_STATUS_MAX, "Failed to fetch SSID from %s: %s", in_dev, strerror(errno));
+		snprintf(errstr, LORCON_STATUS_MAX, "Failed to fetch SSID from %s: %s", input_dev, strerror(errno));
 		close(skfd);
 		return -1;
 	}
 
-	snprintf(in_essid, min(IW_ESSID_MAX_SIZE, wrq.u.essid.length) + 1, "%s", (char *)wrq.u.essid.pointer);
+	snprintf(input_essid, min(IW_ESSID_MAX_SIZE, wrq.u.essid.length) + 1, "%s", (char *)wrq.u.essid.pointer);
 	close(skfd);
 	return 0;
 
@@ -1588,7 +1590,7 @@ CODE:
 		return -1;
 	}
 
-	snprintf(in_name, IFNAMSIZ, "%s", wrq.u.name);
+	snprintf(input_name, IFNAMSIZ, "%s", wrq.u.name);
 
 	close(skfd);
 	return 0;
@@ -1635,7 +1637,7 @@ CODE:
 	int skfd;
 
 	if ((skfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
-		snprintf(in_err, LORCON_STATUS_MAX, "Failed to create AF_INET DGRAM socket %d:%s", errno, strerror(errno));
+		snprintf(errstr, LORCON_STATUS_MAX, "Failed to create AF_INET DGRAM socket %d:%s", errno, strerror(errno));
 		return -1;
 	}
 
@@ -1644,7 +1646,7 @@ CODE:
 	strncpy(wrq.ifr_name, input_dev, IFNAMSIZ);
 
 	if (ioctl(skfd, SIOCGIWFREQ, &wrq) < 0) {
-		snprintf(in_err, LORCON_STATUS_MAX, "channel get ioctl failed %d:%s", errno, strerror(errno));
+		snprintf(errstr, LORCON_STATUS_MAX, "channel get ioctl failed %d:%s", errno, strerror(errno));
 		close(skfd);
 		return -1;
 	}
@@ -1664,7 +1666,7 @@ CODE:
 	int skfd;
 
 	if ((skfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
-		snprintf(in_err, LORCON_STATUS_MAX, "Failed to create AF_INET DGRAM socket %d:%s", errno, strerror(errno));
+		snprintf(errstr, LORCON_STATUS_MAX, "Failed to create AF_INET DGRAM socket %d:%s", errno, strerror(errno));
 		return -1;
 	}
 	//memset(&wrq, 0, sizeof(struct iwreq));
@@ -1703,7 +1705,7 @@ CODE:
         struct iwreq wrq;
 	int skfd;
 	if ((skfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
-		snprintf(input_err, LORCON_STATUS_MAX, "Failed to create AF_INET DGRAM socket %d:%s", errno, strerror(errno));
+		snprintf(errstr, LORCON_STATUS_MAX, "Failed to create AF_INET DGRAM socket %d:%s", errno, strerror(errno));
 		return -1;
 	}
 
@@ -2766,7 +2768,6 @@ CODE:
 	if (size == 0) {
 		return (PCAP_ERROR);
 	}
-
 	return(p->inject_op(p, buf, (int)size));
 
 	
