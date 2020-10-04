@@ -37,7 +37,6 @@
             "Net::Pcap" : "0"
             "strict" : "0"
             "Data::Dumper" : "0"
-            "XS::Install" : "0"
          }
       }
    },
