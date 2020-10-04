@@ -1109,7 +1109,7 @@ lorcon_multi_get_next_interface(ctx, intf)
 CODE:
 	if (intf == NULL){
         	return ctx->interfaces;
-	}else{
+	}
 RETVAL = newSVpv(intf->next, 0);	
 OUTPUT:
 RETVAL
