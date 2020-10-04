@@ -8,4 +8,4 @@ REALTODO:
 - write small pdf about every module with the help of community
 - fix some C code wich still crash
 - implement tx80211_decodepkt function
-
+- decide if static linking lorcon2.so perl's object, this will be a first pass for creating an independing Air::Lorcon2 library (from originary lorcon2)
