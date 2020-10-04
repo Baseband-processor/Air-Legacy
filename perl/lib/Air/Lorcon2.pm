@@ -1379,8 +1379,8 @@ our %EXPORT_TAGS = (
       tx80211_close
       tx80211_decodepkt
       nl80211_ack_cb
-      _floatchan2int
-      _iwfreq2float
+      floatchan2int
+      iwfreq2float
  )],
    suites => [qw(
        WEP40
