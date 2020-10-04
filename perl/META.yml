@@ -1,7 +1,7 @@
 ---
 abstract: 'A fast, portable and efficient library based on Lorcon2. Written in XS for perl penetration tester and wireless-security experts'
 author:
-  - 'Edoardo Mantovani, aka BASEBAND <BASEBAND_at_cpan.org>'
+  - 'Edoardo Mantovani, aka BASEBAND <Baseband@cpan.org>'
 build_requires:
   ExtUtils::MakeMaker: '0'
 configure_requires:
@@ -22,6 +22,5 @@ requires:
   Net::Pcap: '0'
   strict: '0'
   Data::Dumper: '0'
-  XS::Install: '0'
   perl: '5.22.1'
 version: '27.75'
