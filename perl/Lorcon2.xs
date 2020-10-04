@@ -139,9 +139,9 @@ typedef struct  nlmsgerr NLMSGERR;
 typedef struct {
 	int 	nm_protocol;
 	int 	nm_flags;
-	struct sockaddr_nl 	nm_src;
-	struct sockaddr_nl 	nm_dst;
-	struct ucred 	nm_creds;
+	struct sockaddr_nl *nm_src;
+	struct sockaddr_nl *nm_dst;
+	struct ucred *nm_creds;
 	NLMSGHDR * 	nm_nlh;
 	size_t 	nm_size;
 	int 	nm_refcnt;
@@ -1055,7 +1055,7 @@ CODE:
 	 if (context->getchan_ht_cb == NULL) {
 		return -1;
     }else{
-    return (*(context->getchan_ht_cb))(context, ret_channel);
+    return (*(context->getchan_ht_cb))(context, channel);
 	 }
 
 int 
