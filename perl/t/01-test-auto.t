@@ -1,3 +1,5 @@
+#!/usr/bin/perl
+
 # Made by Edoardo Mantovani, 2020
 
 # Simple lorcon_auto_driver tester
