@@ -15,7 +15,6 @@ WriteMakefile(
    VERSION_FROM => 'lib/Air/Lorcon2.pm',
    LIBS => ['-L/lib -L/usr/lib -L/usr/local/lib -llorcon2'],
    INC => '-I/include -I/usr/include -I/usr/local/include',
-   MIN_PERL_VERSION => '5.22.1',
    PREREQ_PM => {
       Net::MAC =>  0,
       Net::Pcap => 0,
