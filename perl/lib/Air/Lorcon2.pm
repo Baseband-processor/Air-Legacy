@@ -1,3 +1,5 @@
+#!usr/bin/perl
+
 package Air::Lorcon2;
 
 # Made by Edoardo Mantovani, 2020
