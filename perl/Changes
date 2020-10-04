@@ -8,6 +8,7 @@ Revision history for Perl extension Air::Lorcon2.
   - toggled donation tag and modified markdown graphic
   - updated 01-test-auto.t: rewritten using Test::More
   - updated 02-test-consts.t: rewritten using Test::More
+  - updated 03-test-detection.t: rewritten using Test::More
   
   - updated 18-test-android.t: rewritten using Test::More
   - fix minor bugs and added C back-end for the following functions:
