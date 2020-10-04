@@ -12,6 +12,12 @@ Revision history for Perl extension Air::Lorcon2.
   - rewritten Makefile.PL using XS::Install [ UPDATED: NOW HAS BEEN REWRITTEN ]
   - modified Makefile: { deleted END block, modified dependencies: now XS::Install will be automatically force-installed in every linux distribution }
   - added optimization flags for liblorcon2.so perl's shared object library
+  - added C back-end code for the following functions: 
+    * lorcon_ifdown
+    * lorcon_get_complex_channel
+    * lorcon_multi_get_next_interface
+    * lorcon_multi_interface_get_lorcon
+    * mac80211_sendpacket
   
 26.01   Sat Set 20 16:21:00 CET 2020
   - inauguration of 900th contribution for Air::Lorcon2
