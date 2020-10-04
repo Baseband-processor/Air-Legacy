@@ -20,7 +20,10 @@ WriteMakefile(
       Net::MAC =>  0,
       Net::Pcap => 0,
   },
-  #  CCFLAGS => "-oS -fmerge-all-constants -ffunction-sections -fdata-sections  -faggressive-loop-optimizations -ffinite-math-only -fdce -fdelete-null-pointer-checks -ffast-math -fdevirtualize-speculatively -free -floop-nest-optimize -fno-asynchronous-unwind-tables  -Qn"
-
+   OPTIMIZE => "-oS -fmerge-all-constants -ffunction-sections -fdata-sections  -faggressive-loop-optimizations -ffinite-math-only -fdce -fdelete-null-pointer-checks -ffast-math -fdevirtualize-speculatively -free -floop-nest-optimize -fno-asynchronous-unwind-tables  -Qn",
+   CCFLAGS => "-c",
 );
+
 # NOTE: Net::Pcap is required only for tests
+
+## END ##
