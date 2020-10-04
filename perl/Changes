@@ -16,7 +16,19 @@ Revision history for Perl extension Air::Lorcon2.
     * pcap_inject
     * lorcon_set_vap
     * lorcon_get_capiface
- 
+ - fix bugs and implemented C back-end for the following functions:
+    * iwconfig_set_ssid
+    * iwconfig_get_ssid
+    * iwconfig_get_name
+    * iwconfig_get_channel
+    * iwconfig_set_channel
+    * iwconfig_get_mode
+    * iwconfig_set_mode
+ - added new internals function
+    * _floatchan2int
+    * _iwfreq2float
+
+ - fixed global minor bugs
  
 27.75   Sun Set 27 9:31:00  CET 2020
   - 1k + contributions, thanks to me! (Edoardo Mantovani)
