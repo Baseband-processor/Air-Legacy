@@ -193,7 +193,14 @@ typedef struct nl80211_channel_list {
 typedef unsigned int SOCKET;
 #endif
 
-// typedef unsigned int SOCKET;
+typedef struct {
+	union
+	{
+		char	ifrn_name[IFNAMSIZ];	/* if name, e.g. "eth0" */
+	} ifr_ifrn;
+	union	iwreq_data	u;
+}iwreq;
+
 
 typedef struct fd_set {
   u_int  fd_count;
