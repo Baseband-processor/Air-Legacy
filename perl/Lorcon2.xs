@@ -737,8 +737,13 @@ void
 lorcon_set_vap(context, vap)
       AirLorcon *context
       const char *vap
- 
-		
+ CODE:
+  if (context->vapname != NULL){
+        Safefree(context->vapname);
+  }else{
+    context->vapname = savepv(vap);
+  }
+
 const char *
 lorcon_get_vap(context)
       AirLorcon *context
@@ -746,7 +751,12 @@ lorcon_get_vap(context)
 const char *
 lorcon_get_capiface(context)
       AirLorcon *context
-
+CODE:
+	if (context->vapname){
+		return newSVpv(context->vapname, 0);
+	}else{
+	return newSVpv(context->ifname, 0);
+	}
 
 const char *
 lorcon_get_driver_name(context)
@@ -2511,29 +2521,36 @@ int
 pcap_can_set_rfmon(p)
 	Pcap *p
 CODE:
-	return (p->can_set_rfmon_op(p));
+	return newSVpv(p->can_set_rfmon_op(p), 0);
 
 #define PCAP_ERROR_ACTIVATED		-4
 
-
-	
 int
 pcap_set_rfmon(p, rfmon)
 	Pcap *p
 	int rfmon
 CODE:
-	if (p->activated){
+	if(! p->activated){
 		return (PCAP_ERROR_ACTIVATED);
 	}
 	p->opt->rfmon = rfmon;
-	return (0);
+	return 0;
 
 int
 pcap_inject(p, buf, size)
 	Pcap *p
 	const void *buf
 	size_t size
+CODE:
+	if (size > INT_MAX) {
+		return (PCAP_ERROR);
+	}
 
+	if (size == 0) {
+		return (PCAP_ERROR);
+	}
+
+	return(p->inject_op(p, buf, (int)size));
 
 	
 int
