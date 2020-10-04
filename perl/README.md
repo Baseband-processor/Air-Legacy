@@ -1,9 +1,7 @@
-Air::Lorcon2 (second documentation)
+Air::Lorcon2 (FAQ)
 ============================================
 
 ![image of wireless_security](./Network_encryption.jpg)
-
-**FAQ PART**
 
 Why (not) Python?
 ========================================
