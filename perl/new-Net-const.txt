@@ -1,3 +1,7 @@
+# Made by Edoardo Mantovani, 2020
+
+# This file contains latest added constants, every new constats will be added at first here
+
 use constant {
 
 	IF_GET_IFACE => 0x0001,
