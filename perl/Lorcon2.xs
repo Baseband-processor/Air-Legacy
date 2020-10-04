@@ -1040,12 +1040,23 @@ lcpf_randmac(addr, valid)
 int 
 lorcon_ifdown( context )
   AirLorcon *context
-
+CODE:
+	if (context->ifconfig_cb == NULL) {
+		return -1;
+	}else{
+	return (*(context->ifconfig_cb))(context, 0);
+	}
 
 int
 lorcon_get_complex_channel( context, channel )
   AirLorcon *context
   AirLorconChannel *channel
+CODE:
+	 if (context->getchan_ht_cb == NULL) {
+		return -1;
+    }else{
+    return (*(context->getchan_ht_cb))(context, ret_channel);
+	 }
 
 int 
 lorcon_parse_ht_channel(in_chanstr, channel)
@@ -1095,10 +1106,19 @@ AirLorconInterface *
 lorcon_multi_get_next_interface(ctx, intf)
   AirLorconMulti *ctx
   AirLorconInterface *intf
-
+CODE:
+	if (intf == NULL){
+        	return ctx->interfaces;
+	}else{
+RETVAL = newSVpv(intf->next, 0);	
+OUTPUT:
+RETVAL
+	
 AirLorcon *
 lorcon_multi_interface_get_lorcon(intf)
   AirLorconInterface *intf
+CODE:
+      return newSVpv(intf->lorcon_intf, 0);
 
 void 
 lorcon_multi_set_interface_error_handler(ctx, lorcon_interface, handler, aux)
@@ -1188,7 +1208,56 @@ int
 madwifing_sendpacket(context, packet)
 	AirLorcon *context
 	AirLorconPacket *packet
+CODE:
+	int ret;
+	u_char rtap_hdr[] = {
+		0x00, 0x00, 
+		0x0e, 0x00, 
+		0x02, 0xc0, 0x00, 0x00, 
+		0x00,
+		0x00,
+		0x00, 0x00,
+		0x00, 0x00,
+	};
 
+	u_char *bytes;
+	int len, freebytes;
+	struct iovec iov[2];
+	struct msghdr msg = {
+		.msg_name = NULL,
+		.msg_namelen = 0,
+		.msg_iov = iov,
+		.msg_iovlen = 2,
+		.msg_control = NULL,
+		.msg_controllen = 0,
+		.msg_flags = 0,
+	};
+	if (packet->lcpa != NULL) {
+		len = lcpa_size(packet->lcpa);
+		freebytes = 1;
+		bytes = (u_char *) malloc(sizeof(u_char) * len);
+		lcpa_freeze(packet->lcpa, bytes);
+	} else if (packet->packet_header != NULL) {
+		freebytes = 0;
+		len = packet->length_header;
+		bytes = (u_char *) packet->packet_header;
+	} else {
+		freebytes = 0;
+		len = packet->length;
+		bytes = (u_char *) packet->packet_raw;
+	}
+
+	iov[0].iov_base = &rtap_hdr;
+	iov[0].iov_len = sizeof(rtap_hdr);
+	iov[1].iov_base = bytes;
+	iov[1].iov_len = len;
+	ret = sendmsg(context->inject_fd, &msg, 0);
+
+	if (freebytes){
+		Safefree(bytes);
+	}
+	return ret;
+		
 int 
 madwifing_openmon_cb(context)
 	AirLorcon *context
