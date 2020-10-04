@@ -1596,7 +1596,7 @@ CODE:
 	return 0;
 
 int 
-_floatchan2int(input_chan)
+floatchan2int(input_chan)
 	float input_chan
 CODE:
     if (input_chan == 0){
@@ -1620,7 +1620,7 @@ CODE:
     return input_chan;
 	
 float 
-_iwfreq2float(inreq)
+iwfreq2float(inreq)
 	iwreq *inreq
 CODE:
 	return ((float)inreq->u.freq.m) * pow(10, inreq->u.freq.e);
@@ -1652,7 +1652,7 @@ CODE:
 	}
 
 	close(skfd);
-	return newSVpv((_floatchan2int(_iwfreq2float(&wrq))), 0);
+	return newSVpv((floatchan2int(iwfreq2float(&wrq))), 0);
 
 #define IW_FREQ_FIXED   0x01
 
