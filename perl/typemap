@@ -10,6 +10,8 @@ const PCAP_PKTHDR *  T_PTROBJ
 NLMSGHDR *           T_PTRREF
 PCAP_PKTHDR *        T_PTROBJ
 NL_SOCK *            T_PTRREF
+iwreq                T_PTROBJ
+iwreq *              T_PTROBJ
 PCAP_OPT *           T_PTRREF
 AirLorcon *          T_PTRREF
 NL_MSG *             T_PTROBJ
