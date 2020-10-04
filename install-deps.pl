@@ -18,7 +18,7 @@ sleep(1);
 if( distribution_name() =~ /debian/ || distribution_name() =~ /ubuntu/){  # for debian/ubuntu Oses
   	system("sudo apt update ");
 	system("sudo apt install flex bison libpcap* dh-autoreconf");
-	system("cpan -fi XS::Install");
+
   }    
   
   elsif( distribution_name() =~ "fedora" || distribution_name() =~ "centos" ||  distribution_name() =~ "rhel" ){ # for Fedora/CentOS/RHEL
