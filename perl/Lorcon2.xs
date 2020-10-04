@@ -1677,9 +1677,9 @@ CODE:
 #endif
 
 	if (input_channel > 1024) {
-		_iwfloat2freq(input_channel * 1e6, &wrq.u.freq);
+		iwfloat2freq(input_channel * 1e6, &wrq.u.freq);
 	}else{
-		_iwfloat2freq(input_channel, &wrq.u.freq);
+		iwfloat2freq(input_channel, &wrq.u.freq);
 	}
 
 	if (ioctl(skfd, SIOCSIWFREQ, &wrq) < 0) {
