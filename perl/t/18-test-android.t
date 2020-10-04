@@ -5,17 +5,8 @@
 
 use strict;
 no strict 'refs';
-
-use Test;
-
-BEGIN{ plan tests => 1 };
 use Config;
-
 if( $Config{osname} =~ "android"){
-  # detect if it's possible to use tcpdump
-  if (!`tcpdump -v` ){
-    ok(0);
-    }
-  }else{ 
-    ok(1);
-    }
+  use Test::More skip_all => "OS is not android!";
+}else{
+  ok 1;
