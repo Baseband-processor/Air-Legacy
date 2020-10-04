@@ -1589,7 +1589,7 @@ CODE:
 int 
 _floatchan2int(input_chan)
 	float input_chan
-{
+CODE:
     if (input_chan == 0){
         return 0;
 	}
