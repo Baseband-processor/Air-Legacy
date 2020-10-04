@@ -9,6 +9,8 @@ Revision history for Perl extension Air::Lorcon2.
   - updated 01-test-auto.t: rewritten using Test::More
   - updated 02-test-consts.t: rewritten using Test::More
   
+  - updated 18-test-android.t: rewritten using Test::More
+  
 27.75   Sun Set 27 9:31:00  CET 2020
   - 1k + contributions, thanks to me! (Edoardo Mantovani)
   - updated POD documentation
