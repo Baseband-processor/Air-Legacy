@@ -1,2 +1,2 @@
 Stable
-Version 26.01 ![first official version]
+Version 28.00 ![first official version]
