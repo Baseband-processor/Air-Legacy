@@ -33,6 +33,7 @@ Revision history for Perl extension Air::Lorcon2.
  - fixed global minor bugs
  - fixed many test bugs
  - added new links about lorcon C documentation
+ - officially added SIOC-ioctls constants
  
 27.75   Sun Set 27 9:31:00  CET 2020
   - 1k + contributions, thanks to me! (Edoardo Mantovani)
