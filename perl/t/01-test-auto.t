@@ -6,9 +6,9 @@
 
 
 use strict;
-no strict 'ref';
+no strict 'refs';
 use Net::Pcap qw( pcap_lookupdev );
-use Test::More tests => 1;
+use Test::More tests => 2;
 BEGIN { use_ok("Air::Lorcon2") };
 use Air::Lorcon2 qw(:lorcon); 
 
