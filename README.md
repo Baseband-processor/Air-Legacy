@@ -68,15 +68,15 @@ if this return no drivers or if in the output there isn't any wireless card try 
 for now only few network drivers are implemented (i.e mac80211 and madwifing), more on future.
 
 **C DOCUMENTATION**
- 
+
 some resources about C Lorcon2 library are here:
   - _HACKING EXPOSED™ WIRELESS: WIRELESS SECURITY SECRETS & SOLUTIONS SECOND AND THIRD EDITION_ 
-  - https://www.willhackforsushi.com/presentations/shmoocon2007.pdf
-  - https://github.com/kismetwireless/lorcon 
-  - http://blog.opensecurityresearch.com/2012/09/getting-started-with-lorcon.html
-  - https://community.broadcom.com/symantecenterprise/communities/community-home/librarydocuments/viewdocument?DocumentKey=ec8602a4-a4ec-4890-8771-9f24cd0bbb4b&CommunityKey=1ecf5f55-9545-44d6-b0f4-4e4a7f5f5e68&tab=librarydocuments
-  - https://www.schneier.com/blog/archives/2006/07/wifi_driver_att.html
-  - http://airpwn.sourceforge.net/Documentation.html
+  - [lorcon 2007 presentation](https://www.willhackforsushi.com/presentations/shmoocon2007.pdf)
+  - [official lorcon2 github repository](https://github.com/kismetwireless/lorcon) 
+  - [getting-started-with-lorcon](http://blog.opensecurityresearch.com/2012/09/getting-started-with-lorcon.html)
+  - [Beginner's Guide to Wireless Auditing ](https://community.broadcom.com/symantecenterprise/communities/community-home/librarydocuments/viewdocument?DocumentKey=ec8602a4-a4ec-4890-8771-9f24cd0bbb4b&CommunityKey=1ecf5f55-9545-44d6-b0f4-4e4a7f5f5e68&tab=librarydocuments)
+  - [Schneier on Security - WiFi Driver Attack](https://www.schneier.com/blog/archives/2006/07/wifi_driver_att.html)
+  - [Airpwn Documentation](http://airpwn.sourceforge.net/Documentation.html)
 
 but, as *Mike Kershaw* said:
 
