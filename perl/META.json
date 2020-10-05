@@ -1,5 +1,5 @@
 {
-   "abstract" : "A fast, portable and efficient library based on Lorcon2. Written in XS for perl penetration tester and wireless-security experts",
+   "abstract" : "Air::Lorcon2: A fast, portable and efficient library based on Lorcon2. Written in XS for perl penetration tester and wireless-security experts",
    "author" : [
       "Edoardo Mantovani aka Baseband"
    ],
@@ -32,7 +32,6 @@
       },
       "runtime" : {
          "requires" : {
-            "perl" : "5.22.1"
             "Net::MAC" : "0"
             "Net::Pcap" : "0"
             "strict" : "0"
