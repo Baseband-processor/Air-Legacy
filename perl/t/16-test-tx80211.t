@@ -7,13 +7,13 @@ use strict;
 no warnings;
 
 use Data::Dumper qw( Dumper );
-use Test;
-BEGIN{ plan tests => 1 };
+use Test::More tests => 1;
 
 use Air::Lorcon2 qw( :lorcon );
 
-if( ! Dumper( tx80211_getcardlist() ) ){
-  ok(0);
+my $Cardlist = Dumper( tx80211_getcardlist() );
+if ( undef( @{  $Cardlist  } ) ){
+  fail("16-test-tx80211.t");
 }else{
-  ok(1);
-}
+  ok 1;
+  }
