@@ -10,7 +10,9 @@ Revision history for Perl extension Air::Lorcon2.
   - updated 02-test-consts.t: rewritten using Test::More
   - updated 03-test-detection.t: rewritten using Test::More
   
+  - updated 16-test-tx80211.t: rewritten using Test::More
   - updated 18-test-android.t: rewritten using Test::More
+  
   - fix minor bugs and added C back-end for the following functions:
     * pcap_can_set_rfmon
     * pcap_inject
