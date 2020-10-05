@@ -9,7 +9,7 @@ no warnings;
 use Test;
 
 BEGIN{ plan tests => 152 };
-use Air::Lorcon2 qw( :suites :ieee802_11 :network_const  :tx_80211  :wifi_mask :requests  :radiotap  :status :rate :extrapacket :channel :consts  );
+use Air::Lorcon2 qw( :suites :ieee802_11 :ioctls :network_const  :tx_80211  :wifi_mask :requests  :radiotap  :status :rate :extrapacket :channel :consts  );
 
 my @Lorcon_Costants = qw(
       WEP_CRC_TABLE
