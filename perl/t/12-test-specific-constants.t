@@ -4,7 +4,7 @@
 # easy test which takes 100 random functions and tests if returns some value
 
 use strict;
-use strict 'subs';
+no strict 'subs';
 no warnings;
 use Test;
 
