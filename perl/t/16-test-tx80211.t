@@ -4,6 +4,7 @@
 # simple test utility for tx80211_getcardlist function
 
 use strict;
+no strict 'refs';
 no warnings;
 
 use Data::Dumper qw( Dumper );
