@@ -8,7 +8,7 @@ no strict 'subs';
 use Data::Dumper qw(Dumper);
 use Test;
 
-BEGIN{ plan tests => 1 };
+BEGIN{ plan tests => 4 };
 
 if ($<) {
     die "Error: test not executed as root\n";
@@ -27,23 +27,11 @@ my $driver = "tuntap"; # test basic tuntap device
 
 my $drv = lorcon_find_driver( $driver );
 
-if(undef( $drv ) ){
-  ok(0);
-}else{
-  ok(1);
-}
-
 my $context = lorcon_create( $pcap_interface, $drv ) or die();
-
 
 my $lcpa = lcpa_init(); # create lcpa type
 my $Packet = lorcon_packet_from_lcpa( $context, $lcpa ); # crafted lorcon_packet_t type
 
-if( undef( $Packet ) ){
-  ok(0);
-}else{
-  ok(1);
-}
 
 my $channel = rand(10); # set the maximun channel to 10
 if( ! lorcon_packet_set_channel( $Packet, $channel ) ){ # try to set the channel for sending the packet
