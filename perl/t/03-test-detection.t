@@ -5,7 +5,7 @@
 
 use strict;
 no strict 'subs';
-use Test::More tests => 1;
+use Test::More tests => 2;
 
 BEGIN{ use_ok( 'Air::Lorcon2' ); }
 
