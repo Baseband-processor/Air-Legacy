@@ -74,6 +74,9 @@ some resources about C Lorcon2 library are here:
   - https://www.willhackforsushi.com/presentations/shmoocon2007.pdf
   - https://github.com/kismetwireless/lorcon 
   - http://blog.opensecurityresearch.com/2012/09/getting-started-with-lorcon.html
+  - https://community.broadcom.com/symantecenterprise/communities/community-home/librarydocuments/viewdocument?DocumentKey=ec8602a4-a4ec-4890-8771-9f24cd0bbb4b&CommunityKey=1ecf5f55-9545-44d6-b0f4-4e4a7f5f5e68&tab=librarydocuments
+  - https://www.schneier.com/blog/archives/2006/07/wifi_driver_att.html
+  - http://airpwn.sourceforge.net/Documentation.html
 
 but, as *Mike Kershaw* said:
 
