@@ -31,6 +31,7 @@ Revision history for Perl extension Air::Lorcon2.
     * _iwfreq2float
 
  - fixed global minor bugs
+ - added new links about lorcon C documentation
  
 27.75   Sun Set 27 9:31:00  CET 2020
   - 1k + contributions, thanks to me! (Edoardo Mantovani)
