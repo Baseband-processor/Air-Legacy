@@ -86,12 +86,12 @@ so take advantage of the C open source code.
 
 
 some resources about libnl library are here:
-   - https://www.infradead.org/~tgr/libnl/
-   - https://workshop.netfilter.org/2010/wiki/images/0/0d/Libmnl.pdf
-   - https://github.com/thom311/libnl
+   - [libnl official site](https://www.infradead.org/~tgr/libnl/)
+   - [Libmnl: minimalistic library for Netlink developers](https://workshop.netfilter.org/2010/wiki/images/0/0d/Libmnl.pdf)
+   - [libnl official github repository](https://github.com/thom311/libnl)
    
  Resources about various aspect of wireless protocols:
-   - https://www.cwnp.com/uploads/802-11i_key_management.pdf            
+   - [802.11 Authentication and Key Management](https://www.cwnp.com/uploads/802-11i_key_management.pdf)            
    - [Official Wi-fi standard specifications ](https://www.wi-fi.org/discover-wi-fi/specifications)
    - [LDPA 802.11 guide, 2700+ pages](https://legal.vvv.enseirb-matmeca.fr/download/amichel/%5BStandard%20LDPC%5D%20802.11-2012.pdf)
    
