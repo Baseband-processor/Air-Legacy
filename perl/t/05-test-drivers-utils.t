@@ -27,27 +27,7 @@ my $driver = "tuntap";
 my $drv = lorcon_find_driver( $driver );
 my $context = lorcon_create( $pcap_device, $drv );
 
-if( ! drv_tuntap_init( $context ) ){
-  ok(0);
-}else{
-  ok(1);
-}
-
-## test file device
-
-lorcon_free( $context ); # free $context
-$context = undef;
-$drv = undef;
-
-$driver = "file";
-$drv = lorcon_find_driver( $driver );
-$context = lorcon_create( $pcap_device, $drv );
-
-if( ! drv_file_init( $context ) ){
-  ok(0);
-}else{
-  ok(1);
-}
+drv_tuntap_init( $context );
 
 
 ## TEST CAPABILITIES ##
