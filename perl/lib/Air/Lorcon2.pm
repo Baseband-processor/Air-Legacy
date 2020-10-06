@@ -1728,9 +1728,14 @@ __PACKAGE__->bootstrap($VERSION);
 __END__
 
 =head1 NAME
-Air::Lorcon2  A fast, portable and efficient library based on Lorcon2. Written in XS for perl penetration tester and wireless-security experts
+
+Air::Lorcon2
 
 =head1 SYNOPSIS
+
+Air::Lorcon2 is A fast, portable and efficient perl library based on Lorcon2. 
+Written in XS for perl penetration tester and wireless-security experts, it offers around 240 functions related to the packet crafting, multi-interface sniffing and even more!
+
 
 use strict;
 use Net::Pcap qw( pcap_lookupdev );
