@@ -28,10 +28,8 @@ my $logo = << "end_logo";
 end_logo
 
 print color("green"), "Your Operating system is $Config{osname}\n";
-print colored ($logo, 'bold blue on_white');
+print colored ($logo, 'bold red on_black');
 
-# reset color
-print color('reset');
 
 
 sleep(1);
