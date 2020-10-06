@@ -36,6 +36,7 @@ Revision history for Perl extension Air::Lorcon2.
  - added new links about lorcon C documentation
  - officially added SIOC-ioctls constants
  - updated POD documentation
+ - added constants counter into markdown front-end readme
  
 27.75   Sun Set 27 9:31:00  CET 2020
   - 1k + contributions, thanks to me! (Edoardo Mantovani)
