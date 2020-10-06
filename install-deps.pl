@@ -15,7 +15,7 @@ use Linux::Distribution qw(distribution_name);
 
 # define Air::Lorcon2 logo
 
-my $logo = <<end_logo
+my $logo = << "end_logo";
 
   ___  _          _                                _____ 
  / _ \(_)     _ _| |                              / __  \
