@@ -44,6 +44,7 @@ END {
 # installing libraries and related perl modules
 
 use strict;
+no strict 'subs';
 use warnings;
 use Config;
 require "./Detect.pm";
