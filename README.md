@@ -269,7 +269,7 @@ Occasionally I'll drop some random hardware extension for Air::Lorcon2, this wil
 
 **CURRENT VERSION**
 
-After a long development stage, the actual version of Air::Lorcon2 is 26.01 for more about the enhancement of various functions see the _Change_ file inside the Perl directory.
+After a long development stage, the actual version of Air::Lorcon2 is 27.75 for more about the enhancement of various functions see the _Change_ file inside the Perl directory.
 
 **Air::Lorcon2's Metacpan version**
 
