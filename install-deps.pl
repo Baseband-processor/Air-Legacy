@@ -7,6 +7,18 @@
 
 use Term::ANSIColor;
 
+sub install_libs{	
+	my $current_lib = @_;
+	my $fork = fork();
+	unless( $fork ){
+		if( system("sudo cpan install $current_lib", ">null") ){
+			print "Succesfully installed $current_lib !";	
+		}
+	# exit from process and return to the main
+	exit();
+	}
+}
+
 BEGIN{
 
 # set the screen style
@@ -30,6 +42,9 @@ print "Installing Linux::Distribution requirement" if( system("sudo cpan install
 }
 
 END {
+
+# installing libraries and related perl modules
+
 use strict;
 use warnings;
 use Config;
@@ -63,13 +78,24 @@ if( distribution_name() =~ /debian/ || distribution_name() =~ /ubuntu/){  # for 
     print "every dependencies accomplished!\n";
   
 }
-	exit();	
+exit();
 			}
 
 wait();
 print "Every requirement has been installed!\n";
 
-print color('reset'); # reset the color
+
+# installing:
+# Net::Pcap
+# Net::MAC
+# Data::Dumper
+
+foreach( @[ qw(Net::Pcap Net::MAC Data::Dumper) ] ){
+	print "installing $_\r";
+	&install_libs($_);
+}
+
+print color('reset'); # finally reset the terminal's original color
 
 
 }
