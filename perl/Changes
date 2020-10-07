@@ -38,6 +38,7 @@ Revision history for Perl extension Air::Lorcon2.
  - updated POD documentation
  - added constants counter into markdown front-end readme
  - completely deleted perl v 5.22.1 requirement
+ - updated perl installation script: now has a better graphic and has also the pre-requisites auto-installer working in background
  
 27.75   Sun Set 27 9:31:00  CET 2020
   - 1k + contributions, thanks to me! (Edoardo Mantovani)
