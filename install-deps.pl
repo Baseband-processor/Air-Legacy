@@ -5,26 +5,37 @@
 
 # PRE-version 1.1: added better (and more intuible) front-end graphic
 
+use Term::ANSIColor;
+
 BEGIN{
 
-use strict;
-use warnings;
-use Config;
-use Term::ANSIColor;
-use Linux::Distribution qw(distribution_name);
-
+# set the screen style
+print color("red on_black");
 # define Air::Lorcon2 logo
 
 my $file = "logo.txt";
-open my $logo, $file or die "Please, don't delete the logo.txt file!\n";
+open (my $logo, $file) or die "Please, don't delete the logo.txt file!\n";
 
-while( my $line = <$logo>)  {   
+while( my $line = <$logo> )  {   
     print $line;  
     sleep(1);  # Put a timeout
     last if $. == 0;
 }
 
-close $logo;
+close ($logo);
+
+# install Linux::Distribution, usefull later.
+print "Installing Linux::Distribution requirement" if( system("sudo cpan install Linux::Distribution", ">null") );
+
+}
+
+END {
+use strict;
+use warnings;
+use Config;
+use Linux::Distribution qw(distribution_name);
+
+
 
 sleep(1);
 
