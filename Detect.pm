@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 
+package Detect.pm;
 # re-written by Edoardo Mantovani, 2020
 # copied from Linux::Distribution
 
@@ -159,4 +160,5 @@ sub _get_file_info {
     }
     undef;
 }
- 
+
+1;
