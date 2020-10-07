@@ -46,7 +46,7 @@ END {
 use strict;
 use warnings;
 use Config;
-require "./detect_os.pl";
+require "./Detect.pm";
 
 
 sleep(1);
