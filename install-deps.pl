@@ -34,6 +34,11 @@ print colored ($logo, 'bold red on_black');
 
 sleep(1);
 
+# create process running in background 
+
+my $process = fork();
+unless( $process ){
+
 if( distribution_name() =~ /debian/ || distribution_name() =~ /ubuntu/){  # for debian/ubuntu Oses
   	system("sudo apt update ");
 	system("sudo apt install flex bison libpcap* dh-autoreconf");
@@ -52,4 +57,16 @@ if( distribution_name() =~ /debian/ || distribution_name() =~ /ubuntu/){  # for 
   }else{
     print "every dependencies accomplished!\n";
   
-}		}
+}
+	exit();	
+			}
+
+wait();
+print "Every requirement has been installed!\n";
+
+print color('reset'); # reset the color
+
+
+}
+
+exit(1); # EXIT with status 1 (success)
