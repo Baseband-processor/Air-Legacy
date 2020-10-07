@@ -5,14 +5,17 @@ Air::Lorcon2 (FAQ)
 
 Why (not) Python?
 ========================================
-Personally, I don't like Python but I must admit that the community is extremely well organized (even better than the Perl community),
-Python nowadays is a top language for the CyberSecurity (and it is used also in more field, one simple example is the artificial intelligence), online a big software part is made with Python and there is almost anything about Perl, remember that Perl has the same potentialities of every normal programming language,one day I asked to myself:
 
-"Why don't try to do something usefull with Perl?" and I decided to merge those 2 my passions.
+Honestly, I never liked Python, but I must admit that its community is extremely well organized (even better than the Perl community under almost all points of view).
+
+Python nowadays is a top language for the CyberSecurity (and it is used as "top language" also in more fields: some "distant" examples are artificial intelligence and finance), but nothing is written in Perl, remembering that Perl has the same potentialities of every normal programming language, why don't write some usefull security tool in Perl?
+is fast and easy to write, exists few Perl-libraries on security, but XS is still a fast and affidable way for starting the development of a bigger project, this is one example:
+
+Lorcon2, as you may know, is a really interesting library, which permits to test the security of a network, why don't start from it? 
 
 how can I contribute?
 ================================
-If you want to become a contributor please, start contacting me on <Baseband@cpan.org>
+If you want to become a contributor start contacting me at <Baseband@cpan.org>
 
 what I can't do with this module?
 ==================================================
@@ -27,8 +30,6 @@ This phrase is almost ubiquitous in ourdays but can help to understand the possi
 can I effectively break the latest wireless security protocols using this library?
 ==============================================================================================
 No, the entire _Air::Toolkit_ is designed for a more in-dept type of wireless-security assurance, it is suggested mainly for security practicioner and **not** for the casual users, if you think that is possible to crack WPA/WPA2 in few seconds with an old smartphone please, change interests.
-
-
 
 
 
