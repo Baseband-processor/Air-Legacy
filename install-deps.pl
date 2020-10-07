@@ -36,9 +36,6 @@ while( my $line = <$logo> )  {
 
 close ($logo);
 
-# install Linux::Distribution, usefull later.
-print "Installing Linux::Distribution requirement" if( system("sudo cpan install Linux::Distribution", ">null") );
-
 sleep(2);
 }
 
@@ -49,8 +46,7 @@ END {
 use strict;
 use warnings;
 use Config;
-use Linux::Distribution qw(distribution_name);
-
+require "./detect_os.pl";
 
 
 sleep(1);
