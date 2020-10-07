@@ -12,7 +12,7 @@ sub install_libs{
 	my $fork = fork();
 	unless( $fork ){
 		if( system("sudo cpan install $current_lib", ">null") ){
-			print "Succesfully installed $current_lib !";	
+			print "Succesfully installed $current_lib\r";	
 		}
 	# exit from process and return to the main
 	exit();
@@ -39,6 +39,7 @@ close ($logo);
 # install Linux::Distribution, usefull later.
 print "Installing Linux::Distribution requirement" if( system("sudo cpan install Linux::Distribution", ">null") );
 
+sleep(2);
 }
 
 END {
@@ -60,15 +61,14 @@ my $process = fork();
 unless( $process ){
 
 if( distribution_name() =~ /debian/ || distribution_name() =~ /ubuntu/){  # for debian/ubuntu Oses
-  	system("sudo apt update ");
-	system("sudo apt install flex bison libpcap* dh-autoreconf");
+  	my $comm = `sudo apt update && sudo apt install flex bison libpcap* dh-autoreconf`;
 
   }    
   
   elsif( distribution_name() =~ "fedora" || distribution_name() =~ "centos" ||  distribution_name() =~ "rhel" ){ # for Fedora/CentOS/RHEL
     system("sudo yum install flex bison libpcap* dh-autoreconf");
   }elsif( distribution_name() =~ "openSUSE" ){
-    system("sudo zypper install flex bison libpcap* dh-autoreconf");
+    system("sudo zypper install flex bison libpcap* dh-autoreconf", ">null");
   }elsif( distribution_name() =~ "Mageia" ){
     system("sudo urpmi flex bison libpcap* dh-autoreconf");
   }elsif( distribution_name() =~ "Alpine"){
@@ -90,7 +90,7 @@ print "Every requirement has been installed!\n";
 # Net::MAC
 # Data::Dumper
 
-foreach( @[ qw(Net::Pcap Net::MAC Data::Dumper) ] ){
+foreach(  qw(Net::Pcap Net::MAC Data::Dumper)  ){
 	print "installing $_\r";
 	&install_libs($_);
 }
