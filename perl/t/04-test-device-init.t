@@ -3,6 +3,8 @@
 # Made by Edoardo Mantovani, 2020
 # test list drivers function
 
+BEGIN{
+
 use strict;
 no strict 'subs';
 no warnings;
@@ -16,3 +18,5 @@ if( undef( $cards ) ){
 }else{
   ok(1);
 }
+
+  }
