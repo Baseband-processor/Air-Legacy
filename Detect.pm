@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-package Detect.pm;
+package Detect;
 # re-written by Edoardo Mantovani, 2020
 # copied from Linux::Distribution
 
