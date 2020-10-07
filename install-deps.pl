@@ -15,22 +15,16 @@ use Linux::Distribution qw(distribution_name);
 
 # define Air::Lorcon2 logo
 
-my $logo = << "end_logo";
+my $file = "logo.txt";
+open my $logo, $file or die "Please, don't delete the logo.txt file!\n";
 
-  ___  _          _                                _____ 
- / _ \(_)     _ _| |                              / __  \
-/ /_\ \_ _ __(_|_) |     ___  _ __ ___ ___  _ __  `' / /'
-|  _  | | '__|   | |    / _ \| '__/ __/ _ \| '_ \   / /  
-| | | | | |   _ _| |___| (_) | | | (_| (_) | | | |./ /___
-\_| |_/_|_|  (_|_)_____/\___/|_|  \___\___/|_| |_|\_____/
+while( my $line = <$logo>)  {   
+    print $line;  
+    sleep(1);  # Put a timeout
+    last if $. == 0;
+}
 
-
-end_logo
-
-print color("green"), "Your Operating system is $Config{osname}\n";
-print colored ($logo, 'bold red on_black');
-
-
+close $logo;
 
 sleep(1);
 
@@ -69,4 +63,3 @@ print color('reset'); # reset the color
 
 }
 
-exit(1); # EXIT with status 1 (success)
