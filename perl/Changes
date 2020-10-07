@@ -40,7 +40,7 @@ Revision history for Perl extension Air::Lorcon2.
  - completely deleted perl v 5.22.1 requirement
  - updated perl installation script: now has a better graphic and has also the pre-requisites auto-installer working in background
  - updated and extended the FAQ part
- 
+ - still update installation script, now will install even perl libraries requirements
  
 27.75   Sun Set 27 9:31:00  CET 2020
   - 1k + contributions, thanks to me! (Edoardo Mantovani)
