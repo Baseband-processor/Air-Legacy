@@ -9,7 +9,7 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
    NAME => 'Air::Lorcon2',
-   LICENSE => 'perl',
+   LICENSE => 'BSD2',
    AUTHOR => 'Edoardo Mantovani aka Baseband',
    DEFINE => '',
    VERSION_FROM => 'lib/Air/Lorcon2.pm',
