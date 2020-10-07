@@ -5,6 +5,12 @@
 # Made by Edoardo Mantovani, 2020
 # This simple script will search for any libnl installation, find the interested headers and modify the Cthxs.h file, inserting the headers
 
+sub BEGIN{
+
+use strict;
+no strict 'refs';
+use warnings;
+
 my @libnl;
 my $i = 0;
 
@@ -40,3 +46,5 @@ close(HEADER);
 
 print "Everything went well, return code: 0\n";
 die 1;
+
+  }
