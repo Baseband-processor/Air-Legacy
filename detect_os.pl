@@ -78,8 +78,7 @@ sub new {
  
 sub distribution_name {
     my $self = shift || new();
-    my $distro;
-    if ($distro = $self->_get_lsb_info()){
+    if (my $distro = $self->_get_lsb_info()){
         return $distro if ($distro);
     }
  
