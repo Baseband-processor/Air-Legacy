@@ -9,15 +9,11 @@ use Term::ANSIColor;
 
 sub install_libs{	
 	my $current_lib = @_;
-	my $fork = fork();
-	unless( $fork ){
-		if( system("sudo cpan install $current_lib", ">null") ){
+		if(system("sudo cpan install $current_lib", ">null") ){
 			print "Succesfully installed $current_lib\r";	
 		}
-	# exit from process and return to the main
-	exit();
-	}
 }
+
 
 BEGIN{
 
