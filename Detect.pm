@@ -5,6 +5,7 @@ package Detect;
 # copied from Linux::Distribution
 
 use strict;
+no strict 'refs';
 use warnings;
  
  
