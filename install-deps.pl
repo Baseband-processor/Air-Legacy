@@ -71,10 +71,10 @@ print "Every requirement has been installed!\n";
 # Net::Pcap
 # Net::MAC
 # Data::Dumper
+
 sub install_libs{	
-	my $current_lib = @_;
-		if(system("sudo cpan install $current_lib >/dev/null") ){
-			print colored(['bright_red on_black'],"Succesfully installed $current_lib", "\r");	
+		if(system("sudo cpan -fi  @_ >/dev/null") ){
+			print colored(['bright_red on_black'],"Succesfully installed @_", "\r");	
 		}
 }
 
