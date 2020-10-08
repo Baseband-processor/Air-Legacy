@@ -56,14 +56,11 @@ sleep(1);
 
 # create process running in background 
 
-my $process = fork();
-unless( $process ){
 
 if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /ubuntu/){  # for debian/ubuntu Oses
   	my $comm = `sudo apt update && sudo apt install flex bison libpcap* dh-autoreconf`;
 
-  }    
-  
+  }
   elsif( Detect->distribution_name() =~ "fedora" || Detect->distribution_name() =~ "centos" ||  Detect->distribution_name() =~ "rhel" ){ # for Fedora/CentOS/RHEL
     system("sudo yum install flex bison libpcap* dh-autoreconf");
   }elsif( Detect->distribution_name() =~ "openSUSE" ){
@@ -73,14 +70,8 @@ if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /u
   }elsif( Detect->distribution_name() =~ "Alpine"){
     system("sudo apk add flex bison libpcap* dh-autoreconf");  
   
-  }else{
-    print "every dependencies accomplished!\n";
-  
-}
-exit();
-			}
+  }
 
-wait();
 print "Every requirement has been installed!\n";
 
 
