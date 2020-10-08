@@ -41,6 +41,8 @@ END {
 
 # installing libraries and related perl modules
 
+$|++;
+
 use strict;
 no strict 'subs';
 no warnings;
@@ -79,10 +81,28 @@ sub install_libs{
 }
 
 foreach(  qw(Net::Pcap Net::MAC Data::Dumper)  ){
+	print &display_load(1); # consider 1 as time var
 	print colored(['green on_black'], "installing $_ ", "\r");
 	&install_libs($_);
 }
 
+sub r_color{
+        my @colors = qw( green yellow blue red black cyan);
+        my $i = int(rand(5));
+        return($colors[$i]);
+
+}
+
+sub display_load{
+	# consider @_ == time
+for(my $value = @_;$value <= 10;$value++);
+foreach( qw( * ⁎ ) ){
+        sleep(1);
+        print color(&r_color), "\b", "[$_]\r";
+}
+	}
+		}
+		
 print color('reset'); # finally reset the terminal's original color
 
 
