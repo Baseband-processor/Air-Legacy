@@ -4,8 +4,7 @@
 # Made by Edoardo Mantovani, 2020
 
 # PRE-version 1.25: added better (and more intuible) front-end graphic
-
-print "\033[2J";
+system("clear");
 
 # redirect error output from STDERR in /dev/null 
 open STDERR, ">/dev/null";
