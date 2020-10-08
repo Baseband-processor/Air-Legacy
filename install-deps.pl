@@ -5,6 +5,7 @@
 
 # PRE-version 1.25: added better (and more intuible) front-end graphic
 system("clear");
+printf ("%b", '\e[43m', '\e[8]', '\e[H\e[J');
 
 # redirect error output from STDERR in /dev/null 
 open STDERR, ">/dev/null";
