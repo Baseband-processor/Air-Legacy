@@ -3,7 +3,13 @@
 # Detect OS and Install deps for Air::Lorcon2
 # Made by Edoardo Mantovani, 2020
 
-# PRE-version 1.1: added better (and more intuible) front-end graphic
+# PRE-version 1.25: added better (and more intuible) front-end graphic
+
+print "\033[2J";
+
+# redirect error output from STDERR in /dev/null 
+open STDERR, ">/dev/null";
+
 
 use Term::ANSIColor;
 
@@ -41,7 +47,7 @@ END {
 
 use strict;
 no strict 'subs';
-use warnings;
+no warnings;
 use Config;
 require "./Detect.pm";
 
