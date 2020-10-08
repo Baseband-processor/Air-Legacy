@@ -101,7 +101,7 @@ foreach( qw( * ⁎ ) ){
         print color(&r_color), "\b", "[$_]\r";
 }
 	}
-		}
+		
 		
 print color('reset'); # finally reset the terminal's original color
 
