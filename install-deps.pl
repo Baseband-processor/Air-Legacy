@@ -47,8 +47,13 @@ no strict 'subs';
 no warnings;
 use Config;
 require "./Detect.pm";
+require "./ProgressBar.pm";
 
 sleep(1);
+
+# First draft for Term::ProgressBar
+
+#my $progress = Term::ProgressBar->new ({count => 10_000});
 
 if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /ubuntu/){  # for debian/ubuntu Oses
 	print colored(['bright_red on_black'], "Installing requisites for GNU Debian!", "\n");
