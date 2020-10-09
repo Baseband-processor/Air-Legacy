@@ -95,7 +95,7 @@ sub r_color{
 
 sub display_load{
 	# consider @_ == time
-for(my $value = @_;$value <= 10;$value++);
+for(my $value = @_;$value <= 10;$value++){
 foreach( qw( * ⁎ ) ){
         sleep(1);
         print color(&r_color), "\b", "[$_]\r";
@@ -108,3 +108,4 @@ print color('reset'); # finally reset the terminal's original color
 
 }
 
+	}
