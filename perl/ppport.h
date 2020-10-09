@@ -4,7 +4,7 @@ my $void = <<'SKIP';
 /*
 ----------------------------------------------------------------------
 
-    ppport.h -- Perl/Pollution/Portability Version 3.60
+    ppport.h -- Perl/Pollution/Portability Version 3.60_02
 
     Automatically created by Devel::PPPort running under perl 5.022001.
 
@@ -21,7 +21,7 @@ SKIP
 
 =head1 NAME
 
-ppport.h - Perl/Pollution/Portability version 3.60
+ppport.h - Perl/Pollution/Portability version 3.60_02
 
 =head1 SYNOPSIS
 
@@ -270,6 +270,8 @@ same function or variable in your project.
     Function / Variable       Static Request               Global Request
     -----------------------------------------------------------------------------------------
     caller_cx()               NEED_caller_cx               NEED_caller_cx_GLOBAL
+    ck_warner()               NEED_ck_warner               NEED_ck_warner_GLOBAL
+    ck_warner_d()             NEED_ck_warner_d             NEED_ck_warner_d_GLOBAL
     croak_xs_usage()          NEED_croak_xs_usage          NEED_croak_xs_usage_GLOBAL
     die_sv()                  NEED_die_sv                  NEED_die_sv_GLOBAL
     eval_pv()                 NEED_eval_pv                 NEED_eval_pv_GLOBAL
@@ -581,7 +583,7 @@ BEGIN { require warnings if "$]" > '5.006' }
 # Disable broken TRIE-optimization
 BEGIN { eval '${^RE_TRIE_MAXBUF} = -1' if "$]" >= "5.009004" && "$]" <= "5.009005"}
 
-my $VERSION = 3.60;
+my $VERSION = 3.60_02;
 
 my %opt = (
   quiet     => 0,
@@ -1351,19 +1353,19 @@ ck_entersub_args_core|||iu
 ck_entersub_args_list|5.013006|5.013006|
 ck_entersub_args_proto|5.013006|5.013006|
 ck_entersub_args_proto_or_list|5.013006|5.013006|
-ckWARN2|5.006000|5.006000|
-ckWARN2_d|5.006000|5.006000|
-ckWARN3|5.007003|5.007003|
-ckWARN3_d|5.007003|5.007003|
-ckWARN4|5.007003|5.007003|
-ckWARN4_d|5.007003|5.007003|
+ckWARN2|5.006000|5.006000|p
+ckWARN2_d|5.006000|5.006000|p
+ckWARN3|5.007003|5.007003|p
+ckWARN3_d|5.007003|5.007003|p
+ckWARN4|5.007003|5.007003|p
+ckWARN4_d|5.007003|5.007003|p
 ckWARN|5.006000|5.003007|p
 ckwarn_common|5.011001||Viu
 ckwarn|||cu
-ckWARN_d|5.006000|5.006000|
+ckWARN_d|5.006000|5.006000|p
 ckwarn_d|||cu
-ck_warner|5.011001|5.011001|v
-ck_warner_d|5.011001|5.011001|v
+ck_warner|5.011001|5.011001|pv
+ck_warner_d|5.011001|5.011001|pv
 CLANG_DIAG_IGNORE|5.023006||Viu
 CLANG_DIAG_IGNORE_DECL|5.027007||Viu
 CLANG_DIAG_IGNORE_STMT|5.027007||Viu
@@ -1919,7 +1921,7 @@ DEBUG_y_TEST|5.031007||Viu
 DEBUG_yv|5.031007||Viu
 DEBUG_yv_TEST|5.031007||Viu
 DEBUG_ZAPHOD32_HASH|5.027001||Viu
-DECLARATION_FOR_LC_NUMERIC_MANIPULATION|5.021010|5.021010|
+DECLARATION_FOR_LC_NUMERIC_MANIPULATION|5.021010|5.021010|p
 DECLARE_AND_GET_RE_DEBUG_FLAGS|5.031010||Viu
 DECLARE_AND_GET_RE_DEBUG_FLAGS_NON_REGEX|5.031010||Viu
 DEFAULT_INC_EXCLUDES_DOT|5.025011|5.025011|Vn
@@ -4382,8 +4384,8 @@ LB_RI_then_RI|5.025003||Viu
 LB_SP_foo|5.023007||Viu
 LB_SY_or_IS_then_various|5.023007||Viu
 LB_various_then_PO_or_PR|5.023007||Viu
-LC_NUMERIC_LOCK|5.027009||Viu
-LC_NUMERIC_UNLOCK|5.027009||Viu
+LC_NUMERIC_LOCK|5.027009||pViu
+LC_NUMERIC_UNLOCK|5.027009||pViu
 LDBL_DIG|5.006000||Viu
 LEAVE|5.003007|5.003007|
 leave_adjust_stacks|5.023008|5.023008|xu
@@ -4445,8 +4447,8 @@ LOCALTIME_R_NEEDS_TZSET|5.010000|5.010000|Vn
 LOCALTIME_R_PROTO|5.008000|5.008000|Vn
 LOCK_DOLLARZERO_MUTEX|5.008001||Viu
 lockf|5.006000||Viu
-LOCK_LC_NUMERIC_STANDARD|5.021010||Viu
-LOCK_NUMERIC_STANDARD|5.021001||Viu
+LOCK_LC_NUMERIC_STANDARD|5.021010||pViu
+LOCK_NUMERIC_STANDARD|5.021001||pViu
 LOC_SED|5.003007|5.003007|Vn
 LOGICAL|5.005000||Viu
 LONGDBLINFBYTES|5.023000|5.023000|Vn
@@ -4765,11 +4767,11 @@ multiconcat_stringify|5.027006||cViu
 multideref_stringify|5.021009||cViu
 MULTILINE_PAT_MOD|5.009005||Viu
 MULTIPLICITY|5.006000|5.006000|Vn
-MUTABLE_AV|5.010001|5.010001|
-MUTABLE_CV|5.010001|5.010001|
-MUTABLE_GV|5.010001|5.010001|
-MUTABLE_HV|5.010001|5.010001|
-MUTABLE_IO|5.010001|5.010001|
+MUTABLE_AV|5.010001|5.010001|p
+MUTABLE_CV|5.010001|5.010001|p
+MUTABLE_GV|5.010001|5.010001|p
+MUTABLE_HV|5.010001|5.010001|p
+MUTABLE_IO|5.010001|5.010001|p
 MUTABLE_PTR|5.010001|5.003007|p
 MUTABLE_SV|5.010001|5.003007|p
 MUTEX_DESTROY|5.005000||Viu
@@ -5381,9 +5383,9 @@ package_version|5.011001||Viu
 pack_cat|5.007003|5.007003|d
 packlist|5.008001|5.008001|
 pack_rec|5.008001||Viu
-packWARN2|5.007003|5.007003|
-packWARN3|5.007003|5.007003|
-packWARN4|5.007003|5.007003|
+packWARN2|5.007003|5.007003|p
+packWARN3|5.007003|5.007003|p
+packWARN4|5.007003|5.007003|p
 packWARN|5.007003|5.003007|p
 pad_add_anon|5.008001|5.008001|
 pad_add_name_pv|5.015001|5.015001|
@@ -5528,6 +5530,7 @@ PERL_API_VERSION|5.006000||Viu
 PERL_API_VERSION_STRING|5.013004||Viu
 PERL_ARENA_ROOTS_SIZE|5.009004||Viu
 PERL_ARENA_SIZE|5.009003||Viu
+PERL_ARGS_ASSERT_CROAK_XS_USAGE|||piu
 Perl_asin|5.021004||Viu
 Perl_assert|5.011000||Viu
 perl_assert_ptr|5.027004||Viu
@@ -7273,7 +7276,7 @@ require_tie_mod|5.009005||Viu
 ReREFCNT_dec|5.005000||Viu
 ReREFCNT_inc|5.005000||Viu
 RESTORE_ERRNO|5.010001||Vi
-RESTORE_LC_NUMERIC|5.021010|5.021010|
+RESTORE_LC_NUMERIC|5.021010|5.021010|p
 restore_magic|5.009003||Viu
 restore_switched_locale|5.027009||Viu
 RE_SV_DUMPLEN|5.009004||Viu
@@ -7989,10 +7992,10 @@ STMT_END|5.003007|5.003007|pV
 STMT_START|5.003007|5.003007|pV
 STOREFEATUREBITSHH|5.031006||Viu
 STORE_LC_NUMERIC_FORCE_TO_UNDERLYING|5.021010|5.021010|
-STORE_LC_NUMERIC_SET_STANDARD|5.027009||Viu
+STORE_LC_NUMERIC_SET_STANDARD|5.027009||pViu
 STORE_LC_NUMERIC_SET_TO_NEEDED|5.021010|5.021010|
 STORE_LC_NUMERIC_SET_TO_NEEDED_IN|5.031003|5.031003|
-STORE_NUMERIC_SET_STANDARD|5.027009||Viu
+STORE_NUMERIC_SET_STANDARD|5.027009||pViu
 strBEGINs|5.027006||Viu
 strEQ|5.003007|5.003007|
 Strerror|5.003007||Viu
@@ -8457,7 +8460,7 @@ SvPVx_const|5.009003||Viu
 SvPVx_force|5.003007||Viu
 SvPVX_mutable|5.009003|5.003007|p
 SvPVx_nolen|5.009003||Viu
-SvPVx_nolen_const|5.009003||Viu
+SvPVx_nolen_const|5.009003||pViu
 SvPVXtrue|5.017002||Viu
 SvPVXx|5.003007||Viu
 SvREADONLY|5.003007|5.003007|
@@ -9037,8 +9040,8 @@ UNLINK|5.003007||Viu
 unlink|5.005000||Viu
 unlnk|5.003007||cVu
 UNLOCK_DOLLARZERO_MUTEX|5.008001||Viu
-UNLOCK_LC_NUMERIC_STANDARD|5.021010||Viu
-UNLOCK_NUMERIC_STANDARD|5.021001||Viu
+UNLOCK_LC_NUMERIC_STANDARD|5.021010||pViu
+UNLOCK_NUMERIC_STANDARD|5.021001||pViu
 UNOP_AUX_item_sv|5.021007||Viu
 unpack_rec|5.008001||Viu
 unpack_str|5.007003|5.007003|d
@@ -9317,7 +9320,7 @@ VUTIL_REPLACE_CORE|5.019008||Viu
 vverify|5.009003|5.009003|
 VVERIFY|5.019008||Viu
 vwarn|5.006000|5.006000|
-vwarner|5.006000|5.006000|
+vwarner|5.006000|5.006000|p
 wait4pid|5.003007||Viu
 wait|5.005000||Viu
 want_vtbl_bm|5.015000||Viu
@@ -10450,7 +10453,7 @@ __DATA__
 #define DPPP_CAT2(x,y) CAT2(x,y)
 #define DPPP_(name) DPPP_CAT2(DPPP_NAMESPACE, name)
 
-#define D_PPP_RELEASE_DATE 1597104000 /* 2020-08-11 */
+#define D_PPP_RELEASE_DATE 1602028800 /* 2020-10-07 */
 
 #if ! defined(PERL_REVISION) && ! defined(PERL_VERSION_MAJOR)
 #  if   !   defined(__PATCHLEVEL_H_INCLUDED__)                                  \
@@ -11167,11 +11170,6 @@ foo
 #endif
 #endif
 
-/* Hint: newCONSTSUB
- * Returns a CV* as of perl-5.7.1. This return value is not supported
- * by Devel::PPPort.
- */
-
 /* newCONSTSUB from IO.xs is in the core starting with 5.004_63 */
 #if (PERL_BCDVERSION < 0x5004063) && (PERL_BCDVERSION != 0x5004005)
 
@@ -11180,10 +11178,10 @@ foo
 #define NEED_newCONSTSUB
 
 #if defined(NEED_newCONSTSUB)
-static void DPPP_(my_newCONSTSUB)(HV * stash, const char * name, SV * sv);
+static CV * DPPP_(my_newCONSTSUB)(HV * stash, const char * name, SV * sv);
 static
 #else
-extern void DPPP_(my_newCONSTSUB)(HV * stash, const char * name, SV * sv);
+extern CV * DPPP_(my_newCONSTSUB)(HV * stash, const char * name, SV * sv);
 #endif
 
 #if defined(NEED_newCONSTSUB) || defined(NEED_newCONSTSUB_GLOBAL)
@@ -11199,9 +11197,10 @@ extern void DPPP_(my_newCONSTSUB)(HV * stash, const char * name, SV * sv);
 /* (There's no PL_parser in perl < 5.005, so this is completely safe)     */
 #define D_PPP_PL_copline PL_copline
 
-void
+CV *
 DPPP_(my_newCONSTSUB)(HV *stash, const char *name, SV *sv)
 {
+        CV *cv;
         U32 oldhints = PL_hints;
         HV *old_cop_stash = PL_curcop->cop_stash;
         HV *old_curstash = PL_curstash;
@@ -11212,7 +11211,7 @@ DPPP_(my_newCONSTSUB)(HV *stash, const char *name, SV *sv)
         if (stash)
                 PL_curstash = PL_curcop->cop_stash = stash;
 
-        newSUB(
+        cv = newSUB(
 
                 start_subparse(FALSE, 0),
 
@@ -11225,6 +11224,8 @@ DPPP_(my_newCONSTSUB)(HV *stash, const char *name, SV *sv)
         PL_curcop->cop_stash = old_cop_stash;
         PL_curstash = old_curstash;
         PL_curcop->cop_line = oldline;
+
+        return cv;
 }
 #endif
 #endif
@@ -11747,7 +11748,7 @@ typedef NVTYPE NV;
 #endif
 #ifndef dAXMARK
 #  define dAXMARK                        I32 ax = POPMARK; \
-                               register SV ** const mark = PL_stack_base + ax++
+                               SV ** const mark = PL_stack_base + ax++
 #endif
 #ifndef XSprePUSH
 #  define XSprePUSH                      (sp = PL_stack_base + ax - 1)
@@ -12950,18 +12951,38 @@ typedef OP* (CPERLscope(*Perl_check_t)) (pTHX_ OP*);
 #endif
 
 #ifndef MUTABLE_PTR
-#if defined(__GNUC__) && !defined(PERL_GCC_BRACE_GROUPS_FORBIDDEN)
+#if defined(PERL_USE_GCC_BRACE_GROUPS)
 #  define MUTABLE_PTR(p) ({ void *_p = (p); _p; })
 #else
 #  define MUTABLE_PTR(p) ((void *) (p))
 #endif
 #endif
+#ifndef MUTABLE_AV
+#  define MUTABLE_AV(p)                  ((AV *)MUTABLE_PTR(p))
+#endif
+
+#ifndef MUTABLE_CV
+#  define MUTABLE_CV(p)                  ((CV *)MUTABLE_PTR(p))
+#endif
+
+#ifndef MUTABLE_GV
+#  define MUTABLE_GV(p)                  ((GV *)MUTABLE_PTR(p))
+#endif
+
+#ifndef MUTABLE_HV
+#  define MUTABLE_HV(p)                  ((HV *)MUTABLE_PTR(p))
+#endif
+
+#ifndef MUTABLE_IO
+#  define MUTABLE_IO(p)                  ((IO *)MUTABLE_PTR(p))
+#endif
+
 #ifndef MUTABLE_SV
 #  define MUTABLE_SV(p)                  ((SV *)MUTABLE_PTR(p))
 #endif
 
 #if (PERL_BCDVERSION >= 0x5004000) && !defined(vnewSVpvf)
-#if defined(__GNUC__) && !defined(PERL_GCC_BRACE_GROUPS_FORBIDDEN)
+#if defined(PERL_USE_GCC_BRACE_GROUPS)
 #  define vnewSVpvf(pat, args) ({ SV *_sv = newSV(0); sv_vsetpvfn(_sv, (pat), strlen((pat)), (args), Null(SV**), 0, Null(bool*)); _sv; })
 #else
 #  define vnewSVpvf(pat, args) ((PL_Sv = newSV(0)), sv_vsetpvfn(PL_Sv, (pat), strlen((pat)), (args), Null(SV**), 0, Null(bool*)), PL_Sv)
@@ -13214,7 +13235,7 @@ DPPP_(my_sv_setpvf_mg_nocontext)(SV * const sv, const char * const pat, ...)
 #  define SV_COW_SHARED_HASH_KEYS        0
 #endif
 
-#if defined(__GNUC__) && !defined(PERL_GCC_BRACE_GROUPS_FORBIDDEN)
+#if defined(PERL_USE_GCC_BRACE_GROUPS)
 #ifndef sv_2pv_flags
 #  define sv_2pv_flags(sv, lp, flags)    ({ SV *_sv = (sv); const I32 _flags = (flags); STRLEN *_lp = lp; _lp = _lp ? : &PL_na; (!(_flags & SV_GMAGIC) && SvGMAGICAL(_sv)) ? ({ char *_pv; SvGMAGICAL_off(_sv); _pv = sv_2pv(_sv, _lp); SvGMAGICAL_on(_sv); _pv; }) : sv_2pv(_sv, _lp); })
 #endif
@@ -13314,6 +13335,18 @@ DPPP_(my_sv_setpvf_mg_nocontext)(SV * const sv, const char * const pat, ...)
                  ((SvFLAGS(sv) & (SVf_POK)) == SVf_POK \
                   ? SvPVX_const(sv) : sv_2pv_flags(sv, D_PPP_SVPV_NOLEN_LP_ARG, SV_GMAGIC|SV_CONST_RETURN))
 #endif
+
+#  if defined(PERL_USE_GCC_BRACE_GROUPS)
+#ifndef SvPVx_nolen_const
+#  define SvPVx_nolen_const(sv)          ({SV *sV_ = (sv); SvPV_nolen_const(sV_); })
+#endif
+
+#  else
+#ifndef SvPVx_nolen_const
+#  define SvPVx_nolen_const(sv)          (PL_Sv = sv, SvPV_nolen_const(PL_Sv))
+#endif
+
+#  endif
 #ifndef SvPV_nomg
 #  define SvPV_nomg(sv, lp)              SvPV_flags(sv, lp, 0)
 #endif
@@ -13527,6 +13560,18 @@ DPPP_(my_sv_setpvf_mg_nocontext)(SV * const sv, const char * const pat, ...)
 #  define packWARN(a)                    (a)
 #endif
 
+#ifndef packWARN2
+#  define packWARN2(a,b)                 (packWARN(a)      << 8 | (b))
+#endif
+
+#ifndef packWARN3
+#  define packWARN3(a,b,c)               (packWARN2(a,b)   << 8 | (c))
+#endif
+
+#ifndef packWARN4
+#  define packWARN4(a,b,c,d)             (packWARN3(a,b,c) << 8 | (d))
+#endif
+
 #ifndef ckWARN
 #  ifdef G_WARN_ON
 #    define  ckWARN(a)                  (PL_dowarn & G_WARN_ON)
@@ -13534,9 +13579,48 @@ DPPP_(my_sv_setpvf_mg_nocontext)(SV * const sv, const char * const pat, ...)
 #    define  ckWARN(a)                  PL_dowarn
 #  endif
 #endif
+#ifndef ckWARN2
+#  define ckWARN2(a,b)                   (ckWARN(a) || ckWARN(b))
+#endif
+
+#ifndef ckWARN3
+#  define ckWARN3(a,b,c)                 (ckWARN(c) || ckWARN2(a,b))
+#endif
+
+#ifndef ckWARN4
+#  define ckWARN4(a,b,c,d)               (ckWARN(d) || ckWARN3(a,b,c))
+#endif
+
+#ifndef ckWARN_d
+#  ifdef isLEXWARN_off
+#    define ckWARN_d(a)  (isLEXWARN_off || ckWARN(a))
+#  else
+#    define ckWARN_d(a)  1
+#  endif
+#endif
+#ifndef ckWARN2_d
+#  define ckWARN2_d(a,b)                 (ckWARN_d(a) || ckWARN_d(b))
+#endif
+
+#ifndef ckWARN3_d
+#  define ckWARN3_d(a,b,c)               (ckWARN_d(c) || ckWARN2_d(a,b))
+#endif
+
+#ifndef ckWARN4_d
+#  define ckWARN4_d(a,b,c,d)             (ckWARN_d(d) || ckWARN3_d(a,b,c))
+#endif
+#ifndef vwarner
+#  define vwarner(err, pat, argsp)       \
+        STMT_START {    SV *sv;                             \
+                        PERL_UNUSED_ARG(err);               \
+                        sv = vnewSVpvf(pat, argsp);         \
+                        sv_2mortal(sv);                     \
+                        warn("%s", SvPV_nolen(sv));         \
+        } STMT_END
+#endif
 
 #if (PERL_BCDVERSION >= 0x5004000) && !defined(warner)
-#if defined(NEED_warner)
+#  if defined(NEED_warner)
 static void DPPP_(my_warner)(U32 err, const char * pat, ...);
 static
 #else
@@ -13551,23 +13635,89 @@ extern void DPPP_(my_warner)(U32 err, const char * pat, ...);
 void
 DPPP_(my_warner)(U32 err, const char *pat, ...)
 {
-  SV *sv;
   va_list args;
-
-  PERL_UNUSED_ARG(err);
-
   va_start(args, pat);
-  sv = vnewSVpvf(pat, &args);
+  vwarner(err, pat, &args);
   va_end(args);
-  sv_2mortal(sv);
-  warn("%s", SvPV_nolen(sv));
 }
 
-#define warner  Perl_warner
+#    define warner  Perl_warner
 
-#define Perl_warner_nocontext  Perl_warner
+#    define Perl_warner_nocontext  Perl_warner
 
+#  endif
 #endif
+
+#if (PERL_BCDVERSION >= 0x5004000) && !defined(ck_warner)
+#  if defined(NEED_ck_warner)
+static void DPPP_(my_ck_warner)(pTHX_ U32 err, const char * pat, ...);
+static
+#else
+extern void DPPP_(my_ck_warner)(pTHX_ U32 err, const char * pat, ...);
+#endif
+
+#if defined(NEED_ck_warner) || defined(NEED_ck_warner_GLOBAL)
+
+#define Perl_ck_warner DPPP_(my_ck_warner)
+
+
+void
+DPPP_(my_ck_warner)(pTHX_ U32 err, const char *pat, ...)
+{
+    va_list args;
+
+    if (   ! ckWARN((err      ) & 0xFF)
+        && ! ckWARN((err >>  8) & 0xFF)
+        && ! ckWARN((err >> 16) & 0xFF)
+        && ! ckWARN((err >> 24) & 0xFF))
+    {
+        return;
+    }
+
+    va_start(args, pat);
+    vwarner(err, pat, &args);
+    va_end(args);
+}
+
+#    define ck_warner  Perl_ck_warner
+#  endif
+#endif
+
+#if (PERL_BCDVERSION >= 0x5004000) && !defined(ck_warner_d)
+#  if defined(NEED_ck_warner_d)
+static void DPPP_(my_ck_warner_d)(pTHX_ U32 err, const char * pat, ...);
+static
+#else
+extern void DPPP_(my_ck_warner_d)(pTHX_ U32 err, const char * pat, ...);
+#endif
+
+#if defined(NEED_ck_warner_d) || defined(NEED_ck_warner_d_GLOBAL)
+
+#define Perl_ck_warner_d DPPP_(my_ck_warner_d)
+
+
+void
+DPPP_(my_ck_warner_d)(pTHX_ U32 err, const char *pat, ...)
+{
+    va_list args;
+
+    if (   ! ckWARN_d((err      ) & 0xFF)
+        && ! ckWARN_d((err >>  8) & 0xFF)
+        && ! ckWARN_d((err >> 16) & 0xFF)
+        && ! ckWARN_d((err >> 24) & 0xFF))
+    {
+        return;
+    }
+
+    va_start(args, pat);
+    vwarner(err, pat, &args);
+    va_end(args);
+}
+
+#    define ck_warner_d  Perl_ck_warner_d
+
+
+#  endif
 #endif
 
 #ifndef IVdf
@@ -13615,7 +13765,7 @@ DPPP_(my_warner)(U32 err, const char *pat, ...)
 #  define newSVuv(uv)                    ((uv) <= IV_MAX ? newSViv((IV)uv) : newSVnv((NV)uv))
 #endif
 
-#if defined(__GNUC__) && !defined(PERL_GCC_BRACE_GROUPS_FORBIDDEN)
+#if defined(PERL_USE_GCC_BRACE_GROUPS)
 #ifndef sv_2uv
 #  define sv_2uv(sv)                     ({ SV *_sv = (sv); (UV) (SvNOK(_sv) ? SvNV(_sv) : sv_2nv(_sv)); })
 #endif
@@ -13638,7 +13788,7 @@ DPPP_(my_warner)(U32 err, const char *pat, ...)
 #  define SvUV(sv)                       (SvIOK(sv) ? SvUVX(sv) : sv_2uv(sv))
 #endif
 
-#if defined(__GNUC__) && !defined(PERL_GCC_BRACE_GROUPS_FORBIDDEN)
+#if defined(PERL_USE_GCC_BRACE_GROUPS)
 #ifndef SvUVx
 #  define SvUVx(sv)                      ({ SV *_sv = (sv)); SvUV(_sv); })
 #endif
@@ -14018,7 +14168,8 @@ extern void DPPP_(my_croak_xs_usage)(const CV * const cv, const char * const par
 #define croak_xs_usage DPPP_(my_croak_xs_usage)
 #define Perl_croak_xs_usage DPPP_(my_croak_xs_usage)
 
-
+#ifndef PERL_ARGS_ASSERT_CROAK_XS_USAGE
+#define PERL_ARGS_ASSERT_CROAK_XS_USAGE assert(cv); assert(params)
 
 void
 DPPP_(my_croak_xs_usage)(const CV *const cv, const char *const params)
@@ -14026,11 +14177,7 @@ DPPP_(my_croak_xs_usage)(const CV *const cv, const char *const params)
     dTHX;
     const GV *const gv = CvGV(cv);
 
-#ifdef PERL_ARGS_ASSERT_CROAK_XS_USAGE
     PERL_ARGS_ASSERT_CROAK_XS_USAGE;
-#else
-     assert(cv); assert(params);
-#endif
 
     if (gv) {
         const char *const gvname = GvNAME(gv);
@@ -14046,6 +14193,7 @@ DPPP_(my_croak_xs_usage)(const CV *const cv, const char *const params)
         croak("Usage: CODE(0x%" UVxf ")(%s)", PTR2UV(cv), params);
     }
 }
+#endif
 #endif
 #endif
 #ifndef mPUSHs
@@ -14148,7 +14296,7 @@ DPPP_(my_croak_xs_usage)(const CV *const cv, const char *const params)
 #  define PERL_LOADMOD_IMPORT_OPS        0x4
 #endif
 
-#if defined(__GNUC__) && !defined(PERL_GCC_BRACE_GROUPS_FORBIDDEN)
+#if defined(PERL_USE_GCC_BRACE_GROUPS)
 # define D_PPP_CROAK_IF_ERROR(cond) ({ SV *_errsv; ((cond) && (_errsv = ERRSV) && (SvROK(_errsv) || SvTRUE(_errsv)) && (croak_sv(_errsv), 1)); })
 #else
 # define D_PPP_CROAK_IF_ERROR(cond) ((cond) && (SvROK(ERRSV) || SvTRUE(ERRSV)) && (croak_sv(ERRSV), 1))
@@ -14173,7 +14321,7 @@ DPPP_(my_croak_xs_usage)(const CV *const cv, const char *const params)
 # ifdef eval_sv
 #  undef eval_sv
 # endif
-# if defined(__GNUC__) && !defined(PERL_GCC_BRACE_GROUPS_FORBIDDEN)
+# if defined(PERL_USE_GCC_BRACE_GROUPS)
 #  define eval_sv(sv, flags) ({ I32 _flags = (flags); I32 _ret = Perl_eval_sv(aTHX_ sv, (_flags & ~G_RETHROW)); D_PPP_CROAK_IF_ERROR(_flags & G_RETHROW); _ret; })
 # else
 #  define eval_sv(sv, flags) ((PL_na = Perl_eval_sv(aTHX_ sv, ((flags) & ~G_RETHROW))), D_PPP_CROAK_IF_ERROR((flags) & G_RETHROW), (I32)PL_na)
@@ -14184,7 +14332,7 @@ DPPP_(my_croak_xs_usage)(const CV *const cv, const char *const params)
 #if (PERL_BCDVERSION < 0x5031002)
 # ifdef eval_pv
 #  undef eval_pv
-#  if defined(__GNUC__) && !defined(PERL_GCC_BRACE_GROUPS_FORBIDDEN)
+#  if defined(PERL_USE_GCC_BRACE_GROUPS)
 #   define eval_pv(p, croak_on_error) ({ SV *_sv = Perl_eval_pv(aTHX_ p, 0); D_PPP_CROAK_IF_ERROR(croak_on_error); _sv; })
 #  else
 #   define eval_pv(p, croak_on_error) ((PL_Sv = Perl_eval_pv(aTHX_ p, 0)), D_PPP_CROAK_IF_ERROR(croak_on_error), PL_Sv)
@@ -14336,7 +14484,7 @@ DPPP_(my_load_module)(U32 flags, SV *name, SV *ver, ...)
 #endif
 
 #ifndef newRV_noinc
-#if defined(__GNUC__) && !defined(PERL_GCC_BRACE_GROUPS_FORBIDDEN)
+#if defined(PERL_USE_GCC_BRACE_GROUPS)
 #  define newRV_noinc(sv) ({ SV *_sv = (SV *)newRV((sv)); SvREFCNT_dec((sv)); _sv; })
 #else
 #  define newRV_noinc(sv) ((PL_Sv = (SV *)newRV((sv))), SvREFCNT_dec((sv)), PL_Sv)
@@ -14520,7 +14668,7 @@ DPPP_(my_load_module)(U32 flags, SV *name, SV *ver, ...)
 #endif
 
 #ifndef newSV_type
-#if defined(__GNUC__) && !defined(PERL_GCC_BRACE_GROUPS_FORBIDDEN)
+#if defined(PERL_USE_GCC_BRACE_GROUPS)
 #  define newSV_type(t) ({ SV *_sv = newSV(0); sv_upgrade(_sv, (t)); _sv; })
 #else
 #  define newSV_type(t) ((PL_Sv = newSV(0)), sv_upgrade(PL_Sv, (t)), PL_Sv)
@@ -14545,7 +14693,7 @@ DPPP_(my_load_module)(U32 flags, SV *name, SV *ver, ...)
 #endif
 
 #ifndef newSVpvn_flags
-#if defined(__GNUC__) && !defined(PERL_GCC_BRACE_GROUPS_FORBIDDEN)
+#if defined(PERL_USE_GCC_BRACE_GROUPS)
 # define newSVpvn_flags(s, len, flags) ({ SV *_sv = newSVpvn(D_PPP_CONSTPV_ARG((s)), (len)); SvFLAGS(_sv) |= ((flags) & SVf_UTF8); ((flags) & SVs_TEMP) ? sv_2mortal(_sv) : _sv; })
 #else
 # define newSVpvn_flags(s, len, flags) ((PL_Sv = newSVpvn(D_PPP_CONSTPV_ARG((s)), (len))), SvFLAGS(PL_Sv) |= ((flags) & SVf_UTF8), (((flags) & SVs_TEMP) ? sv_2mortal(PL_Sv) : PL_Sv))
@@ -14557,7 +14705,7 @@ DPPP_(my_load_module)(U32 flags, SV *name, SV *ver, ...)
 
 #if ( (PERL_BCDVERSION >= 0x5007003) && (PERL_BCDVERSION < 0x5008007) ) || ( (PERL_BCDVERSION >= 0x5009000) && (PERL_BCDVERSION < 0x5009002) )
 #undef sv_setsv_flags
-#if defined(__GNUC__) && !defined(PERL_GCC_BRACE_GROUPS_FORBIDDEN)
+#if defined(PERL_USE_GCC_BRACE_GROUPS)
 #define sv_setsv_flags(dstr, sstr, flags)                                          \
   STMT_START {                                                                     \
     if (((flags) & SV_NOSTEAL) && (sstr) && (SvFLAGS((SV *)(sstr)) & SVs_TEMP)) {  \
@@ -14583,7 +14731,7 @@ DPPP_(my_load_module)(U32 flags, SV *name, SV *ver, ...)
 #endif
 #endif
 
-#if defined(__GNUC__) && !defined(PERL_GCC_BRACE_GROUPS_FORBIDDEN)
+#if defined(PERL_USE_GCC_BRACE_GROUPS)
 #ifndef sv_setsv_flags
 #  define sv_setsv_flags(dstr, sstr, flags) \
   STMT_START {                                                                     \
@@ -14642,7 +14790,7 @@ DPPP_(my_load_module)(U32 flags, SV *name, SV *ver, ...)
 
 #endif
 
-#if defined(__GNUC__) && !defined(PERL_GCC_BRACE_GROUPS_FORBIDDEN)
+#if defined(PERL_USE_GCC_BRACE_GROUPS)
 #ifndef newSVsv_flags
 #  define newSVsv_flags(sv, flags)       ({ SV *_sv = newSV(0); sv_setsv_flags(_sv, (sv), (flags)); _sv; })
 #endif
@@ -14875,7 +15023,7 @@ DPPP_(my_newSVpvn_share)(pTHX_ const char *s, I32 len, U32 hash)
 #endif
 
 #ifdef SVf_IVisUV
-#if defined(__GNUC__) && !defined(PERL_GCC_BRACE_GROUPS_FORBIDDEN)
+#if defined(PERL_USE_GCC_BRACE_GROUPS)
 #ifndef SvIV_nomg
 #  define SvIV_nomg(sv)                  (!SvGMAGICAL((sv)) ? SvIV((sv)) : ({ SV *_sviv = sv_mortalcopy_flags((sv), SV_NOSTEAL); IV _iv = SvIV(_sviv); SvFLAGS((sv)) = (SvFLAGS((sv)) & ~SVf_IVisUV) | (SvFLAGS(_sviv) & SVf_IVisUV); _iv; }))
 #endif
@@ -15242,7 +15390,7 @@ DPPP_dopoptosub_at(const PERL_CONTEXT *cxstk, I32 startingblock)
     I32 i;
 
     for (i = startingblock; i >= 0; i--) {
-	register const PERL_CONTEXT * const cx = &cxstk[i];
+	const PERL_CONTEXT * const cx = &cxstk[i];
 	switch (CxTYPE(cx)) {
 	default:
 	    continue;
@@ -15275,9 +15423,9 @@ extern const PERL_CONTEXT * DPPP_(my_caller_cx)(pTHX_ I32 level, const PERL_CONT
 const PERL_CONTEXT *
 DPPP_(my_caller_cx)(pTHX_ I32 level, const PERL_CONTEXT **dbcxp)
 {
-    register I32 cxix = DPPP_dopoptosub_at(cxstack, cxstack_ix);
-    register const PERL_CONTEXT *cx;
-    register const PERL_CONTEXT *ccstack = cxstack;
+    I32 cxix = DPPP_dopoptosub_at(cxstack, cxstack_ix);
+    const PERL_CONTEXT *cx;
+    const PERL_CONTEXT *ccstack = cxstack;
     const PERL_SI *top_si = PL_curstackinfo;
 
     for (;;) {
@@ -16643,7 +16791,7 @@ DPPP_(my_utf8_to_uvchr_buf)(pTHX_ const U8 *s, const U8 *send, STRLEN *retlen)
    /* Also note that SvGETMAGIC() may change presence of SVf_UTF8 flag */
 #  if (PERL_BCDVERSION < 0x5017005)
 #    undef sv_len_utf8
-#    if defined(__GNUC__) && !defined(PERL_GCC_BRACE_GROUPS_FORBIDDEN)
+#    if defined(PERL_USE_GCC_BRACE_GROUPS)
 #      define sv_len_utf8_nomg(sv) ({ SV *_sv2 = (sv); (SvUTF8(_sv2) ? Perl_sv_len_utf8(aTHX_ (!SvGMAGICAL(_sv2) ? _sv2 : sv_mortalcopy_flags(_sv2, SV_NOSTEAL))) : ({ STRLEN _len; SvPV_nomg(_sv2, _len); _len; })); })
 #      define sv_len_utf8(sv) ({ SV *_sv1 = (sv); SvGETMAGIC(_sv1); sv_len_utf8_nomg(_sv1); })
 #    else
@@ -16651,7 +16799,7 @@ DPPP_(my_utf8_to_uvchr_buf)(pTHX_ const U8 *s, const U8 *send, STRLEN *retlen)
 #      define sv_len_utf8(sv) (PL_Sv = (sv), SvGETMAGIC(PL_Sv), sv_len_utf8_nomg(PL_Sv))
 #    endif
 #  endif
-#  if defined(__GNUC__) && !defined(PERL_GCC_BRACE_GROUPS_FORBIDDEN)
+#  if defined(PERL_USE_GCC_BRACE_GROUPS)
 #ifndef sv_len_utf8_nomg
 #  define sv_len_utf8_nomg(sv)           ({ SV *_sv = (sv); sv_len_utf8(!SvGMAGICAL(_sv) ? _sv : sv_mortalcopy_flags(_sv, SV_NOSTEAL)); })
 #endif
@@ -16916,6 +17064,70 @@ DPPP_(my_pv_display)(pTHX_ SV *dsv, const char *pv, STRLEN cur, STRLEN len, STRL
 }
 
 #endif
+#endif
+
+#if PERL_VERSION_LT(5,27,9)
+#ifndef LC_NUMERIC_LOCK
+#  define LC_NUMERIC_LOCK
+#endif
+
+#ifndef LC_NUMERIC_UNLOCK
+#  define LC_NUMERIC_UNLOCK
+#endif
+
+#  if PERL_VERSION_LT(5,19,0)
+#    undef STORE_LC_NUMERIC_SET_STANDARD
+#    undef RESTORE_LC_NUMERIC
+#    undef DECLARATION_FOR_LC_NUMERIC_MANIPULATION
+#    ifdef USE_LOCALE
+#ifndef DECLARATION_FOR_LC_NUMERIC_MANIPULATION
+#  define DECLARATION_FOR_LC_NUMERIC_MANIPULATION char *LoC_
+#endif
+
+#ifndef STORE_NUMERIC_SET_STANDARD
+#  define STORE_NUMERIC_SET_STANDARD()   \
+	 LoC_ = savepv(setlocale(LC_NUMERIC, NULL));  \
+	 SAVEFREEPV(LoC_);                            \
+	 setlocale(LC_NUMERIC, "C");
+#endif
+
+#ifndef RESTORE_LC_NUMERIC
+#  define RESTORE_LC_NUMERIC()           \
+	 setlocale(LC_NUMERIC, LoC_);
+#endif
+
+#    else
+#ifndef DECLARATION_FOR_LC_NUMERIC_MANIPULATION
+#  define DECLARATION_FOR_LC_NUMERIC_MANIPULATION
+#endif
+
+#ifndef STORE_LC_NUMERIC_SET_STANDARD
+#  define STORE_LC_NUMERIC_SET_STANDARD()
+#endif
+
+#ifndef RESTORE_LC_NUMERIC
+#  define RESTORE_LC_NUMERIC()
+#endif
+
+#    endif
+#  endif
+#endif
+
+#ifndef LOCK_NUMERIC_STANDARD
+#  define LOCK_NUMERIC_STANDARD()
+#endif
+
+#ifndef UNLOCK_NUMERIC_STANDARD
+#  define UNLOCK_NUMERIC_STANDARD()
+#endif
+
+/* The names of these changed in 5.28 */
+#ifndef LOCK_LC_NUMERIC_STANDARD
+#  define LOCK_LC_NUMERIC_STANDARD       LOCK_NUMERIC_STANDARD
+#endif
+
+#ifndef UNLOCK_LC_NUMERIC_STANDARD
+#  define UNLOCK_LC_NUMERIC_STANDARD     UNLOCK_NUMERIC_STANDARD
 #endif
 
 /* If this doesn't exist, it's not needed, so is void noop */
