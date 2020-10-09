@@ -20,26 +20,10 @@ my $pcap_intf = pcap_lookupdev( \$pcap_err );
 # create $context in a safe way
 
 # automatically search for drivers
-my $driver;
-my @list = lorcon_list_drivers();
-
-foreach ( @list ){
-        if ( Dumper( $_ ) =~ "mac80211"){
-                $driver = "mac80211";
-                break;
-        }elsif ( Dumper( $_ ) =~ "madwifing" ){
-                $driver = "madwifing";
-                break;
-        }elsif( Dumper( $_ ) =~ "file" ){
-                $driver = "file";
-                break;
-        }
-
-}
 
 
 
-my $drv = lorcon_find_driver( $driver );
+my $drv = lorcon_find_driver( "tuntap" );
 my $context = lorcon_create( $pcap_intf, $drv ) or die;
 
 # skip tests if pcap_can_set_rfmon quit
