@@ -10,7 +10,6 @@ system("clear");
 
 use Term::ANSIColor;
 
-
 BEGIN{
 
 # set the screen style
@@ -52,20 +51,25 @@ require "./Detect.pm";
 sleep(1);
 
 if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /ubuntu/){  # for debian/ubuntu Oses
+	print colored(['bright_red on_black'], "Installing requisites for GNU Debian!", "\n");
   	my $comm = `sudo apt update && sudo apt install flex bison libpcap*  >/dev/null`;
 
   }
   elsif( Detect->distribution_name() =~ "fedora" || Detect->distribution_name() =~ "centos" ||  Detect->distribution_name() =~ "rhel" ){ # for Fedora/CentOS/RHEL
+    print colored(['bright_red on_black'], "Installing requisites for GNU  Fedora!", "\n");
     system("sudo yum install flex bison libpcap*  >/dev/null");
   }elsif( Detect->distribution_name() =~ "openSUSE" ){
+    print colored(['bright_red on_black'], "Installing requisites for GNU  SUSE!", "\n");
     system("sudo zypper install flex bison libpcap*  >/dev/null ");
   }elsif( Detect->distribution_name() =~ "Mageia" ){
+    print colored(['bright_red on_black'], "Installing requisites for GNU Mageia!", "\n");
     system("sudo urpmi flex bison libpcap*  >/dev/null");
   }elsif( Detect->distribution_name() =~ "Alpine"){
+     print colored(['bright_red on_black'], "Installing requisites for Alpine Linux!", "\n");
     system("sudo apk add flex bison libpcap*  >/dev/null");  
-  
-  }
 
+  }
+system("clear");
 print "Every requirement has been installed!\n";
 
 
