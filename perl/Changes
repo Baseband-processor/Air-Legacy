@@ -9,7 +9,7 @@ Revision history for Perl extension Air::Lorcon2.
   - updated 01-test-auto.t: rewritten using Test::More
   - updated 02-test-consts.t: rewritten using Test::More
   - updated 03-test-detection.t: rewritten using Test::More
-  
+  - updated tests from 06 to 10: fixed bugs and used as default driver "tuntap" device
   - updated 16-test-tx80211.t: rewritten using Test::More
   - updated 17-test-pcap.t: rewritten using Test::More
   - updated 18-test-android.t: rewritten using Test::More
