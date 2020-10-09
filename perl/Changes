@@ -6,6 +6,7 @@ Revision history for Perl extension Air::Lorcon2.
 
 28.00   Sun Opt 04 16:00:00 CET 2020
   - toggled donation tag and modified markdown graphic
+  - fixed ALL tests, now the "make full" installation works without any problems under Ubuntu os
   - updated 01-test-auto.t: rewritten using Test::More
   - updated 02-test-consts.t: rewritten using Test::More
   - updated 03-test-detection.t: rewritten using Test::More
@@ -19,6 +20,7 @@ Revision history for Perl extension Air::Lorcon2.
     * pcap_inject
     * lorcon_set_vap
     * lorcon_get_capiface
+    
  - fix bugs and implemented C back-end for the following functions:
     * iwconfig_set_ssid
     * iwconfig_get_ssid
@@ -27,6 +29,7 @@ Revision history for Perl extension Air::Lorcon2.
     * iwconfig_set_channel
     * iwconfig_get_mode
     * iwconfig_set_mode
+    
  - added new internals function
     * _floatchan2int
     * _iwfreq2float
