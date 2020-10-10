@@ -129,6 +129,112 @@ use constant {
 	PSK_SHA256 => "00-0F-AC-06",
 };
 
+
+use constant {
+	get_wiphy =>   " 0x1",
+	set_wiphy =>   " 0x2",
+	new_wiphy =>   " 0x3",
+	del_wiphy =>   " 0x4",
+	get_interface =>   " 0x5",
+	set_interface =>   " 0x6",
+	new_interface =>   " 0x7",
+	del_interface =>   " 0x8",
+	get_key =>   " 0x9",
+	set_key =>   " 0xa",
+	new_key =>   " 0xb",
+	del_key =>   " 0xc",
+	get_beacon =>   " 0xd",
+	set_beacon =>   " 0xe",
+	start_ap =>   " 0xf",
+	stop_ap =>   " 0x10",
+	get_station =>   " 0x11",
+	set_station =>   " 0x12",
+	new_station =>   " 0x13",
+	del_station =>   " 0x14",
+	get_mpath =>   " 0x15",
+	set_mpath =>   " 0x16",
+	new_mpath =>   " 0x17",
+	del_mpath =>   " 0x18",
+	set_bss =>   " 0x19",
+	set_reg =>   " 0x1a",
+	req_set_reg =>   " 0x1b",
+	get_mesh_config =>   " 0x1c",
+	set_mesh_config =>   " 0x1d",
+	get_reg =>   " 0x1f",
+	get_scan =>   " 0x20",
+	trigger_scan =>   " 0x21",
+	new_scan_results =>   " 0x22",
+	scan_aborted =>   " 0x23",
+	reg_change =>   " 0x24",
+	authenticate =>   " 0x25",
+	associate =>   " 0x26",
+	deauthenticate =>   " 0x27",
+	disassociate =>   " 0x28",
+	michael_mic_failure =>   " 0x29",
+	reg_beacon_hint =>   " 0x2a",
+	join_ibss =>   " 0x2b",
+	leave_ibss =>   " 0x2c",
+	testmode =>   " 0x2d",
+	connect =>   " 0x2e",
+	roam =>   " 0x2f",
+	disconnect =>   " 0x30",
+	set_wiphy_netns =>   " 0x31",
+	get_survey =>   " 0x32",
+	new_survey_results =>   " 0x33",
+	set_pmksa =>   " 0x34",
+	del_pmksa =>   " 0x35",
+	flush_pmksa =>   " 0x36",
+	remain_on_channel =>   " 0x37",
+	cancel_remain_on_channel =>   " 0x38",
+	set_tx_bitrate_mask =>   " 0x39",
+	register_frame =>   " 0x3a",
+	frame =>   " 0x3b",
+	frame_tx_status =>   " 0x3c",
+	set_power_save =>   " 0x3d",
+	get_power_save =>   " 0x3e",
+	set_cqm =>   " 0x3f",
+	notify_cqm =>   " 0x40",
+	set_channel =>   " 0x41",
+	set_wds_peer =>   " 0x42",
+	frame_wait_cancel =>   " 0x43",
+	join_mesh =>   " 0x44",
+	leave_mesh =>   " 0x45",
+	unprot_deauthenticate =>   " 0x46",
+	unprot_disassociate =>   " 0x47",
+	new_peer_candidate =>   " 0x48",
+	get_wowlan =>   " 0x49",
+	set_wowlan =>   " 0x4a",
+	start_sched_scan =>   " 0x4b",
+	stop_sched_scan =>   " 0x4c",
+	sched_scan_results =>   " 0x4d",
+	sched_scan_stopped =>   " 0x4e",
+	set_rekey_offload =>   " 0x4f",
+	pmksa_candidate =>   " 0x50",
+	tdls_oper =>   " 0x51",
+	tdls_mgmt =>   " 0x52",
+	unexpected_frame =>   " 0x53",
+	probe_client =>   " 0x54",
+	register_beacons =>   " 0x55",
+	unexpected_4addr_frame =>   " 0x56",
+	set_noack_map =>   " 0x57",
+	ch_switch_notify =>   " 0x58",
+	start_p2p_device =>   " 0x59",
+	stop_p2p_device =>   " 0x5a",
+	conn_failed =>   " 0x5b",
+	set_mcast_rate =>   " 0x5c",
+	set_mac_acl =>   " 0x5d",
+	radar_detect =>   " 0x5e",
+	get_protocol_features =>   " 0x5f",
+	update_ft_ies =>   " 0x60",
+	ft_event =>   " 0x61",
+	crit_protocol_start =>   " 0x62",
+	crit_protocol_stop =>   " 0x63",
+	get_coalesce =>   " 0x64",
+	set_coalesce =>   " 0x65",
+	channel_switch =>   " 0x66",
+	vendor =>   " 0x67",
+};
+
 my %channel_to_frequency = (
     1 => 2412,
     2 => 2417,
@@ -1238,6 +1344,110 @@ our %EXPORT_TAGS = (
       WIFI_OTHER_MASK 
 
 )],
+  wifi_commands => [qw(
+	get_wiphy
+	set_wiphy
+	new_wiphy
+	del_wiphy
+	get_interface
+	set_interface
+	new_interface
+	del_interface
+	get_key
+	set_key
+	new_key
+	del_key
+	get_beacon
+	set_beacon
+	start_ap
+	stop_ap
+	get_station
+	set_station
+	new_station
+	del_station
+	get_mpath
+	set_mpath
+	new_mpath
+	del_mpath
+	set_bss
+	set_reg
+	req_set_reg
+	get_mesh_config
+	set_mesh_config
+	get_reg
+	get_scan
+	trigger_scan
+	new_scan_results
+	scan_aborted
+	reg_change
+	authenticate
+	associate
+	deauthenticate
+	disassociate
+	michael_mic_failure
+	reg_beacon_hint
+	join_ibss
+	leave_ibss
+	testmode
+	connect
+	roam
+	disconnect
+	set_wiphy_netns
+	get_survey
+	new_survey_results
+	set_pmksa
+	del_pmksa
+	flush_pmksa
+	remain_on_channel
+	cancel_remain_on_channel
+	set_tx_bitrate_mask
+	register_frame
+	frame
+	frame_tx_status
+	set_power_save
+	get_power_save
+	set_cqm
+	notify_cqm
+	set_channel
+	set_wds_peer
+	frame_wait_cancel
+	join_mesh
+	leave_mesh
+	unprot_deauthenticate
+	unprot_disassociate
+	new_peer_candidate
+	get_wowlan
+	set_wowlan
+	start_sched_scan
+	stop_sched_scan
+	sched_scan_results
+	sched_scan_stopped
+	set_rekey_offload
+	pmksa_candidate
+	tdls_oper
+	tdls_mgmt
+	unexpected_frame
+	probe_client
+	register_beacons
+	unexpected_4addr_frame
+	set_noack_map
+	ch_switch_notify
+	start_p2p_device
+	stop_p2p_device
+	conn_failed
+	set_mcast_rate
+	set_mac_acl
+	radar_detect
+	get_protocol_features
+	update_ft_ies
+	ft_event
+	crit_protocol_start
+	crit_protocol_stop
+	get_coalesce
+	set_coalesce
+	channel_switch
+	vendor
+ )],
    lorcon => [qw(
       is_compatible_with_formal_logic
       lorcon_get_version
