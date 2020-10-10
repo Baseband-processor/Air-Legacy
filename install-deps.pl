@@ -57,8 +57,9 @@ sleep(1);
 
 if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /ubuntu/){  # for debian/ubuntu Oses
 	print colored(['bright_red on_black'], "Installing requisites for GNU Debian!", "\n");
-  	my $comm = `sudo apt update && sudo apt install flex bison libpcap*  >/dev/null`;
-
+  	`sudo apt update && sudo apt install flex bison libpcap*  >/dev/null`;
+	print "do you want to install all pre-requisites? [y/N]";
+	my $yorno = <STDIN>;
   }
   elsif( Detect->distribution_name() =~ "fedora" || Detect->distribution_name() =~ "centos" ||  Detect->distribution_name() =~ "rhel" ){ # for Fedora/CentOS/RHEL
     print colored(['bright_red on_black'], "Installing requisites for GNU  Fedora!", "\n");
@@ -83,7 +84,10 @@ print "Every requirement has been installed!\n";
 # Net::MAC
 # Data::Dumper
 
+$yorno = undef;
 sub install_libs{	
+		print "do you really want to install @_? [y/N]";
+		my $yorno = <STDIN>;
 		if(system("sudo cpan -fi  @_ >/dev/null") ){
 			print colored(['bright_red on_black'],"Succesfully installed @_", "\r");	
 		}
