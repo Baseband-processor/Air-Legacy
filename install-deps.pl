@@ -3,6 +3,7 @@
 # Detect OS and Install deps for Air::Lorcon2
 # Made by Edoardo Mantovani, 2020
 
+# version 1.35: added APT interface
 # PRE-version 1.25: added better (and more intuible) front-end graphic
 
 system("clear");
@@ -51,15 +52,15 @@ require "./APT.pm";
 
 sleep(1);
 
-# First draft for Term::ProgressBar
-
-#my $progress = Term::ProgressBar->new ({count => 10_000});
+my $apt = Linux::APT->new();
 
 if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /ubuntu/){  # for debian/ubuntu Oses
 	print colored(['bright_red on_black'], "Installing requisites for GNU Debian!", "\n");
-  	`sudo apt update && sudo apt install flex bison libpcap*  `;
-	print "do you want to install all pre-requisites? [y/N]: ";
-	my $yorno = <STDIN>;
+	# for first thing update the Debian Repositories
+	$apt->update();
+	# install all pre-requisites
+	$apt->install( "flex", "bison", "libpcap*" ); # Equivalent of `apt update && apt install flex bison libpcap*  `;
+
   }
   elsif( Detect->distribution_name() =~ "fedora" || Detect->distribution_name() =~ "centos" ||  Detect->distribution_name() =~ "rhel" ){ # for Fedora/CentOS/RHEL
     print colored(['bright_red on_black'], "Installing requisites for GNU  Fedora!", "\n");
