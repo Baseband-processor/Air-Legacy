@@ -47,7 +47,7 @@ no strict 'subs';
 no warnings;
 use Config;
 require "./Detect.pm";
-require "./ProgressBar.pm";
+
 
 sleep(1);
 
