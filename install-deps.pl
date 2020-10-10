@@ -47,7 +47,7 @@ no strict 'subs';
 no warnings;
 use Config;
 require "./Detect.pm";
-
+require "./APT.pm";
 
 sleep(1);
 
