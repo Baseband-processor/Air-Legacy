@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 
 # Made by Edoardo Mantovani, 2020
+# Main installer for Air::Lorcon2
 
 use strict;
 no strict;
@@ -18,6 +19,7 @@ WriteMakefile(
    PREREQ_PM => {
       Net::MAC =>  0,
       Net::Pcap => 0,
+      Data::Dumper => 0,
   },
 );
 
