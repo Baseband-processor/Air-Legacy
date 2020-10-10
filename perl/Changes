@@ -47,8 +47,7 @@ Revision history for Perl extension Air::Lorcon2.
  - toggled Linux::Distribution in favour of single perl script inspired by Linux::Distribution itself
  - deleted unused python scripts from lorcon2
  - update ppport.h to 3.60_2
- - created ProgressBar.pm file, which will provide basic methods for printing a progress bar
-- added new test: 19-test-WEP.t [STILL IN BETA]
+ - added new test: 19-test-WEP.t [STILL IN BETA]
 
 
 27.75   Sun Set 27 9:31:00  CET 2020
