@@ -192,6 +192,17 @@ my %channel_to_frequency = (
 );
 
 use constant {
+	IBSS => "\x40\xb0\xc0\xd0",
+	managed => "\x40\xd0",
+	AP => "\x00\x20\x40\xa0\xb0\xc0\xd0",
+	VLAN => "\x00\x20\x40\xa0\xb0\xc0\xd0",
+	mesh_point => "\xb0\xc0\xd0",
+	P2P_CLIENT => "\x40\xd0", 
+	P2P_GO => "\x00\x20\x40\xa0\0xb0\0xc0\xd0",
+	P2P_DEV => "\x40\xd0",
+};
+
+use constant {
     WEP_CRC_TABLE =>[ qw /   
     0x00000000 0x77073096 0xee0e612c 0x990951ba 0x076dc419
     0x706af48f 0xe963a535 0x9e6495a3 0x0edb8832 0x79dcb8a4
@@ -737,6 +748,17 @@ our %EXPORT_TAGS = (
       LORCON_STATUS_MAX
       LORCON_MAX_PACKET_LEN
    )],
+  rx_frames => [qw(
+      IBSS
+      managed
+      AP
+      VLAN
+      mesh_point
+      P2P_CLIENT
+      P2P_GO
+      P2P_DEV
+  )],
+  
   ioctls => [qw(
 	SIOCSIWNAME
 	SIOCGIWNAME
