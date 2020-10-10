@@ -84,7 +84,7 @@ print "Every requirement has been installed!\n";
 # Net::MAC
 # Data::Dumper
 
-$yorno = undef;
+my $yorno = undef;
 sub install_libs{	
 		print "do you really want to install @_? [y/N]";
 		my $yorno = <STDIN>;
