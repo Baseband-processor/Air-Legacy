@@ -52,7 +52,12 @@ require "./APT.pm";
 
 sleep(1);
 
-my $apt = Linux::APT->new();
+my $sudo = `which sudo`; # collect the SUDO folder
+my $path = `which apt-get`; # obtain the current apt-get path
+
+my $apt = Linux::APT->new(
+	aptget => "$sudo $path",
+	);
 
 if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /ubuntu/){  # for debian/ubuntu Oses
 	print colored(['bright_red on_black'], "Installing requisites for GNU Debian!", "\n");
