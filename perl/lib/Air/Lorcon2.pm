@@ -130,6 +130,8 @@ use constant {
 };
 
 
+# NOTE: 
+# these wifi_commands constants  are supported for the Intel Centrino Advanced-N 6200 network card
 use constant {
 	get_wiphy =>   " 0x1",
 	set_wiphy =>   " 0x2",
@@ -1720,6 +1722,8 @@ our @EXPORT = (
    @{ $EXPORT_TAGS{ ieee802_11 } },
    @{ $EXPORT_TAGS{ suites } },
    @{ $EXPORT_TAGS{ ioctls } },
+   @{ $EXPORT_TAGS{ wifi_commands } },
+   @{ $EXPORT_TAGS{ rx_frames } },
 );
 
 # NOTE:
