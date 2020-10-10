@@ -64,8 +64,11 @@ if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /u
 	# for first thing update the Debian Repositories
 	$apt->update();
 	# install all pre-requisites
-	$apt->install( "flex", "bison", "libpcap*" ); # Equivalent of `apt update && apt install flex bison libpcap*  `;
-
+	$apt->install( "flex", "bison", ); # Equivalent of `apt update && apt install flex bison `;
+	# libpcap is a special case, we MUST use a regex for installing it
+	my $toupgrade = $apt->toupgrade;
+	my $install = $apt->install(grep(m/libpcap/i, keys(%{$toupgrade->{packages}})));
+	# this will install automatically every package containing libpcap and its dependencies
   }
   elsif( Detect->distribution_name() =~ "fedora" || Detect->distribution_name() =~ "centos" ||  Detect->distribution_name() =~ "rhel" ){ # for Fedora/CentOS/RHEL
     print colored(['bright_red on_black'], "Installing requisites for GNU  Fedora!", "\n");
