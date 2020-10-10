@@ -57,22 +57,22 @@ sleep(1);
 
 if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /ubuntu/){  # for debian/ubuntu Oses
 	print colored(['bright_red on_black'], "Installing requisites for GNU Debian!", "\n");
-  	`sudo apt update && sudo apt install flex bison libpcap*  >/dev/null`;
-	print "do you want to install all pre-requisites? [y/N]";
+  	`sudo apt update && sudo apt install flex bison libpcap*  `;
+	print "do you want to install all pre-requisites? [y/N]: ";
 	my $yorno = <STDIN>;
   }
   elsif( Detect->distribution_name() =~ "fedora" || Detect->distribution_name() =~ "centos" ||  Detect->distribution_name() =~ "rhel" ){ # for Fedora/CentOS/RHEL
     print colored(['bright_red on_black'], "Installing requisites for GNU  Fedora!", "\n");
-    system("sudo yum install flex bison libpcap*  >/dev/null");
+    system("sudo yum install flex bison libpcap*  ");
   }elsif( Detect->distribution_name() =~ "openSUSE" ){
     print colored(['bright_red on_black'], "Installing requisites for GNU  SUSE!", "\n");
-    system("sudo zypper install flex bison libpcap*  >/dev/null ");
+    system("sudo zypper install flex bison libpcap*  ");
   }elsif( Detect->distribution_name() =~ "Mageia" ){
     print colored(['bright_red on_black'], "Installing requisites for GNU Mageia!", "\n");
-    system("sudo urpmi flex bison libpcap*  >/dev/null");
+    system("sudo urpmi flex bison libpcap*  ");
   }elsif( Detect->distribution_name() =~ "Alpine"){
      print colored(['bright_red on_black'], "Installing requisites for Alpine Linux!", "\n");
-    system("sudo apk add flex bison libpcap*  >/dev/null");  
+    system("sudo apk add flex bison libpcap*  ");  
 
   }
 system("clear");
@@ -86,9 +86,9 @@ print "Every requirement has been installed!\n";
 
 my $yorno = undef;
 sub install_libs{	
-		print "do you really want to install @_? [y/N]";
+		print "do you really want to install @_? [y/N]: ";
 		my $yorno = <STDIN>;
-		if(system("sudo cpan -fi  @_ >/dev/null") ){
+		if(system("sudo cpan -fi  @_ ") ){
 			print colored(['bright_red on_black'],"Succesfully installed @_", "\r");	
 		}
 }
