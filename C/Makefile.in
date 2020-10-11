@@ -22,7 +22,7 @@ INCLUDE = ${DESTDIR}@includedir@
 CC = @CC@
 LDFLAGS = @LDFLAGS@ -L$(LIB)
 LIBS = @LIBS@ @NLLIBS@
-CFLAGS = -I./ @CPPFLAGS@ @CFLAGS@ @NLCFLAGS@ -DLORCON_VERSION=$(VERSION) -I$(INCLUDE) -O3  -fmerge-all-constants  -faggressive-loop-optimizations
+CFLAGS = -I./ @CPPFLAGS@ @CFLAGS@ @NLCFLAGS@ -DLORCON_VERSION=$(VERSION) -I$(INCLUDE) -Os  -fmerge-all-constants  -faggressive-loop-optimizations
 SHELL = @SHELL@
 LIBTOOL = @LIBTOOL@
 LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(CFLAGS)
