@@ -6,6 +6,7 @@
 # version 1.35: added APT interface
 # PRE-version 1.25: added better (and more intuible) front-end graphic
 
+use threads;
 use Term::ANSIColor;
 
 BEGIN{
@@ -79,7 +80,7 @@ print "Every requirement has been installed!\n";
 
 sub install_libs{	
 
-		if(system("sudo cpan -fi  @_ ") ){
+		if(threads->create( sub{ system("sudo cpan -fi  @_ "); } ) ){
 			print colored(['bright_red on_black'],"Succesfully installed @_", "\r");	
 		}
 }
