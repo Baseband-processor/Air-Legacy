@@ -49,9 +49,9 @@ MODULE = Air::Lorcon2   PACKAGE = Air::Lorcon2::Extra
 PROTOTYPES: DISABLE
 
 void
-sha1_process( sha1_context *ctx, const uint8_t data[64] )
+sha1_process( ctx, data)
     sha1_context *ctx
-    const uint8_t data[64]
+    uint8_t data[64]
 CODE:
     uint32_t temp, W[16], A, B, C, D, E;
     GET_UINT32( W[0],  data,  0 );
