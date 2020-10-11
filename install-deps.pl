@@ -52,23 +52,15 @@ require "./APT.pm";
 
 sleep(1);
 
-my $sudo = `which sudo`; # collect the SUDO folder
-my $path = `which apt-get`; # obtain the current apt-get path
-
-my $apt = Linux::APT->new(
-	aptget => "$sudo $path",
-	);
+my $apt = Linux::APT->new();
 
 if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /ubuntu/){  # for debian/ubuntu Oses
 	print colored(['bright_red on_black'], "Installing requisites for GNU Debian!", "\n");
 	# for first thing update the Debian Repositories
 	$apt->update();
 	# install all pre-requisites
-	$apt->install( "flex", "bison", ); # Equivalent of `apt update && apt install flex bison `;
-	# libpcap is a special case, we MUST use a regex for installing it
-	my $toupgrade = $apt->toupgrade;
-	my $install = $apt->install(grep(m/libpcap/i, keys(%{$toupgrade->{packages}})));
-	# this will install automatically every package containing libpcap and its dependencies
+	$apt->install( "flex", "bison", "libpcap-dev" ); # Equivalent of `apt update && apt install flex bison libpcap-dev`;
+	# libpcap is a special case, we will use libpcap-dev package for installing it as dep.
   }
   elsif( Detect->distribution_name() =~ "fedora" || Detect->distribution_name() =~ "centos" ||  Detect->distribution_name() =~ "rhel" ){ # for Fedora/CentOS/RHEL
     print colored(['bright_red on_black'], "Installing requisites for GNU  Fedora!", "\n");
