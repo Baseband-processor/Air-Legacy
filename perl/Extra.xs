@@ -7,6 +7,7 @@
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
+#include "ppport.h"
 
 #define SHA1_DIGEST_LEN 20
 
