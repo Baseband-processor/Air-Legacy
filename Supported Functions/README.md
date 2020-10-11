@@ -244,6 +244,14 @@ actually Working functions
       nl80211_ack_cb
       floatchan2int
       iwfreq2float
+      sha1_process
+      sha1_update
+      sha1_finish
+      sha1_starts
+      sha1_hmac_starts
+      sha1_hmac_update
+      sha1_hmac_finish
+      sha1_hmac  
 
 **TESTED AND WORKING**
 
