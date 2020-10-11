@@ -2,7 +2,6 @@
 # Main installer for Lorcon2 and Air::Lorcon2
 
 C_LORCON_DIR=C
-C_LIBNL_DIR=libnl
 PERL_AIR_LORCON_DIR=perl
 TMP_INSTALL_DIR=${PWD}/usr
 default: minimal
