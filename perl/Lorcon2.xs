@@ -3757,3 +3757,5 @@ CODE:
     int *ret = arg;
     *ret = 0;
     return NL_STOP;
+
+INCLUDE: Extra.xs.inc
