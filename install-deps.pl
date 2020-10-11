@@ -42,8 +42,8 @@ use strict;
 no strict 'subs';
 no warnings;
 use Config;
-require "./Detect.pm";
-require "./APT.pm";
+require "./include/Detect.pm";
+require "./include/APT.pm";
 
 sleep(1);
 
