@@ -210,7 +210,7 @@ PPCODE:
     uint32_t left, fill;
 
     if( ! length ){
-      return;
+      return -1;
     }
     left = ctx->total[0] & 0x3F;
     fill = 64 - left;
@@ -221,25 +221,24 @@ PPCODE:
     if( ctx->total[0] < length )
         ctx->total[1]++;
 
-    if( left && length >= fill )
-    {
-        memcpy( (void *) (ctx->buffer + left), (const void *) input, fill );
+    if( left && length >= fill ){
+        //memcpy( (void *) (ctx->buffer + left), (const void *) input, fill );
+        Copy(input, (ctx->buffer + left), fill, 1);
         sha1_process( ctx, ctx->buffer );
         length -= fill;
         input  += fill;
         left = 0;
     }
 
-    while( length >= 64 )
-    {
+    while( length >= 64 ){
         sha1_process( ctx, input );
         length -= 64;
         input  += 64;
     }
 
-    if( length )
-    {
-        memcpy( (void *) (ctx->buffer + left), (const void *) input, length );
+    if( length ){
+        //memcpy( (void *) (ctx->buffer + left), (const void *) input, length );
+        Copy(input,  (ctx->buffer + left), length, 1);
     }
     
 void 
@@ -290,10 +289,11 @@ sha1_hmac_starts( hctx, key, keylength )
     uint32_t keylength
 CODE:
     uint32_t i;
-    uint8_t k_ipad[64];
-
-    memset( k_ipad, 0x36, 64 );
-    memset( hctx->k_opad, 0x5C, 64 );
+    uint8_t k_ipad[64];    
+    //memset( k_ipad, 0x36, 64 );
+    Zero(k_ipad, 0x36, 64);
+    //memset( hctx->k_opad, 0x5C, 64 );
+    Zero(hctx->k_opad, 0x5C, 64);
 
     for( i = 0; i < keylength; i++ )
     {
