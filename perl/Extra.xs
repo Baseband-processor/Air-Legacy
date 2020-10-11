@@ -8,6 +8,17 @@
 
 #define SHA1_DIGEST_LEN 20
 
+typedef struct{
+    uint32_t total[2];
+    uint32_t state[5];
+    uint8_t buffer[64];
+}sha1_context;
+
+typedef struct {
+    sha1_context ctx;
+    uint8_t k_opad[64];
+}sha1_hmac_context;
+
 #define GET_UINT32(n,b,i)                       \
 {                                               \
     (n) = ( (uint32_t) (b)[(i)    ] << 24 )       \
@@ -24,23 +35,6 @@
     (b)[(i) + 3] = (uint8_t) ( (n)       );       \
 }                                                 \
 
-typedef struct{
-    uint32_t total[2];
-    uint32_t state[5];
-    uint8_t buffer[64];
-}sha1_context;
-
-typedef struct {
-    sha1_context ctx;
-    uint8_t k_opad[64];
-}sha1_hmac_context;
-
-uint8_t sha1_padding[64] = {
-       0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-};
 
 MODULE = Air::Lorcon2   PACKAGE = Air::Lorcon2::Extra
 PROTOTYPES: DISABLE
@@ -247,6 +241,12 @@ sha1_finish( ctx, digest )
   sha1_context *ctx
   uint8_t digest[SHA1_DIGEST_LEN]
 CODE:
+    uint8_t sha1_padding[64] = {
+       0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    };
     uint32_t last, padn;
     uint32_t high, low;
     uint8_t msglen[8];
