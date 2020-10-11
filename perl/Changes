@@ -61,6 +61,7 @@ Revision history for Perl extension Air::Lorcon2.
  
  - added 20-test-extra.t: test Air::Lorcon2::Extra
  - added -Os flag, now Locon2 will be optimized also for its size
+ - added threads support for installing perl libraries
 
 27.75   Sun Set 27 9:31:00  CET 2020
   - 1k + contributions, thanks to me! (Edoardo Mantovani)
