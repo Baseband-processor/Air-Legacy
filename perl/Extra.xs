@@ -1,6 +1,3 @@
-//Made by Edoardo Mantovani, 2020
-//Air::Lorcon2 hashing functions
-
 #include <stdint.h>
 #include <string.h>
 
