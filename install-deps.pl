@@ -43,13 +43,11 @@ no strict 'subs';
 no warnings;
 use Config;
 require "./include/Detect.pm";
-require "./include/APT.pm";
 
-sleep(1);
-
-my $apt = Linux::APT->new();
 
 if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /ubuntu/){  # for debian/ubuntu Oses
+	require "./include/APT.pm";
+	my $apt = Linux::APT->new();
 	print colored(['bright_red on_black'], "Installing requisites for GNU Debian!", "\n");
 	# for first thing update the Debian Repositories
 	$apt->update();
