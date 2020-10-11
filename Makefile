@@ -16,7 +16,6 @@ full: prerequisites  perlT
 prerequisites:
 	sudo perl install-deps.pl
 perlT:
-	echo "INSTALLING LORCON C LIBRARY\n"
 	(cd ./C && chmod 755 ./configure && ./configure --prefix=$(TMP_INSTALL_DIR) && make all && make install)
 	(cd ./$(PERL_AIR_LORCON_DIR) && sudo perl Makefile.PL  && sudo make && sudo make test && sudo make install )
 #OPTIMIZE="-oS  -ffunction-sections -fdata-sections -faggressive-loop-optimizations -ffinite-math-only -fdce -fdelete-null-pointer-checks -ffast-math -fdevirtualize-speculatively -free -floop-nest-optimize -fno-asynchronous-unwind-tables  -Qn"
