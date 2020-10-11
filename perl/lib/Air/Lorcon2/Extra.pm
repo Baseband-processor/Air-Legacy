@@ -8,7 +8,7 @@ package Air::Lorcon2::Extra;
 our $VERSION = '27.75';
 
 use strict;
-no strict subs';
+no strict 'subs';
 no strict 'refs';
 use warnings;
 use base qw(Exporter DynaLoader);
