@@ -44,7 +44,7 @@ no strict 'subs';
 no warnings;
 use Config;
 require "./include/Detect.pm";
-require "./include/processes.pm";
+require "./include/Processes.pm";
 
 if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /ubuntu/){  # for debian/ubuntu Oses
 	require "./include/APT.pm";
