@@ -17,7 +17,9 @@ package Proc::Simple;
 use strict;
 use POSIX qw(setsid SIGTERM);
 use IO::Handle;
- 
+use vars qw($VERSION %EXIT_STATUS %INTERVAL
+            %DESTROYED);
+
  
 my $Debug = 0;
 my $WNOHANG = get_system_nohang();
