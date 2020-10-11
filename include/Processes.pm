@@ -15,7 +15,7 @@ package Proc::Simple;
  
 
 use strict;
-use POSIX;
+use POSIX qw(setsid SIGTERM);
 use IO::Handle;
  
  
@@ -48,7 +48,7 @@ sub start {
   return 0 unless defined $self->{'pid'};  
  
   if($self->{pid} == 0) {
-      POSIX::setsid();
+      setsid();
       $self->dprt("setsid called ($$)");
  
       if (defined $self->{'redirect_stderr'}) {
@@ -109,7 +109,7 @@ sub kill {
   my $sig  = shift;
  
   # If no signal specified => SIGTERM-Signal
-  $sig = POSIX::SIGTERM() unless defined $sig;
+  $sig = SIGTERM() unless defined $sig;
  
   # Use numeric signal if we get a string 
   if( $sig !~ /^[-\d]+$/ ) {
