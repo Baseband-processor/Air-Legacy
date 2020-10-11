@@ -26,7 +26,9 @@ our %EXPORT_TAGS = (
   )],
   
 );
-@{ $EXPORT_TAGS{ sha1 } },
-  
+
+our @EXPORT = (
+  @{ $EXPORT_TAGS{ sha1 } },
+);
   
 1;
