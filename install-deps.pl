@@ -6,9 +6,6 @@
 # version 1.35: added APT interface
 # PRE-version 1.25: added better (and more intuible) front-end graphic
 
-system("clear");
-
-
 use Term::ANSIColor;
 
 BEGIN{
@@ -23,8 +20,6 @@ open (my $logo, $file) or die "Please, don't delete the logo.txt file!\n";
 print colored(['bright_red on_black'], "Made by Edoardo Mantovani", "\n");
 
 # re-clear the screen
-
-system("clear");
 
 sleep(2);
 
@@ -76,7 +71,6 @@ if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /u
     system("sudo apk add flex bison libpcap*  ");  
 
   }
-system("clear");
 print "Every requirement has been installed!\n";
 
 
@@ -85,10 +79,8 @@ print "Every requirement has been installed!\n";
 # Net::MAC
 # Data::Dumper
 
-my $yorno = undef;
 sub install_libs{	
-		print "do you really want to install @_? [y/N]: ";
-		my $yorno = <STDIN>;
+
 		if(system("sudo cpan -fi  @_ ") ){
 			print colored(['bright_red on_black'],"Succesfully installed @_", "\r");	
 		}
@@ -109,7 +101,7 @@ sub r_color{
 
 sub display_load{
 	# consider @_ == time
-for(my $value = @_;$value <= 10;$value++){
+for( my $value = @_;$value <= 10;$value++){
 foreach( qw( * ⁎ ) ){
         sleep(1);
         print color(&r_color), "\b", "[$_]\r";
