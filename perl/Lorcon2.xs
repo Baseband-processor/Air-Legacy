@@ -2289,9 +2289,6 @@ CODE:
 	if (ret < 0){
 		return TX80211_ENOTX;
 	}
-	if (ret < (input_tx->plen)){
-		return TX80211_EPARTTX;
-	}
 	return (ret);
 	
 int 
