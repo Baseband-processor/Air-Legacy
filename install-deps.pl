@@ -43,7 +43,6 @@ use strict;
 no strict 'subs';
 no warnings;
 use Config;
-require "./include/Detect.pm";
 require "./include/Processes.pm";
 
 # run the processes in Background
@@ -51,6 +50,7 @@ require "./include/Processes.pm";
 my $process = Proc::Simple->new(); 
 
 $process->start( sub {
+require "./include/Detect.pm";
 if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /ubuntu/){  # for debian/ubuntu Oses
 	require "./include/APT.pm";
 	my $apt = Linux::APT->new();
@@ -75,10 +75,12 @@ if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /u
     system("sudo apk add flex bison libpcap*  ");  
 
   }
+  	print "Every requirement has been installed!\n";
   	} );
 	
-print "Every requirement has been installed!\n";
 
+# kill the process
+$process->kill();
 
 # installing:
 # Net::Pcap
@@ -90,12 +92,6 @@ sub install_libs{
 		if(system("sudo cpan -fi  @_ ") ){
 			print colored(['bright_red on_black'],"Succesfully installed @_", "\r");	
 		}
-}
-
-foreach(  qw(Net::Pcap Net::MAC Data::Dumper)  ){
-	print &display_load(1); # consider 1 as time var
-	print colored(['green on_black'], "installing $_ ", "\r");
-	&install_libs($_);
 }
 
 sub r_color{
@@ -113,11 +109,23 @@ foreach( qw( * ⁎ ) ){
         print color(&r_color), "\b", "[$_]\r";
 }
 	}
-		
-		
+	
+$process->start( sub {
+foreach(  qw(Net::Pcap Net::MAC Data::Dumper)  ){
+	print &display_load(1); # consider 1 as time var
+	print colored(['green on_black'], "installing $_ ", "\r");
+	&install_libs($_);
+}
+	});
+
+$process->kill();
+
+
+	
 print color('reset'); # finally reset the terminal's original color
 
 
 }
 
 	}
+## END ##
