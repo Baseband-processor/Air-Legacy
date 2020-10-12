@@ -80,7 +80,9 @@ if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /u
 	
 
 # kill the process
-$process->kill();
+#$process->kill();
+
+sleep(3);
 
 # installing:
 # Net::Pcap
@@ -110,15 +112,15 @@ foreach( qw( * ⁎ ) ){
 }
 	}
 	
-$process->start( sub {
 foreach(  qw(Net::Pcap Net::MAC Data::Dumper)  ){
 	print &display_load(1); # consider 1 as time var
 	print colored(['green on_black'], "installing $_ ", "\r");
 	&install_libs($_);
 }
-	});
 
-$process->kill();
+sleep(2);
+
+#$process->kill();
 
 
 	
