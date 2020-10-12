@@ -46,6 +46,11 @@ use Config;
 require "./include/Detect.pm";
 require "./include/Processes.pm";
 
+# run the processes in Background
+
+my $process = Proc::Simple->new(); 
+
+$process->start( sub {
 if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /ubuntu/){  # for debian/ubuntu Oses
 	require "./include/APT.pm";
 	my $apt = Linux::APT->new();
@@ -70,6 +75,8 @@ if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /u
     system("sudo apk add flex bison libpcap*  ");  
 
   }
+  	} );
+	
 print "Every requirement has been installed!\n";
 
 
