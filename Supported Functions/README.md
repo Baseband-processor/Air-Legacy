@@ -252,6 +252,12 @@ actually Working functions
       sha1_hmac_update
       sha1_hmac_finish
       sha1_hmac  
+      iwconfig_get_intpriv
+      iwconfig_set_charpriv
+      tx80211_rt2570_init
+      tx80211_rt2570_capabilities
+      rt2570_open
+      rt2570_send
 
 **TESTED AND WORKING**
 
