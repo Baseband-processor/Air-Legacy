@@ -2218,6 +2218,82 @@ wtinj_selfack(wtinj, addr)
 	TX80211 *wtinj
 	uint8_t *addr
 
+
+int 
+tx80211_rt2570_init(input_tx)
+	TX80211 *input_tx
+CODE:
+	input_tx->capabilities = tx80211_rt2570_capabilities();
+	input_tx->open_callthrough = rt2570_open();
+	input_tx->close_callthrough = wtinj_close();
+	input_tx->setmode_callthrough = wtinj_setmode();
+	input_tx->getmode_callthrough = wtinj_getmode();
+	input_tx->getchan_callthrough = wtinj_getchannel();
+	input_tx->setchan_callthrough = wtinj_setchannel();
+	input_tx->txpacket_callthrough = rt2570_send();
+	input_tx->setfuncmode_callthrough = wtinj_setfuncmode();
+	return 0;
+
+
+int 
+tx80211_rt2570_capabilities()
+CODE:
+	return (TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT |  TX80211_CAP_BSSTIME | TX80211_CAP_FRAG | TX80211_CAP_CTRL | TX80211_CAP_DURID);
+
+
+int 
+iwconfig_get_intpriv(in_dev, privcmd, val, errstr)
+	char *in_dev
+	char *privcmd
+	int *val
+	char *errstr
+
+int 
+iwconfig_set_charpriv(in_dev, privcmd, val, errstr)
+	char *in_dev
+	char *privcmd
+	char *val
+	char *errstr
+
+int 
+rt2570_open(input_tx)
+	TX80211 *input_tx
+CODE:
+	char errstr[TX80211_STATUS_MAX];
+	if (iwconfig_set_charpriv(input_tx->ifname, "rfmontx", "1", errstr) >= 0){
+		return(wtinj_open(input_tx));
+	}
+	if (iwconfig_set_intpriv(input_tx->ifname, "rfmontx", 1, 0, errstr) >= 0){
+		return(wtinj_open(input_tx));
+	}
+
+	fprintf(stderr, "Error enabling rfmontx private ioctl: %s\n", errstr);
+	return -1;
+
+
+int 
+rt2570_send(input_tx, input_pkt)
+	TX80211 *input_tx
+	TX80211_PACKET *input_pkt
+CODE:
+	int ret;
+
+	if (!(input_tx->raw_fd > 0)) {
+		return 0;
+	}
+
+	ret = write(input_tx->raw_fd, input_pkt->packet, input_pkt->plen);
+
+	usleep(2);
+
+	if (ret < 0){
+		return TX80211_ENOTX;
+	}
+	if (ret < (input_tx->plen)){
+		return TX80211_EPARTTX;
+	}
+	return (ret);
+	
 int 
 tx80211_zd1211rw_capabilities()
 	CODE:
