@@ -1,8 +1,8 @@
 TYPEMAP
 
-sha1_hmac_context    T_PTROBJ
+sha1_hmac_context    T_PTRREF
 sha1_hmac_context *  T_PTROBJ
-sha1_context         T_PTROBJ
+sha1_context         T_PTRREF
 sha1_context *       T_PTROBJ
 LCPA_META *          T_PTROBJ
 Lorcon_DOT11 *       T_PTROBJ
