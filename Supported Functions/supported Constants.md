@@ -574,5 +574,8 @@ This file contains all constants implemented in Air::Lorcon2 ( v. 28.0.0 )
   TKIP
   EAP
   PSK
+  LINUX_WLEXT_MONITOR
+  LINUX_WLEXT_MASTER
+  IW_MAX_PRIV_DEF
 
 ``` 
