@@ -9,9 +9,12 @@ no warnings;
 use Test;
 
 BEGIN{ plan tests => 152 };
-use Air::Lorcon2 qw( :suites :rx_frames :ieee802_11 :ioctls :network_const  :tx_80211  :wifi_mask :requests  :radiotap  :status :rate :extrapacket :channel :consts  );
+use Air::Lorcon2 qw( :iw :suites :rx_frames :ieee802_11 :ioctls :network_const  :tx_80211  :wifi_mask :requests  :radiotap  :status :rate :extrapacket :channel :consts  );
 
 my @Lorcon_Costants = qw(
+      LINUX_WLEXT_MONITOR
+      LINUX_WLEXT_MASTER
+      IW_MAX_PRIV_DEF
       WEP_CRC_TABLE
       LORCON_EGENERIC
       LORCON_ENOTSUPP
