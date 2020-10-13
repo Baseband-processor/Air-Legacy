@@ -129,6 +129,11 @@ use constant {
 	PSK_SHA256 => "00-0F-AC-06",
 };
 
+use constant {
+	LINUX_WLEXT_MONITOR => 6,
+	LINUX_WLEXT_MASTER => 3,
+	IW_MAX_PRIV_DEF => 128,
+};
 
 # NOTE: 
 # these wifi_commands constants  are supported for the Intel Centrino Advanced-N 6200 network card
@@ -1133,6 +1138,12 @@ our %EXPORT_TAGS = (
       WLAN_STATUS_INVALID_RSN_IE_CAPAB        
       WLAN_STATUS_CIPHER_REJECTED_PER_POLICY  
 )],
+  iw => [qw(
+     LINUX_WLEXT_MONITOR
+     LINUX_WLEXT_MASTER
+     IW_MAX_PRIV_DEF
+   )],
+     
   requests => [qw(
      WLAN_FC_SUBTYPE_ASSOCREQ    
      WLAN_FC_SUBTYPE_ASSOCRESP   
@@ -1726,6 +1737,7 @@ our @EXPORT = (
    @{ $EXPORT_TAGS{ ioctls } },
    @{ $EXPORT_TAGS{ wifi_commands } },
    @{ $EXPORT_TAGS{ rx_frames } },
+   @{ $EXPORT_TAGS{ iw } },
 );
 
 # NOTE:
