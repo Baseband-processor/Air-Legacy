@@ -69,7 +69,7 @@ Revision history for Perl extension Air::Lorcon2.
     * tx80211_rt2570_capabilities
     * rt2570_open
     * rt2570_send
-
+ - added new constant class: iw [+3 constants]
 
 27.75   Sun Set 27 9:31:00  CET 2020
   - 1k + contributions, thanks to me! (Edoardo Mantovani)
