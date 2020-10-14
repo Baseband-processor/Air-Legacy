@@ -1712,6 +1712,10 @@ our %EXPORT_TAGS = (
       tx80211_rt73_capabilities
       rt73_open
       rt73_close
+      tx80211_rt2500_init
+      tx80211_rt2500_capabilities
+      rt2500_open
+      rt2500_close
 
  )],
    suites => [qw(
