@@ -3696,6 +3696,53 @@ CODE:
 	return NULL;
 
 
+
+int 
+tx80211_rt2500_init(input_tx)
+	TX80211 *input_tx
+CODE:
+	input_tx->capabilities = tx80211_rt2500_capabilities();
+	input_tx->open_callthrough = rt2500_open();
+	input_tx->close_callthrough = rt2500_close();
+	input_tx->setmode_callthrough = wtinj_setmode();
+	input_tx->getmode_callthrough = wtinj_getmode();
+	input_tx->getchan_callthrough = wtinj_getchannel();
+	input_tx->setchan_callthrough = wtinj_setchannel();
+	input_tx->txpacket_callthrough = wtinj_send();
+	input_tx->setfuncmode_callthrough = wtinj_setfuncmode();
+	return 0;
+
+
+int 
+tx80211_rt2500_capabilities()
+CODE:
+	 return (TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT | TX80211_CAP_SEQ | TX80211_CAP_BSSTIME | TX80211_CAP_FRAG | TX80211_CAP_CTRL | TX80211_CAP_DURID | TX80211_CAP_DSSSTX);
+
+
+
+int 
+rt2500_open(input_tx)
+	TX80211 *input_tx
+CODE:
+	char errstr[TX80211_STATUS_MAX];
+	if (iwconfig_set_charpriv(input_tx->ifname, "rfmontx", "1", errstr) != 0) {
+		snprintf(input_tx->errstr, TX80211_STATUS_MAX, "Error enabling rfmontx private ioctl: %s\n", errstr);
+		return -1;
+	}
+	return(wtinj_open(input_tx));
+
+
+int 
+rt2500_close(input_tx)
+	TX80211 *input_tx
+CODE:
+	char errstr[TX80211_STATUS_MAX];
+	if (iwconfig_set_charpriv(input_tx->ifname, "rfmontx", "0", errstr) != 0) {
+		snprintf(input_tx->errstr, TX80211_STATUS_MAX, "Error disabling rfmontx private ioctl: %s\n", errstr);
+		return -1;
+	}
+	return(wtinj_close(input_tx));
+	
 #define TX80211_ENOERR			0
 
 
