@@ -79,9 +79,7 @@ sub r_color{
 }
 
 sub install_libs{	
-		if(system("sudo cpan -fi  @_ ") ){
-			print colored(['bright_red on_black'],"Succesfully installed @_", "\r");	
-		}
+	CPAN::Shell->install(@_);
 }
 
 sub display_load{
@@ -89,13 +87,14 @@ sub display_load{
 for( my $value = @_; $value <= 10; $value++){
 foreach( qw( * ⁎ ) ){
         sleep(1);
-        print color(&r_color), "\b", "[$_]\r", color(&r_color), "Installing the required library, loading...\r";
+        print color(&r_color), "\b", "[$_]\r", color(&r_color), "Installing the $_ \r";
 }
 	}
 	  }
 
 $process->start( sub {
 foreach(  qw(Net::Pcap Net::MAC Data::Dumper)  ){
+	require "./include/CPAN.pm";
 	print &display_load(1); # consider 1 as time var
 	print colored(['green on_black'], "installing $_ ", "\r");
 	&install_libs($_);
