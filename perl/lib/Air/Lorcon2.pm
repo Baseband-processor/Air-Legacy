@@ -1708,6 +1708,11 @@ our %EXPORT_TAGS = (
       nl80211_ack_cb
       floatchan2int
       iwfreq2float
+      tx80211_rt73_init
+      tx80211_rt73_capabilities
+      rt73_open
+      rt73_close
+
  )],
    suites => [qw(
        WEP40
