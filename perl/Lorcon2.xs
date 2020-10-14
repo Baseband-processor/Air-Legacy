@@ -3620,6 +3620,9 @@ CODE:
 	return 0;
 
 
+#define TX80211_CAP_OFDMTX	4096
+#define TX80211_CAP_MIMOTX	8192
+
 int 
 tx80211_rt73_capabilities()
 CODE:
