@@ -73,6 +73,12 @@ sleep(3);
 # installing:
 # Net::Pcap
 
+sub r_color{
+        my @colors = qw( green yellow blue red black cyan magenta);
+        my $i = int(rand(5));
+        return($colors[$i]);
+}
+
 sub install_libs{	
 		if(system("sudo cpan -fi  @_ ") ){
 			print colored(['bright_red on_black'],"Succesfully installed @_", "\r");	
