@@ -2182,24 +2182,28 @@ int
 wtinj_close(wtinj)
 	TX80211 *wtinj
 CODE:
-	return close(wtinj->raw_fd);
+	return( close(wtinj->raw_fd) );
 
 int 
 wtinj_setchannel(wtinj, channel)
 	TX80211 *wtinj
 	int channel
 CODE:
-		return (iwconfig_set_channel(wtinj->ifname, wtinj->errstr, channel));
+        return (iwconfig_set_channel(wtinj->ifname, wtinj->errstr, channel));
 
 
 int 
 wtinj_getchannel(wtinj)
 	TX80211 *wtinj
+CODE:
+	return (iwconfig_get_channel(wtinj->ifname, wtinj->errstr));
 
 int 
 wtinj_setmode(wtinj, mode)
 	TX80211 *wtinj
 	int mode
+CODE:
+	return(iwconfig_set_mode(wtinj->ifname, wtinj->errstr, mode));
 
 int 
 wtinj_getmode(wtinj)
@@ -3906,7 +3910,7 @@ CODE:
 	if (input_tx->open_callthrough == NULL){
 		return TX80211_ENOHANDLER;
 	}
-	return (input_tx->open_callthrough) (input_tx);
+	return (input_tx->open_callthrough);
 
 
 int 
