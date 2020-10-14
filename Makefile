@@ -14,6 +14,7 @@ minimal:  perlT
 full: prerequisites  perlT
 
 prerequisites:
+	sudo cpan -fi CPAN::Distribution >/dev/null
 	sudo perl install-deps.pl
 perlT:
 	(cd ./C && chmod 755 ./configure && ./configure --prefix=$(TMP_INSTALL_DIR) && make all && make install)
