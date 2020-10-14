@@ -78,29 +78,24 @@ sub r_color{
         return($colors[$i]);
 }
 
-sub install_libs{	
-	CPAN::Shell->install(@_);
-}
-
 sub display_load{
 	# consider @_ == time
 for( my $value = @_; $value <= 10; $value++){
 foreach( qw( * ⁎ ) ){
         sleep(1);
-        print color(&r_color), "\b", "[$_]\r", color(&r_color), "Installing the $_ \r";
+        print color(&r_color), "\b", "[$_]\r";
 }
 	}
 	  }
 
-$process->start( sub {
+
+require "./include/CPAN.pm";
 foreach(  qw(Net::Pcap Net::MAC Data::Dumper)  ){
-	require "./include/CPAN.pm";
 	print &display_load(1); # consider 1 as time var
 	print colored(['green on_black'], "installing $_ ", "\r");
-	&install_libs($_);
+	CPAN::Shell->install($_);
 }
-	});
-
+	
 
 sleep(2);
 
