@@ -258,6 +258,10 @@ actually Working functions
       tx80211_rt2570_capabilities
       rt2570_open
       rt2570_send
+      tx80211_rt73_init
+      tx80211_rt73_capabilities
+      rt73_open
+      rt73_close
 
 **TESTED AND WORKING**
 
