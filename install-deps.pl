@@ -31,7 +31,6 @@ use strict;
 no strict 'subs';
 no strict 'refs';
 no warnings;
-use Config;
 
 require "./include/Processes.pm";
 require "./include/Detect.pm";
@@ -75,7 +74,7 @@ sleep(3);
 
 sub r_color{
         my @colors = qw( green yellow blue red black cyan magenta);
-        my $i = int(rand(5));
+        my $i = int(rand(6));
         return($colors[$i]);
 }
 
