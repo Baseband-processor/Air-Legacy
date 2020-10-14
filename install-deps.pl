@@ -106,4 +106,4 @@ sleep(2);
 
 print color('reset'); # finally reset the terminal's original color
 }
-	}
+	
