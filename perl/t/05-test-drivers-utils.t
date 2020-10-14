@@ -46,4 +46,6 @@ tx80211_prism54_capabilities();
 
 tx80211_rt61_capabilities();
 
+tx80211_rt73_capabilities();
+
 ok(1);
