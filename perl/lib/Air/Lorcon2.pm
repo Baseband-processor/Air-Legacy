@@ -1720,6 +1720,7 @@ our %EXPORT_TAGS = (
       aj_getnonblock
       aj_getsocket
       aj_ifupdown
+      lorcon_supported_cards
  )],
  
    suites => [qw(
@@ -1983,6 +1984,13 @@ sub Frequency_to_Channel{
         return (grep { $channel_to_frequency{$_} eq $Frequency } keys %channel_to_frequency );
         }
 
+# show every supported driver by Lorcon2 in a clear way
+sub lorcon_supported_cards {
+	my %tx80211 = tx80211_getcardlist();
+	foreach( keys %tx80211 ){
+		print "$_ => $tx80211{ $_ }\n";
+	}
+}
 
 __PACKAGE__->bootstrap($VERSION);
 
