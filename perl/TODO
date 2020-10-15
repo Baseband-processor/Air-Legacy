@@ -11,5 +11,13 @@ REALTODO:
 - decide if static linking lorcon2.so perl's object, this will be a first pass for creating an independing Air::Lorcon2 library (from originary lorcon2)
 - try to re-implement CCFLAGS from Makefile.PL
 - implement new drivers
+   * ath5k 
+   * ath9k
+   * airo
+   * iwlwifi (it will be very difficult)
+   * mt76
+   * rt2x00
+   * ti
+   
 - add TKIP/CCMP support
 
