@@ -1332,7 +1332,7 @@ CODE:
 #define SIOCSIFFLAGS 0x8914
 
 int 
-aj_ifupdown(char *ifname, int devup) 
+aj_ifupdown(ifname,  devup) 
 	char *ifname
 	int devup
 CODE:
