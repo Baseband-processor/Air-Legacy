@@ -89,6 +89,7 @@ Revision history for Perl extension Air::Lorcon2.
     * aj_ifupdown
   - splitted perl installation process into 2 files 
   - added pure-perl function: lorcon_supported_cards
+  - officially added first draft for zd1211rw driver into lorcon_list_drivers function
   
 27.75   Sun Set 27 9:31:00  CET 2020
   - 1k + contributions, thanks to me! (Edoardo Mantovani)
