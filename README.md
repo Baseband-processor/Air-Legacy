@@ -45,15 +45,18 @@ directory.
 
 **TEST IF LORCON2 SUPPORTS LOCAL ADAPTERS**
 
-for veryfing that everything works just start typing 
-*perl -e '*
+for veryfing that everything works just start executing the following script:
 
 ```perl
 #!/usr/bin/perl
+# Made by Edoardo Mantovani, 2020
 
 use Air::Lorcon2 qw( :lorcon );
-use Data::Dumper;
+use Data::Dumper qw( Dumper );
+print "avaiable drivers are:\n";
 print Dumper( lorcon_list_drivers() );
+print "\n while Lorcon2's supported drivers are:\n";
+print lorcon_supported_cards();
 
 ```
 
