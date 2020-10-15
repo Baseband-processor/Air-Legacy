@@ -82,7 +82,11 @@ Revision history for Perl extension Air::Lorcon2.
     * rt2500_close
   - added -ffast-math compilation flag  to Lorcon2 library
   - toggled CPAN.pm in favor of App::Cpan
-  
+  - added aj_ functions: [SEE IN EXTENDED] …
+    * aj_setnonblock
+    * aj_getnonblock
+    * aj_getsocket
+    * aj_ifupdown
   
 27.75   Sun Set 27 9:31:00  CET 2020
   - 1k + contributions, thanks to me! (Edoardo Mantovani)
