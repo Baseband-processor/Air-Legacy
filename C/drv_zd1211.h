@@ -53,6 +53,7 @@
 #include <net/ethernet.h>
 #include <netpacket/packet.h>
 #include "tx80211.h"
+#include "lorcon_int.h"
 
 #define USE_DRV_ZD1211RW 1
 
