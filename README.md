@@ -220,7 +220,7 @@ Probably the best collaborator I ever had, without him, the biggest part related
 This library is the result of 2 months of hard work and, still now, there are several problem related to the perl-types conversion, 
 Probably the project will grow even more, my main ideas are:
 
-- [ ] offer a full coverage for the Lorcon2 library
+- [x] offer a full coverage for the Lorcon2 library
 - [ ] develop a big amount of perl-based-subroutines, despite the function-avaiability, lorcon2 is a finite project, it's our work to make it infinite.
 - [ ] Integrate Air::Lorcon2 with other modules, those are:
 
