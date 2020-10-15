@@ -270,7 +270,8 @@ actually Working functions
       aj_getnonblock
       aj_getsocket
       aj_ifupdown
-
+      lorcon_supported_cards
+      
 **TESTED AND WORKING**
 
 - [x]      lorcon_list_drivers
