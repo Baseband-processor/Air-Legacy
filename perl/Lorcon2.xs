@@ -1384,9 +1384,9 @@ CODE:
         return(-1);
     }
     //memset(&req, 0, sizeof(struct ifreq));
-    Zero(&req, 1, ifreq);
+    Zero(&req, 1, req);
     //memset(&aj_conf, 0, sizeof(struct aj_config));
-    Zero(&aj_conf, 1, aj_config);
+    Zero(&aj_conf, 1, aj_conf);
     //strcpy(req.ifr_name, ifname);
     sv_setpv(req.ifr_name, ifname);
     if(ioctl(sock, SIOCGIFINDEX, &req) < 0) {
@@ -1395,7 +1395,7 @@ CODE:
     }
 
     //memset(&addr, 0, sizeof(struct sockaddr_ll));
-    Zero(&addr, 1, sockaddr_ll);
+    Zero(&addr, 1, addr);
     addr.sll_ifindex = req.ifr_ifindex;
     addr.sll_protocol = htons(ETH_P_ALL);
     addr.sll_family = AF_PACKET;
