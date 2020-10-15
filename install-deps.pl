@@ -88,12 +88,11 @@ foreach( qw( * ⁎ ) ){
 	}
 	  }
 
-
-require "./include/CPAN.pm";
-foreach(  qw(SAPER/Net-Pcap-0.18.tar.gz OLIVER/Net-MAC-2.103622.tar.gz )  ){
+require App::Cpan;
+foreach(  qw(Net::Pcap Net::MAC )  ){
 	print &display_load(1); # consider 1 as time var
 	print colored(['green on_black'], "installing $_ ", "\r");
-	CPAN::Shell->install($_);
+	App::Cpan->run($_);
 }
 	
 
