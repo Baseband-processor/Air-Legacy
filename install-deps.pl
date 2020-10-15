@@ -88,11 +88,10 @@ foreach( qw( * ⁎ ) ){
 	}
 	  }
 
-require App::Cpan;
+my $CPAN_file = 'install-module.pl'; 
 foreach(  qw(Net::Pcap Net::MAC )  ){
-	print &display_load(1); # consider 1 as time var
-	print colored(['green on_black'], "installing $_ ", "\r");
-	App::Cpan->run($_);
+	my $comm =  `sudo perl $CPAN_file -fi $_ `;
+	$comm = undef; # cancel $comm content
 }
 	
 
