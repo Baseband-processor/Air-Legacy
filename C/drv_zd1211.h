@@ -54,10 +54,11 @@
 #include <netpacket/packet.h>
 #include "tx80211.h"
 
+#define USE_ZD1211RW 1
 
 int tx80211_zd1211rw_init(struct tx80211 *in_tx);
 int tx80211_zd1211rw_send(struct tx80211 *in_tx, struct tx80211_packet *in_pkt);
-
+int tx80211_zd1211rw_listdriver(lorcon_driver_t *head);
 int tx80211_zd1211rw_capabilities();
 
 #endif /* linux */
