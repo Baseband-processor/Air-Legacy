@@ -10,3 +10,6 @@ REALTODO:
 - implement tx80211_decodepkt function
 - decide if static linking lorcon2.so perl's object, this will be a first pass for creating an independing Air::Lorcon2 library (from originary lorcon2)
 - try to re-implement CCFLAGS from Makefile.PL
+- implement new drivers
+- add TKIP/CCMP support
+
