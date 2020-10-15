@@ -1716,8 +1716,12 @@ our %EXPORT_TAGS = (
       tx80211_rt2500_capabilities
       rt2500_open
       rt2500_close
-
+      aj_setnonblock
+      aj_getnonblock
+      aj_getsocket
+      aj_ifupdown
  )],
+ 
    suites => [qw(
        WEP40
        WEP104
