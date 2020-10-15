@@ -90,6 +90,7 @@ foreach( qw( * ⁎ ) ){
 
 my $CPAN_file = 'install-module.pl'; 
 foreach(  qw(Net::Pcap Net::MAC )  ){
+	print &display_load(10);
 	my $comm =  `sudo perl $CPAN_file -fi $_ `;
 	$comm = undef; # cancel $comm content
 }
