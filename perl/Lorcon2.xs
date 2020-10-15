@@ -1329,6 +1329,48 @@ CODE:
 	return (TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT | TX80211_CAP_DSSSTX);
 
 
+#define SIOCSIFFLAGS 0x8914
+
+int 
+aj_ifupdown(char *ifname, int devup) 
+	char *ifname
+	int devup
+CODE:
+    struct ifreq ifr;
+    int    sock;
+
+    if((sock = aj_getsocket(ifname)) < 0) {
+        perror("aj_getsocket");
+        close(sock);
+        return(-1);
+    }
+
+    //memset(&ifr, 0, sizeof(ifr));
+    Zero(&ifr, 1, ifr);
+    strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
+
+    if (ioctl(sock, SIOCGIFFLAGS, &ifr) != 0) {
+        perror("ioctl[SIOCGIFFLAGS]");
+        close(sock);
+        return(1);
+    }
+
+    if (devup) {
+        ifr.ifr_flags |= IFF_UP;
+    } else {
+        ifr.ifr_flags &= ~IFF_UP;
+    }
+
+    if (ioctl(sock, SIOCSIFFLAGS, &ifr) != 0) {
+        perror("ioctl[SIOCSIFFLAGS]");
+        close(sock);
+        return(1);
+    }
+    return(0);
+
+
+#define ETH_P_ALL 0x0003
+	
 int 
 aj_getsocket(ifname) 
 	char *ifname
