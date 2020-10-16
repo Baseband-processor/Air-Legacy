@@ -148,7 +148,7 @@ lorcon_driver_t  tx80211_zd1211rw_listdriver(lorcon_driver_t *head)
 	d->name = strdup("zd1211rw");
 	d->details = strdup("zd1211rw driver for USB wireless dongles based for: ZyDAS-ZD1211, ZyDAS-ZD1211B, and Atheros AR5007UG");
 	d->init_func = tx80211_zd1211rw_init(in_tx);
-	//d->probe_func = drv_mac80211_probe();
+	d->probe_func = NULL;
 	d->next = head;
 	return d;	
 }
