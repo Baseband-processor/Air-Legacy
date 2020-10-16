@@ -57,6 +57,8 @@
 #include "wtinject.h"
 #include "lorcon.h"
 
+#define USE_DRV_HOSTAP 1
+
 int tx80211_hostap_init(struct tx80211 *in_tx);
 
 int tx80211_hostap_capabilities();
