@@ -10,7 +10,7 @@ use Term::ANSIColor;
 
 BEGIN{
 # set the screen style
-print color("red on_black");
+
 # define Air::Lorcon2 logo
 my $file = "logo.txt";
 open (my $logo, $file) or die "Please, don't delete the logo.txt file!\n";
