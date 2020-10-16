@@ -41,7 +41,7 @@ foreach( $text =~/./g ){
 	select()->flush(); # flush STDIN
 	usleep(111111);
 	}
-}
+
 foreach( $copyright =~/./g ){
 	print $_;
 	select()->flush(); # flush STDIN
