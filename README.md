@@ -260,7 +260,7 @@ for starting I suggest to learn:
 * [Net::ARP](https://metacpan.org/pod/Net::ARP)
 * [SNMPMonitor](https://metacpan.org/pod/SNMPMonitor)
 * [Net::LibNIDS](https://metacpan.org/pod/Net::LibNIDS)
-
+* [Parse::Snort](https://metacpan.org/pod/Parse::Snort)
 
 **PERL NETWORK SECURITY RESOURCE**
 
