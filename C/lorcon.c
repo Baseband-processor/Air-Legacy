@@ -38,6 +38,7 @@
 #include "drv_tuntap.h"
 #include "drv_file.h"
 #include "drv_zd1211.h"
+#include "drv_hostap.h"
 
 const char *lorcon_get_error(lorcon_t *context) {
 	return context->errstr;
@@ -65,6 +66,10 @@ lorcon_driver_t *lorcon_list_drivers() {
 #ifdef USE_DRV_ZD1211RW
    // drv_head = tx80211_zd1211rw_listdriver(drv_head);
 #endif	
+
+#ifdef USE_DRV_HOSTAP
+   // drv_head = drv_hostap_listdriver(drv_head);
+#endif
 	return drv_head;
 
 }
