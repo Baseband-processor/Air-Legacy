@@ -140,14 +140,14 @@ int tx80211_zd1211rw_send(struct tx80211 *in_tx, struct tx80211_packet *in_pkt)
 
 int tx80211_zd1211rw_listdriver(lorcon_driver_t *head)
 {
- 
+ 	struct tx80211 *in_tx;
 	lorcon_driver_t *d = (lorcon_driver_t *) malloc(sizeof(lorcon_driver_t *));
 	//Newxz(d, 1, AirLorconDriver);
 	memset(d, 0, sizeof(lorcon_driver_t *) );
 	lorcon_t *interface;
 	d->name = strdup("zd1211rw");
 	d->details = strdup("zd1211rw driver for USB wireless dongles based for: ZyDAS-ZD1211, ZyDAS-ZD1211B, and Atheros AR5007UG");
-	d->init_func = tx80211_zd1211rw_init(head);
+	d->init_func = tx80211_zd1211rw_init(in_tx);
 	//d->probe_func = drv_mac80211_probe();
 	d->next = head;
 	return d;	
