@@ -255,8 +255,10 @@ for starting I suggest to learn:
 * [Net::P0f](https://metacpan.org/pod/Net::P0f)
 * [Net::Pcap::Reassemble](https://metacpan.org/pod/Net::Pcap::Reassemble)
 * [Nagios::NRPE](https://metacpan.org/pod/Nagios::NRPE)
+* [Monitoring::Plugin](https://metacpan.org/pod/Monitoring::Plugin)
 * [Net::Connection::Sniffer](https://metacpan.org/pod/Net::Connection::Sniffer)
 * [Net::ARP](https://metacpan.org/pod/Net::ARP)
+* [SNMPMonitor](https://metacpan.org/pod/SNMPMonitor)
 
 **PERL NETWORK SECURITY RESOURCE**
 
