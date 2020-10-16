@@ -55,10 +55,13 @@
 #include <netpacket/packet.h>
 
 #include "wtinject.h"
+#include "lorcon.h"
 
 int tx80211_hostap_init(struct tx80211 *in_tx);
 
 int tx80211_hostap_capabilities();
+
+lorcon_driver_t *drv_hostap_listdriver(lorcon_driver_t *);
 
 #endif /* linux */
 
