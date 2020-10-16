@@ -53,13 +53,13 @@
 #include <net/ethernet.h>
 #include <netpacket/packet.h>
 #include "tx80211.h"
-#include "lorcon_int.h"
+#include "lorcon.h"
 
 #define USE_DRV_ZD1211RW 1
 
 int tx80211_zd1211rw_init(struct tx80211 *in_tx);
 int tx80211_zd1211rw_send(struct tx80211 *in_tx, struct tx80211_packet *in_pkt);
-lorcon_driver_t  tx80211_zd1211rw_listdriver(lorcon_driver_t *head);
+lorcon_driver_t  tx80211_zd1211rw_listdriver(lorcon_driver_t *);
 int tx80211_zd1211rw_capabilities();
 
 #endif /* linux */
