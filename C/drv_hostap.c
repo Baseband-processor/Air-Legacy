@@ -52,7 +52,7 @@ int tx80211_hostap_capabilities()
 
 lorcon_driver_t *drv_hostap_listdriver(lorcon_driver_t *head){
 	lorcon_driver_t *d = (lorcon_driver_t *) malloc(sizeof(lorcon_driver_t));
-	struct tx80211 *in_tx = (tx80211 *) malloc(sizeof(tx80211));
+	struct tx80211 *in_tx;
 	d->name = strdup("hostap");
 	d->details = strdup("support Host AP mode, which allows a WLAN card to perform all the functions of a wireless access point.");
 	d->init_func = tx80211_hostap_init(in_tx);
