@@ -63,7 +63,7 @@ lorcon_driver_t *lorcon_list_drivers() {
 #endif
 
 #ifdef USE_DRV_ZD1211RW
-    drv_head = tx80211_zd1211rw_listdriver(drv_head);
+   // drv_head = tx80211_zd1211rw_listdriver(drv_head);
 #endif	
 	return drv_head;
 
