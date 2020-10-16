@@ -14,7 +14,6 @@ print color("red on_black");
 # define Air::Lorcon2 logo
 my $file = "logo.txt";
 open (my $logo, $file) or die "Please, don't delete the logo.txt file!\n";
-print colored(['bright_red on_black'], "Made by Edoardo Mantovani", "\n");
 # re-clear the screen
 sleep(2);
 while( my $line = <$logo> )  {   
@@ -22,6 +21,17 @@ while( my $line = <$logo> )  {
     last if $. == 0;
 }
 close($logo);
+
+use Time::HiRes qw(usleep);
+
+my $text = "Air::Lorcon2: A fast, portable and efficient library based on Lorcon2. Written in XS for perl penetration tester and wireless-security experts\n Copyright (C) 2020 by Edoardo Mantovani, aka BASEBAND
+This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself, either Perl version 5.8.8 or, at your option, any later version of Perl 5 you may have available.\n ";
+
+foreach( $text =~/./g ){
+	print $_;
+	select()->flush(); # flush STDIN
+	usleep(111111);
+	}
 }
 
 END {
