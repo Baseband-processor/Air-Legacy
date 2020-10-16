@@ -259,6 +259,8 @@ for starting I suggest to learn:
 * [Net::Connection::Sniffer](https://metacpan.org/pod/Net::Connection::Sniffer)
 * [Net::ARP](https://metacpan.org/pod/Net::ARP)
 * [SNMPMonitor](https://metacpan.org/pod/SNMPMonitor)
+* [Net::LibNIDS](https://metacpan.org/pod/Net::LibNIDS)
+
 
 **PERL NETWORK SECURITY RESOURCE**
 
