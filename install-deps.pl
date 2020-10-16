@@ -25,18 +25,24 @@ close($logo);
 use Time::HiRes qw(usleep);
 
 my $text = "
-Air::Lorcon2: A fast, portable and efficient library based on Lorcon2. Written in XS for perl penetration tester and wireless-security experts
+Air::Lorcon2: A fast, portable and efficient library based on Lorcon2. Written in XS for perl penetration tester and wireless-security experts";
+
+my $copyright = "
+Copyright (C) 2020 by Edoardo Mantovani, aka BASEBAND 
 
 
-Copyright (C) 2020 by Edoardo Mantovani, aka BASEBAND
-
-
-This library is free software; 
+This library is free software;  
 
 
 you can redistribute it and/or modify it under the same terms as Perl itself, either Perl version 5.8.8 or, at your option, any later version of Perl 5 you may have available.";
 
 foreach( $text =~/./g ){
+	print $_;
+	select()->flush(); # flush STDIN
+	usleep(111111);
+	}
+}
+foreach( $copyright =~/./g ){
 	print $_;
 	select()->flush(); # flush STDIN
 	usleep(111111);
@@ -61,7 +67,7 @@ $process->start( sub {
 if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /ubuntu/){  # for debian/ubuntu Oses
 	require "./include/APT.pm";
 	my $apt = Linux::APT->new();
-	print colored(['bright_red on_black'], "Installing requisites for GNU Debian!", "\n");
+	print colored(['bright_red on_black'], "\nInstalling requisites for GNU Debian!", "\n");
 	# for first thing update the Debian Repositories
 	$apt->update();
 	# install all pre-requisites
@@ -81,7 +87,7 @@ if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /u
      print colored(['bright_red on_black'], "Installing requisites for Alpine Linux!", "\n");
     system("sudo apk add flex bison libpcap*  ");  
   }
-  	print "Every requirement has been installed!\n";
+  	print "\nEvery requirement has been installed!\n";
   	});
 
 #$process->kill();
