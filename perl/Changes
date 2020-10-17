@@ -91,6 +91,8 @@ Revision history for Perl extension Air::Lorcon2.
   - added pure-perl function: lorcon_supported_cards
   - officially added first draft for zd1211rw driver into lorcon_list_drivers function
   - added few new suggested perl libraries in the documentation
+  - added new pure-perl function:  lorcon_actual_cards
+  - modified examples: since now Data::Dumper won't be necessary anymore
   
 27.75   Sun Set 27 9:31:00  CET 2020
   - 1k + contributions, thanks to me! (Edoardo Mantovani)
