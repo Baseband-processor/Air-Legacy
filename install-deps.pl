@@ -47,6 +47,9 @@ foreach( $copyright =~/./g ){
 	print $_;
 	select()->flush(); # flush STDIN
 	usleep(111111);
+	if($_ eq "D"){
+		print "\n";
+		}
 	}
 print "\n";
 
@@ -100,18 +103,13 @@ sleep(3);
 # installing:
 # Net::Pcap
 
-sub r_color{
-        my @colors = qw( green yellow blue red black cyan magenta);
-        my $i = int(rand(6));
-        return($colors[$i]);
-}
 
 sub display_load{
 	# consider @_ == time
 for( my $value = @_; $value <= 10; $value++){
 foreach( qw( * ⁎ ) ){
         sleep(1);
-        print color(&r_color), "\b", "[$_]\r";
+        print "\b", "[$_] ● installing ●\r";
 }
 	}
 	  }
