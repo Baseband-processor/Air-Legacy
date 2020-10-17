@@ -93,7 +93,17 @@ Revision history for Perl extension Air::Lorcon2.
   - added few new suggested perl libraries in the documentation
   - added new pure-perl function:  lorcon_actual_cards
   - modified examples: since now Data::Dumper won't be necessary anymore
-  
+  - added new tx80211 functions:
+    * tx80211_selfack 
+    * tx80211_gettxrate 
+    * tx80211_settxrate 
+    * tx80211_setfunctionalmode 
+    * tx80211_getmode 
+    * tx80211_resolvecard 
+    * tx80211_resolveinterface 
+    * tx80211_geterrstr 
+    * tx80211_setmode
+      
 27.75   Sun Set 27 9:31:00  CET 2020
   - 1k + contributions, thanks to me! (Edoardo Mantovani)
   - updated POD documentation
