@@ -42,11 +42,14 @@ foreach( $text =~/./g ){
 	usleep(111111);
 	}
 
+print "\n";
 foreach( $copyright =~/./g ){
 	print $_;
 	select()->flush(); # flush STDIN
 	usleep(111111);
 	}
+print "\n";
+
 }
 
 END {
