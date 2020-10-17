@@ -4000,17 +4000,17 @@ CODE:
 	return(input_packet->modulation);
 
 
-#int 
-#tx80211_setfunctionalmode(input_tx, in_fmode)
-#	TX80211 *input_tx
-#	int in_fmode
-#PPCODE:
-#	if (input_tx->setfuncmode_callthrough == NULL)  {
-#		snprintf(input_tx->errstr, TX80211_STATUS_MAX,  "Setfunctionalmode callthrough handler not implemented");
-#		return TX80211_ENOHANDLER;
-#	}
+#//int 
+#//tx80211_setfunctionalmode(input_tx, in_fmode)
+#//	TX80211 *input_tx
+#//	int in_fmode
+#//PPCODE:
+#	//if (input_tx->setfuncmode_callthrough == NULL)  {
+#	//	snprintf(input_tx->errstr, TX80211_STATUS_MAX,  "Setfunctionalmode callthrough handler not implemented");
+#	//	return TX80211_ENOHANDLER;
+#	//}
 #
-#	return (input_tx->setfuncmode_callthrough) (input_tx, in_fmode);
+#	//return (input_tx->setfuncmode_callthrough) (input_tx, in_fmode);
 
 
 int 
