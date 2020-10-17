@@ -576,9 +576,11 @@ lorcon_list_drivers()
       RETVAL
 
 
-const char *
+char *
 lorcon_get_error( context )
       AirLorcon *context
+CODE:
+	return newSVpv(context->errstr, 0);
 
 AirLorconDriver *
 lorcon_find_driver( driver )
