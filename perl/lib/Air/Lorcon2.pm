@@ -2004,11 +2004,16 @@ sub lorcon_supported_cards {
 
 # this will dump supported lorcon drivers supported by host, output is similar to lorcon_supported_cards function
 sub lorcon_actual_cards {
-	my %drivers = lorcon_list_drivers();
-	foreach( keys %drivers ){
-		print "$_ => $drivers{ $_ }\n";
+	my $driver = lorcon_list_drivers();
+	foreach( @{ $driver } ){
+		my %r = %{ $_ };
+		foreach( keys %{ $_ }){
+			print $_ . " => " . $r{ $_ };
+			print "\n";
+		}
+	print "\n";
 	}
-}
+}	
 
 __PACKAGE__->bootstrap($VERSION);
 
