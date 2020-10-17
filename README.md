@@ -3,7 +3,7 @@ Air::Lorcon2
 
 ![image of wireless_security_protocols_bg](./wireless.jpg)
 
-![coverage](https://progress-bar.dev/97?title=progress)  ![functions](https://progress-bar.dev/270?title=functions)  ![constants](https://progress-bar.dev/565?title=constants)  ![size](https://img.shields.io/github/languages/code-size/Baseband-processor/Air-Lorcon2) ![license](https://img.shields.io/github/license/Baseband-processor/Air-Lorcon2) ![Lcommits](https://img.shields.io/github/last-commit/Baseband-processor/Air-Lorcon2)  ![toplang](https://img.shields.io/github/languages/top/Baseband-processor/Air-Lorcon2) 
+![coverage](https://progress-bar.dev/97?title=progress)  ![functions](https://progress-bar.dev/271?title=functions)  ![constants](https://progress-bar.dev/565?title=constants)  ![size](https://img.shields.io/github/languages/code-size/Baseband-processor/Air-Lorcon2) ![license](https://img.shields.io/github/license/Baseband-processor/Air-Lorcon2) ![Lcommits](https://img.shields.io/github/last-commit/Baseband-processor/Air-Lorcon2)  ![toplang](https://img.shields.io/github/languages/top/Baseband-processor/Air-Lorcon2) 
  ![release-date](https://img.shields.io/github/release-date/Baseband-processor/Air-Lorcon2)
  
  ![26.01-commits](https://img.shields.io/github/commits-since/Baseband-processor/Air-Lorcon2/26.01) ![27.75](https://img.shields.io/github/commits-since/Baseband-processor/Air-Lorcon2/27.75)
@@ -52,9 +52,9 @@ for veryfing that everything works just start executing the following script:
 # Made by Edoardo Mantovani, 2020
 
 use Air::Lorcon2 qw( :lorcon );
-use Data::Dumper qw( Dumper );
 print "avaiable drivers are:\n";
-print Dumper( lorcon_list_drivers() );
+print lorcon_actual_cards();
+sleep(2);
 print "\n while Lorcon2's supported drivers are:\n";
 print lorcon_supported_cards();
 
@@ -112,13 +112,12 @@ the most basic usage is:
 
 use strict;
 use Net::Pcap qw( pcap_lookupdev );
-use Data::Dumper qw(Dumper);
 use Air::Lorcon2 qw(:lorcon); # This will export every lorcon2's subroutines
 
 my $pcap_err = '';
 my $pcap_interface = pcap_lookupdev( \$pcap_err ); # This will give us the best interface avaiable for sniffing 
 
-print Dumper( lorcon_list_drivers() ) or die $!;
+print lorcon_actual_cards() or die $!;
 
 # NOTE: lorcon_list_drivers will show supported drivers avaiable in the current host, while tx80211_getcardlist function
 # will show the lorcon's supported network cards list
