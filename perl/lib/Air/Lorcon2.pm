@@ -1721,6 +1721,7 @@ our %EXPORT_TAGS = (
       aj_getsocket
       aj_ifupdown
       lorcon_supported_cards
+      lorcon_actual_cards
  )],
  
    suites => [qw(
