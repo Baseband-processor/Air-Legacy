@@ -103,7 +103,8 @@ Revision history for Perl extension Air::Lorcon2.
     * tx80211_resolveinterface 
     * tx80211_geterrstr 
     * tx80211_setmode
-      
+  - modified lorcon_get_error function: now will return string as output
+  
 27.75   Sun Set 27 9:31:00  CET 2020
   - 1k + contributions, thanks to me! (Edoardo Mantovani)
   - updated POD documentation
