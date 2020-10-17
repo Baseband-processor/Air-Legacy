@@ -4067,3 +4067,118 @@ CODE:
     *ret = 0;
     return NL_STOP;
 
+int 
+tx80211_selfack(in_tx, addr)
+	TX80211 *in_tx
+	uint8_t *addr
+
+int 
+tx80211_gettxrate(input_packet)
+	TX80211_PACKET *input_packet
+CODE:
+	return(input_packet->txrate);
+	
+int 
+tx80211_settxrate(input_tx, input_packet, txrate)
+	TX80211 *input_tx
+	TX80211_PACKET *input_packet
+	int txrate
+CODE:
+	if (input_tx->injectortype == INJ_NODRIVER) {
+		snprintf(input_tx->errstr, TX80211_STATUS_MAX, "settxrate: driver type not intialized");
+		return TX80211_ENOINIT;
+	}
+
+	if ((tx80211_get_capabilities(input_tx) & TX80211_CAP_SETRATE) == 0) {
+		snprintf(input_tx->errstr, TX80211_STATUS_MAX, "setmodulation: driver does not support setting the TX data rate.");
+		return TX80211_ENOTCAPAB;
+	}
+
+	input_packet->txrate = txrate;
+	return TX80211_ENOERR;
+
+int 
+tx80211_setfunctionalmode(input_tx, in_fmode)
+	TX80211 *input_tx
+	int in_fmode
+CODE:	
+	if (input_tx->setfuncmode_callthrough == NULL) 
+	{
+		snprintf(input_tx->errstr, TX80211_STATUS_MAX,  "Setfunctionalmode callthrough handler not implemented");
+		return TX80211_ENOHANDLER;
+	}
+
+	return (input_tx->setfuncmode_callthrough);
+
+int 
+tx80211_getmode(input_tx)
+	TX80211 *input_tx
+CODE:
+	if (input_tx->getmode_callthrough == NULL)
+	{
+		snprintf(input_tx->errstr, TX80211_STATUS_MAX,  "Getmode callthrough handler not implemented");
+		return TX80211_ENOHANDLER;
+	}
+
+	return (input_tx->getmode_callthrough);
+
+int 
+tx80211_resolvecard(in_str)
+	const char *in_str
+	
+int 
+tx80211_resolveinterface(input_str)
+	char *input_str
+CODE:
+#ifdef SYS_LINUX
+
+	char driver[32];
+	char *tmpdriver;
+
+	tmpdriver = ifconfig_get_sysdriver(input_str);
+
+	if (tmpdriver == NULL){
+		return INJ_NODRIVER;
+	}
+	/* Clean up so we don't have to deal w/ it on each return */
+	snprintf(driver, 32, "%s", tmpdriver);
+	Safefree(tmpdriver);
+
+	/* Check for the phy80211 attribute as a shortcut for detecting mac80211 devices */
+	if (ifconfig_get_sysattr(input_str, "phy80211")){
+		return INJ_MAC80211;
+	}
+	if (!strcasecmp(driver, "hostap")){
+		return INJ_HOSTAP;
+	}
+	if (!strcasecmp(driver, "prism54")){
+		return INJ_PRISM54;
+	}
+	if (!strcasecmp(driver, "madwifing") || !strcasecmp(driver, "madwifi-ng")){
+		return INJ_MADWIFING;
+	}
+#endif
+
+	return INJ_NODRIVER;
+	
+char *
+tx80211_geterrstr(input_tx)
+	TX80211 *input_tx
+CODE:
+	return newSVpv(input_tx->errstr, 0);
+
+int 
+tx80211_setmode(input_tx, input_mode)
+	TX80211 *input_tx
+	int input_mode
+CODE:
+	fprintf(stderr, "LORCON - tx80211_setmode(...) is deprecated, please use tx80211_setfunctionalmode(...) instead\n");
+
+	if (input_tx->setmode_callthrough == NULL) 
+	{
+		snprintf(input_tx->errstr, TX80211_STATUS_MAX,  "Setmode callthrough handler not implemented");
+		return TX80211_ENOHANDLER;
+	}
+
+	return (input_tx->setmode_callthrough);
+	
