@@ -271,6 +271,17 @@ actually Working functions
       aj_getsocket
       aj_ifupdown
       lorcon_supported_cards
+      lorcon_actual_cards
+      tx80211_selfack 
+      tx80211_gettxrate 
+      tx80211_settxrate 
+      tx80211_setfunctionalmode 
+      tx80211_getmode 
+      tx80211_resolvecard 
+      tx80211_resolveinterface 
+      tx80211_geterrstr 
+      tx80211_setmode
+
       
 **TESTED AND WORKING**
 
