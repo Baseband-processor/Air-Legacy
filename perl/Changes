@@ -4,6 +4,9 @@ Revision history for Perl extension Air::Lorcon2.
 
 [first official release]
 
+29.00   Sun Opt 18 16:00:00 CET 2020
+  - updated every file to version 29.00
+
 28.00   Sun Opt 04 16:00:00 CET 2020
   - toggled donation tag and modified markdown graphic
   - fixed ALL tests, now the "make full" installation works without any problems under Ubuntu os
