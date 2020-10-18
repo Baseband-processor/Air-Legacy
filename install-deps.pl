@@ -28,7 +28,7 @@ my $text = "
 Air::Lorcon2: A fast, portable and efficient library based on Lorcon2. Written in XS for perl penetration tester and wireless-security experts";
 
 my $copyright = "
-Copyright (C) 2020 by Edoardo Mantovani, aka BASEBAND 
+Copyright (C) 2020 by Edoardo Mantovani, aka BASEBAND
 
 
 This library is free software;  
