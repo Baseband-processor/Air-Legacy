@@ -67,6 +67,7 @@ void **             T_PV
 unsigned long int   T_U_LONG
 uint8_t             T_U_SHORT
 uint8_t *           T_U_SHORT
+uint32_t            T_U_SHORT
 unsigned int        T_PV
 unsigned int *      T_PV
 bpf_u_int32         T_PV
