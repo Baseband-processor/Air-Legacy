@@ -36,7 +36,7 @@ No, the entire _Air::Toolkit_ is designed for a more in-dept type of wireless-se
 CURRENT VERSION
 ====================
 
-The latest version of Air::Lorcon2 is: 27.75
+The latest version of Air::Lorcon2 is: 29.00
 
 
 **Edoardo Mantovani, 2020**
