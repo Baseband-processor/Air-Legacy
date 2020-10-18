@@ -4,7 +4,7 @@ my $void = <<'SKIP';
 /*
 ----------------------------------------------------------------------
 
-    ppport.h -- Perl/Pollution/Portability Version 3.60_02
+    ppport.h -- Perl/Pollution/Portability Version 3.62
 
     Automatically created by Devel::PPPort running under perl 5.022001.
 
@@ -21,7 +21,7 @@ SKIP
 
 =head1 NAME
 
-ppport.h - Perl/Pollution/Portability version 3.60_02
+ppport.h - Perl/Pollution/Portability version 3.62
 
 =head1 SYNOPSIS
 
@@ -583,7 +583,7 @@ BEGIN { require warnings if "$]" > '5.006' }
 # Disable broken TRIE-optimization
 BEGIN { eval '${^RE_TRIE_MAXBUF} = -1' if "$]" >= "5.009004" && "$]" <= "5.009005"}
 
-my $VERSION = 3.60_02;
+my $VERSION = 3.62;
 
 my %opt = (
   quiet     => 0,
@@ -10453,7 +10453,7 @@ __DATA__
 #define DPPP_CAT2(x,y) CAT2(x,y)
 #define DPPP_(name) DPPP_CAT2(DPPP_NAMESPACE, name)
 
-#define D_PPP_RELEASE_DATE 1602028800 /* 2020-10-07 */
+#define D_PPP_RELEASE_DATE 1602806400 /* 2020-10-16 */
 
 #if ! defined(PERL_REVISION) && ! defined(PERL_VERSION_MAJOR)
 #  if   !   defined(__PATCHLEVEL_H_INCLUDED__)                                  \
