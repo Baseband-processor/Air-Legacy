@@ -6,30 +6,25 @@
 use strict;
 no strict 'subs';
 use Test;
-BEGIN{ plan tests => 4 };
+
+BEGIN{ plan tests => 1 };
 
 use Air::Lorcon2 qw( :lorcon );
 
-if( ! association_reason_codes_HASH() ){
-  ok(0);
-}else{
-  ok(1);
-}
+association_reason_codes_HASH();
 
-if( ! dissociation_reason_codes_HASH() ){
-  ok(0);
-}else{
-  ok(1);
-}
+dissociation_reason_codes_HASH();
 
-if( ! channel_to_frequency_HASH() ){
-  ok(0);
-}else{
-  ok(1);
-}
+channel_to_frequency_HASH();
 
-if( ! RMAC_gen() ){
-  ok(0);
-}else{
-  ok(1);
-}
+RMAC_gen();
+
+FindLinkage();
+
+Detect_Driver();
+
+Packet_to_hex();
+
+Hex_to_packet();
+
+ok(1);
