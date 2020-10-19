@@ -2035,15 +2035,16 @@ Air::Lorcon2 is A fast, portable and efficient perl library based on Lorcon2.
 Written in XS for perl penetration tester and wireless-security experts, it offers around 240 functions related to the packet crafting, multi-interface sniffing and even more!
 
 
+#!/usr/bin/perl
+
 use strict;
 use Net::Pcap qw( pcap_lookupdev );
-use Data::Dumper qw(Dumper);
 use Air::Lorcon2 qw(:lorcon); # This will export every lorcon2's subroutines
 
 my $pcap_err = '';
 my $pcap_interface = pcap_lookupdev( \$pcap_err ); # This will give us the best interface avaiable for sniffing 
 
-print Dumper( lorcon_list_drivers() ) or die $!;
+print lorcon_actual_cards() or die $!;
 
 # NOTE: lorcon_list_drivers will show supported drivers avaiable in the current host, while tx80211_getcardlist function
 # will show the lorcon's supported network cards list
@@ -2126,6 +2127,7 @@ mac80211_sendpacket( $context, $Packet );
 
 my $raw_bytes = "\x00\x00\x00\x00\x00";
 tuntap_sendbytes( $context, length( $raw_bytes ), \$raw_bytes );
+
 
 =head1 DESCRIPTION
 
