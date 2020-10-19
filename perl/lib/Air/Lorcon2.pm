@@ -1975,11 +1975,15 @@ sub channel_to_frequency_HASH(){
 
 # these 2 functions drop the reference for the dissociation and association reason codes required for lcpf functions
 sub dissociation_reason_codes_HASH(){
-	return(\%dissociation_reason_codes);
+	foreach( keys %dissociation_reason_codes ){
+		print "$_ => dissociation_reason_codes{ $_ }\n";
+	}
 }
 
 sub association_reason_codes_HASH(){
-	return(\%association_reason_codes);
+	foreach( keys %association_reason_codes ){
+		print "$_ => association_reason_codes{ $_ }\n";
+	}
 }
 # as their name suggest, these 2 functions permits the conversion from channel to its frequency and vice-versa, is suggested to use them with 
 # Lorcon_set_channel (or similar) functions
