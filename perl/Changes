@@ -8,7 +8,14 @@ Revision history for Perl extension Air::Lorcon2.
   - updated every file to version 29.00
   - added first version of cfg80211 header
   - updated Devel::PPPort to version 3.62
-  
+  - added few new prototypes for future perl cfg80211 control
+     * convert_key_from_CPU
+     * send_key_to_dongle
+     * brcmf_cfg80211_request_ap_if
+     * brcmf_mon_add_vif
+     * brcmf_cfg80211_add_iface
+     * brcmf_notify_escan_complete
+
 28.00   Sun Opt 04 16:00:00 CET 2020
   - toggled donation tag and modified markdown graphic
   - fixed ALL tests, now the "make full" installation works without any problems under Ubuntu os
