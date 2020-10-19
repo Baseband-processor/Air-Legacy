@@ -14,5 +14,10 @@ int cfg80211_init(lorcon_t *);
 int tx80211_cfg80211_capabilities();
 lorcon_driver_t *drv_cfg80211_listdriver(lorcon_driver_t *);
 void convert_key_from_CPU(struct brcmf_wsec_key *key, struct brcmf_wsec_key_le *key_length);
+int send_key_to_dongle(struct brcmf_if *ifp, struct brcmf_wsec_key *key);
+int brcmf_cfg80211_request_ap_if(struct brcmf_if *ifp);
+wireless_dev_t *brcmf_mon_add_vif(struct wiphy *wiphy, const char *name); // typedef struct wireless_dev wireless_dev_t
+wireless_dev_t *brcmf_cfg80211_add_iface(struct wiphy *wiphy, const char *name, unsigned char name_assign_type, enum nl80211_iftype type, struct vif_params *params);
+s32 brcmf_notify_escan_complete(struct brcmf_cfg80211_info *cfg, struct brcmf_if *ifp, bool aborted, bool fw_abort); // signed integer
 #endif
 #endif
