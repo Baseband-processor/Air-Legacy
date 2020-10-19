@@ -20,4 +20,8 @@ REALTODO:
    * ti
    
 - add TKIP/CCMP support
-
+- add lorcon_wpa struct
+- update pcap_can_set_rfmon and relate
+- fix lorcon_multi_loop and relate
+- speed up Air::Lorcon2's execution
+- fix graphics
