@@ -94,8 +94,7 @@ u32 brcmf_create_iovar(char *name, const char *data, u32 datalen,char *buf, u32 
 	return len + datalen;
 }
 
-int brcmf_netdev_wait_pend8021x(struct net_device *ndev)
-{
+int brcmf_netdev_wait_pend8021x(struct net_device *ndev){
 	struct brcmf_if *ifp = netdev_priv(ndev);
 	struct brcmf_pub *drvr = ifp->drvr;
 	int timeout = 10 * HZ / 1000;
@@ -149,13 +148,21 @@ brcmf_create_bsscfg(s32 bssidx, char *name, char *data, u32 datalen, char *buf, 
 	return iolen;
 }
 
+int brcmf_proto_query_dcmd(struct brcmf_pub *drvr, int ifidx, uint cmd, void *buf, uint len){
+    return drvr->proto->query_dcmd(drvr, ifidx, cmd, buf, len);
+}
+
+int brcmf_proto_set_dcmd(struct brcmf_pub *drvr, int ifidx, uint cmd, void *buf, uint len){
+     return ( drvr->proto->set_dcmd(drvr, ifidx, cmd, buf, len) );
+ }
+
 s32
 brcmf_fil_cmd_data(struct brcmf_if *ifp, u32 cmd, void *data, u32 len, bool set){
 	struct brcmf_pub *drvr = ifp->drvr;
 	s32 err;
 
 	if (drvr->bus_if->state != BRCMF_BUS_UP) {
-		brcmf_err("bus is down. we have nothing to do.\n");
+		printf("bus is down. we have nothing to do.\n");
 		return -EIO;
 	}
 
@@ -169,10 +176,11 @@ brcmf_fil_cmd_data(struct brcmf_if *ifp, u32 cmd, void *data, u32 len, bool set)
 	if (err >= 0){
 		return 0;
 	}
-	brcmf_dbg(FIL, "Failed: %s (%d)\n", brcmf_fil_get_errstr((u32)(-err)), err);
+	//brcmf_dbg(FIL, "Failed: %s (%d)\n", brcmf_fil_get_errstr((u32)(-err)), err);
 	return -EBADE;
 }
 
+#define EPERM 1
 s32 brcmf_fil_bsscfg_data_set(struct brcmf_if *ifp, char *name, void *data, u32 len)
 {
 	struct brcmf_pub *drvr = ifp->drvr;
@@ -189,7 +197,7 @@ s32 brcmf_fil_bsscfg_data_set(struct brcmf_if *ifp, char *name, void *data, u32 
 		err = brcmf_fil_cmd_data(ifp, BRCMF_C_SET_VAR, drvr->proto_buf, buflen, true);
 	} else {
 		err = -EPERM;
-		brcmf_err("Creating bsscfg failed\n");
+		printf("Creating bsscfg failed\n");
 	}
 
 	mutex_unlock(&drvr->proto_block);
