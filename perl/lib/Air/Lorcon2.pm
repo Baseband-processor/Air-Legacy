@@ -1731,6 +1731,7 @@ our %EXPORT_TAGS = (
       tx80211_resolveinterface 
       tx80211_geterrstr 
       tx80211_setmode
+      FindLinkage
  )],
  
    suites => [qw(
