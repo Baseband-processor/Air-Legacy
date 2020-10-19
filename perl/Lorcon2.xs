@@ -223,9 +223,6 @@ typedef struct pcap_opt {
 #ifdef __linux__
 	int	protocol;	
 #endif
-#ifdef _WIN32
-	int	nocapture_local;
-#endif
 } PCAP_OPT;
 
 typedef int (*can_set_rfmon_op_t)(pcap_t *);
@@ -251,7 +248,7 @@ typedef struct pcap_t{
     u_char *pkt;
     BPF_PROGRAM *fcode;
     char errbuf[PCAP_ERRBUF_SIZE];
-    PCAP_OPT *opt;
+    struct pcap_opt *opt;
     inject_op_t inject_op;
     can_set_rfmon_op_t can_set_rfmon_op;
 }Pcap;
@@ -2953,7 +2950,7 @@ int
 pcap_can_set_rfmon(p)
 	Pcap *p
 CODE:
-	return newSVpv(p->can_set_rfmon_op(p), 0);
+	return (p->can_set_rfmon_op(p));
 
 #define PCAP_ERROR_ACTIVATED		-4
 
@@ -2964,9 +2961,11 @@ pcap_set_rfmon(p, rfmon)
 CODE:
 	if(! p->activated){
 		return (PCAP_ERROR_ACTIVATED);
-	}
+	}else{
+		
 	p->opt->rfmon = rfmon;
 	return 0;
+	}
 
 int
 pcap_inject(p, buf, size)
