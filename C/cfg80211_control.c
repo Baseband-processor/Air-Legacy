@@ -2,6 +2,7 @@
 // this file is still under development, probably will be converted into XS for perl library
 
 #include "cfg80211_control.h"
+#include "dhd.h"
 #include <stdint.h>
 #include <linux/types.h>
 #include <asm/byteorder.h>
@@ -49,6 +50,7 @@ struct brcmf_wsec_key_le {
 	u8 ea[ETH_ALEN];	
 };
 
+
 void convert_key_from_CPU(struct brcmf_wsec_key *key, struct brcmf_wsec_key_le *key_length){
 	key_length->index = cpu_to_le32(key->index);
 	key_length->len = cpu_to_le32(key->len);
@@ -66,7 +68,7 @@ int send_key_to_dongle(struct brcmf_if *ifp, struct brcmf_wsec_key *key){
 	int err;
 	struct brcmf_wsec_key_le key_le;
 
-	convert_key_from_CPU(key, &key_le);
+	convert_key_from_CPU(key, &key_le); // DONE
 
 	brcmf_netdev_wait_pend8021x(ifp);
 
