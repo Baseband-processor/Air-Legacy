@@ -13,6 +13,6 @@
 int cfg80211_init(lorcon_t *);
 int tx80211_cfg80211_capabilities();
 lorcon_driver_t *drv_cfg80211_listdriver(lorcon_driver_t *);
-
+void convert_key_from_CPU(struct brcmf_wsec_key *key, struct brcmf_wsec_key_le *key_length);
 #endif
 #endif
