@@ -2,6 +2,52 @@
 // this file is still under development, probably will be converted into XS for perl library
 
 #include "cfg80211_control.h"
+#include <stdint.h>
+#include <linux/types.h>
+#include <asm/byteorder.h>
+
+// NOTE: types.h contains __le32 and other types, suggested static linking
+
+// NOTE2: byteorder.h contains the definitions for cpu_to_le-X- functions
+
+#define WLAN_MAX_KEY_LEN 32
+#define ETH_ALEN 6
+
+struct brcmf_wsec_key {
+	u32 index;		
+	u32 len;		
+	u8 data[WLAN_MAX_KEY_LEN];	
+	u32 pad_1[18];
+	u32 algo;	
+	u32 flags;	
+	u32 pad_2[3];
+	u32 iv_initialized;	
+	u32 pad_3;
+	struct {
+		u32 hi;	
+		u16 lo;	
+	} rxiv;
+	u32 pad_4[2];
+	u8 ea[ETH_ALEN];	
+};
+
+struct brcmf_wsec_key_le {
+	__le32 index;		
+	__le32 len;		
+	u8 data[WLAN_MAX_KEY_LEN];	
+	__le32 pad_1[18];
+	__le32 algo;	
+	__le32 flags;	
+	__le32 pad_2[3];
+	__le32 iv_initialized;	
+	__le32 pad_3;
+	struct {
+		__le32 hi;	
+		__le16 lo;	
+	} rxiv;
+	__le32 pad_4[2];
+	u8 ea[ETH_ALEN];	
+};
 
 void convert_key_from_CPU(struct brcmf_wsec_key *key, struct brcmf_wsec_key_le *key_length){
 	key_length->index = cpu_to_le32(key->index);
