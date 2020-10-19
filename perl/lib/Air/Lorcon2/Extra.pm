@@ -5,7 +5,7 @@
 
 package Air::Lorcon2::Extra;
 
-our $VERSION = '27.75';
+our $VERSION = '29.00';
 
 use strict;
 no strict 'subs';
