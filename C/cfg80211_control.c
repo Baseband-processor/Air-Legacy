@@ -77,6 +77,22 @@ int brcmf_get_pend_8021x_cnt(struct brcmf_pub *drvr){
 #define MAX_WAIT_FOR_8021X_TX	10
 #define TASK_INTERRUPTIBLE 1
 #define TASK_RUNNING 0
+#define EIO 5 
+#define HZ 1000
+
+u32 brcmf_create_iovar(char *name, const char *data, u32 datalen,char *buf, u32 buflen){
+	u32 len;
+	len = strlen(name) + 1;
+	if ((len + datalen) > buflen){
+		return 0;
+	}
+	memcpy(buf, name, len);
+
+	if (data && datalen){
+		memcpy(&buf[len], data, datalen);
+	}
+	return len + datalen;
+}
 
 int brcmf_netdev_wait_pend8021x(struct net_device *ndev)
 {
