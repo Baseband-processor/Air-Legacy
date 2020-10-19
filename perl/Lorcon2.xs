@@ -901,9 +901,9 @@ lorcon_loop(context, counter,  callback, user)
 	}
 	context->handler_cb = callback;
 	context->handler_user = user;
-	ret = pcap_loop(context->pcap, counter, lorcon_pcap_handler(user,counter, callback), (u_char *) context);
+	ret = pcap_loop(context->pcap, counter, lorcon_pcap_handler(user,counter, callback), context);
     if (ret == -1) {
-        snprintf(context->errstr, LORCON_STATUS_MAX, "pcap_loop failed: %s", pcap_geterr(context->pcap));
+        snprintf(context->errstr, LORCON_STATUS_MAX, "pcap_loop failed: %s", pcap_geterr(context->pcap) );
     }
 	return( ret );
 
