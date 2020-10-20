@@ -4194,9 +4194,7 @@ int
 tx80211_free(input_tx)
 	TX80211 *input_tx
 CODE:
-	if( Safefree(input_tx) ){
-		return 1;
-	}else{
-		return -1;
-	}
+	Safefree(input_tx);
+	return 1;
+
 	
