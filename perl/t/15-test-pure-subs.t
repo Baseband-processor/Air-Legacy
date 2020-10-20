@@ -23,8 +23,8 @@ FindLinkage();
 
 Detect_Driver();
 
-Packet_to_hex();
+Packet_to_hex("just a test");
 
-Hex_to_packet();
+Hex_to_packet("just a test");
 
 ok(1);
