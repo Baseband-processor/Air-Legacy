@@ -667,3 +667,10 @@ int tx80211_getdlt(struct tx80211 *in_tx)
 {
 	return in_tx->dlt;
 }
+
+struct tx80211 *tx80211_meta()
+{
+	struct tx80211 *c =  (struct tx80211 *) malloc(sizeof(struct tx80211));
+	return c;
+
+}
