@@ -4185,10 +4185,7 @@ CODE:
 	
 TX80211 *
 tx80211_meta()
-CODE:
-	struct tx80211 *c = 
-		(struct tx80211 *) malloc(sizeof(struct tx80211));
-	return c;
+
 
 int
 tx80211_free(input_tx)
