@@ -26,7 +26,8 @@ AirLorconPacket *    T_PTRREF
 AirLorconMulti *     T_PTRREF
 AirLorconInterface * T_PTRREF
 AirLorconChannel *   T_PTRREF
-TX80211 *            T_PTRREF
+TX80211              T_PTROBJ
+TX80211 *            T_PTROBJ
 TX80211_PACKET *     T_PTRREF
 Pcap *               T_PTRREF
 BPF_PROGRAM *        T_PTRREF
