@@ -4183,3 +4183,9 @@ CODE:
 
 	return (input_tx->setmode_callthrough);
 	
+TX80211 *
+tx80211_meta()
+CODE:
+	struct tx80211  *d;
+	return(d);
+	
