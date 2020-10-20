@@ -1733,6 +1733,7 @@ our %EXPORT_TAGS = (
       tx80211_setmode
       FindLinkage
       tx80211_meta
+      tx80211_free
  )],
  
    suites => [qw(
