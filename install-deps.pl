@@ -10,7 +10,7 @@ use Term::ANSIColor;
 
 BEGIN{
 # set the screen style
-print color("bright_red on_black");
+print color("bright_red");
 # define Air::Lorcon2 logo
 my $file = "logo.txt";
 open (my $logo, $file) or die "Please, don't delete the logo.txt file!\n";
@@ -23,6 +23,8 @@ while( my $line = <$logo> )  {
 close($logo);
 
 use Time::HiRes qw(usleep);
+
+print "\n";
 
 my $text = "
 Air::Lorcon2: A fast, portable and efficient library based on Lorcon2. Written in XS for perl penetration tester and wireless-security experts";
