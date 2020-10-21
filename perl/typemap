@@ -16,6 +16,8 @@ PCAP_PKTHDR *        T_PTROBJ
 NL_SOCK *            T_PTRREF
 iwreq                T_PTROBJ
 iwreq *              T_PTROBJ
+tx80211_decode_t     T_PTROBJ
+tx80211_decode_t *   T_PTROBJ
 PCAP_OPT *           T_PTRREF
 AirLorcon *          T_PTRREF
 NL_MSG *             T_PTROBJ
