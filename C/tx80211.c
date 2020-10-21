@@ -668,9 +668,17 @@ int tx80211_getdlt(struct tx80211 *in_tx)
 	return in_tx->dlt;
 }
 
+// tx80211_meta and tx80211_packet_meta functions return relative structs for Air::Lorcon2
+
 struct tx80211 *tx80211_meta()
 {
 	struct tx80211 *c =  (struct tx80211 *) malloc(sizeof(struct tx80211));
 	return c;
 
+}
+
+struct tx80211_packet *tx80211_packet_meta()
+{
+	struct tx80211_packet *c =  (struct tx80211_packet *) malloc(sizeof(struct tx80211_packet));
+	return c;	
 }
