@@ -283,6 +283,7 @@ actually Working functions
       tx80211_setmode
       FindLinkage
       tx80211_meta 
+      tx80211_packet_meta 
       
 **TESTED AND WORKING**
 
