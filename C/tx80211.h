@@ -468,6 +468,6 @@ int tx80211_decodepkt(int in_dlt, struct tx80211_decode *decoded,
 					  const uint8_t *in_packet, int in_length);
 
 struct tx80211 *tx80211_meta();
-
+struct tx80211_packet *tx80211_packet_meta();
 
 #endif
