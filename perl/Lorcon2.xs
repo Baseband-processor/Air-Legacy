@@ -4194,4 +4194,6 @@ CODE:
 	Safefree(input_tx);
 	return 1;
 
+TX80211_PACKET *
+tx80211_packet_meta()
 	
