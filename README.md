@@ -85,7 +85,7 @@ some resources about C Lorcon2 library and its related applications are here:
 
 but, as *Mike Kershaw* said:
 
-* "there isn't really any documentation on the other functions, sorry; the code would be the best reference there. "*
+* _"there isn't really any documentation on the other functions, sorry; the code would be the best reference there. "_
 
 so take advantage of the C open source code.
 
