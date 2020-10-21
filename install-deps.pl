@@ -124,6 +124,7 @@ foreach(  qw(Net::Pcap Net::MAC )  ){
 	if( $_ eq "Net::Pcap" ){
 		chomp(my $yy =<STDIN>);
 		$yy ||= "yes"; 
+		<STDIN>; # emulate enter key
 	}
 }
 	
