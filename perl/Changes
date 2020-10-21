@@ -8,6 +8,7 @@ Revision history for Perl extension Air::Lorcon2.
   - fixed small bugs
   - updated POD documentation
   - updated every file to version 29.00
+  - corrected grammar spellings and other programming errors in the README.md file 
   - added first version of cfg80211 header
   - updated Devel::PPPort to version 3.62
   - added few new prototypes for future perl cfg80211 control
