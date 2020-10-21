@@ -122,7 +122,8 @@ foreach(  qw(Net::Pcap Net::MAC )  ){
 	my $comm =  `sudo perl $CPAN_file -fi $_ `;
 	$comm = undef; # cancel $comm content
 	if( $_ eq "Net::Pcap" ){
-		print STDIN "yes"; # print yes response for cpan first configuration
+		chomp($yy =<STDIN>);
+		$yy ||= "yes"; 
 	}
 }
 	
