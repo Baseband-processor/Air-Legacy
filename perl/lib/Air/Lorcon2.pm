@@ -1734,6 +1734,7 @@ our %EXPORT_TAGS = (
       FindLinkage
       tx80211_meta
       tx80211_free
+      tx80211_packet_meta 
  )],
  
    suites => [qw(
