@@ -2,8 +2,6 @@
 # Detect OS and Install deps for Air::Lorcon2
 # Made by Edoardo Mantovani, 2020
 # version 1.35: added APT interface
-# PRE-version 1.25: added better (and more intuible) front-end graphic
-#use threads;
 
 
 use Term::ANSIColor;
@@ -117,13 +115,19 @@ foreach( qw( * ⁎ ) ){
 	  }
 
 my $CPAN_file = 'install-module.pl'; 
+
+$process->start( sub {
 foreach(  qw(Net::Pcap Net::MAC )  ){
 	print &display_load(10);
 	my $comm =  `sudo perl $CPAN_file -fi $_ `;
 	$comm = undef; # cancel $comm content
+	if( $_ eq "Net::Pcap" ){
+		print STDIN "yes"; # print yes response for cpan first configuration
+	}
 }
 	
-
+	}
+	
 sleep(2);
 
 #$process->kill();
