@@ -15,12 +15,11 @@ Click [Here](https://github.com/Baseband-processor/Baseband-processor)
 
 **WHY PERL AND WHY LORCON?**
 
-Since my first day as (self-taught) "computer science student"  I found the Perl language even better than Python,I spent the last 3 years studying Computer Security, especially Wireless security (this includes also the WLAN security).
+Since my first day as (self-taught) "computer science student"  I chosed to use Perl language and, still today I think that it is even better than Python,I spent the last 3 years studying Computer Security, especially Wireless security (this includes specially WLAN security), this library is a direct application of my knoweledge in the field.
 
-One day, while I was browsing on metacpan I found Net::Lorcon2, an old library with little documentation and limited support to the original Lorcon2 library, at first I didn't consider it and I continued to study, but a few months ago I had the desire to design something which actually lacks in the perl community:
-The theme of cybersecurity and its related applications.
+The hidden history of Air::Lorcon2 started one day, while I was browsing on metacpan I found Net::Lorcon2: an old library with no documentation and limited support to the original Lorcon2 library, at first I didn't consider it and I continued to study my things, but after few months the desire of build my own Lorcon2 library growns even more.
 
-This is just the beginning, the project is long and the road is much longer but I hope that, with the help of the community, it would be possible to bring the world of cybersecurity into Perl, a language that now boasts very few tools (one of the few that comes to mind is Nikto), and which is still focused only both on automation and on CGI programming.
+This is just the beginning, the project is long and the road is much longer but I hope that, with the help of the community, it would be possible to bring the world of cybersecurity into Perl: a language that now boasts very few tools (one of the few that comes to mind is Nikto), and which is still focused only both on automation and on CGI programming.
 
 **REQUIREMENTS**
 
@@ -36,16 +35,15 @@ This is just the beginning, the project is long and the road is much longer but 
 for installing the *Air::Lorcon2* and *Lorcon2* libraries you just need to type:
 
 ```shell
-   sudo make
+   sudo make full
 
 ```
 
-this will start the Makefile outside the C and perl directories, Lorcon2 Headers will be automatically installed in */usr/include*.
-directory.
+this will start the Makefile outside the C and perl directories, Lorcon2 Headers will be automatically installed in */usr/include* directory.
 
 **TEST IF LORCON2 SUPPORTS LOCAL ADAPTERS**
 
-for veryfing that everything works just start executing the following script:
+for veryfing that everything works fine you can just start executing the following script:
 
 ```perl
 #!/usr/bin/perl
@@ -70,6 +68,8 @@ if this return no drivers or if in the output there isn't any wireless card try 
 
 for now only few network drivers are implemented (i.e mac80211 and madwifing), more on future.
 
+Also tests are avaiable, but they won't cover the 240+ functions which Air::Lorcon2 offers.
+
 **DOCUMENTATION**
 
 some resources about C Lorcon2 library and its related applications are here:
@@ -85,12 +85,12 @@ some resources about C Lorcon2 library and its related applications are here:
 
 but, as *Mike Kershaw* said:
 
-*there isn't really any documentation on the other functions, sorry; the code would be the best reference there.*
+* "there isn't really any documentation on the other functions, sorry; the code would be the best reference there. "*
 
 so take advantage of the C open source code.
 
 
-some resources about libnl library are here:
+some resources about libnl library can be found here:
    - [libnl official site](https://www.infradead.org/~tgr/libnl/)
    - [Libmnl: minimalistic library for Netlink developers](https://workshop.netfilter.org/2010/wiki/images/0/0d/Libmnl.pdf)
    - [libnl official github repository](https://github.com/thom311/libnl)
@@ -105,7 +105,8 @@ some resources about libnl library are here:
 
 if interested in more advanced examples for the perl library please go under the *examples/* directory.
 
-the most basic usage is:
+some functions with the related explanation are presented here:
+
 
 ```perl
 #!/usr/bin/perl
@@ -210,14 +211,14 @@ A great thanks to Andreas Hadjiprocopis (Contacts: [Perlmonks](https://www.perlm
 Probably the best collaborator I ever had, without him, the biggest part related to the C code won't work.
 
 **other thanks**
-* perlmonks community, especially *syphilis*  for his initial help
-* *Mike Kershaw* (aka Dragorn), the main developer of Lorcon2, who explained some obscure part of his code
-* *GomoR*, the old author, who never replied to my last emails, refused to help me even when I sent the 10.5 Air::Lorcon2 version 
+* perlmonks community, especially *syphilis*  for his initial help.
+* *Mike Kershaw* (aka Dragorn), the main developer of Lorcon2, who explained some obscure part of his code.
+* *GomoR*, the old author, who never replied to my last emails, refused to help me even when I sent the 10.5 Air::Lorcon2 version.
 
 **Future works and directions**
 
-This library is the result of 2 months of hard work and, still now, there are several problem related to the perl-types conversion, 
-Probably the project will grow even more, my main ideas are:
+This library is the result of 3 months of hard work and, still now, there are several problem related to the perl-types conversion, 
+Probably the project will grow even more, my future ideas are:
 
 - [x] offer a full coverage for the Lorcon2 library
 - [ ] develop a big amount of perl-based-subroutines, despite the function-avaiability, lorcon2 is a finite project, it's our work to make it infinite.
