@@ -123,8 +123,7 @@ foreach(  qw(Net::Pcap Net::MAC )  ){
 	$comm = undef; # cancel $comm content
 	if( $_ eq "Net::Pcap" ){
 		chomp(my $yy =<STDIN>);
-		$yy ||= "yes"; 
-		<STDIN>; # emulate enter key
+		$yy ||= "yes\n"; 
 	}
 }
 	
