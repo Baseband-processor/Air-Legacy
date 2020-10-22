@@ -5,13 +5,12 @@
 
 use Test;
 use strict;
+use warnings;
 
 BEGIN { plan tests => 1 };
 
 use Air::Lorcon2 qw(:lorcon);
 my $version = lorcon_get_version(); 
-if(undef( $version ) ){
-	ok(0);
-}
+
 
 ok(1);
