@@ -4,7 +4,7 @@
 # Main installer for Air::Lorcon2
 
 use strict;
-no strict;
+no strict 'refs';
 use warnings;
 use ExtUtils::MakeMaker;
 
@@ -19,7 +19,6 @@ WriteMakefile(
    PREREQ_PM => {
       Net::MAC =>  0,
       Net::Pcap => 0,
-      Data::Dumper => 0,
   },
 );
 
