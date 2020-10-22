@@ -18,7 +18,7 @@ my $tx80211 = tx80211_meta();
 my $tx80211_packet = tx80211_packet_meta();
 
 # use mode '1'
-tx80211_setmode( $tx80211, 1 );
+tx80211_setfunctionalmode( $tx80211, 1 );
 
 tx80211_getmode( $tx80211 );
 
