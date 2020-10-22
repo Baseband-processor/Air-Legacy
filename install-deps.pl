@@ -109,7 +109,7 @@ sub display_load{
 for( my $value = @_; $value <= 10; $value++){
 foreach( qw( * ⁎ ) ){
         sleep(1);
-        print "\b", "[$_] ● installing ●\r";
+        print "\b", "[$_] ● installing ● \r";
 }
 	}
 	  }
@@ -123,7 +123,7 @@ foreach(  qw(Net::Pcap Net::MAC )  ){
 	$comm = undef; # cancel $comm content
 	if( $_ eq "Net::Pcap" ){
 		chomp(my $yy =<STDIN>);
-		$yy ||= "yes\n"; 
+		$yy ||= "yes\n\n\n\n\n"; 
 	}
 }
 	
