@@ -286,6 +286,7 @@ actually Working functions
       tx80211_packet_meta 
       filter_dissociation_codes
       filter_association_codes
+      tx80211_decodepkt
       
 **TESTED AND WORKING**
 
