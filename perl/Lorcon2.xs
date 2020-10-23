@@ -2277,7 +2277,7 @@ wtinj_getchannel(wtinj)
 	TX80211 *wtinj
 CODE:
 	//return (iwconfig_get_channel(wtinj->ifname, wtinj->errstr));
-	return(wtinj->channel);
+	return(wtinj->channel) (int);
 		
 int 
 wtinj_setmode(wtinj, mode)
