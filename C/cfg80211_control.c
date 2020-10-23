@@ -66,6 +66,10 @@ struct brcmf_wsec_key_le {
 	u8 ea[ETH_ALEN];	
 };
 
+// force cpu to convert types 
+#define __cpu_to_le16(x)   ((__force __le16)(__u16)(x))
+#define __cpu_to_le32( x)   ((__force __le32)(__u32)(x))
+
 
 void convert_key_from_CPU(struct brcmf_wsec_key *key, struct brcmf_wsec_key_le *key_length){
 	key_length->index = cpu_to_le32(key->index);
