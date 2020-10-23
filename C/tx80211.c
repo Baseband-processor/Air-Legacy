@@ -680,5 +680,8 @@ struct tx80211 *tx80211_meta()
 struct tx80211_packet *tx80211_packet_meta()
 {
 	struct tx80211_packet *c =  (struct tx80211_packet *) malloc(sizeof(struct tx80211_packet));
+	c->mode = NULL;
+	c->channel = NULL;
+	c->dlt = NULL;
 	return c;	
 }
