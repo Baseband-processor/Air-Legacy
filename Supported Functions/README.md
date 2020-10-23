@@ -284,6 +284,8 @@ actually Working functions
       FindLinkage
       tx80211_meta 
       tx80211_packet_meta 
+      filter_dissociation_codes
+      filter_association_codes
       
 **TESTED AND WORKING**
 
