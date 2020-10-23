@@ -4,12 +4,12 @@
 use strict;
 use warnings;
 use App::Cpan;
-require "./include/Processes.pm";
+#require "./include/Processes.pm";
 
-my $process = Proc::Simple->new();
+#my $process = Proc::Simple->new();
 
-$process->start( sub {
+#$process->start( sub {
   App::Cpan->run( @ARGV );
-  });
+ # });
   
 #END
