@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use Test;
 
-use Test::More skip_all => "OS is not android!";
+use Test::More skip_all => "still under WIP!";
  
 BEGIN{plan tests => 1};
 
