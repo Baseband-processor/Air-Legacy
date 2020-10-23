@@ -1117,13 +1117,12 @@ AV *
 lorcon_multi_get_interfaces(ctx)
   AirLorconMulti *ctx
 INIT:
-        AirLorconMulti *ctx;
 	AirLorconMulti *list = lorcon_multi_get_interfaces(ctx);
         AV *av = newAV();
 	AirLorcon *dri;
 	AirLorconMulti *TT = NULL;
 CODE:
-        for(TT = list; TT != NULL){
+        for(TT = list; TT != NULL;TT++){
    	hv_store(TT, "interface_name",    4, newSVpv(dri->drivername, 0), 0);
         av_push(av, TT);
 }
