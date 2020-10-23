@@ -2297,20 +2297,23 @@ wtinj_setchannel(wtinj, channel)
 	TX80211 *wtinj
 	int channel
 CODE:
+	wtinj->channel = channel;
         return (iwconfig_set_channel(wtinj->ifname, wtinj->errstr, channel));
-
+	
 
 int 
 wtinj_getchannel(wtinj)
 	TX80211 *wtinj
 CODE:
-	return (iwconfig_get_channel(wtinj->ifname, wtinj->errstr));
-
+	//return (iwconfig_get_channel(wtinj->ifname, wtinj->errstr));
+	return(wtinj->channel);
+		
 int 
 wtinj_setmode(wtinj, mode)
 	TX80211 *wtinj
 	int mode
 CODE:
+	wtinj->mode = mode;
 	return(iwconfig_set_mode(wtinj->ifname, wtinj->errstr, mode));
 
 int 
