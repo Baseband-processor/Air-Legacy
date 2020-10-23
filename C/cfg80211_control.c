@@ -14,6 +14,19 @@
 
 // NOTE2: byteorder.h contains the definitions for cpu_to_le-X- functions
 
+
+//define typedef
+
+typedef unsigned long u64;
+typedef unsigned int u32;
+typedef unsigned int u16;
+typedef unsigned short u8;
+
+#define __bitwise
+
+typedef u32 __bitwise __le32;
+typedef u16 __bitwise __le186;
+
 #define WLAN_MAX_KEY_LEN 32
 #define ETH_ALEN 6
 
