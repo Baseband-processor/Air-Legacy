@@ -7,6 +7,8 @@ use strict;
 use warnings;
 use Test;
 
+use Test::More skip_all => "OS is not android!";
+ 
 BEGIN{plan tests => 1};
 
 use Air::Lorcon2 qw( :lorcon );
