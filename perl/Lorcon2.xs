@@ -1118,11 +1118,10 @@ lorcon_multi_get_interfaces(ctx)
   AirLorconMulti *ctx
 INIT:
         AV *av = newAV();
-        lorcon_driver_t *TT = NULL;
+	AirLorcon *dri;
 CODE:
-        for(TT = ctx; TT != NULL; TT = TT->interfaces){
-          SV *test = lorcon_driver_t_c2sv(TT);
-          av_push(av, test);
+        for(TT = ctx; TT != NULL; TT = dri->drivername){
+          av_push(av, TT);
 }
         RETVAL = av;
 OUTPUT:
