@@ -33,7 +33,9 @@
 #include <arpa/inet.h>
 #endif
 
-#include <lorcon2/tx80211.h>
+#define TX80211_DECODE_FLAGSET	1
+
+//#include <lorcon2/tx80211.h>
 
 /* for DLT_PRISM_HEADER */
 #define WLAN_DEVNAMELEN_MAX	16
@@ -132,13 +134,13 @@ typedef struct {
 #define PPI_FIELD_PROCINFO		6
 #define PPI_FIELD_CAPINFO		7
 
-struct tx80211_decode {
+struct  tx80211_decode{
 	/* bitmap to preserve integrity between lib binaries.  Flags indicate content of
 	 * structure, NOT availability of data in each field. */
-	uint32_t decode_bitmap;
+	uint32_t *decode_bitmap;
 
 	/* dot11 basic decode */
-	int pkt_length;
+	int *pkt_length;
 	uint8_t *pkt_head;
 	uint8_t *pkt_dot11;
 	uint8_t *pkt_data;
@@ -152,8 +154,9 @@ typedef struct {
 	u_int32_t it_present; 
 } __attribute__((__packed__)) radiotap_header;
 
-int tx80211_decodepkt(int in_dlt, struct tx80211_decode *decoded, const uint8_t *in_packet, int in_length)
+int tx80211_decodepkt(int in_dlt, const uint8_t *in_packet, int in_length)
 {
+	struct tx80211_decode *decoded;
 	avs_80211_1_header *avshdr = (avs_80211_1_header *) in_packet;
 	ppi_packet_header *ppihdr = (ppi_packet_header *) in_packet;
 	radiotap_header *rtaphdr = (radiotap_header *) in_packet;
