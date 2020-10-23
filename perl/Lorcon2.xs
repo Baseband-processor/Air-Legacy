@@ -1119,10 +1119,9 @@ lorcon_multi_get_interfaces(ctx)
 INIT:
         AV *av = newAV();
 	AirLorcon *dri;
-        HV *out     = newHV();
-        SV *out_ref = newRV_noinc((SV *)out);
+        HV *TT    = newHV();
 CODE:
-        for(TT = ctx; TT != NULL; TT = dri->drivername){
+        for(TT = ctx; TT != NULL){
    	hv_store(TT, "name",    4, newSVpv(dri->drivername, 0), 0);
         av_push(av, TT);
 }
@@ -1149,7 +1148,7 @@ AirLorcon *
 lorcon_multi_interface_get_lorcon(intf)
   AirLorconInterface *intf
 CODE:
-      return newSVpv(intf->lorcon_intf, 0);
+      return intf->lorcon_intf;
 
 void 
 lorcon_multi_set_interface_error_handler(ctx, lorcon_interface, handler, aux)
