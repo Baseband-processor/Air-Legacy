@@ -21,6 +21,10 @@
 #include <lorcon2/config.h>
 #endif
 
+#define tx80211_le16(x) (uint16_t)( \
+		(((uint16_t)(x) & 0x00ff) << 8) | (((uint16_t)(x) & 0xff00) >> 8))
+
+
 #include <stdint.h>
 #include <errno.h>
 #include <string.h>
