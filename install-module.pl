@@ -4,12 +4,10 @@
 use strict;
 use warnings;
 use App::Cpan;
-#require "./include/Processes.pm";
 
-#my $process = Proc::Simple->new();
+open STDERR, '>/dev/null';
+App::Cpan->run( @ARGV );
 
-#$process->start( sub {
-  App::Cpan->run( @ARGV );
- # });
-  
+close(STDERR);
+
 #END
