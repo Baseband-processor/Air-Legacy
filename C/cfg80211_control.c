@@ -2,13 +2,13 @@
 // this file is still under development, probably will be converted into XS for perl library
 
 #include "cfg80211_control.h"
-#include "dhd.h"
-#include <stdint.h>
-#include <linux/types.h>
-#include <asm/byteorder.h>
-#include <linux/netdevice.h>
-#include <linux/sched.h>
-#include <linux/mutex.h>
+//#include "dhd.h"
+//#include <stdint.h>
+//#include <linux/types.h>
+//#include <asm/byteorder.h>
+//#include <linux/netdevice.h>
+//#include <linux/sched.h>
+//#include <linux/mutex.h>
 
 // NOTE: types.h contains __le32 and other types, suggested static linking
 
@@ -66,7 +66,7 @@ void convert_key_from_CPU(struct brcmf_wsec_key *key, struct brcmf_wsec_key_le *
 	memcpy(key_length->ea, key->ea, sizeof(key->ea));
 }
 
-
+/*
 typedef struct { int counter; } atomic_t;
 #define atomic_read(v)		((v)->counter)
 
@@ -126,7 +126,7 @@ brcmf_create_bsscfg(s32 bssidx, char *name, char *data, u32 datalen, char *buf, 
 		return brcmf_create_iovar(name, data, datalen, buf, buflen);
 	}
 	prefixlen = strlen(prefix);
-	namelen = strlen(name) + 1; /* lengh of iovar  name + null */
+	namelen = strlen(name) + 1; 
 	iolen = prefixlen + namelen + sizeof(bssidx_le) + datalen;
 
 	if (buflen < iolen) {
@@ -220,3 +220,4 @@ int send_key_to_dongle(struct brcmf_if *ifp, struct brcmf_wsec_key *key){
 		}
 	return err;
 }
+*/
