@@ -1989,6 +1989,37 @@ sub association_reason_codes_HASH(){
 		print "$_ => association_reason_codes{ $_ }\n";
 	}
 }
+
+# filter_dissociation_codes and filter_association_codes will fetch a given word and search through the hashes, returning the identificative number
+
+sub filter_dissociation_codes{
+	my $word = @_;
+	if( length( $word ) <= 3 ){
+		print "word too short!\n";
+		return -1;
+	}
+	foreach( keys %dissociation_reason_codes ){
+		if( $word =~ $dissociation_reason_codes{ $_ } ){
+			return $_;
+		}
+	}
+
+}
+
+sub filter_association_codes{
+	my $word = @_;
+	if( length( $word ) <= 3 ){
+		print "word too short!\n";
+		return -1;
+	}
+	foreach( keys %association_reason_codes ){
+		if( $word =~ $association_reason_codes{ $_ } ){
+			return $_;
+		}
+	}
+
+}
+
 # as their name suggest, these 2 functions permits the conversion from channel to its frequency and vice-versa, is suggested to use them with 
 # Lorcon_set_channel (or similar) functions
 
