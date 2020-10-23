@@ -132,6 +132,18 @@ typedef struct {
 #define PPI_FIELD_PROCINFO		6
 #define PPI_FIELD_CAPINFO		7
 
+struct tx80211_decode {
+	/* bitmap to preserve integrity between lib binaries.  Flags indicate content of
+	 * structure, NOT availability of data in each field. */
+	uint32_t decode_bitmap;
+
+	/* dot11 basic decode */
+	int pkt_length;
+	uint8_t *pkt_head;
+	uint8_t *pkt_dot11;
+	uint8_t *pkt_data;
+};
+
 /* The radio capture header precedes the 802.11 header. */
 typedef struct {
 	u_int8_t it_version;
