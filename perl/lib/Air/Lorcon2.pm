@@ -1738,6 +1738,8 @@ our %EXPORT_TAGS = (
       filter_dissociation_codes
       filter_association_codes
       tx80211_decodepkt
+      ajinj_open
+      ajinj_close
  )],
  
    suites => [qw(
