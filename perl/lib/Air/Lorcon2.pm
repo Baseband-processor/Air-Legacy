@@ -1737,6 +1737,7 @@ our %EXPORT_TAGS = (
       tx80211_packet_meta 
       filter_dissociation_codes
       filter_association_codes
+      tx80211_decodepkt
  )],
  
    suites => [qw(
