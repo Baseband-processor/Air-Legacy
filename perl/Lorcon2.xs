@@ -2288,40 +2288,6 @@ ifconfig_ifupdown(in_dev, errorstring,  devup)
 int 
 wtinj_open(wtinj)
 	TX80211 *wtinj
-  CODE:
-	int err;
-	short flags;
-	IFREQ if_req;
-	SOCKADDR_LL *sa_ll;
-	wtinj->raw_fd = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
-
-	if (wtinj->raw_fd < 0) {
-		snprintf(wtinj->errstr, "", "no socket fd in tx descriptor");
-		return -1;
-	}
-	//memset(&if_req, 0, sizeof if_req);
-	Zero(&if_req, 1, if_req);
-	//memcpy(if_req.ifr_name, wtinj->ifname, IFNAMSIZ);
-	Copy(wtinj->ifname, if_req.ifr_name, IFNAMSIZ, 0);
-	if_req.ifr_name[IFNAMSIZ - 1] = 0;
-	err = ioctl(wtinj->raw_fd, SIOCGIFINDEX, &if_req);
-	if (err < 0) {
-		snprintf(wtinj->errstr, "", "SIOCGIFINDEX ioctl failed, %s", strerror(errno));
-		close(wtinj->raw_fd);
-		return -2;
-	}
-
-	//memset(&sa_ll, 0, sizeof sa_ll);
-	Zero(sa_ll, 1, sa_ll);
-	sa_ll->sll_family = AF_PACKET;
-	sa_ll->sll_protocol = htons(ETH_P_80211_RAW);
-	sa_ll->sll_ifindex = if_req.ifr_ifindex;
-	err = bind(wtinj->raw_fd, (SOCKADDR *)&sa_ll, sizeof sa_ll);
-	if (err != 0) {
-		snprintf(wtinj->errstr, "", "bind() failed, %s", strerror(errno));
-		close(wtinj->raw_fd);
-		return -3;
-	}
 
 
 int 
@@ -2355,7 +2321,7 @@ int
 wtinj_getmode(wtinj)
 	TX80211 *wtinj
 CODE:
-	return(iwconfig_get_mode(wtinj->ifname, wtinj->errstr));
+	return(wtinj->mode);
 
 
 int 
