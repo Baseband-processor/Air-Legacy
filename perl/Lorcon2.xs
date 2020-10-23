@@ -1122,7 +1122,6 @@ INIT:
 	AirLorcon *dri;
 	AirLorconMulti *TT = NULL;
 CODE:
-        for(TT = list; TT != NULL;TT++){
    	hv_store(TT, "interface_name",    4, newSVpv(dri->drivername, 0), 0);
         av_push(av, TT);
 }
