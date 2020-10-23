@@ -1078,7 +1078,7 @@ CODE:
 
 int 
 lorcon_parse_ht_channel(in_chanstr, channel)
-  const char *in_chanstr
+  char *in_chanstr
   AirLorconChannel *channel
 
 AirLorconMulti *
@@ -1117,12 +1117,13 @@ AV *
 lorcon_multi_get_interfaces(ctx)
   AirLorconMulti *ctx
 INIT:
-	AirLorconMulti *list = lorcon_multi_get_interfaces();
+        AirLorconMulti *ctx;
+	AirLorconMulti *list = lorcon_multi_get_interfaces(ctx);
         AV *av = newAV();
 	AirLorcon *dri;
 	AirLorconMulti *TT = NULL;
 CODE:
-        for(TT = list; TT != NULL; TT = ){
+        for(TT = list; TT != NULL){
    	hv_store(TT, "interface_name",    4, newSVpv(dri->drivername, 0), 0);
         av_push(av, TT);
 }
