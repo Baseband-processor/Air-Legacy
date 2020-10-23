@@ -1382,36 +1382,7 @@ CODE:
 int 
 aj_getsocket(ifname) 
 	char *ifname
-CODE:
-    struct sockaddr_ll	addr;
-    struct ifreq	req;
-    struct aj_config	aj_conf;
-    int    sock;
 
-    if((sock = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL))) < 0) {
-        return(-1);
-    }
-    //memset(&req, 0, sizeof(struct ifreq));
-    Zero(&req, 1, req);
-    //memset(&aj_conf, 0, sizeof(struct aj_config));
-    Zero(&aj_conf, 1, aj_conf);
-    //strcpy(req.ifr_name, ifname);
-    sv_setpv(req.ifr_name, ifname);
-    if(ioctl(sock, SIOCGIFINDEX, &req) < 0) {
-        close(sock);
-        return(-1);
-    }
-
-    //memset(&addr, 0, sizeof(struct sockaddr_ll));
-    Zero(&addr, 1, addr);
-    addr.sll_ifindex = req.ifr_ifindex;
-    addr.sll_protocol = htons(ETH_P_ALL);
-    addr.sll_family = AF_PACKET;
-    if(bind(sock, (struct sockaddr *)&addr, sizeof(struct sockaddr_ll)) < 0) {
-        close(sock);
-        return(-1);
-    }
-    return(sock);
 	
 int 
 ajinj_open(ajinj)
