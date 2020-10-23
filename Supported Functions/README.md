@@ -287,6 +287,8 @@ actually Working functions
       filter_dissociation_codes
       filter_association_codes
       tx80211_decodepkt
+      ajinj_open  
+      ajinj_close 
       
 **TESTED AND WORKING**
 
