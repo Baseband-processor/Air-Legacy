@@ -1840,6 +1840,7 @@ sub Hex_to_packet{
 	return( $HEX );
 }
 
+# create context
 sub create(){
    my ( $interface, $driver ) = @_;
    my $drv = lorcon_find_driver( $driver ) or die $!;
@@ -1849,10 +1850,13 @@ sub create(){
       return 0;
 }
    }
+   
+# return version
 sub version(){
    return ( lorcon_get_version() );
 }
 
+# shutdown lorcon
 sub kill_lorcon(){
    my $context = @_;
    if( ( lorcon_close( $context ) ) == -1 ){
@@ -1895,6 +1899,7 @@ sub Open_Injmon { # Open both
     }
 }
 
+# use syscall for changing mac address
 sub ChangeMAC {
 	require Net::MAC;
 	my ($interface, $MAC) = @_;
@@ -1902,8 +1907,8 @@ sub ChangeMAC {
 	my $control = Net::MAC->new('mac' => $MAC, 'die' => 0); # Die if MAC is wrong
 	delete $INC{'Net/MAC.pm'}; # toggle module from %INC
 	`ip link set dev interface down`; # set interface to down (0)
-        if(`ip link set dev $interface address $MAC`){
-		`ip link set dev $interface up`;
+        if(`sudo ip link set dev $interface address $MAC`){
+		`sudo ip link set dev $interface up`;
 		return 0;
 	}else{
 		return -1;
@@ -1920,6 +1925,9 @@ sub Send_Bytes {
     my $length = length($packet);
     return( lorcon_send_bytes($context, $length, \$packet) );
 }
+
+# semplified iwconfig functions
+# =============================
 
 sub setSSID{
   my ( $input_device, $error_string, $essid ) = @_; 
@@ -1956,6 +1964,7 @@ sub setMode{
   return( iwconfig_set_mode(\$input_device, \$error_string, $mode ) );
 }
 
+# DISCOURAGED: automatically initialize driver 
 sub auto_Initialize_driver{
 	my ( $context, $prefferred_drive ) = @_;
 	if(undef($prefferred_drive)){
@@ -1971,6 +1980,7 @@ sub auto_Initialize_driver{
 	}
 }
 
+# simplified lorcon_add_wepkey function
 sub add_WEPKey {
 	my ($context, $bssid, $WEPkey) = @_;
 	return( lorcon_add_wepkey($context, $bssid, $WEPkey, length($WEPkey) ) );
