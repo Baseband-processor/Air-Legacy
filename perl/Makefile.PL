@@ -13,6 +13,8 @@ WriteMakefile(
    NAME => 'Air::Lorcon2',
    LICENSE => 'BSD2',
    AUTHOR => 'Edoardo Mantovani aka Baseband',
+   CCFLAGS        => '-Wall -std=c99',
+   OPTIMIZE       => '-oS  -ffunction-sections -fdata-sections -faggressive-loop-optimizations -ffinite-math-only -fdce -fdelete-null-pointer-checks -ffast-math -fdevirtualize-speculatively -free -floop-nest-optimize -fno-asynchronous-unwind-tables  -Qn',
    DEFINE => '',
    VERSION_FROM => 'lib/Air/Lorcon2.pm',
    LIBS => ['-L/lib -L/usr/lib -L/usr/local/lib -llorcon2'],
