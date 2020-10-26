@@ -1,6 +1,7 @@
 actually Working functions
 ================================================
-      is_compatible_with_formal_logic
+
+      -[ x ] is_compatible_with_formal_logic
       lorcon_get_version
       lorcon_list_drivers
       lorcon_find_driver
@@ -290,47 +291,6 @@ actually Working functions
       ajinj_open  
       ajinj_close 
       
-**TESTED AND WORKING**
-
-- [x]      lorcon_list_drivers
-- [x]      lorcon_find_driver
-- [x]      lorcon_create
-- [x]      lorcon_free_driver_list
-- [x]      lorcon_free
-- [x]      lorcon_set_timeout
-- [x]      lorcon_get_timeout
-- [x]      lorcon_open_monitor
-- [x]      lorcon_open_injmon
-- [x]      lorcon_set_vap
-- [x]      lorcon_get_vap
-- [x]      lorcon_get_capiface
-- [x]      lorcon_auto_driver
-- [x]      lorcon_get_driver_name
-- [x]      lorcon_get_error
-- [x]      lorcon_open_inject
-- [x]      lorcon_send_bytes
-- [x]      lorcon_airjack_init
-- [x]      iwconfig_set_mode
-- [x]      iwconfig_get_mode
-- [x]      iwconfig_set_channel
-- [x]      iwconfig_get_channel
-- [x]      iwconfig_get_name
-- [x]      iwconfig_get_ssid
-- [x]      iwconfig_set_ssid
-- [x]      drv_madwifing_init
-- [x]      drv_madwifing_listdriver
-- [x]      lorcon_close
-- [x]      lorcon_inject
-- [x]      lorcon_add_wepkey
-- [x]      lorcon_ifup
-- [x]      lorcon_ifdown
-- [x]      drv_mac80211_listdriver
-- [x]      drv_mac80211_init
-- [x]      lorcon_multi_create
-- [x]      nl80211_find_parent
-- [x]      madwifing_find_parent
-- [x]      lcpa_append
-- [x]      lcpa_insert
 
 
 **NOT WORKING FUNCTIONS**
