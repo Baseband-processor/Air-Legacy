@@ -1,29 +1,28 @@
 actually Working functions
 ================================================
-
-      -[x] is_compatible_with_formal_logic
-      lorcon_get_version
-      lorcon_list_drivers
-      lorcon_find_driver
-      lorcon_create
-      lorcon_free_driver_list
-      lorcon_free
-      lorcon_set_timeout
-      lorcon_get_timeout
-      lorcon_open_monitor
-      lorcon_open_injmon
-      lorcon_set_vap
-      lorcon_get_vap
-      lorcon_get_capiface
-      lorcon_auto_driver
-      lorcon_get_driver_name
-      lorcon_get_error
-      lorcon_packet_from_pcap
-      lorcon_open_inject
-      lorcon_send_bytes
-      lorcon_get_useraux
-      lorcon_set_useraux
-      lorcon_packet_free
+- [x] is_compatible_with_formal_logic
+- [x] lorcon_get_version
+- [x] lorcon_list_drivers
+- [x] lorcon_find_driver
+- [x] lorcon_create
+- [x] lorcon_free_driver_list
+- [x] lorcon_free
+- [x] lorcon_set_timeout
+- [x] lorcon_get_timeout
+- [x] lorcon_open_monitor
+- [x] lorcon_open_injmon
+- [x] lorcon_set_vap
+- [x] lorcon_get_vap
+- [x] lorcon_get_capiface
+- [x] lorcon_auto_driver
+- [x] lorcon_get_driver_name
+- [x] lorcon_get_error
+- [x] lorcon_packet_from_pcap
+- [x] lorcon_open_inject
+- [x] lorcon_send_bytes
+- [x] lorcon_get_useraux
+- [x] lorcon_set_useraux
+- [x] lorcon_packet_free
       lorcon_packet_decode
       lorcon_packet_set_channel
       lorcon_packet_get_channel
