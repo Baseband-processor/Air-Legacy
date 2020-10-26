@@ -25,6 +25,6 @@ WriteMakefile(
   },
 );
 
-# NOTE: Net::Pcap is required only for tests
+# NOTE: for now the OPTIMIZE and the CCFLAGS are flawed, will be updated in future
 
 ## END ##
