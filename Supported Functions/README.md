@@ -1,7 +1,7 @@
 actually Working functions
 ================================================
 
-      -[ x ] is_compatible_with_formal_logic
+      -[x] is_compatible_with_formal_logic
       lorcon_get_version
       lorcon_list_drivers
       lorcon_find_driver
