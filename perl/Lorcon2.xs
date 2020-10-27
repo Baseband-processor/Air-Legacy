@@ -110,6 +110,19 @@
 
 #define SIOC80211IFCREATE (SIOCDEVPRIVATE+7)
 
+#define SHA1_DIGEST_LEN 20
+
+typedef struct{
+    uint32_t total[2];
+    uint32_t state[5];
+    uint8_t buffer[64];
+}sha1_context;
+
+typedef struct {
+    sha1_context ctx;
+    uint8_t k_opad[64];
+}sha1_hmac_context;
+
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
