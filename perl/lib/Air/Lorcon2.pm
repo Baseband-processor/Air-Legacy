@@ -9,6 +9,7 @@ use strict;
 no strict 'subs';
 no strict 'refs';
 use warnings;
+use Net::MAC; # require Net::MAC library for MAC manipulation
 
 our $VERSION = '29.00';
 use base qw(Exporter DynaLoader);
@@ -1826,13 +1827,11 @@ sub RString_Gen(){ # adapted string for MAC address
 }
 
 sub RMAC_gen(){
-  require Net::MAC; # require Net::MAC library for MAC manipulation
   my $raw_mac = (Net::MAC->new('mac' => &RString_Gen(), 'die' => 0) );
   my $formatted_mac = $raw_mac->convert(
     'bit_group' => 8,  
     'delimiter' => ':'
 );
-  delete $INC{'Net/MAC.pm'}; # toggle module from %INC
   return ($formatted_mac);
 
 }
