@@ -4162,8 +4162,12 @@ tx80211_packet_meta()
 MODULE = Air::Lorcon2   PACKAGE = Air::Lorcon2::Extra::HASH
 PROTOTYPES: DISABLE
 
-sha1_context *sha1_meta()
+sha1_context *
+sha1_meta()
 
+sha1_hmac_context *
+sha1_hmac_meta()
+	
 void
 sha1_process(ctx, data)
     sha1_context *ctx
