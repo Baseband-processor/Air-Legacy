@@ -297,7 +297,7 @@ actually Working functions
       sha1_hmac_update
       sha1_hmac_finish
       sha1_hmac
-      
+      sha1_meta
 
 
 **NOT WORKING FUNCTIONS**
