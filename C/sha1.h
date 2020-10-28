@@ -49,7 +49,8 @@ typedef struct sha1_context sha1_context_t;
 void sha1_starts( sha1_context_t *ctx );
 void sha1_update( sha1_context_t *ctx, const uint8_t *input, uint32_t length );
 void sha1_finish( sha1_context_t *ctx, uint8_t digest[SHA1_DIGEST_LEN] );
-
+void sha1_process( sha1_context_t *ctx, const uint8_t data[64] );
+    
 struct sha1_hmac_context {
     sha1_context_t ctx;
     uint8_t k_opad[64];
