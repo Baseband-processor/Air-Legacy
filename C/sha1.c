@@ -48,12 +48,21 @@
     (b)[(i) + 3] = (uint8_t) ( (n)       );       \
 }
 
-struct sha1_context *sha1_meta(){
+struct sha1_context *sha1_meta()
+{
 	struct sha1_context *c =  (struct sha1_context *) malloc(sizeof(struct sha1_context));
 	c->total = NULL;
 	c->state = NULL;
 	c->buffer = NULL;
-    return c;	
+   	return c;	
+}
+
+struct sha1_hmac_context *sha1_hmac_meta()
+{
+	struct sha1_hmac_context *c =  (struct sha1_hmac_context *) malloc(sizeof(struct sha1_hmac_context));
+	c->ctx = NULL;
+	c->k_opad = NULL;
+   	return c;
 }
 
 void sha1_starts( sha1_context *ctx )
