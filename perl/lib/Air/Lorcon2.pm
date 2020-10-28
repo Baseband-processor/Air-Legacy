@@ -1752,6 +1752,7 @@ our %EXPORT_TAGS = (
    )],
    crypto => [qw(
    	sha1_meta
+	sha1_hmac_meta 
    	sha1_process
    	sha1_update
    	sha1_finish
