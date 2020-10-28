@@ -37,23 +37,21 @@
  */
 #define SHA1_DIGEST_LEN 20
 
-typedef struct
-{
+struct sha1_context {
     uint32_t total[2];
     uint32_t state[5];
     uint8_t buffer[64];
-}
-sha1_context;
+};
+
 
 void sha1_starts( sha1_context *ctx );
 void sha1_update( sha1_context *ctx, const uint8_t *input, uint32_t length );
 void sha1_finish( sha1_context *ctx, uint8_t digest[SHA1_DIGEST_LEN] );
 
-typedef struct {
+struct sha1_hmac_context {
     sha1_context ctx;
     uint8_t k_opad[64];
-}
-sha1_hmac_context;
+};
 
 struct sha1_context *sha1_meta();
 struct sha1_hmac_context *sha1_hmac_meta();
