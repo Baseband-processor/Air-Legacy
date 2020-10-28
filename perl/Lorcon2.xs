@@ -4158,9 +4158,7 @@ CODE:
 
 TX80211_PACKET *
 tx80211_packet_meta()
-	
-MODULE = Air::Lorcon2   PACKAGE = Air::Lorcon2::Extra::HASH
-PROTOTYPES: DISABLE
+
 
 sha1_context *
 sha1_meta()
