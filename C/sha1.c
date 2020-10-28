@@ -47,8 +47,7 @@
 }
 
 
-
-void sha1_starts( sha1_context *ctx )
+void sha1_starts( sha1_context_t *ctx )
 {
     ctx->total[0] = 0;
     ctx->total[1] = 0;
@@ -60,7 +59,7 @@ void sha1_starts( sha1_context *ctx )
     ctx->state[4] = 0xC3D2E1F0;
 }
 
-static void sha1_process( sha1_context *ctx, const uint8_t data[64] )
+static void sha1_process( sha1_context_t *ctx, const uint8_t data[64] )
 {
     uint32_t temp, W[16], A, B, C, D, E;
 
@@ -216,7 +215,7 @@ static void sha1_process( sha1_context *ctx, const uint8_t data[64] )
     ctx->state[4] += E;
 }
 
-void sha1_update( sha1_context *ctx, const uint8_t *input, uint32_t length )
+void sha1_update( sha1_context_t *ctx, const uint8_t *input, uint32_t length )
 {
     uint32_t left, fill;
 
@@ -263,7 +262,7 @@ static uint8_t sha1_padding[64] =
        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-void sha1_finish( sha1_context *ctx, uint8_t digest[SHA1_DIGEST_LEN] )
+void sha1_finish( sha1_context_t *ctx, uint8_t digest[SHA1_DIGEST_LEN] )
 {
     uint32_t last, padn;
     uint32_t high, low;
@@ -289,7 +288,7 @@ void sha1_finish( sha1_context *ctx, uint8_t digest[SHA1_DIGEST_LEN] )
     PUT_UINT32( ctx->state[4], digest, 16 );
 }
 
-void sha1_hmac_starts( sha1_hmac_context *hctx, const uint8_t *key, uint32_t keylen )
+void sha1_hmac_starts( sha1_hmac_context_t *hctx, const uint8_t *key, uint32_t keylen )
 {
     uint32_t i;
     uint8_t k_ipad[64];
@@ -309,12 +308,12 @@ void sha1_hmac_starts( sha1_hmac_context *hctx, const uint8_t *key, uint32_t key
     sha1_update( &hctx->ctx, k_ipad, 64 );
 }
 
-void sha1_hmac_update( sha1_hmac_context *hctx, const uint8_t *buf, uint32_t buflen )
+void sha1_hmac_update( sha1_hmac_context_t *hctx, const uint8_t *buf, uint32_t buflen )
 {
     sha1_update( &hctx->ctx, buf, buflen );
 }
 
-void sha1_hmac_finish( sha1_hmac_context *hctx, uint8_t digest[SHA1_DIGEST_LEN] )
+void sha1_hmac_finish( sha1_hmac_context_t *hctx, uint8_t digest[SHA1_DIGEST_LEN] )
 {
     uint8_t tmpbuf[SHA1_DIGEST_LEN];
 
@@ -329,26 +328,21 @@ void sha1_hmac_finish( sha1_hmac_context *hctx, uint8_t digest[SHA1_DIGEST_LEN] 
 void sha1_hmac( const uint8_t *key, uint32_t keylen, const uint8_t *buf, uint32_t buflen,
                 uint8_t digest[SHA1_DIGEST_LEN] )
 {
-    sha1_hmac_context hctx;
+    sha1_hmac_context_t hctx;
 
     sha1_hmac_starts( &hctx, key, keylen );
     sha1_hmac_update( &hctx, buf, buflen );
     sha1_hmac_finish( &hctx, digest );
 }
 
-struct sha1_context *sha1_meta()
+struct sha1_context_t *sha1_meta()
 {
-	struct sha1_context *c =  (struct sha1_context *) malloc(sizeof(struct sha1_context));
-	c->total = NULL;
-	c->state = NULL;
-	c->buffer = NULL;
-   	return c;	
+	struct sha1_context_t *c =  (struct sha1_contex_tt *) malloc(sizeof(struct sha1_context_t *));
+   	return c;
 }
 
-struct sha1_hmac_context *sha1_hmac_meta()
+struct sha1_hmac_context_t *sha1_hmac_meta()
 {
-	struct sha1_hmac_context *c =  (struct sha1_hmac_context *) malloc(sizeof(struct sha1_hmac_context));
-	c->ctx = NULL;
-	c->k_opad = NULL;
+	struct sha1_hmac_context_t *c =  (struct sha1_hmac_context_t *) malloc(sizeof(struct sha1_hmac_context_t *));
    	return c;
 }

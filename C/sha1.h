@@ -1,3 +1,4 @@
+
 /*
  *  FIPS-180-1 compliant SHA-1 implementation
  *
@@ -45,22 +46,22 @@ struct sha1_context {
 
 typedef struct sha1_context sha1_context_t;
 
-void sha1_starts( sha1_context *ctx );
-void sha1_update( sha1_context *ctx, const uint8_t *input, uint32_t length );
-void sha1_finish( sha1_context *ctx, uint8_t digest[SHA1_DIGEST_LEN] );
+void sha1_starts( sha1_context_t *ctx );
+void sha1_update( sha1_context_t *ctx, const uint8_t *input, uint32_t length );
+void sha1_finish( sha1_context_t *ctx, uint8_t digest[SHA1_DIGEST_LEN] );
 
 struct sha1_hmac_context {
-    sha1_context ctx;
+    sha1_context_t ctx;
     uint8_t k_opad[64];
 };
 
 typedef struct sha1_hmac_context sha1_hmac_context_t;
 
-struct sha1_context *sha1_meta();
-struct sha1_hmac_context *sha1_hmac_meta();
-void sha1_hmac_starts( sha1_hmac_context *hctx, const uint8_t *key, uint32_t keylen );
-void sha1_hmac_update( sha1_hmac_context *hctx, const uint8_t *buf, uint32_t buflen );
-void sha1_hmac_finish( sha1_hmac_context *hctx, uint8_t digest[SHA1_DIGEST_LEN] );
+struct sha1_context_t *sha1_meta();
+struct sha1_hmac_context_t *sha1_hmac_meta();
+void sha1_hmac_starts( sha1_hmac_context_t *hctx, const uint8_t *key, uint32_t keylen );
+void sha1_hmac_update( sha1_hmac_context_t *hctx, const uint8_t *buf, uint32_t buflen );
+void sha1_hmac_finish( sha1_hmac_context_t *hctx, uint8_t digest[SHA1_DIGEST_LEN] );
 void sha1_hmac( const uint8_t *key, uint32_t keylen, const uint8_t *buf, uint32_t buflen,
                 uint8_t digest[SHA1_DIGEST_LEN] );
 
