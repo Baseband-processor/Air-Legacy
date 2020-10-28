@@ -1749,7 +1749,17 @@ our %EXPORT_TAGS = (
        TKIP
        EAP
        PSK
-   )]
+   )],
+   crypto => [qw(
+   	sha1_process
+   	sha1_update
+   	sha1_finish
+	sha1_starts
+	sha1_hmac_starts
+	sha1_hmac_update
+	sha1_hmac_finish
+	sha1_hmac
+   )],
 );
 
 # _pcap_check_activate has been eliminated due to debug errors
@@ -1771,6 +1781,8 @@ our @EXPORT = (
    @{ $EXPORT_TAGS{ wifi_commands } },
    @{ $EXPORT_TAGS{ rx_frames } },
    @{ $EXPORT_TAGS{ iw } },
+   @{ $EXPORT_TAGS{ crypto } },
+
 );
 
 # NOTE:
