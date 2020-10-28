@@ -7,7 +7,6 @@ REALTODO:
 - write full documentation ( 70% )
 - write small pdf about every module with the help of community
 - fix some C code wich still crash
-- implement tx80211_decodepkt function
 - decide if static linking lorcon2.so perl's object, this will be a first pass for creating an independing Air::Lorcon2 library (from originary lorcon2)
 - try to re-implement CCFLAGS from Makefile.PL
 - implement new drivers
@@ -24,4 +23,3 @@ REALTODO:
 - update pcap_can_set_rfmon and relate
 - fix lorcon_multi_loop and relate
 - speed up Air::Lorcon2's execution
-- fix graphics
