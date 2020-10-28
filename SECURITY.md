@@ -2,19 +2,16 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+The security supported version are version 28.00 and 29.00 
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 29.00   | :x                 |
+| 29.00   | :white_check_mark: |
 | 28.00   | :white_check_mark: |
 
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+please contact <Baseband@cpan.org> for any problem related to security
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+Edoardo Mantovani, 2020
