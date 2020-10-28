@@ -43,6 +43,7 @@ struct sha1_context {
     uint8_t buffer[64];
 };
 
+typedef struct sha1_context sha1_context_t;
 
 void sha1_starts( sha1_context *ctx );
 void sha1_update( sha1_context *ctx, const uint8_t *input, uint32_t length );
@@ -52,6 +53,8 @@ struct sha1_hmac_context {
     sha1_context ctx;
     uint8_t k_opad[64];
 };
+
+typedef struct sha1_hmac_context sha1_hmac_context_t;
 
 struct sha1_context *sha1_meta();
 struct sha1_hmac_context *sha1_hmac_meta();
