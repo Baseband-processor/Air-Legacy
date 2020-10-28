@@ -74,6 +74,7 @@ Also tests are avaiable, but they won't cover the 240+ functions which Air::Lorc
 
 some resources about C Lorcon2 library and its related applications are here:
   - _HACKING EXPOSED™ WIRELESS: WIRELESS SECURITY SECRETS & SOLUTIONS SECOND AND THIRD EDITION_ 
+  - [lorcon 2010 presentation at Stanford](https://slideplayer.com/slide/3519051/)
   - [lorcon 2007 presentation](https://www.willhackforsushi.com/presentations/shmoocon2007.pdf)
   - [official lorcon2 github repository](https://github.com/kismetwireless/lorcon) 
   - [getting-started-with-lorcon](http://blog.opensecurityresearch.com/2012/09/getting-started-with-lorcon.html)
