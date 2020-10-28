@@ -289,6 +289,14 @@ actually Working functions
       tx80211_decodepkt
       ajinj_open  
       ajinj_close 
+      sha1_process
+      sha1_update
+      sha1_finish
+      sha1_starts
+      sha1_hmac_starts
+      sha1_hmac_update
+      sha1_hmac_finish
+      sha1_hmac
       
 
 
