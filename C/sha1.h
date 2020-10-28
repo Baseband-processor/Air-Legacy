@@ -56,6 +56,7 @@ typedef struct {
 sha1_hmac_context;
 
 struct sha1_context *sha1_meta();
+struct sha1_hmac_context *sha1_hmac_meta();
 void sha1_hmac_starts( sha1_hmac_context *hctx, const uint8_t *key, uint32_t keylen );
 void sha1_hmac_update( sha1_hmac_context *hctx, const uint8_t *buf, uint32_t buflen );
 void sha1_hmac_finish( sha1_hmac_context *hctx, uint8_t digest[SHA1_DIGEST_LEN] );
