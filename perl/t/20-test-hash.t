@@ -6,7 +6,7 @@
 use strict;
 use Test;
 BEGIN{ plan tests => 1 };
-use Air::Lorcon2::Extra qw( :sha1 );
+use Air::Lorcon2::Extra::HASH;
 
 
 ok(1);
