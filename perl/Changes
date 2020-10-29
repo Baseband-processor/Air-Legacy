@@ -59,6 +59,7 @@ Revision history for Perl extension Air::Lorcon2.
     * sha1_hmac
   - added new function: sha1_meta (spawn a sha1_context object into perl code)
   - added new function: sha1_hmac_meta (spawn a sha1_hmac_context object into perl code)
+  - added new test: 20-test-hash.t ( tests some hashing functions )
   
 28.00   Sun Opt 04 16:00:00 CET 2020
   - toggled donation tag and modified markdown graphic
