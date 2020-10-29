@@ -162,7 +162,7 @@ Revision history for Perl extension Air::Lorcon2.
   - modified lorcon_get_error function: now will return string as output
   - first draft for ath10k driver
   - added base ath10k driver configuration files [STILL BETA]
-
+  - modified various licenses
 
 27.75   Sun Set 27 9:31:00  CET 2020
   - 1k + contributions, thanks to me! (Edoardo Mantovani)
