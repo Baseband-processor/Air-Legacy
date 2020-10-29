@@ -27,15 +27,6 @@ print "\n";
 my $text = "
 Air::Lorcon2: A fast, portable and efficient library based on Lorcon2. Written in XS for perl penetration tester and wireless-security experts";
 
-my $copyright = "
-Copyright (C) 2020 by Edoardo Mantovani, aka BASEBAND
-
-
-This library is free software;  
-
-
-you can redistribute it and/or modify it under the same terms as Perl itself, either Perl version 5.8.8 or, at your option, any later version of Perl 5 you may have available.";
-
 foreach( $text =~/./g ){
 	print $_;
 	select()->flush(); # flush STDIN
@@ -43,15 +34,7 @@ foreach( $text =~/./g ){
 	}
 
 print "\n";
-foreach( $copyright =~/./g ){
-	print $_;
-	select()->flush(); # flush STDIN
-	usleep(111111);
-	if($_ eq "D"){
-		print "\n";
-		}
-	}
-print "\n";
+
 
 }
 
