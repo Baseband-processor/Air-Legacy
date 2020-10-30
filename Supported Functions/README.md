@@ -23,7 +23,7 @@ actually Working functions
 - [x] lorcon_get_useraux
 - [x] lorcon_set_useraux
 - [x] lorcon_packet_free
-      lorcon_packet_decode
+- [x] lorcon_packet_decode
       lorcon_packet_set_channel
       lorcon_packet_get_channel
       lorcon_packet_txprep_by_ctx
