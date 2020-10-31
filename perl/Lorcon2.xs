@@ -4676,3 +4676,15 @@ CODE:
 	}	
 }
 		return(buf);
+
+ASSOCIATION_REQUEST_MANAGEMENT_FRAME *
+assoc_request_meta()
+
+ASSOCIATION_RESP_MANAGEMENT_FRAME *
+assoc_response_meta()
+
+BEACON_MANAGEMENT_FRAME *
+beacon_management_meta()
+
+AUTH_MANAGEMENT_FRAME *
+auth_management_meta()
