@@ -22,6 +22,7 @@
 #include <lorcon2/nl80211_control.h>
 #include <lorcon2/lorcon_packasm.h>
 #include <lorcon2/sha1.h>
+#include <lorcon2/reaver.h>
 #include <sys/time.h>
 #include <sys/stat.h>
 #include <sys/socket.h>
