@@ -404,7 +404,121 @@ typedef struct wg80211_frame{
 	uint8_t data[0];
 }WG80211_FRAME;
 
+typedef struct  wps_data{
+	WPS_CONTEXT *wps;
+	char *key;
+	char *essid;
+	int registrar;
+	int er;
+	enum {
+		SEND_M1, RECV_M2, SEND_M3, RECV_M4, SEND_M5, RECV_M6, SEND_M7,
+		RECV_M8, RECEIVED_M2D, WPS_MSG_DONE, RECV_ACK, WPS_FINISHED,
+		SEND_WSC_NACK,
+		RECV_M1, SEND_M2, RECV_M3, SEND_M4, RECV_M5, SEND_M6,
+		RECV_M7, SEND_M8, RECV_DONE, SEND_M2D, RECV_M2D_ACK
+	} state;
+	u8 uuid_e[WPS_UUID_LEN];
+	u8 uuid_r[WPS_UUID_LEN];
+	u8 mac_addr_e[ETH_ALEN];
+	u8 nonce_e[WPS_NONCE_LEN];
+	u8 nonce_r[WPS_NONCE_LEN];
+	u8 psk1[WPS_PSK_LEN];
+	u8 psk2[WPS_PSK_LEN];
+	u8 snonce[2 * WPS_SECRET_NONCE_LEN];
+	u8 peer_hash1[WPS_HASH_LEN];
+	u8 peer_hash2[WPS_HASH_LEN];
+	WPA_BUF *dh_privkey;
+	WPA_BUF *dh_pubkey_e;
+	WPA_BUF *dh_pubkey_r;
+	u8 authkey[WPS_AUTHKEY_LEN];
+	u8 keywrapkey[WPS_KEYWRAPKEY_LEN];
+	u8 emsk[WPS_EMSK_LEN];
+	WPA_BUF *last_msg;
+	u8 *dev_password;
+	size_t dev_password_len;
+	u16 dev_pw_id;
+	int pbc;
+	u8 request_type;
+	u16 encr_type;
+	u16 auth_type;
+	u8 *new_psk;
+	size_t new_psk_len;
+	int wps_pin_revealed;
+	WPS_CREDENTIAL cred;
+	WPS_DEVICE_DATA peer_dev;
+	u16 config_error;
+	int ext_reg;
+	int int_reg;
+	WPS_CREDENTIAL *new_ap_settings;
+	void *dh_ctx;
+	void (*ap_settings_cb)(void *ctx, const WPS_CREDENTIAL *cred);
+	void *ap_settings_cb_ctx;
+	WPS_CREDENTIAL *use_cred;
+	int use_psk_key;
+}WPS_DATA;
 
+typedef struct {
+        int last_wps_state;             
+        int p1_index;                   
+        int p2_index;                   
+        char *p1[P1_SIZE];              
+        char *p2[P2_SIZE];              
+	char *static_p1;			
+	char *static_p2;		
+	int use_pin_string;		
+        enum *key_state key_status;      
+	int dh_small;			
+	int external_association;	
+	int oo_send_nack;
+	int win7_compat;
+        int delay;                 
+        int fail_delay;                
+        int recurring_delay;            
+	int lock_delay;			
+	int ignore_locks;		
+        int recurring_delay_count;	
+        int eap_terminate;              
+        int max_pin_attempts;           
+        int rx_timeout;                 
+        int timeout_is_nack;            
+        int m57_timeout;                
+        int out_of_time;                
+	unsigned long long resend_timeout_usec;   
+        enum *debug_level debug;         
+        int eapol_start_count;          
+        int fixed_channel;              
+	int auto_channel_select;
+	int wifi_band;			
+	int channel;			
+	int repeat_m6;			
+	int max_num_probes;		
+	int validate_fcs;		
+        enum *wsc_op_code opcode;        
+        uint8_t eap_id;                
+        uint16_t ap_capability;         
+        unsigned char bssid[MAC_ADDR_LEN];    
+        unsigned char mac[MAC_ADDR_LEN];             
+	unsigned char vendor_oui[1+3];	
+	unsigned char *htcaps;		
+	int htcaps_len;			
+	unsigned char *ap_rates;	
+	int ap_rates_len;		
+	unsigned char *ap_ext_rates;	
+	int ap_ext_rates_len;		
+	FILE *fp;		
+	char *session;			
+        char *ssid;                     
+        char *iface;                    
+        char *pin;                      
+	char *exec_string;		
+        enum *nack_code nack_reason;     
+        pcap_t *handle;                 
+	int output_fd;			
+	uint64_t uptime;		
+        WPS_DATA *wps;           
+}globals;
+
+typedef struct globals GLOB;
 
 typedef struct {
         int type, subtype;
@@ -4277,3 +4391,215 @@ CODE:
     sha1_hmac_starts( &hctx, key, keylength );
     sha1_hmac_update( &hctx, buf, buflength );
     sha1_hmac_finish( &hctx, digest );
+
+size_t
+build_radio_tap_header(rt_header)
+	void *rt_header
+CODE:
+	#define RADIOTAP_HEADER_LENGTH \
+	"\x0c\0"
+	#define RADIOTAP_HEADER_PRESENT_FLAGS \
+	"\x04\x80\0\0" 
+	#define RADIOTAP_HEADER_RATE_OPTION \
+	"\0\0" 
+	#define RADIOTAP_HEADER_LENGTH \
+	"\x0a\0" 
+	#define RADIOTAP_HEADER_PRESENT_FLAGS \
+	"\x00\x80\0\0"
+	#define RADIOTAP_HEADER_RATE_OPTION ""
+	#define RADIOTAP_HEADER \
+	"\0\0"  \
+	RADIOTAP_HEADER_LENGTH \
+	RADIOTAP_HEADER_PRESENT_FLAGS \
+	RADIOTAP_HEADER_RATE_OPTION \
+	"\x18\0" 
+	int radio_header = sizeof(RADIOTAP_HEADER) - 1;
+	//memcpy(rt_header, RADIOTAP_HEADER, sizeof(RADIOTAP_HEADER)-1);
+	Copy(RADIOTAP_HEADER, rt_header, radio_header);
+	RETVAL = ( sizeof(RADIOTAP_HEADER) - 1 );
+OUTPUT:
+	RETVAL
+	
+WPS_DATA *
+get_wps()
+CODE:
+	GLOB *globule;
+	return globule->wps;
+
+
+uint16_t 
+get_ap_capability()
+CODE:
+GLOB * globule;
+RETVAL = globule->ap_capability;
+OUTPUT:
+RETVAL
+
+void 
+set_channel(channel)
+int channel
+CODE:
+	GLOB *globule;
+	globule->channel = channel;
+        return( 0 );
+
+int 
+get_channel()
+CODE:
+	GLOB *globule;
+	return globule->channel;
+
+void 
+set_bssid(value)
+unsigned char *value
+CODE:
+	GLOB *globule;
+	//memcpy(globule->bssid, value, MAC_ADDR_LEN);
+	Copy(value, globule->bssid, MAC_ADDR_LEN);
+	return 0;
+
+size_t
+build_association_management_frame(f)
+         ASSOCIATION_REQUEST_MANAGEMENT_FRAME *f
+
+
+size_t
+build_authentication_management_frame(f)
+         AUTH_MANAGEMENT_FRAME *f
+	 
+void*
+build_wps_probe_request(bssid, essid, length)
+	unsigned char *bssid
+	char *essid
+	size_t *length
+CODE:	
+	TAG_PARAMS *ssid_tag;
+	void *packet = NULL;
+	size_t offset = 0, rt_len = 0, dot11_len = 0, ssid_tag_len = 0, packet_len = 0;
+	int broadcast = !memcmp(bssid, "\xff\xff\xff\xff\xff\xff", 6);
+
+	if(!broadcast && essid != NULL)
+	{
+		 ssid_tag->len = (uint8_t) strlen(essid);
+	}
+	else
+	{
+		ssid_tag->len = 0;
+	}
+
+	ssid_tag->number = SSID_TAG_NUMBER;
+	ssid_tag_len = ssid_tag->len + sizeof(TAG_PARAMS *);
+	struct radio_tap_header *rt_header;
+	rt_len = build_radio_tap_header(&rt_header);
+	DOT_11_FRAME_H *dot11_header;
+	dot11_len = build_dot11_frame_header_m(&dot11_header, FC_PROBE_REQUEST, bssid);
+
+	packet_len = rt_len + dot11_len + ssid_tag_len;
+	return 0;
+
+void *
+build_snap_packet(length)
+	size_t *length
+CODE:
+	void *packet = NULL;
+	size_t rt_len = 0, dot11_len = 0, llc_len = 0, packet_len = 0;
+	struct radio_tap_header rt_header;
+	struct dot11_frame_header dot11_header;
+	struct llc_header llc_header;
+	rt_len = build_radio_tap_header(&rt_header);
+        dot11_len = build_dot11_frame_header(&dot11_header, FC_STANDARD);
+        llc_len = build_llc_header(&llc_header);
+
+	packet_len = rt_len + dot11_len + llc_len;
+	//packet = malloc(packet_len);
+	Newx(packet, packet_len, 1);
+	if(packet) {
+		//memset((void *) packet, 0, packet_len);
+		Zero(packet, 0, packet_len);
+		//memcpy((void *) packet, &rt_header, rt_len);
+		Copy(&rt_header, packet, rt_len, 1);
+		//memcpy((void *) ((char *) packet+rt_len), &dot11_header, dot11_len);
+		char *p = packet + rt_len;
+		Copy(&dot11_header, p, dot11_len, 1);
+		//memcpy((void *) ((char *) packet+rt_len+dot11_len), &llc_header, llc_len);
+		char *p1 = packet + rt_len + dot11_len;
+		Copy(&llc_header, p1, llc_len, 1);
+		*len = packet_len;
+	}
+	return packet;
+
+void *
+build_eap_packet(payload, payload_length, length)
+	const void *payload
+	uint16_t payload_length
+	size_t *length
+CODE:
+	void *buf = NULL, *snap_packet = NULL, *eap_header = NULL, *dot1x_header = NULL, *wfa_header = NULL;
+	size_t buf_len = 0, snap_len = 0, eap_len = 0, dot1x_len = 0, wfa_len = 0, offset = 0, total_payload_len = 0;
+	uint8_t eap_type = 0, eap_code = 0;
+	WPS_DATA *wps = get_wps();
+
+	switch(wps->state)
+	{
+		case RECV_M1:
+			eap_code = EAP_RESPONSE;
+			eap_type = EAP_IDENTITY;
+			break;
+		default:
+			eap_code = EAP_RESPONSE;
+			eap_type = EAP_EXPANDED;
+	}
+	total_payload_len = payload_length;
+	if(eap_type == EAP_EXPANDED)
+	{
+		wfa_header = build_wfa_header(get_opcode(), &wfa_len);
+		total_payload_len += wfa_len;
+	}
+
+	snap_packet = build_snap_packet(&snap_len);
+	eap_header = build_eap_header(get_eap_id(), eap_code, eap_type, total_payload_len, &eap_len);
+	dot1x_header = build_dot1X_header(DOT1X_EAP_PACKET, (total_payload_len+eap_len), &dot1x_len);
+	if(snap_packet && eap_header && dot1x_header)
+	{
+		buf_len = snap_len + dot1x_len + eap_len + total_payload_len;
+		buf = malloc(buf_len);
+		if(buf)
+		{
+			//memset((void *) buf, 0, buf_len);
+			Zero(buf, 1, buf_len);
+			//memcpy((void *) buf, snap_packet, snap_len);
+			Copy(snap_packet, buf, snap_len, 1);
+			offset += snap_len;
+			//memcpy((void *) ((char *) buf+offset), dot1x_header, dot1x_len);
+			char *boffset =  buf + offset;
+			Copy(dot1x_header, boffset, dot1x_len, 1);
+			offset += dot1x_len;
+			//memcpy((void *) ((char *) buf+offset), eap_header, eap_len);
+			Copy(eap_header, boffset, eap_len, 1);
+			offset += eap_len;
+	
+			if(eap_type == EAP_EXPANDED)
+			{
+				//memcpy((void *) ((char *) buf+offset), wfa_header, wfa_len);
+				Copy(wfa_header, boffset, wfa_len, 1);
+				offset += wfa_len;
+			}
+
+			if(payload && payload_length)
+			{
+				//memcpy((void *) ((char *) buf+offset), payload, payload_length);
+				Copy(payload, boffset, payload_length, 1);
+			}
+			int *len;
+			*len = (offset + payload_length);
+		}
+
+		Safefree(snap_packet);
+		Safefree(eap_header);
+		Safefree(dot1x_header);
+		if(wfa_header) {
+			Safefree((void *) wfa_header);
+	}
+	}	
+}
+		return(buf);
