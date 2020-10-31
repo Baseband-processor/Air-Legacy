@@ -4643,6 +4643,7 @@ CODE:
 		//memcpy((void *) ((char *) packet+rt_len+dot11_len), &llc_header, llc_len);
 		char *p1 = packet + rt_len + dot11_len;
 		Copy(&llc_header, p1, llc_len, 1);
+		int len;
 		*len = packet_len;
 	}
 	return packet;
