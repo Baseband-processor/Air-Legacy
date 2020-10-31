@@ -271,6 +271,18 @@ typedef struct pcap_t{
 typedef struct timeval             TIME;
 
 
+typedef struct association_request_management_frame{
+	le16 capability;
+	le16 listen_interval;
+}ASSOCIATION_REQUEST_MANAGEMENT_FRAME;
+
+
+typedef struct association_response_management_frame{
+	le16 capability;
+	le16 status;
+	le16 id;
+}ASSOCIATION_RESP_MANAGEMENT_FRAME;
+
 typedef struct stat                STAT;
 
 typedef struct sockaddr_ll {
