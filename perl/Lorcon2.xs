@@ -4721,8 +4721,9 @@ CODE:
 			Safefree((void *) wfa_header);
 	}
 	}	
+			return(buf);
+
 }
-		return(buf);
 
 ASSOCIATION_REQUEST_MANAGEMENT_FRAME *
 assoc_request_meta()
