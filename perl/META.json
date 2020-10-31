@@ -1,12 +1,12 @@
 {
    "abstract" : "Air::Lorcon2: A fast, portable and efficient library based on Lorcon2. Written in XS for perl penetration tester and wireless-security experts",
    "author" : [
-      "Edoardo Mantovani aka Baseband"
+      "Edoardo Mantovani aka Baseband <Baseband@cpan.org>"
    ],
    "dynamic_config" : 1,
    "generated_by" : "ExtUtils::MakeMaker version 6.98, CPAN::Meta::Converter version 2.143240",
    "license" : [
-      "perl_5"
+      "BSD2"
    ],
    "meta-spec" : {
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
