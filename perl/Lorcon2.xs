@@ -4602,6 +4602,8 @@ CODE:
 		ssid_tag->len = 0;
 	}
 
+	#define SSID_TAG_NUMBER 0
+
 	ssid_tag->number = SSID_TAG_NUMBER;
 	ssid_tag_len = ssid_tag->len + sizeof(TAG_PARAMS *);
 	struct radio_tap_header *rt_header;
