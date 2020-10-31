@@ -3,6 +3,8 @@
 
 // export all struct
 
+#include "reaver.h"
+
 struct association_request_management_frame{
 	le16 capability;
 	le16 listen_interval;
