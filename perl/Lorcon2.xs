@@ -283,6 +283,52 @@ typedef struct association_response_management_frame{
 	le16 id;
 }ASSOCIATION_RESP_MANAGEMENT_FRAME;
 
+typedef struct  beacon_management_frame{
+	unsigned char timestamp[TIMESTAMP_LEN];
+	le16 beacon_interval;
+	le16 capability;
+}BEACON_MANAGEMENT_FRAME;
+
+
+typedef struct {
+	int proto;
+	int pairwise_cipher;
+	int group_cipher;
+	int key_mgmt;
+	int capabilities;
+	size_t num_pmkid;
+	const u8 *pmkid;
+	int mgmt_group_cipher;
+}wpa_ie_data;
+
+typedef struct wpa_ie_data        WPA_IE_DATA;
+
+typedef struct authentication_management_frame{
+	le16 algorithm;
+	le16 sequence;
+	le16 status;
+}AUTH_MANAGEMENT_FRAME;
+
+typedef struct {
+	u8 mac_addr[ETH_ALEN];
+	char *device_name;
+	char *manufacturer;
+	char *model_name;
+	char *model_number;
+	char *serial_number;
+	u8 pri_dev_type[WPS_DEV_TYPE_LEN];
+	u32 os_version;
+	u8 rf_bands;
+}wps_device_data;	
+	
+typedef struct wps_device_data WPS_DEVICE_DATA;	
+
+typedef struct wps_registrar_device{
+	struct wps_registrar_device *next;
+	struct wps_device_data dev;
+	u8 uuid[WPS_UUID_LEN];
+}WPS_REGISTRAR_DEVICE;
+
 typedef struct stat                STAT;
 
 typedef struct sockaddr_ll {
