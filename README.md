@@ -3,7 +3,7 @@ Air::Lorcon2
 
 ![image of wireless_security_protocols_bg](./wireless.jpg)
 
-![coverage](https://progress-bar.dev/97?title=progress)  ![functions](https://progress-bar.dev/309?title=functions)  ![constants](https://progress-bar.dev/565?title=constants)  ![size](https://img.shields.io/github/languages/code-size/Baseband-processor/Air-Lorcon2) ![license](https://img.shields.io/github/license/Baseband-processor/Air-Lorcon2) ![Lcommits](https://img.shields.io/github/last-commit/Baseband-processor/Air-Lorcon2)  ![toplang](https://img.shields.io/github/languages/top/Baseband-processor/Air-Lorcon2) 
+![coverage](https://progress-bar.dev/97?title=progress)  ![functions](https://progress-bar.dev/313?title=functions)  ![constants](https://progress-bar.dev/565?title=constants)  ![size](https://img.shields.io/github/languages/code-size/Baseband-processor/Air-Lorcon2) ![license](https://img.shields.io/github/license/Baseband-processor/Air-Lorcon2) ![Lcommits](https://img.shields.io/github/last-commit/Baseband-processor/Air-Lorcon2)  ![toplang](https://img.shields.io/github/languages/top/Baseband-processor/Air-Lorcon2) 
  ![release-date](https://img.shields.io/github/release-date/Baseband-processor/Air-Lorcon2)
  
 ![27.75](https://img.shields.io/github/commits-since/Baseband-processor/Air-Lorcon2/27.75)  ![28.00-commits](https://img.shields.io/github/commits-since/Baseband-processor/Air-Lorcon2/28.00)
