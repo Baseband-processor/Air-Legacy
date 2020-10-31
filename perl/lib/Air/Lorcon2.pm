@@ -1763,6 +1763,19 @@ our %EXPORT_TAGS = (
 	sha1_hmac_finish
 	sha1_hmac
    )],
+   reaver =>[qw(
+   	build_radio_tap_header
+   	get_wps
+   	get_ap_capability
+   	set_channel
+	get_channel
+	set_bssid
+	build_wps_probe_request
+	build_association_management_frame
+	build_authentication_management_frame
+	build_snap_packet
+	build_eap_packet
+   )],
 );
 
 # _pcap_check_activate has been eliminated due to debug errors
@@ -1785,7 +1798,7 @@ our @EXPORT = (
    @{ $EXPORT_TAGS{ rx_frames } },
    @{ $EXPORT_TAGS{ iw } },
    @{ $EXPORT_TAGS{ crypto } },
-
+   @{ $EXPORT_TAGS{ reaver } },
 );
 
 # NOTE:
