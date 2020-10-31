@@ -39,6 +39,9 @@
 #define WLAN_FC_SUBTYPE_DEAUTH      12
 #define WLAN_FC_SUBTYPE_QOSDATA     8
 
+
+#define WPS_UUID_LEN 16
+#define SSID_TAG_NUMBER	0
 #define RADIOTAP_HEADER \
 "\0\0" \
 
@@ -169,7 +172,7 @@ typedef struct nlmsgerr {
 
 typedef struct  wps_data{
 	void *ap_settings_cb_ctx;
-	WPS_CREDENTIAL *use_cred;
+	struct wps_credential *use_cred;
 	int use_psk_key;
 }WPS_DATA;
 
@@ -350,7 +353,7 @@ typedef struct wps_device_data WPS_DEVICE_DATA;
 
 typedef struct wps_registrar_device{
 	struct wps_registrar_device *next;
-	struct wps_device_data dev;
+	struct wps_device_data *dev;
 	u8 uuid[WPS_UUID_LEN];
 }WPS_REGISTRAR_DEVICE;
 
@@ -393,6 +396,13 @@ typedef struct  {
 typedef struct ifmap IFMAP;
 
 typedef sa_family_t SA_FAM;
+
+struct wpabuf {
+	size_t size; 
+	size_t used; 
+	u8 *ext_data; 
+};
+typedef struct wpabuf WPA_BUF;
 
 typedef struct {
         SA_FAM sa_family;
@@ -486,6 +496,14 @@ typedef struct wg80211_frame{
 	uint8_t null[14];
 	uint8_t data[0];
 }WG80211_FRAME;
+
+#define P1_SIZE			10000
+#define P2_SIZE	1000
+
+#define WPS_KEYWRAPKEY_LEN 16
+#define WPS_EMSK_LEN 32
+#define WPS_PSK_LEN 16
+#define WPS_SECRET_NONCE_LEN 16
 
 typedef struct  wps_data{
 	WPS_CONTEXT *wps;
@@ -773,6 +791,14 @@ typedef struct dot11_frame_header{
 
 typedef struct dot11_frame_header DOT11_FRAME_H;
 	
+
+typedef struct radio_tap_header{
+        uint8_t revision;
+        uint8_t pad;
+        uint16_t len;
+        uint32_t present_flags;
+};
+
 #include "c/lorcon_driver_t.c"
 #include "c/tx80211_decode.c"
 	
