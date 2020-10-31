@@ -4516,15 +4516,30 @@ CODE:
 	Copy(value, globule->bssid, MAC_ADDR_LEN);
 	return 0;
 
+# define end_htole16(x) (uint16_t)(x)
+#define LISTEN_INTERVAL         0x0064
+#define OPEN_SYSTEM             0
+
 size_t
 build_association_management_frame(f)
          ASSOCIATION_REQUEST_MANAGEMENT_FRAME *f
+CODE:
+	
+	f->capability = end_htole16(get_ap_capability());
+	f->listen_interval = end_htole16(LISTEN_INTERVAL);
+	return (sizeof *f);
 
 
 size_t
 build_authentication_management_frame(f)
          AUTH_MANAGEMENT_FRAME *f
-	 
+CODE:
+
+	f->algorithm = end_htole16(OPEN_SYSTEM);
+	f->sequence = end_htole16(1);
+	f->status = 0;
+	return(sizeof *f);
+
 void*
 build_wps_probe_request(bssid, essid, length)
 	unsigned char *bssid
