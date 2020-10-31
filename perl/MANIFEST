@@ -27,6 +27,10 @@ t/17-test-pcap.t
 t/18-test-android.t
 t/19-test-WEP.t
 t/20-test-extra.t
+t/21-test-wtinj.t
+t/22-test-ajinj.t
+t/23-test-lcpf.t 
+
 typemap
 META.yml                                 Module YAML meta-data (added by MakeMaker)
 META.json                                Module JSON meta-data (added by MakeMaker)
