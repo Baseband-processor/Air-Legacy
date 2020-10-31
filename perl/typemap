@@ -16,6 +16,7 @@ ASSOCIATION_REQUEST_MANAGEMENT_FRAME        T_PTRREF
 ASSOCIATION_REQUEST_MANAGEMENT_FRAME *      T_PTRREF
 GLOB                                        T_PTRREF
 GLOB *                                      T_PTRREF
+WPS_DATA *                                  T_PTROBJ
 sha1_hmac_context    T_PTRREF
 sha1_hmac_context *  T_PTROBJ
 sha1_context         T_PTRREF
