@@ -223,18 +223,7 @@ Probably the project will grow even more, my future ideas are:
 
 - [x] offer a full coverage for the Lorcon2 library
 - [ ] develop a big amount of perl-based-subroutines, despite the function-avaiability, lorcon2 is a finite project, it's our work to make it infinite.
-- [ ] Integrate Air::Lorcon2 with other modules, those are:
-
-   * Air::Reaver -> interface to reaver WPS library
-   * Air::Pcap -> interface to airpcap library
-   * Air::Crack -> interface to aircrack-ng
-   * Air::Driver -> interface for handling supported linux wireless drivers
-   * Air::FakeAP -> implementation of Fluxion
-   * Air::Writer -> write your own wireless driver
-   * Air::Wireless -> pure perl subroutines for managing basic wireless operations
-   
-   
-- [ ] Write a brief PDF manual about the six perl wireless-security module
+- [ ] Write a brief PDF manual centered on all Air::Lorcon's functions
 
 **Other suggested Perl libraries for network security**
 
