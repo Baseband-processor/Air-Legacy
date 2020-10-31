@@ -299,7 +299,17 @@ actually Working functions
       sha1_hmac
       sha1_meta
       sha1_hmac_meta 
-
+      build_radio_tap_header
+      get_wps
+      get_ap_capability
+      set_channel
+      get_channel
+      set_bssid
+      build_wps_probe_request
+      build_association_management_frame
+      build_authentication_management_frame
+      build_snap_packet
+      build_eap_packet
 
 **NOT WORKING FUNCTIONS**
 
