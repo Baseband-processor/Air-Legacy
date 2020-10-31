@@ -4,6 +4,7 @@
 // export all struct
 
 #include "reaver.h"
+#define TIMESTAMP_LEN 64
 
 struct association_request_management_frame{
 	le16 capability;
