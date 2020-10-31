@@ -79,7 +79,7 @@ Revision history for Perl extension Air::Lorcon2.
       * beacon_management_meta
       * assoc_response_meta
       * assoc_request_meta
- 
+   - added new constant class: wps_constant 
  
 
   
