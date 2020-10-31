@@ -154,7 +154,7 @@ drv_mac80211_init( $context );
 
 # And if we add a packet the possible uses  grows exponentially:
 
-my $Packet = "\xdd\x09\x00\x50\xf2\x04\x10\x4a\x00\x01\x10"; # WPS probe packet taken by Air::Reaver, another my module for Reaver
+my $Packet = "\xdd\x09\x00\x50\xf2\x04\x10\x4a\x00\x01\x10"; # WPS probe packet
 
 # || 
 
