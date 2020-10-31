@@ -1,4 +1,6 @@
 #define INT_MAX    2147483647
+#define TIMESTAMP_LEN           8
+#define MAC_ADDR_LEN 		6
 #define LORCON_CHANNEL_BASIC    0
 #define LORCON_CHANNEL_HT20     1
 #define LORCON_CHANNEL_HT40P    2
@@ -131,7 +133,10 @@
 
 #include "Ctxs.h"
 
- 
+typedef uint8_t u8;
+typedef uint16_t u16;
+typedef uint32_t u32;
+typedef uint64_t u64;
 
 typedef struct {
 	__u32		nlmsg_len;	
