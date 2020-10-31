@@ -24,6 +24,9 @@ actually Working functions
 - [x] lorcon_set_useraux
 - [x] lorcon_packet_free
 - [x] lorcon_packet_decode
+
+**still not tested**
+
       lorcon_packet_set_channel
       lorcon_packet_get_channel
       lorcon_packet_txprep_by_ctx
@@ -310,6 +313,12 @@ actually Working functions
       build_authentication_management_frame
       build_snap_packet
       build_eap_packet
+      auth_management_meta
+      beacon_management_meta
+      assoc_response_meta
+      assoc_request_meta
+ 
+ 
 
 **NOT WORKING FUNCTIONS**
 
