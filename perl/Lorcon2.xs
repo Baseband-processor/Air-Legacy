@@ -37,6 +37,9 @@
 #define WLAN_FC_SUBTYPE_DEAUTH      12
 #define WLAN_FC_SUBTYPE_QOSDATA     8
 
+#define RADIOTAP_HEADER \
+"\0\0" \
+
 #define IEEE80211_RADIOTAP_F_FRAG	0x08
 #define TX80211_CAP_CTRL	64
 #define TX80211_CAP_SELFACK	512
@@ -100,6 +103,15 @@
 #define WLAN_FC_ORDER               BIT(7)
 #define PCAP_ERRBUF_SIZE 	    256
 #define PCAP_ERROR 		    -1
+
+#define DOT1X_EAP_PACKET	0x00
+#define EAP_IDENTITY 		0x01
+#define EAP_EXPANDED            0xFE
+
+#define EAP_REQUEST  1
+#define	EAP_RESPONSE 2
+#define	EAP_SUCCESS  3
+#define	EAP_FAILURE 4
 
 #define lorcon_hton16(x) (x)
 
@@ -671,6 +683,14 @@ typedef struct  lorcon_t{
 typedef void (*lorcon_handler)(lorcon_t *, lorcon_packet_t *, unsigned char *user);
 typedef lorcon_handler             AirLorconHandler;
 
+typedef struct {
+        uint8_t number;
+        uint8_t len;
+}tagged_parameter;
+
+
+typedef struct tagged_parameter TAG_PARAMS;
+
 typedef struct tx80211{
 	int injectortype;
 	char ifname[MAX_IFNAME_LEN];
@@ -729,6 +749,17 @@ typedef struct tx80211_packet{
 }TX80211_PACKET;
 
 
+typedef struct dot11_frame_header{
+        uint16_t fc;
+        uint16_t duration;
+        unsigned char addr1[MAC_ADDR_LEN];
+        unsigned char addr2[MAC_ADDR_LEN];
+        unsigned char addr3[MAC_ADDR_LEN];
+        uint16_t frag_seq;
+};
+
+typedef struct dot11_frame_header DOT11_FRAME_H;
+	
 #include "c/lorcon_driver_t.c"
 #include "c/tx80211_decode.c"
 	
@@ -4473,7 +4504,7 @@ CODE:
 	"\x18\0" 
 	int radio_header = sizeof(RADIOTAP_HEADER) - 1;
 	//memcpy(rt_header, RADIOTAP_HEADER, sizeof(RADIOTAP_HEADER)-1);
-	Copy(RADIOTAP_HEADER, rt_header, radio_header);
+	StructCopy(RADIOTAP_HEADER, rt_header, radio_header);
 	RETVAL = ( sizeof(RADIOTAP_HEADER) - 1 );
 OUTPUT:
 	RETVAL
@@ -4513,7 +4544,7 @@ unsigned char *value
 CODE:
 	GLOB *globule;
 	//memcpy(globule->bssid, value, MAC_ADDR_LEN);
-	Copy(value, globule->bssid, MAC_ADDR_LEN);
+	Copy(value, globule->bssid, MAC_ADDR_LEN, 1);
 	return 0;
 
 # define end_htole16(x) (uint16_t)(x)
