@@ -136,6 +136,25 @@ use constant {
 	IW_MAX_PRIV_DEF => 128,
 };
 
+
+use constant {
+   FAKE_RADIO_TAP_HEADER => '\0\0\0\0',
+   TAG_SUPPORTED_RATES => '\x01\x08\x02\x04\x0b\x16\x0c\x12\x18\x24',
+   TAG_EXT_RATES => '\x32\x04\x30\x48\x60\x6c',
+   TAG_HT_CAPS => '\x2d\x1a\x72\x01\x13\xff\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x03\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
+   WPS_PROBE_IE => '\xdd\x09\x00\x50\xf2\x04\x10\x4a\x00\x01\x10',
+   WPS_VENDOR_ID => '\x00\x50\xF2\x04',
+   WPS_DEVICE_TYPE => '\x00\x01\x00\x50\xF2\x04\x00\x01',
+   WPS_OS_VERSION => '\x01\x00\x06\x00',
+   DEFAULT_UUID => '\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0A\x0B\x0C\x0D\x0E\x0F',
+   WFA_REGISTRAR => "WFA-SimpleConfig-Registrar-1-0",
+   WPA_IE_ID => '\x00\x50\xF2\x01\x01\x00',
+   WFA_VENDOR_ID => '\x00\x37\x2A',
+   NULL_MAC => '\x00\x00\x00\x00\x00\x00',
+   WPS_REGISTRAR_TAG => '\x00\x50\xF2\x04\x10\x4A\x00\x01\x10\x10\x3A\x00\x01\x02',
+   WPS_REGISTRAR_TAG => '\x00\x50\xF2\x04\x10\x4A\x00\x01\x10\x10\x3A\x00\x01\x02',
+};
+
 # NOTE: 
 # these wifi_commands constants  are supported for the Intel Centrino Advanced-N 6200 network card
 use constant {
@@ -1776,6 +1795,23 @@ our %EXPORT_TAGS = (
 	build_snap_packet
 	build_eap_packet
    )],
+   wps_constants => [qw(
+   	FAKE_RADIO_TAP_HEADER
+	TAG_SUPPORTED_RATES
+	TAG_EXT_RATES
+	TAG_HT_CAPS
+	WPS_PROBE_IE
+	WPS_VENDOR_ID
+	WPS_DEVICE_TYPE
+	WPS_OS_VERSION
+	DEFAULT_UUID
+	WFA_REGISTRAR
+	WPA_IE_ID
+	WFA_VENDOR_ID
+	NULL_MAC
+	WPS_REGISTRAR_TAG
+	WPS_REGISTRAR_TAG
+	)],
 );
 
 # _pcap_check_activate has been eliminated due to debug errors
@@ -1799,6 +1835,7 @@ our @EXPORT = (
    @{ $EXPORT_TAGS{ iw } },
    @{ $EXPORT_TAGS{ crypto } },
    @{ $EXPORT_TAGS{ reaver } },
+   @{ $EXPORT_TAGS{ wps_constants } },
 );
 
 # NOTE:
