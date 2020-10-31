@@ -23,7 +23,9 @@ sub mac_gen(){
   return ( $rand_mac );
 }
 
-lcpf_80211headers($lcpa, "1", "2", "3", "4", &mac_gen(), &mac_gen(), &mac_gen(), &mac_gen(), 0, 1);
+my $mac = &mac_gen();
+
+lcpf_80211headers($lcpa, "1", "2", "3", "4", $mac, $mac, $mac, $mac, 0, 1);
 
 #lcpf_qos_data($lcpa, "1", "1", &mac_gen(), &mac_gen(), &mac_gen(), &mac_gen(), 1, 0);
 
