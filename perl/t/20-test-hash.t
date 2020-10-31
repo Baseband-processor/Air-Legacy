@@ -6,7 +6,7 @@
 use strict;
 use Test;
 BEGIN{ plan tests => 1 };
-use Air::Lorcon2 qw(crypto);
+use Air::Lorcon2 qw(:crypto);
 
 # craft sha1_context and sha1_hmac_context
 
