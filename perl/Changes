@@ -60,6 +60,21 @@ Revision history for Perl extension Air::Lorcon2.
   - added new function: sha1_meta (spawn a sha1_context object into perl code)
   - added new function: sha1_hmac_meta (spawn a sha1_hmac_context object into perl code)
   - added new test: 20-test-hash.t ( tests some hashing functions )
+  - fixed tests 20 and 23
+  - started the Air::Reaver inclusion inside code 
+    added GLOB struct, usefull for the following functions:
+      * build_radio_tap_header
+      * get_wps
+      * get_ap_capability
+      * set_channel
+      * get_channel
+      * set_bssid
+      * build_wps_probe_request
+      * build_association_management_frame
+      * build_authentication_management_frame
+      * build_snap_packet
+      * build_eap_packet
+
   
 28.00   Sun Opt 04 16:00:00 CET 2020
   - toggled donation tag and modified markdown graphic
