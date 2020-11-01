@@ -536,7 +536,7 @@ typedef struct wps_context{
 
 	struct wps_registrar *registrar;
 
-	enum *wps_state wps_state;
+	//enum *wps_state wps_state;
 
 	int ap_setup_locked;
 
@@ -705,7 +705,7 @@ typedef struct {
         int m57_timeout;                
         int out_of_time;                
 	unsigned long long resend_timeout_usec;   
-        enum *debug_level debug;         
+        // enum *debug_level debug;         
         int eapol_start_count;          
         int fixed_channel;              
 	int auto_channel_select;
