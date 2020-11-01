@@ -526,7 +526,85 @@ typedef struct wg80211_frame{
 #define WPS_PSK_LEN 16
 #define WPS_SECRET_NONCE_LEN 16
 
-typedef struct  wps_data{
+typedef struct wps_context{
+
+	int ap;
+
+	struct wps_registrar *registrar;
+
+	enum wps_state wps_state;
+
+	int ap_setup_locked;
+
+	u8 uuid[16];
+
+	u8 ssid[32];
+
+	/**
+	 * ssid_len - Length of ssid in octets
+	 */
+	size_t ssid_len;
+
+	/**
+	 * dev - Own WPS device data
+	 */
+	struct wps_device_data dev;
+
+	/**
+	 * oob_conf - OOB Config data
+	 */
+	struct oob_conf_data oob_conf;
+
+	u16 oob_dev_pw_id;
+	void *dh_ctx;
+	struct wpabuf *dh_privkey;
+
+
+	struct wpabuf *dh_pubkey;
+
+	u16 config_methods;
+	u16 encr_types;
+
+	u16 auth_types;
+
+	u8 *network_key;
+
+	size_t network_key_len;
+
+	u8 psk[32];
+	int psk_set;
+
+
+	u8 *ap_settings;
+
+	size_t ap_settings_len;
+
+	char *friendly_name;
+
+	char *manufacturer_url;
+
+
+	char *model_description;
+
+
+	char *model_url;
+	char *upc;
+	int (*cred_cb)(void *ctx, const struct wps_credential *cred);
+	void (*event_cb)(void *ctx, enum wps_event event,
+			 union wps_event_data *data);
+
+	/**
+	 * cb_ctx: Higher layer context data for callbacks
+	 */
+	void *cb_ctx;
+
+	struct upnp_wps_device_sm *wps_upnp;
+	struct upnp_pending_message *upnp_msgs;
+};
+
+typedef struct wps_context WPS_CONTEXT;
+
+typedef struct  {
 	WPS_CONTEXT *wps;
 	char *key;
 	char *essid;
@@ -577,7 +655,9 @@ typedef struct  wps_data{
 	void *ap_settings_cb_ctx;
 	WPS_CREDENTIAL *use_cred;
 	int use_psk_key;
-}WPS_DATA;
+}wps_data;
+
+typedef struct wps_data WPS_DATA;
 
 typedef struct {
         int last_wps_state;             
