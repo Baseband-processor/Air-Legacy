@@ -1794,6 +1794,8 @@ our %EXPORT_TAGS = (
 	build_authentication_management_frame
 	build_snap_packet
 	build_eap_packet
+	globule_init
+	globule_deinit
    )],
    wps_constants => [qw(
    	FAKE_RADIO_TAP_HEADER
