@@ -274,7 +274,7 @@ typedef struct llc_header{
 	uint8_t ssap;
 	uint8_t control_field;
 	unsigned char org_code[3];
-	be16 type;
+	__be16 type;
 }llc_header;
 
 typedef struct pcap_opt {
@@ -531,24 +531,16 @@ typedef struct wg80211_frame{
 #define WPS_SECRET_NONCE_LEN 16
 
 typedef struct wps_context{
-
 	int ap;
-
 	struct wps_registrar *registrar;
-
 	//enum *wps_state wps_state;
-
 	int ap_setup_locked;
-
 	u8 uuid[16];
-
 	u8 ssid[32];
-
 	/**
 	 * ssid_len - Length of ssid in octets
 	 */
 	size_t ssid_len;
-
 	/**
 	 * dev - Own WPS device data
 	 */
@@ -705,7 +697,7 @@ typedef struct {
         int m57_timeout;                
         int out_of_time;                
 	unsigned long long resend_timeout_usec;   
-        // enum *debug_level debug;         
+        //enum *debug_level debug;         
         int eapol_start_count;          
         int fixed_channel;              
 	int auto_channel_select;
