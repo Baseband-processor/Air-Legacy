@@ -323,6 +323,12 @@ typedef struct pcap_t{
 
 typedef struct timeval             TIME;
 
+typedef struct dot1X_header{
+	uint8_t version;
+	uint8_t type;
+	uint16_t len;
+}DOT1X;
+
 
 typedef struct association_request_management_frame{
 	le16 capability;
@@ -4820,6 +4826,30 @@ CODE:
 	}
 	return packet;
 
+#define DOT1X_VERSION           0x01
+#define DOT1X_START             0x01
+
+void *
+build_dot1X_header(type, payload_len, len)
+	uint8_t type
+	uint16_t payload_len
+	size_t *len
+CODE:
+	DOT1X *header = NULL;
+	void *buf = NULL;
+
+	buf = malloc(sizeof(DOT1X));
+	if(buf){
+		*len = sizeof(DOT1X);
+		memset((void *) buf, 0, sizeof(DOT1X));
+		header = (DOT1X *) buf;
+
+		header->version = DOT1X_VERSION;
+		header->type = type;
+		header->len = htons(payload_len);
+	}
+	return buf;
+	
 void *
 build_eap_packet(payload, payload_length, length)
 	const void *payload
@@ -4975,3 +5005,33 @@ PPCODE:
 		Safefree(globule);
 	}
 
+void *
+build_eapol_start_packet(length)
+	size_t *length
+CODE:
+	void *snap_packet = NULL, *dot1x_header = NULL, *packet = NULL;
+        size_t snap_len = 0, dot1x_len = 0, packet_len = 0;
+
+        snap_packet = build_snap_packet(&snap_len);
+        dot1x_header = build_dot1X_header(DOT1X_START, 0, &dot1x_len);
+
+	if(snap_packet && dot1x_header)
+	{
+        	packet_len = snap_len + dot1x_len;
+        	packet = malloc(packet_len);
+
+        	if(packet)
+        	{
+        	        /* Build packet */
+        	        memset((void *) packet, 0, packet_len);
+        	        memcpy((void *) packet, snap_packet, snap_len);
+        	        memcpy((void *) ((char *) packet+snap_len), dot1x_header, dot1x_len);
+
+			*length = packet_len;
+		}
+
+		Safefree(snap_packet);
+		Safefree(dot1x_header);
+	}
+	return packet;
+	
