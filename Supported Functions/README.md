@@ -317,7 +317,8 @@ actually Working functions
       beacon_management_meta
       assoc_response_meta
       assoc_request_meta
- 
+      build_dot1X_header
+      build_eapol_start_packet
  
 
 **NOT WORKING FUNCTIONS**
