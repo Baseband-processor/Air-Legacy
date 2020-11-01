@@ -739,7 +739,9 @@ typedef struct {
 	int output_fd;			
 	uint64_t uptime;		
         WPS_DATA *wps;           
-}GLOB;
+}globule;
+
+typedef struct globule GLOB;
 
 typedef struct {
         int type, subtype;
