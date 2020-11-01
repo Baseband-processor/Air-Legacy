@@ -625,19 +625,21 @@ typedef struct wps_credential {
 	size_t cred_attr_len;
 }WPS_CREDENTIAL;
 
+typedef enum {
+		SEND_M1, RECV_M2, SEND_M3, RECV_M4, SEND_M5, RECV_M6, SEND_M7,
+		RECV_M8, RECEIVED_M2D, WPS_MSG_DONE, RECV_ACK, WPS_FINISHED,
+		SEND_WSC_NACK,
+		RECV_M1, SEND_M2, RECV_M3, SEND_M4, RECV_M5, SEND_M6,
+		RECV_M7, SEND_M8, RECV_DONE, SEND_M2D, RECV_M2D_ACK
+} state;
+
 typedef struct  {
 	WPS_CONTEXT *wps;
 	char *key;
 	char *essid;
 	int registrar;
 	int er;
-	enum {
-		SEND_M1, RECV_M2, SEND_M3, RECV_M4, SEND_M5, RECV_M6, SEND_M7,
-		RECV_M8, RECEIVED_M2D, WPS_MSG_DONE, RECV_ACK, WPS_FINISHED,
-		SEND_WSC_NACK,
-		RECV_M1, SEND_M2, RECV_M3, SEND_M4, RECV_M5, SEND_M6,
-		RECV_M7, SEND_M8, RECV_DONE, SEND_M2D, RECV_M2D_ACK
-	} state;
+	state state;
 	u8 uuid_e[WPS_UUID_LEN];
 	u8 uuid_r[WPS_UUID_LEN];
 	u8 mac_addr_e[ETH_ALEN];
