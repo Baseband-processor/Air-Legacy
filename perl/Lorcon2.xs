@@ -668,7 +668,7 @@ typedef struct {
 	char *static_p1;			
 	char *static_p2;		
 	int use_pin_string;		
-        enum *key_state key_status;      
+        //enum *key_state key_status;      
 	int dh_small;			
 	int external_association;	
 	int oo_send_nack;
