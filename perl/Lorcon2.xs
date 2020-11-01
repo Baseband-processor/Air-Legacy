@@ -4814,14 +4814,14 @@ CODE:
 	//packet = malloc(packet_len);
 	Newx(packet, packet_len, 1);
 	if(packet) {
-		//memset((void *) packet, 0, packet_len);
-		Zero(packet, 0, packet_len);
-		//memcpy((void *) packet, &rt_header, rt_len);
-		Copy(&rt_header, packet, rt_len, 1);
-		//memcpy((void *) ((char *) packet+rt_len), &dot11_header, dot11_len);
+		memset((void *) packet, 0, packet_len);
+		//Zero(packet, 0, packet_len);
+		memcpy((void *) packet, &rt_header, rt_len);
+		//Copy(&rt_header, packet, rt_len, 1);
+		memcpy((void *) ((char *) packet+rt_len), &dot11_header, dot11_len);
 		char *p = packet + rt_len;
-		Copy(&dot11_header, p, dot11_len, 1);
-		//memcpy((void *) ((char *) packet+rt_len+dot11_len), &llc_header, llc_len);
+		//Copy(&dot11_header, p, dot11_len, 1);
+		memcpy((void *) ((char *) packet+rt_len+dot11_len), &llc_header, llc_len);
 		char *p1 = packet + rt_len + dot11_len;
 		Copy(&llc_header, p1, llc_len, 1);
 		int *len = packet_len;
@@ -4862,7 +4862,8 @@ CODE:
 	if(snap_packet && eap_header && dot1x_header)
 	{
 		buf_len = snap_len + dot1x_len + eap_len + total_payload_len;
-		buf = malloc(buf_len);
+		//buf = malloc(buf_len);
+		Newx(buf, buf_len, 1);
 		if(buf)
 		{
 			//memset((void *) buf, 0, buf_len);
