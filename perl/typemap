@@ -2,6 +2,7 @@ TYPEMAP
 
 WPS_REGISTRAR_DEVICE                        T_PTRREF
 WPS_REGISTRAR_DEVICE *                      T_PTRREF
+DOT11_FRAME_H *                             T_PTROBJ
 WPS_DEVICE_DATA                             T_PTRREF
 WPS_DEVICE_DATA *                           T_PTRREF
 AUTH_MANAGEMENT_FRAME                       T_PTRREF
