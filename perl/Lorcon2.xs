@@ -540,7 +540,7 @@ typedef struct wps_context{
 
 	struct wps_registrar *registrar;
 
-	enum wps_state wps_state;
+	enum *wps_state wps_state;
 
 	int ap_setup_locked;
 
@@ -680,7 +680,7 @@ typedef struct  {
 
 typedef struct wps_data WPS_DATA;
 
-typedef struct globals{
+typedef struct {
         int last_wps_state;             
         int p1_index;                   
         int p2_index;                   
