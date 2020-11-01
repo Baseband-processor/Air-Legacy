@@ -4895,7 +4895,7 @@ CODE:
 				//memcpy((void *) ((char *) buf+offset), payload, payload_length);
 				Copy(payload, boffset, payload_length, 1);
 			}
-			int *len;
+			int len;
 			*len = (offset + payload_length);
 		}
 
