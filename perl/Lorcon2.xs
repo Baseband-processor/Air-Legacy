@@ -1,6 +1,8 @@
 #define INT_MAX    2147483647
 #define TIMESTAMP_LEN           8
 #define MAC_ADDR_LEN 		6
+#define WPS_DEV_TYPE_LEN 8
+#define WPS_DEV_TYPE_BUFSIZE 21
 #define LORCON_CHANNEL_BASIC    0
 #define LORCON_CHANNEL_HT20     1
 #define LORCON_CHANNEL_HT40P    2
