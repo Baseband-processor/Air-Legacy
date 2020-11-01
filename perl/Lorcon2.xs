@@ -4664,8 +4664,8 @@ CODE:
 	RADIOTAP_HEADER_RATE_OPTION \
 	"\x18\0" 
 	int radio_header = sizeof(RADIOTAP_HEADER) - 1;
-	//memcpy(rt_header, RADIOTAP_HEADER, sizeof(RADIOTAP_HEADER)-1);
-	StructCopy(RADIOTAP_HEADER, rt_header, radio_header);
+	memcpy(rt_header, RADIOTAP_HEADER, sizeof(RADIOTAP_HEADER)-1);
+	//StructCopy(RADIOTAP_HEADER, rt_header, radio_header);
 	RETVAL = ( sizeof(RADIOTAP_HEADER) - 1 );
 OUTPUT:
 	RETVAL
@@ -4702,6 +4702,7 @@ CODE:
 char *
 get_mac()
 CODE:
+GLOB *glbule;
 return globule->mac;
 	
 void 
@@ -4795,7 +4796,7 @@ CODE:
 	ssid_tag_len = ssid_tag->len + sizeof(TAG_PARAMS *);
 	struct radio_tap_header *rt_header;
 	rt_len = build_radio_tap_header(&rt_header);
-	DOT_11_FRAME_H *dot11_header;
+	DOT11_FRAME_H *dot11_header;
 	dot11_len = build_dot11_frame_header_m(&dot11_header, FC_PROBE_REQUEST, bssid);
 
 	packet_len = rt_len + dot11_len + ssid_tag_len;
@@ -4828,8 +4829,7 @@ CODE:
 		//memcpy((void *) ((char *) packet+rt_len+dot11_len), &llc_header, llc_len);
 		char *p1 = packet + rt_len + dot11_len;
 		Copy(&llc_header, p1, llc_len, 1);
-		int len;
-		*len = packet_len;
+		int *len = packet_len;
 	}
 	return packet;
 
