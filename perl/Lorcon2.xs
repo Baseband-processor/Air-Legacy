@@ -191,11 +191,7 @@ typedef struct nlmsgerr {
 	NLMSGHDR *msg;
 };
 
-typedef struct  wps_data{
-	void *ap_settings_cb_ctx;
-	struct wps_credential *use_cred;
-	int use_psk_key;
-}WPS_DATA;
+
 
 typedef struct  nlmsgerr NLMSGERR;
 
