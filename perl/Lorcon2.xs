@@ -4924,8 +4924,7 @@ int
 globule_init()
 CODE:
 	int ret = 0;
-
-	globule = malloc(sizeof(struct globals));
+	GLOB *globule;
 	if(globule){
 		//memset(globule, 0, sizeof(struct globals));
 		Zero(globule, 1, GLOB);
@@ -4940,7 +4939,7 @@ void
 globule_deinit()
 PPCODE:
 	int i = 0;
-
+	GLOB *globule;
 	if(globule)
 	{
 		for(i=0; i<P1_SIZE; i++)
