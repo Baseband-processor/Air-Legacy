@@ -680,7 +680,7 @@ typedef struct  {
 
 typedef struct wps_data WPS_DATA;
 
-typedef struct {
+typedef struct globals{
         int last_wps_state;             
         int p1_index;                   
         int p2_index;                   
@@ -739,9 +739,7 @@ typedef struct {
 	int output_fd;			
 	uint64_t uptime;		
         WPS_DATA *wps;           
-}globals;
-
-typedef struct globals GLOB;
+}GLOB;
 
 typedef struct {
         int type, subtype;
