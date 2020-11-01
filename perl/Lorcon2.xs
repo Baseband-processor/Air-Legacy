@@ -706,7 +706,7 @@ typedef struct {
 	int repeat_m6;			
 	int max_num_probes;		
 	int validate_fcs;		
-        enum *wsc_op_code opcode;        
+        //enum *wsc_op_code opcode;        
         uint8_t eap_id;                
         uint16_t ap_capability;         
         unsigned char bssid[MAC_ADDR_LEN];    
@@ -4915,8 +4915,8 @@ CODE:
 	int ret = 0;
 	GLOB *globule;
 	if(globule){
-		//memset(globule, 0, sizeof(struct globals));
-		Zero(globule, 1, struct globals);
+		memset(globule, 0, sizeof(GLOB *));
+		//Zero(globule, 1, struct globals);
 		ret = 1;
 		globule->resend_timeout_usec = 200000;
 		globule->output_fd = -1;
