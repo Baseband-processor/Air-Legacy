@@ -4699,6 +4699,11 @@ CODE:
 	GLOB *globule;
 	return globule->channel;
 
+char *
+get_mac()
+CODE:
+return globule->mac;
+	
 void 
 set_bssid(value)
 unsigned char *value
@@ -4731,6 +4736,38 @@ CODE:
 	f->sequence = end_htole16(1);
 	f->status = 0;
 	return(sizeof *f);
+
+
+size_t 
+build_dot11_frame_header_m(fh, fc, dstmac)
+	DOT11_FRAME_H *fh
+	uint16_t fc
+	char dstmac
+CODE:
+	uint16_t frag_seq;
+
+	fh->duration = end_htole16(52); /* DEFAULT_DURATION */
+	fh->fc = end_htole16(fc);
+	fh->frag_seq = end_htole16(frag_seq);
+
+	//memcpy(dst, src, n)            Copy(src, dst, n, t)
+	//memcpy(fh->addr1, dstmac, MAC_ADDR_LEN);
+	Copy(dstmac, fh->addr1, MAC_ADDR_LEN, 1);
+	//memcpy(fh->addr2, get_mac(), MAC_ADDR_LEN);
+	Copy(get_mac(), fh->addr2, MAC_ADDR_LEN, 1);
+	//memcpy(fh->addr3, dstmac, MAC_ADDR_LEN);
+	Copy(dstmac, fh->addr3, MAC_ADDR_LEN, 1);
+	frag_seq += 0x10; /* SEQ_MASK */
+	return sizeof *fh;
+
+
+size_t 
+build_dot11_frame_header(fh, fc) 
+		DOT11_FRAME_HEADER *fh
+		uint16_t fc
+CODE:
+	return build_dot11_frame_header_m(fh, fc, get_bssid());
+
 
 void*
 build_wps_probe_request(bssid, essid, length)
