@@ -556,12 +556,12 @@ typedef struct wps_context{
 	/**
 	 * dev - Own WPS device data
 	 */
-	struct wps_device_data dev;
+	struct wps_device_data *dev;
 
 	/**
 	 * oob_conf - OOB Config data
 	 */
-	struct oob_conf_data oob_conf;
+	struct oob_conf_data *oob_conf;
 
 	u16 oob_dev_pw_id;
 	void *dh_ctx;
@@ -611,6 +611,19 @@ typedef struct wps_context{
 };
 
 typedef struct wps_context WPS_CONTEXT;
+
+typedef struct wps_credential {
+	char ssid[32];
+	size_t ssid_len;
+	u16 auth_type;
+	u16 encr_type;
+	u8 key_idx;
+	u8 key[64];
+	size_t key_len;
+	u8 mac_addr[ETH_ALEN];
+	const u8 *cred_attr;
+	size_t cred_attr_len;
+}WPS_CREDENTIAL;
 
 typedef struct  {
 	WPS_CONTEXT *wps;
