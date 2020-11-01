@@ -4807,7 +4807,7 @@ CODE:
 	void *packet = NULL;
 	size_t rt_len = 0, dot11_len = 0, llc_len = 0, packet_len = 0;
 	struct radio_tap_header rt_header;
-	DOT_11_FRAME_H *dot11_header;
+	DOT11_FRAME_H *dot11_header;
 	struct llc_header *llc_header;
 	rt_len = build_radio_tap_header(&rt_header);
         dot11_len = build_dot11_frame_header(&dot11_header, FC_STANDARD);
