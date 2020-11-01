@@ -665,14 +665,14 @@ typedef struct  {
 	u8 *new_psk;
 	size_t new_psk_len;
 	int wps_pin_revealed;
-	WPS_CREDENTIAL cred;
-	WPS_DEVICE_DATA peer_dev;
+	WPS_CREDENTIAL *cred;
+	WPS_DEVICE_DATA *peer_dev;
 	u16 config_error;
 	int ext_reg;
 	int int_reg;
 	WPS_CREDENTIAL *new_ap_settings;
 	void *dh_ctx;
-	void (*ap_settings_cb)(void *ctx, const WPS_CREDENTIAL *cred);
+	void (*ap_settings_cb)(void *ctx, WPS_CREDENTIAL *cred);
 	void *ap_settings_cb_ctx;
 	WPS_CREDENTIAL *use_cred;
 	int use_psk_key;
