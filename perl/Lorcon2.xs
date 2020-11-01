@@ -4763,7 +4763,7 @@ CODE:
 
 size_t 
 build_dot11_frame_header(fh, fc) 
-		DOT11_FRAME_HEADER *fh
+		DOT11_FRAME_H *fh
 		uint16_t fc
 CODE:
 	return build_dot11_frame_header_m(fh, fc, get_bssid());
