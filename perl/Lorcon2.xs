@@ -82,6 +82,25 @@
 #define INJ_BCM43XX     14
 #define INJ_MAC80211	15
 
+#define WPS_DH_GROUP 5
+
+#define WPS_UUID_LEN 16
+#define WPS_NONCE_LEN 16
+#define WPS_AUTHENTICATOR_LEN 8
+#define WPS_AUTHKEY_LEN 32
+#define WPS_KEYWRAPKEY_LEN 16
+#define WPS_EMSK_LEN 32
+#define WPS_PSK_LEN 16
+#define WPS_SECRET_NONCE_LEN 16
+#define WPS_HASH_LEN 32
+#define WPS_KWA_LEN 8
+#define WPS_MGMTAUTHKEY_LEN 32
+#define WPS_MGMTENCKEY_LEN 16
+#define WPS_MGMT_KEY_ID_LEN 16
+#define WPS_OOB_DEVICE_PASSWORD_ATTR_LEN 54
+#define WPS_OOB_DEVICE_PASSWORD_LEN 32
+#define WPS_OOB_PUBKEY_HASH_LEN 20
+
 #define __FD_ISSET(d, set) \
   ((__FDS_BITS (set)[__FD_ELT (d)] & __FD_MASK (d)) != 0)
 
