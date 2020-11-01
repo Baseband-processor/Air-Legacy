@@ -4884,3 +4884,71 @@ beacon_management_meta()
 
 AUTH_MANAGEMENT_FRAME *
 auth_management_meta()
+
+int 
+globule_init()
+CODE:
+	int ret = 0;
+
+	globule = malloc(sizeof(struct globals));
+	if(globule){
+		//memset(globule, 0, sizeof(struct globals));
+		Zero(globule, 1, GLOB);
+		ret = 1;
+		globule->resend_timeout_usec = 200000;
+		globule->output_fd = -1;
+	}
+	return ret;
+
+
+void 
+globule_deinit()
+PPCODE:
+	int i = 0;
+
+	if(globule)
+	{
+		for(i=0; i<P1_SIZE; i++)
+                {
+                        if(globule->p1[i]) Safefree(globule->p1[i]);
+                }
+                for(i=0; i<P2_SIZE; i++)
+                {
+                        if(globule->p2[i]) Safefree(globule->p2[i]);
+                }
+
+		//if(globule->wps){
+		//	wps_deinit(globule->wps);
+		//}
+		//if(globule->handle){
+		//	pcap_close(globule->handle);
+		//}
+		if(globule->pin){
+			Safefree(globule->pin);
+		}
+		if(globule->iface){
+			Safefree(globule->iface);
+		}
+		if(globule->ssid){
+			Safefree(globule->ssid);
+		}
+		if(globule->session){
+			Safefree(globule->session);
+		}
+		if(globule->static_p1){
+			Safefree(globule->static_p1);
+		}
+		if(globule->static_p2){
+			Safefree(globule->static_p2);
+		}
+		if(globule->fp){
+			fclose(globule->fp);
+		}
+		if(globule->exec_string){
+			Safefree(globule->exec_string);
+		}
+		if(globule->output_fd != -1) close(globule->output_fd);
+
+		Safefree(globule);
+	}
+
