@@ -4669,17 +4669,16 @@ OUTPUT:
 WPS_DATA *
 get_wps()
 CODE:
-	GLOB *globule;
-	return globule->wps;
+GLOB *globule;
+return globule->wps;
 
 
 uint16_t 
 get_ap_capability()
 CODE:
-GLOB * globule;
-RETVAL = globule->ap_capability;
-OUTPUT:
-RETVAL
+GLOB *globule;
+return globule->ap_capability;
+
 
 void 
 set_channel(channel)
@@ -4698,8 +4697,8 @@ CODE:
 char *
 get_mac()
 CODE:
-GLOB *glbule;
-return globule->mac;
+	GLOB *globule;
+	return globule->mac;
 	
 void 
 set_bssid(value)
@@ -4891,8 +4890,7 @@ CODE:
 				//memcpy((void *) ((char *) buf+offset), payload, payload_length);
 				Copy(payload, boffset, payload_length, 1);
 			}
-			int len;
-			*len = (offset + payload_length);
+			char *len = (offset + payload_length);
 		}
 
 		Safefree(snap_packet);
@@ -4925,7 +4923,7 @@ CODE:
 	GLOB *globule;
 	if(globule){
 		//memset(globule, 0, sizeof(struct globals));
-		Zero(globule, 1, GLOB);
+		Zero(globule, 1, struct globals);
 		ret = 1;
 		globule->resend_timeout_usec = 200000;
 		globule->output_fd = -1;
