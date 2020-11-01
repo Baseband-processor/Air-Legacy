@@ -834,13 +834,11 @@ typedef struct  lorcon_t{
 typedef void (*lorcon_handler)(lorcon_t *, lorcon_packet_t *, unsigned char *user);
 typedef lorcon_handler             AirLorconHandler;
 
-typedef struct {
+typedef struct tagged_parameter{
         uint8_t number;
         uint8_t len;
-}tagged_parameter;
+}TAG_PARAMS;
 
-
-typedef struct tagged_parameter TAG_PARAMS;
 
 typedef struct tx80211{
 	int injectortype;
