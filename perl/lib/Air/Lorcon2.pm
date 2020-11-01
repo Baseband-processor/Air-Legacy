@@ -1796,6 +1796,12 @@ our %EXPORT_TAGS = (
 	build_eap_packet
 	globule_init
 	globule_deinit
+	build_eapol_start_packet
+	assoc_request_meta
+	assoc_response_meta
+	beacon_management_meta
+	auth_management_meta
+	build_dot1X_header
    )],
    wps_constants => [qw(
    	FAKE_RADIO_TAP_HEADER
