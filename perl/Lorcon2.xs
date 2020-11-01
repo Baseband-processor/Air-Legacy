@@ -273,6 +273,14 @@ typedef struct fd_set {
 
 typedef struct bpf_program    * BPF_PROGRAM;
 
+typedef struct llc_header{
+	uint8_t dsap;
+	uint8_t ssap;
+	uint8_t control_field;
+	unsigned char org_code[3];
+	be16 type;
+}llc_header;
+
 typedef struct pcap_opt {
 	char	*device;
 	int	timeout;	
@@ -4750,8 +4758,8 @@ CODE:
 	void *packet = NULL;
 	size_t rt_len = 0, dot11_len = 0, llc_len = 0, packet_len = 0;
 	struct radio_tap_header rt_header;
-	struct dot11_frame_header dot11_header;
-	struct llc_header llc_header;
+	DOT_11_FRAME_H *dot11_header;
+	struct llc_header *llc_header;
 	rt_len = build_radio_tap_header(&rt_header);
         dot11_len = build_dot11_frame_header(&dot11_header, FC_STANDARD);
         llc_len = build_llc_header(&llc_header);
