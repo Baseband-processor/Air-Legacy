@@ -80,6 +80,9 @@ Revision history for Perl extension Air::Lorcon2.
       * assoc_response_meta
       * assoc_request_meta
    - added new constant class: wps_constant 
+   - added 2 new functions: 
+      * globule_init 
+      * globule_deinit
  
 
   
