@@ -730,7 +730,7 @@ typedef struct {
         char *iface;                    
         char *pin;                      
 	char *exec_string;		
-        enum *nack_code nack_reason;     
+        //enum *nack_code nack_reason;     
         pcap_t *handle;                 
 	int output_fd;			
 	uint64_t uptime;		
@@ -752,8 +752,8 @@ typedef struct {
 typedef lorcon_dot11_extra        Lorcon_DOT11;
 
 typedef struct {
-    const u_char *source_mac;
-    const u_char *dest_mac;
+    u_char *source_mac;
+    u_char *dest_mac;
     unsigned int llc_type;
 }lorcon_dot3_extra;
 
@@ -778,9 +778,9 @@ typedef struct lorcon_packet_t{
 	int length_data;
 	LCPA_META *lcpa;
 	int free_data;
-	const u_char *packet_raw;
-	const u_char *packet_header;
-	const u_char *packet_data;
+	u_char *packet_raw;
+	u_char *packet_header;
+	u_char *packet_data;
 	void *extra_info;
 	int extra_type;
     	lorcon_t *interface;
