@@ -4,7 +4,11 @@
 // Made by Edoardo Mantovani, 2020
 // import libraries
 
+#include "EXTERN.h"
+#include "perl.h"
+#include "XSUB.h"
 #include <string.h>
+#include <math.h>
 #include <lorcon2/lorcon.h>
 #include <lorcon2/lorcon_packet.h>
 #include <lorcon2/lorcon_multi.h>
