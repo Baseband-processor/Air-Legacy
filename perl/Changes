@@ -83,9 +83,12 @@ Revision history for Perl extension Air::Lorcon2.
    - added 2 new functions: 
       * globule_init 
       * globule_deinit
-   - added 2 new reaver function for packet crafting:
+   - added 5 new reaver function for packet crafting:
       * build_dot1X_header
       * build_eapol_start_packet
+      * build_eap_failure_packet
+      * build_tagged_parameter
+      * build_wps_tagged_parameter
  
 
   
