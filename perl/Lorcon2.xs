@@ -5035,3 +5035,39 @@ CODE:
 	}
 	return packet;
 	
+void *
+build_eap_failure_packet(len)
+	size_t *len
+CODE:
+	void *buf = NULL, *snap_packet = NULL, *eap_header = NULL, *dot1x_header = NULL;
+	size_t buf_len = 0, snap_len = 0, eap_len = 0, dot1x_len = 0, offset = 0;
+
+	/* Build SNAP, EAP and 802.1x headers */
+        snap_packet = build_snap_packet(&snap_len);
+        eap_header = build_eap_header(get_eap_id(), EAP_FAILURE, EAP_FAILURE, 0, &eap_len);
+        dot1x_header = build_dot1X_header(DOT1X_EAP_PACKET, eap_len, &dot1x_len);
+
+	buf_len = snap_len + eap_len + dot1x_len;
+
+	if(snap_packet && eap_header && dot1x_header)
+	{
+		buf = malloc(buf_len);
+		if(buf)
+		{
+			memset((void *) buf, 0, buf_len);
+			
+			memcpy((void *) buf, snap_packet, snap_len);
+			offset += snap_len;
+			memcpy((void *) ((char *) buf+offset), dot1x_header, dot1x_len);
+			offset += dot1x_len;
+			memcpy((void *) ((char *) buf+offset), eap_header, eap_len);
+
+			*len = buf_len;
+		}
+	}
+
+	if(snap_packet) Safefree((void *) snap_packet);
+	if(eap_header) Safefree((void *) eap_header);
+	if(dot1x_header) Safefree((void *) dot1x_header);
+	return buf;
+	
