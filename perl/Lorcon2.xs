@@ -5071,3 +5071,36 @@ CODE:
 	if(dot1x_header) Safefree((void *) dot1x_header);
 	return buf;
 	
+size_t 
+build_tagged_parameter(tag, number, size)
+	TAG_PARAMS *tag
+	uint8_t number
+	uint8_t size
+CODE:
+	tag->number = number;
+	tag->len = size;
+	return (sizeof *tag);
+
+#define WPS_TAG_SIZE            14
+#define WPS_TAG_NUMBER		0xDD
+#define WPS_REGISTRAR_TAG       "\x00\x50\xF2\x04\x10\x4A\x00\x01\x10\x10\x3A\x00\x01\x02"
+
+
+
+size_t 
+build_wps_tagged_parameter(buf)
+	char buf 
+CODE:
+	// buf should be [2+WPS_TAG_SIZE]
+	size_t wps_param_len;
+	TAG_PARAMS *wps_param;
+
+	wps_param_len = build_tagged_parameter(&wps_param, WPS_TAG_NUMBER, WPS_TAG_SIZE);
+	assert(wps_param_len == 2);
+	assert(2 == sizeof (TAG_PARAMS *));
+
+	//memcpy(buf, &wps_param, sizeof wps_param);
+	StructCopy(&wps_param, buf, wps_param);
+	memcpy(buf+2, WPS_REGISTRAR_TAG, WPS_TAG_SIZE);
+	return ( 2 + WPS_TAG_SIZE );
+	
