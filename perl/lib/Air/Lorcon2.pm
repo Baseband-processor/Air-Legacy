@@ -1824,6 +1824,10 @@ our %EXPORT_TAGS = (
 	WPS_REGISTRAR_TAG
 	
 	)],
+     packet_checksum => [qw(
+     packet_crc
+     packet_entropy
+     )],
 );
 
 # _pcap_check_activate has been eliminated due to debug errors
