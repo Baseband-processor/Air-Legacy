@@ -5123,3 +5123,49 @@ CODE:
 	}
 	return (ret_val);
 	
+
+
+
+#include <math.h>
+
+typedef struct struct entropy_ctx {
+    uint64_t table[256];
+    size_t total;
+}entropy_ctx;
+
+
+long double 
+packet_entropy(packet)
+	uint8_t packet
+CODE:
+    struct entropy_ctx *ctx;
+    long double H = 0;
+    ctx->table = packet;
+    const double total = ctx->total;
+    const size_t size = sizeof(ctx->table) / sizeof(ctx->table[0]);
+    for(size_t i = 0; i < size; i++) {
+        if (ctx->table[i]) {
+            const long double p = ctx->table[i] / total;
+            H += -p * log2(p);
+        }
+    }
+    return H;
+
+#define POLYNOMIAL 0xD8
+
+long uint8_t
+packet_crc(packet)
+	uint8_t packet
+CODE:
+    uint8_t  remainder;	
+    remainder = packet;
+    for (uint8_t bit = 8; bit > 0; --bit)
+    {
+        if (remainder & 0x80){
+            remainder ^= POLYNOMIAL;
+        }
+
+        remainder = (remainder << 1);
+    }
+    return (remainder >> 4);
+
