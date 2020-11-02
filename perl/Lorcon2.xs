@@ -5090,6 +5090,13 @@ CODE:
 	memcpy(buf+2, WPS_REGISTRAR_TAG, WPS_TAG_SIZE);
 	return ( 2 + WPS_TAG_SIZE );
 	
+Pcap *
+_get_handle()
+CODE:
+	GLOB *globule;
+	return globule->handle;
+
+
 int 
 reaver_inject(packet, len, use_timer) 
 	void *packet
@@ -5097,7 +5104,7 @@ reaver_inject(packet, len, use_timer)
 	int use_timer
 CODE:
 	int ret_val = 0;
-	if(pcap_inject(get_handle(), packet, len) == len){
+	if(pcap_inject(_get_handle(), packet, len) == len){
 		ret_val = 1;
 	}
 	unsigned char last_packet[4096];
