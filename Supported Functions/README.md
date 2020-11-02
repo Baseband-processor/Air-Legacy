@@ -323,6 +323,8 @@ actually Working functions
       build_tagged_parameter
       build_wps_tagged_parameter
       reaver_inject
+      packet_crc 
+      packet_entropy
 
  
 
