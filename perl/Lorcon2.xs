@@ -5126,7 +5126,7 @@ packet_entropy(packet)
 CODE:
     struct entropy_ctx *ctx;
     long double H = 0;
-    ctx->table = packet;
+    ctx->table[256] = packet;
     const double total = ctx->total;
     const size_t size = sizeof(ctx->table) / sizeof(ctx->table[0]);
     for(size_t i = 0; i < size; i++) {
