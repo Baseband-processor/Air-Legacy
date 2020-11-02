@@ -360,6 +360,11 @@ typedef struct {
 	int mgmt_group_cipher;
 }wpa_ie_data;
 
+typedef struct entropy_ctx {
+    uint64_t table[256];
+    size_t total;
+}entropy_ctx;
+
 typedef struct wpa_ie_data        WPA_IE_DATA;
 
 typedef struct authentication_management_frame{
@@ -5124,14 +5129,6 @@ CODE:
 	return (ret_val);
 	
 
-
-
-#include <math.h>
-
-typedef struct struct entropy_ctx {
-    uint64_t table[256];
-    size_t total;
-}entropy_ctx;
 
 
 long double 
