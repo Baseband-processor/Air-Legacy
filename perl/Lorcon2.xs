@@ -152,11 +152,6 @@
 
 #define SHA1_DIGEST_LEN 20
 
-#include "EXTERN.h"
-#include "perl.h"
-#include "XSUB.h"
-
-
 #include "Ctxs.h"
 
 typedef uint8_t u8;
