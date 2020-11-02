@@ -31,7 +31,9 @@ can I effectively break the latest wireless security protocols using this librar
 ==============================================================================================
 No, the entire _Air::Toolkit_ is designed for a more in-dept type of wireless-security assurance, it is suggested mainly for security practicioner and **not** for the casual users, if you think that is possible to crack WPA/WPA2 in few seconds with an old smartphone please, change interests.
 
-
+WHY there isn't only Lorcon's function in this library?
+=================================================================================================
+The project grows exponentially in those months, perl has so much unused potential and this can be the right way for express it, I am also including Reaver utilities, I plan to include also some air-crack utilities and, maybe in future, write an entire OOP framework for wireless security with perl. 
 
 CURRENT VERSION
 ====================
