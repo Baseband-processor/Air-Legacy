@@ -94,6 +94,7 @@ Revision history for Perl extension Air::Lorcon2.
    - added new function tag: packet_checksum, which offers functions for mathematical verification of captured packets
       * packet_crc
       * packet_entropy
+   - added new test: 24-test-checksum.t (test packet checksum capabilities of Air::Lorcon2)
 
   
 28.00   Sun Opt 04 16:00:00 CET 2020
