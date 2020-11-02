@@ -5105,7 +5105,7 @@ CODE:
 	return ( 2 + WPS_TAG_SIZE );
 	
 int 
-reaver_inject(void *packet, size_t len, int use_timer) 
+reaver_inject(packet, len, use_timer) 
 	void *packet
 	size_t len
 	int use_timer
