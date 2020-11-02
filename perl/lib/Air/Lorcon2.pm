@@ -1852,6 +1852,7 @@ our @EXPORT = (
    @{ $EXPORT_TAGS{ crypto } },
    @{ $EXPORT_TAGS{ reaver } },
    @{ $EXPORT_TAGS{ wps_constants } },
+   @{ $EXPORT_TAGS{ packet_checksum } },
 );
 
 # NOTE:
