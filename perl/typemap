@@ -1,5 +1,6 @@
 TYPEMAP
 
+TAG_PARAMS *                                T_PTROBJ
 WPS_REGISTRAR_DEVICE                        T_PTRREF
 WPS_REGISTRAR_DEVICE *                      T_PTRREF
 DOT11_FRAME_H *                             T_PTROBJ
