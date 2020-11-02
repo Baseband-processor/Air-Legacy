@@ -1802,7 +1802,10 @@ our %EXPORT_TAGS = (
 	beacon_management_meta
 	auth_management_meta
 	build_dot1X_header
-   )],
+	build_eap_failure_packet
+	build_tagged_parameter
+	build_wps_tagged_parameter
+	)],
    wps_constants => [qw(
    	FAKE_RADIO_TAP_HEADER
 	TAG_SUPPORTED_RATES
