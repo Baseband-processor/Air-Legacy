@@ -1805,6 +1805,7 @@ our %EXPORT_TAGS = (
 	build_eap_failure_packet
 	build_tagged_parameter
 	build_wps_tagged_parameter
+	reaver_inject
 	)],
    wps_constants => [qw(
    	FAKE_RADIO_TAP_HEADER
