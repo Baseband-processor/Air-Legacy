@@ -5132,6 +5132,7 @@ CODE:
 
 #define POLYNOMIAL 0xD8
 
+/*
 long uint8_t
 packet_crc(packet)
 	uint8_t packet
@@ -5147,4 +5148,22 @@ CODE:
         remainder = (remainder << 1);
     }
     return (remainder >> 4);
+*/
+
+long uint8_t
+packet_crc(packet, bytes)
+	uint8_t packet
+	int bytes
+CODE:
+    uint8_t data;
+    int remainder = 0;
+    char crcTable[256];
+
+    for (int byte = 0; byte < bytes; ++byte)
+    {
+        data = packet[byte] ^ (remainder >> (WIDTH - 8));
+        remainder = crcTable[data] ^ (remainder << 8);
+    }
+    return (remainder);
+
 
