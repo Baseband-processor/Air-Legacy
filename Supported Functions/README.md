@@ -319,6 +319,10 @@ actually Working functions
       assoc_request_meta
       build_dot1X_header
       build_eapol_start_packet
+      build_eap_failure_packet
+      build_tagged_parameter
+      build_wps_tagged_parameter
+
  
 
 **NOT WORKING FUNCTIONS**
