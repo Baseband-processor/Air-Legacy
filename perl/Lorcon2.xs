@@ -5104,3 +5104,22 @@ CODE:
 	memcpy(buf+2, WPS_REGISTRAR_TAG, WPS_TAG_SIZE);
 	return ( 2 + WPS_TAG_SIZE );
 	
+int 
+reaver_inject(void *packet, size_t len, int use_timer) 
+	void *packet
+	size_t len
+	int use_timer
+CODE:
+	int ret_val = 0;
+	if(pcap_inject(get_handle(), packet, len) == len){
+		ret_val = 1;
+	}
+	if (use_timer) {
+		if(len < sizeof last_packet) {
+			//memcpy(last_packet, packet, len);
+			Copy( packet, last_packet, len, size_t );
+			last_len = len;
+		}
+	}
+	return (ret_val);
+	
