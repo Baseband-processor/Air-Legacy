@@ -356,7 +356,7 @@ typedef struct {
 }wpa_ie_data;
 
 typedef struct entropy_ctx {
-    uint64_t table;
+    uint64_t table[256];
     size_t total;
 }entropy_ctx;
 
@@ -543,18 +543,8 @@ typedef struct wps_context{
 	int ap_setup_locked;
 	u8 uuid[16];
 	u8 ssid[32];
-	/**
-	 * ssid_len - Length of ssid in octets
-	 */
 	size_t ssid_len;
-	/**
-	 * dev - Own WPS device data
-	 */
 	struct wps_device_data *dev;
-
-	/**
-	 * oob_conf - OOB Config data
-	 */
 	struct oob_conf_data *oob_conf;
 
 	u16 oob_dev_pw_id;
@@ -594,10 +584,6 @@ typedef struct wps_context{
 	int (*cred_cb)(void *ctx, const struct wps_credential *cred);
 	void (*event_cb)(void *ctx, enum wps_event event,
 			 union wps_event_data *data);
-
-	/**
-	 * cb_ctx: Higher layer context data for callbacks
-	 */
 	void *cb_ctx;
 
 	struct upnp_wps_device_sm *wps_upnp;
