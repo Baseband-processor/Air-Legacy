@@ -356,7 +356,7 @@ typedef struct {
 }wpa_ie_data;
 
 typedef struct entropy_ctx {
-    uint64_t table[256];
+    uint64_t table;
     size_t total;
 }entropy_ctx;
 
@@ -5114,11 +5114,12 @@ CODE:
 	if(pcap_inject(get_handle(), packet, len) == len){
 		ret_val = 1;
 	}
+	unsigned char last_packet[4096];
 	if (use_timer) {
 		if(len < sizeof last_packet) {
 			//memcpy(last_packet, packet, len);
 			Copy( packet, last_packet, len, size_t );
-			last_len = len;
+			int last_len = len;
 		}
 	}
 	return (ret_val);
