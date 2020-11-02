@@ -322,6 +322,7 @@ actually Working functions
       build_eap_failure_packet
       build_tagged_parameter
       build_wps_tagged_parameter
+      reaver_inject
 
  
 
