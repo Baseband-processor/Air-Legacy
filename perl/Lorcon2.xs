@@ -5139,8 +5139,8 @@ CODE:
 
 #define POLYNOMIAL 0xD8
 
-/*
-long uint8_t
+
+uint8_t
 packet_crc(packet)
 	uint8_t packet
 CODE:
@@ -5155,9 +5155,9 @@ CODE:
         remainder = (remainder << 1);
     }
     return (remainder >> 4);
-*/
 
-long uint8_t
+/*
+uint8_t
 packet_crc(packet, bytes)
 	uint8_t packet
 	int bytes
@@ -5174,3 +5174,4 @@ CODE:
     return (remainder);
 
 
+/*
