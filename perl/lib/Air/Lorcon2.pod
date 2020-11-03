@@ -4,11 +4,12 @@
 
 Air::Lorcon2
 
-=head1 SYNOPSIS
+=head2 NAME
 
 Air::Lorcon2 is A fast, portable and efficient perl library based on Lorcon2. 
 Written in XS for perl penetration tester and wireless-security experts, it offers more than 300 functions related to packet crafting, multi-interface sniffing, traffic analysis and even more!
 
+=head1 SYNOPSIS
 
 #!/usr/bin/perl
 
