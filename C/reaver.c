@@ -68,3 +68,75 @@ struct authentication_management_frame *auth_management_meta()
 	c->algorithm = NULL;
 	return c;	
 }
+
+struct association_request_management_frame *assoc_request_meta()
+{
+	struct association_request_management_frame *c =  (struct association_request_management_frame *) malloc(sizeof(struct association_request_management_frame));
+	c->capability = NULL;
+	c->listen_interval = NULL;
+	return c;	
+}
+
+
+struct association_response_management_frame *assoc_response_meta()
+{
+	struct association_response_management_frame *c =  (struct association_response_management_frame *) malloc(sizeof(struct association_response_management_frame));
+	c->capability = NULL;
+	c->status = NULL;
+	c->id = NULL;
+	return c;	
+}
+
+
+struct beacon_management_frame *beacon_management_meta()
+{
+	struct beacon_management_frame *c =  (struct beacon_management_frame *) malloc(sizeof(struct beacon_management_frame));
+	c->capability = NULL;
+	c->beacon_interval = NULL;
+	return c;	
+}
+
+int free_authentication_management_frame(struct authentication_management_frame *c)
+{
+	free(c);
+	return 1;	
+}
+
+int free_association_response_management_frame(struct association_response_management_frame *c)
+{
+	free(c);
+	return 1;	
+}
+
+int free_association_request_management_frame(struct association_request_management_frame *c)
+{
+	free(c);
+	return 1;	
+}
+
+int free_authentication_management_frame(struct authentication_management_frame *c)
+{
+	free(c);
+	return 1;	
+}
+
+int free_association_request_management_frame(struct association_request_management_frame *c)
+{
+	free(c);
+	return 1;
+}
+
+
+int free_association_response_management_frame(struct association_response_management_frame *c)
+{
+	free(c);
+	return 1;
+}
+
+
+
+int free_beacon_management_frame(struct beacon_management_frame *c)
+{
+	free(c);
+	return 1;
+}
