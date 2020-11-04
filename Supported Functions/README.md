@@ -325,7 +325,7 @@ actually Working functions
       reaver_inject
       packet_crc 
       packet_entropy
-
+      wps_data_to_json
  
 
 **NOT WORKING FUNCTIONS**
