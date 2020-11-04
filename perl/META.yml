@@ -21,7 +21,6 @@ requires:
   Net::MAC: '0'
   Net::Pcap: '0'
   strict: '0'
-  Data::Dumper: '0'
   Term::ANSIColor: '0'
   Time::HiRes : '0'
 version: '29.00'
