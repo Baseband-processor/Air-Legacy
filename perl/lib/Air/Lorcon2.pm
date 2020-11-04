@@ -2150,6 +2150,19 @@ sub lorcon_actual_cards {
 	}
 }	
 
+# for infos see: https://www.electronicdesign.com/technologies/communications/article/21796484/understanding-wireless-range-calculations
+# convert mW to dBm
+
+sub mw_to_dbm {
+	my $mw = @_;
+	return( 10 *log( $mw ) ); # our dBm converted value
+}
+
+sub dbm_to_mw {
+	my $dbm = @_;
+	return( 10 ** ( $dbm / 10 ) ); # our mW converted value
+}
+
 __PACKAGE__->bootstrap($VERSION);
 
 1;
