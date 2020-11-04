@@ -23,3 +23,4 @@ REALTODO:
 - update pcap_can_set_rfmon and relate
 - fix lorcon_multi_loop and relate
 - speed up Air::Lorcon2's execution
+- rename the entire project into Air::Legacy, this because it will include reaver, aircrack, hashcat and lorcon2 functions
