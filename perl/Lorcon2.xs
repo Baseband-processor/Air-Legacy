@@ -776,6 +776,24 @@ typedef struct lorcon_packet_t{
     	unsigned int tx_mcs_40mhz;
 }AirLorconPacket;
 
+typedef struct libwps_data{
+        uint8_t version;
+        uint8_t state;
+        uint8_t locked;
+        char manufacturer[LIBWPS_MAX_STR_LEN];
+        char model_name[LIBWPS_MAX_STR_LEN];
+        char model_number[LIBWPS_MAX_STR_LEN];
+        char device_name[LIBWPS_MAX_STR_LEN];
+        char ssid[LIBWPS_MAX_STR_LEN];
+        char uuid[LIBWPS_MAX_STR_LEN];
+        char serial[LIBWPS_MAX_STR_LEN];
+        char selected_registrar[LIBWPS_MAX_STR_LEN];
+        char response_type[LIBWPS_MAX_STR_LEN];
+        char primary_device_type[LIBWPS_MAX_STR_LEN];
+        char config_methods[LIBWPS_MAX_STR_LEN];
+        char rf_bands[LIBWPS_MAX_STR_LEN];
+        char os_version[LIBWPS_MAX_STR_LEN];
+}LIBWPS_DATA;
 
 typedef struct  lorcon_t{
 	char drivername[32];
@@ -5157,3 +5175,194 @@ CODE:
     return (remainder >> 4);
 
 
+char* 
+_append_and_free(s1, s2, who) 
+	char* s1
+	char *s2
+	int who
+CODE:
+	char *new = append(s1, s2);
+	if(who & 1){
+		Safefree(s1);
+	}
+	if(who & 2){
+		Safefree(s2);
+	}
+	return new;
+
+char* 
+_sanitize_string(s) 
+	char *s
+CODE:
+	if(!s){
+		return savepv("(null)");
+	}
+
+	size_t i,j, l = sv_len(s), ls=l;
+	for(i=0;i<ls;i++) if(s[i] < ' ' || s[i] > 127) l += 4;
+	char *new = malloc(l+1);
+	if(!new) return 0;
+	for(i=0,j=0;i<ls;i++) {
+		if(s[i] < ' ' || s[i] > 127) {
+			sprintf(new + j, "\\\\x%02x", s[i] & 0xff);
+			j  += 4;
+		} else new[j] = s[i];
+		j++;
+	}
+	new[j] = 0;
+	return new;
+	
+char *
+wps_data_to_json(bssid, ssid, channel,  rssi, endor, wps, progress) 
+	char* bssid
+	char *ssid
+	int channel
+	int rssi
+	unsigned char* vendor
+	LIBWPS_DATA *wps
+	char *progress
+CODE:
+	size_t ol = 0, nl = 0, ns = 0;
+	char *json_str = 0, *old = savepv("{"), *tmp;
+	char buf[1024];
+
+	nl = snprintf(buf, sizeof buf, "\"bssid\" : \"%s\", ", bssid);
+	json_str = _append_and_free(old, buf, 1);
+	old = json_str;
+
+	tmp = _sanitize_string(ssid);
+	nl = snprintf(buf, sizeof buf, "\"essid\" : \"%s\", ", tmp);
+	Safefree(tmp);
+	json_str = _append_and_free(old, buf, 1);
+	old = json_str;
+
+	nl = snprintf(buf, sizeof buf, "\"channel\" : %d, ", channel);
+	json_str = _append_and_free(old, buf, 1);
+	old = json_str;
+
+	nl = snprintf(buf, sizeof buf, "\"rssi\" : %d, ", rssi);
+	json_str = _append_and_free(old, buf, 1);
+	old = json_str;
+
+	if(vendor) {
+		nl = snprintf(buf, sizeof buf, "\"vendor_oui\" : \"%02X%02X%02X\", ", vendor[0], vendor[1], vendor[2]);
+		json_str = _append_and_free(old, buf, 1);
+		old = json_str;
+	}
+
+	if(wps->version) {
+		nl = snprintf(buf, sizeof buf, "\"wps_version\" : %d, ", wps->version);
+		json_str = _append_and_free(old, buf, 1);
+		old = json_str;
+	}
+	if(wps->state) {
+		nl = snprintf(buf, sizeof buf, "\"wps_state\" : %d, ", wps->state);
+		json_str = _append_and_free(old, buf, 1);
+		old = json_str;
+	}
+	if(wps->locked) {
+		nl = snprintf(buf, sizeof buf, "\"wps_locked\" : %d, ", wps->locked);
+		json_str = _append_and_free(old, buf, 1);
+		old = json_str;
+	}
+	if(*wps->manufacturer) {
+		tmp = _sanitize_string(wps->manufacturer);
+		nl = snprintf(buf, sizeof buf, "\"wps_manufacturer\" : \"%s\", ", tmp);
+		Safefree(tmp);
+		json_str = _append_and_free(old, buf, 1);
+		old = json_str;
+	}
+	if(*wps->model_name) {
+		tmp = _sanitize_string(wps->model_name);
+		nl = snprintf(buf, sizeof buf, "\"wps_model_name\" : \"%s\", ", tmp);
+		Safefree(tmp);
+		json_str = _append_and_free(old, buf, 1);
+		old = json_str;
+	}
+	if(*wps->model_number) {
+		tmp = _sanitize_string(wps->model_number);
+		nl = snprintf(buf, sizeof buf, "\"wps_model_number\" : \"%s\", ", tmp);
+		Safefree(tmp);
+		json_str = _append_and_free(old, buf, 1);
+		old = json_str;
+	}
+	if(*wps->device_name) {
+		tmp = sanitize_string(wps->device_name);
+		nl = snprintf(buf, sizeof buf, "\"wps_device_name\" : \"%s\", ", tmp);
+		Safefree(tmp);
+		json_str = _append_and_free(old, buf, 1);
+		old = json_str;
+	}
+	if(*wps->ssid) {
+		tmp = _sanitize_string(wps->ssid);
+		nl = snprintf(buf, sizeof buf, "\"wps_ssid\" : \"%s\", ", tmp);
+		Safefree(tmp);
+		json_str = _append_and_free(old, buf, 1);
+		old = json_str;
+	}
+	if(*wps->serial) {
+		tmp = _sanitize_string(wps->serial);
+		nl = snprintf(buf, sizeof buf, "\"wps_serial\" : \"%s\", ", tmp);
+		Safefree(tmp);
+		json_str = _append_and_free(old, buf, 1);
+		old = json_str;
+	}
+	if(*wps->os_version) {
+		tmp = _sanitize_string(wps->os_version);
+		nl = snprintf(buf, sizeof buf, "\"wps_os_version\" : \"%s\", ", tmp);
+		Safefree(tmp);
+		json_str = _append_and_free(old, buf, 1);
+		old = json_str;
+	}
+	if(*wps->uuid) {
+		tmp = _sanitize_string(wps->uuid);
+		nl = snprintf(buf, sizeof buf, "\"wps_uuid\" : \"%s\", ", tmp);
+		Safefree(tmp);
+		json_str = _append_and_free(old, buf, 1);
+		old = json_str;
+	}
+	if(*wps->selected_registrar) {
+		tmp = _sanitize_string(wps->selected_registrar);
+		nl = snprintf(buf, sizeof buf, "\"wps_selected_registrar\" : \"%s\", ", tmp);
+		Safefree(tmp);
+		json_str = _append_and_free(old, buf, 1);
+		old = json_str;
+	}
+	if(*wps->response_type) {
+		tmp = _sanitize_string(wps->response_type);
+		nl = snprintf(buf, sizeof buf, "\"wps_response_type\" : \"%s\", ", tmp);
+		Safefree(tmp);
+		json_str = _append_and_free(old, buf, 1);
+		old = json_str;
+	}
+	if(*wps->primary_device_type) {
+		tmp = _sanitize_string(wps->primary_device_type);
+		nl = snprintf(buf, sizeof buf, "\"wps_primary_device_type\" : \"%s\", ", tmp);
+		Safefree(tmp);
+		json_str = _append_and_free(old, buf, 1);
+		old = json_str;
+	}
+	if(*wps->config_methods) {
+		tmp = _sanitize_string(wps->config_methods);
+		nl = snprintf(buf, sizeof buf, "\"wps_config_methods\" : \"%s\", ", tmp);
+		Safefree(tmp);
+		json_str = _append_and_free(old, buf, 1);
+		old = json_str;
+	}
+	if(*wps->rf_bands) {
+		tmp = _sanitize_string(wps->rf_bands);
+		nl = snprintf(buf, sizeof buf, "\"wps_rf_bands\" : \"%s\", ", tmp);
+		Safefree(tmp);
+		json_str = _append_and_free(old, buf, 1);
+		old = json_str;
+	}
+	if(progress) {
+		nl = snprintf(buf, sizeof buf, "\"progress\" : \"%s\", ", progress);
+		json_str = _append_and_free(old, buf, 1);
+		old = json_str;
+	}
+
+	nl = snprintf(buf, sizeof buf, "\"dummy\": 0}");
+	json_str = _append_and_free(old, buf, 1);
+
+	return json_str;
