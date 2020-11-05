@@ -3,7 +3,7 @@
 use strict;
 use Net::Pcap qw( pcap_lookupdev );
 use Data::Dumper qw(Dumper);
-use Air::Lorcon2 qw(:lorcon); # This will export every lorcon2's subroutines
+use Air::Legacy qw(:lorcon); # This will export every lorcon2's subroutines
 
 my $pcap_err = '';
 my $pcap_interface = pcap_lookupdev( \$pcap_err ); # This will give us the best interface avaiable for sniffing 
