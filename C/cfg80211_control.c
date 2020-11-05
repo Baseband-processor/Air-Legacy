@@ -1,9 +1,15 @@
 // Made by Edoardo Mantovani, 2020
 // this file is still under development, probably will be converted into XS for perl library
 
-#include "cfg80211_control.h"
+// include boilerplate
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+
 //#include "dhd.h"
-//#include <stdint.h>
+#include "cfg80211_control.h"
+#include "ie80211.h"
 //#include <linux/types.h>
 //#include <asm/byteorder.h>
 //#include <linux/netdevice.h>
@@ -71,7 +77,7 @@ struct brcmf_wsec_key_le {
 #define __cpu_to_le32( x)   ((__force __le32)(__u32)(x))
 
 
-void convert_key_from_CPU(struct brcmf_wsec_key *key, struct brcmf_wsec_key_le *key_length){
+int convert_key_from_CPU(struct brcmf_wsec_key *key, struct brcmf_wsec_key_le *key_length){
 	key_length->index = cpu_to_le32(key->index);
 	key_length->len = cpu_to_le32(key->len);
 	key_length->algo = cpu_to_le32(key->algo);
@@ -81,6 +87,7 @@ void convert_key_from_CPU(struct brcmf_wsec_key *key, struct brcmf_wsec_key_le *
 	key_length->iv_initialized = cpu_to_le32(key->iv_initialized);
 	memcpy(key_length->data, key->data, sizeof(key->data));
 	memcpy(key_length->ea, key->ea, sizeof(key->ea));
+	return 1;
 }
 
 /*
