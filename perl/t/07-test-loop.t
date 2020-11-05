@@ -9,7 +9,7 @@ use Test;
 
 BEGIN{ plan tests => 3 };
 
-use Air::Lorcon2 qw( :lorcon );
+use Air::Legacy qw( :lorcon );
 
 my $loop = lorcon_multi_create(); # create multi_t object
 
@@ -19,7 +19,7 @@ sub print_ok(){
   
 my $nmbrs = 10;
 
-if( ! Air::Lorcon2::lorcon_multi_loop( $loop, $nmbrs, &print_ok(), \"this is only a try" ) ){
+if( ! lorcon_multi_loop( $loop, $nmbrs, &print_ok(), \"this is only a try" ) ){
   ok(0);
 }else{
   ok(1);
