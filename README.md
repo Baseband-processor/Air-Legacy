@@ -262,15 +262,15 @@ for starting I suggest to learn:
 
 **FREE DROPS**
 
-Occasionally I'll drop some random hardware extension for Air::Lorcon2, this will include specific hardware, customized extension and new working modes.
+Occasionally I'll drop some random hardware extension for Air::Legacy, this will include specific hardware, customized extension and new working modes.
 
 **CURRENT VERSION**
 
-After a long development stage, the actual version of Air::Lorcon2 is 29.00 for more about the enhancement of various functions see the _Change_ file inside the Perl directory.
+After a long development stage, the actual version of Air::Legacy is the 00.00 for more about the enhancement of various functions see the _Change_ file inside the Perl directory.
 
-**Air::Lorcon2's Metacpan version**
+**Air::Legacy's Metacpan version**
 
-As you may understand, Air::Lorcon2 has an autoinstaller, which couldn't be executed normally running the classical command:
+As you may understand, Air::Legacy has an autoinstaller, which couldn't be executed normally running the classical command:
 
 ```shell
 sudo cpanm Air::Legacy
