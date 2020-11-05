@@ -326,7 +326,7 @@ actually Working functions
       packet_crc 
       packet_entropy
       wps_data_to_json
- 
+      libwps_meta
 
 **NOT WORKING FUNCTIONS**
 
