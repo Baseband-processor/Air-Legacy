@@ -7,12 +7,19 @@ Air::Legacy
  ![release-date](https://img.shields.io/github/release-date/Baseband-processor/Air-Legacy)
  
 
-
 **WHO I AM?**
 
 Click [Here](https://github.com/Baseband-processor/Baseband-processor)
 
+**PERL, WIRELESS SECURITY AND C**
 
+Okay, the first project was Air::Lorcon2, an XS framework for using wireless penetration testing utilities into perl, the project growns exponentially, now there are more than 300 functions and reaver's utilities are appearing, in the future other famous wireless security tools will be added, aircrack-ng is the first of the list.
+
+**Why not stop to Lorcon2?**
+
+Lorcon2 is a great library, it offers a good abstraction which permits to interact with drivers and use them for sending packets or from sniff data, the only problem is that 
+the possible attack scenarios with (the old) Air::Lorcon2 were reduced, this isn't good..
+More attack can be used, more the efficency growns.
 
 **REQUIREMENTS**
 
