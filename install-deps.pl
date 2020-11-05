@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# Detect OS and Install deps for Air::Lorcon2
+# Detect OS and Install deps for Air::Legacy
 # Made by Edoardo Mantovani, 2020
 # version 1.35: added APT interface
 
@@ -25,7 +25,7 @@ use Time::HiRes qw(usleep);
 print "\n";
 
 my $text = "
-Air::Lorcon2: A fast, portable and efficient library based on Lorcon2. Written in XS for perl penetration tester and wireless-security experts";
+Air::Legacy: A fast, portable and efficient library based on Lorcon2. Written in XS for perl penetration tester and wireless-security experts";
 
 foreach( $text =~/./g ){
 	print $_;
