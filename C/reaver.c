@@ -62,14 +62,6 @@ struct association_request_management_frame *assoc_request_meta()
 }
 
 
-struct association_response_management_frame *assoc_response_meta()
-{
-	struct association_response_management_frame *c =  (struct association_response_management_frame *) malloc(sizeof(struct association_response_management_frame));
-	c->capability = NULL;
-	c->status = NULL;
-	c->id = NULL;
-	return c;	
-}
 
 
 struct beacon_management_frame *beacon_management_meta()
@@ -89,13 +81,7 @@ struct authentication_management_frame *auth_management_meta()
 	return c;	
 }
 
-struct association_request_management_frame *assoc_request_meta()
-{
-	struct association_request_management_frame *c =  (struct association_request_management_frame *) malloc(sizeof(struct association_request_management_frame));
-	c->capability = NULL;
-	c->listen_interval = NULL;
-	return c;	
-}
+
 
 
 struct association_response_management_frame *assoc_response_meta()
@@ -108,13 +94,6 @@ struct association_response_management_frame *assoc_response_meta()
 }
 
 
-struct beacon_management_frame *beacon_management_meta()
-{
-	struct beacon_management_frame *c =  (struct beacon_management_frame *) malloc(sizeof(struct beacon_management_frame));
-	c->capability = NULL;
-	c->beacon_interval = NULL;
-	return c;	
-}
 
 struct libwps_data *libwps_meta()
 {
