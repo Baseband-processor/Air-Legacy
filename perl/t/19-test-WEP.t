@@ -8,7 +8,7 @@ no strict 'refs';
 
 use Test::More skip_all => "uninplemented!\n";
 
-use Air::Lorcon2 qw( :lorcon );
+use Air::Legacy qw( :lorcon );
 use Net::Pcap qw( pcap_lookupdev );
 
 my $pcap_err = '';
