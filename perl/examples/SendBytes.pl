@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 use strict;
-use Air::Lorcon2 qw( :lorcon );
+use Air::Legacy qw( :lorcon );
 use Data::Dumper qw( Dumper );
 print Dumper(  lorcon_list_drivers() );
 print "insert your driver name: ";
