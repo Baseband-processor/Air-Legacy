@@ -5,7 +5,6 @@
 
 use strict;
 no strict 'subs';
-use Data::Dumper qw(Dumper);
 use Test;
 
 BEGIN{ plan tests => 1 };
@@ -14,7 +13,7 @@ if ($<) {
     die "Error: test not executed as root\n";
 }
 
-use Air::Lorcon2 qw( :lorcon );
+use Air::Legacy qw( :lorcon );
 use Net::Pcap qw( pcap_lookupdev );
 
 # set up Net::Pcap dev
