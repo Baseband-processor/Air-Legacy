@@ -2,7 +2,7 @@
 
 # Made by Edoardo Mantovani, 2020
 
-# main test routine for Air::Lorcon2
+# main test routine for Air::Legacy
 
 use Test;
 use strict;
@@ -11,9 +11,8 @@ no strict 'subs';
 
 BEGIN { plan tests => 1 };
 
-use Air::Lorcon2 qw( :lorcon ); 
+use Air::Legacy qw( :lorcon ); 
 use Net::Pcap qw( pcap_lookupdev );
-use Data::Dumper qw(Dumper);
 
 my $pcap_err = '';
 my $pcap_intf = pcap_lookupdev( \$pcap_err );
