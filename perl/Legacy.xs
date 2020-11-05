@@ -923,7 +923,7 @@ typedef struct radio_tap_header{
 #include "c/lorcon_driver_t.c"
 #include "c/tx80211_decode.c"
 	
-MODULE = Air::Lorcon2   PACKAGE = Air::Lorcon2
+MODULE = Air::Legacy   PACKAGE = Air::Legacy
 PROTOTYPES: DISABLE
 
 
