@@ -2,7 +2,7 @@ CONSTANTS LIST
 ================================
 
 
-This file contains all constants implemented in Air::Lorcon2 ( v. 28.0.0 )
+This file contains all constants implemented in Air::Legacy 
 
 ```
      WEP_CRC_TABLE
