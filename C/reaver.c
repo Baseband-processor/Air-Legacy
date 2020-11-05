@@ -168,4 +168,4 @@ int free_beacon_management_frame(struct beacon_management_frame *c)
 	return 1;
 }
 
-/*
+*/
