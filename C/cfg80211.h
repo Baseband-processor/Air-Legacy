@@ -13,7 +13,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
+
+#ifdef _SYS_TYPES_H
+	#include <sys/types.h>
+#endif
+
 #include <sys/socket.h>
 #include <linux/netdevice.h>
 #include <linux/debugfs.h>
