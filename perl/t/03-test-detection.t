@@ -7,9 +7,9 @@ use strict;
 no strict 'subs';
 use Test::More tests => 2;
 
-BEGIN{ use_ok( 'Air::Lorcon2' ); }
+BEGIN{ use_ok( 'Air::Legacy' ); }
 
-use Air::Lorcon2 qw( :lorcon );
+use Air::Legacy qw( :lorcon );
 
 my $driver = Detect_Driver();
 
