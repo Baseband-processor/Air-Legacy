@@ -9,7 +9,7 @@ no warnings;
 
 use Test::More tests => 1;
 
-use Air::Lorcon2 qw( :lorcon );
+use Air::Legacy qw( :lorcon );
 
 tx80211_getcardlist();
 
