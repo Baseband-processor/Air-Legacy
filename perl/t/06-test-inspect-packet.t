@@ -5,12 +5,11 @@
 
 use strict;
 no strict 'subs';
-use Data::Dumper qw( Dumper );
 use Test;
 
 BEGIN{ plan tests => 6 };
 
-use Air::Lorcon2 qw( :lorcon );
+use Air::Legacy qw( :lorcon );
 use Net::Pcap qw( pcap_lookupdev );
 
 my $lcpa = lcpa_init();
@@ -29,11 +28,7 @@ my $context = lorcon_create( $pcap_device, $drv );
 
 my $Packet = lorcon_packet_from_lcpa( $context, $lcpa );
 
-if( ! lorcon_packet_get_dot11_extra($Packet ) ) {
- ok(0);
-}else{
-  ok(1);
-}
+lorcon_packet_get_dot11_extra($Packet );
 
 if( ! lorcon_packet_get_dot3_extra( $Packet ) ) {
   ok(0);
