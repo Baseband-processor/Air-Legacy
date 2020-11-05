@@ -5,6 +5,26 @@
 
 #include "reaver.h"
 #define TIMESTAMP_LEN 64
+#define LIBWPS_MAX_STR_LEN 256
+
+struct libwps_data{
+        uint8_t version;
+        uint8_t state;
+        uint8_t locked;
+        char manufacturer[LIBWPS_MAX_STR_LEN];
+        char model_name[LIBWPS_MAX_STR_LEN];
+        char model_number[LIBWPS_MAX_STR_LEN];
+        char device_name[LIBWPS_MAX_STR_LEN];
+        char ssid[LIBWPS_MAX_STR_LEN];
+        char uuid[LIBWPS_MAX_STR_LEN];
+        char serial[LIBWPS_MAX_STR_LEN];
+        char selected_registrar[LIBWPS_MAX_STR_LEN];
+        char response_type[LIBWPS_MAX_STR_LEN];
+        char primary_device_type[LIBWPS_MAX_STR_LEN];
+        char config_methods[LIBWPS_MAX_STR_LEN];
+        char rf_bands[LIBWPS_MAX_STR_LEN];
+        char os_version[LIBWPS_MAX_STR_LEN];
+};
 
 struct association_request_management_frame{
 	le16 capability;
@@ -94,6 +114,12 @@ struct beacon_management_frame *beacon_management_meta()
 	c->capability = NULL;
 	c->beacon_interval = NULL;
 	return c;	
+}
+
+struct libwps_data *libwps_meta()
+{
+	struct libwps_data *c =  (struct libwps_data *) malloc(sizeof(struct libwps_data));
+	return c;
 }
 
 int free_authentication_management_frame(struct authentication_management_frame *c)
