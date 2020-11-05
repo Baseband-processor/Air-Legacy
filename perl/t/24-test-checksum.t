@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # Made by Edoardo Mantovani, 2020
-# test packet checksum capabilities of Air::Lorcon2
+# test packet checksum capabilities of Air::Legacy
 
 use strict;
 use warnings;
@@ -9,7 +9,7 @@ use Test;
 
 BEGIN{ plan tests => 1 };
 
-use Air::Lorcon2 qw( :packet_checksum );
+use Air::Legacy qw( :packet_checksum );
 
 my $packet = "\x00\x00\x00\x00\x00\x00"; # NULL packet
 
