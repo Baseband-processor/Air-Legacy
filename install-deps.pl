@@ -60,7 +60,7 @@ if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /u
 	# for first thing update the Debian Repositories
 	$apt->update();
 	# install all pre-requisites
-	$apt->install( "flex", "bison", "libpcap-dev" ); # Equivalent of `apt update && apt install flex bison libpcap-dev`;
+	$apt->install( "flex", "bison", "libpcap-dev", "linux-libc-dev" ); # Equivalent of `apt update && apt install flex bison libpcap-dev linux-libc-dev`;
 	# libpcap is a special case, we will use libpcap-dev package for installing it as dep.
   }
   elsif( Detect->distribution_name() =~ "fedora" || Detect->distribution_name() =~ "centos" ||  Detect->distribution_name() =~ "rhel" ){ # for Fedora/CentOS/RHEL
