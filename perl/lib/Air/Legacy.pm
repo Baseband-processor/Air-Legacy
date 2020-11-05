@@ -2173,10 +2173,16 @@ sub detect_sensitivity(){
 		open($WIRELESS, '>', $wireless);
 		my $last_line;
 		$last_line = $_, while (<$WIRELESS>);
-		my @lines = split( $last_line, / / );
+		my @lines = split( / /, $last_line );
 		close($WIRELESS); # close the fh
 		return( $lines[4] ); # return the receiver sensitivity
 	}
+}
+
+sub calculate_APdistance {
+	my ( $frequency, $dbm ) = @_;
+	my $signal_strength = &detect_sensitivity();
+	return( (27.55 - ($dbm * log( $frequency ) ) + $signal_strength)/$dbm; # output in KM
 }
 
 __PACKAGE__->bootstrap($VERSION);
