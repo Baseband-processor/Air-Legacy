@@ -1,5 +1,6 @@
 TYPEMAP
 
+LIBWPS_DATA *                               T_PTRREF
 TAG_PARAMS *                                T_PTROBJ
 WPS_REGISTRAR_DEVICE                        T_PTRREF
 WPS_REGISTRAR_DEVICE *                      T_PTRREF
