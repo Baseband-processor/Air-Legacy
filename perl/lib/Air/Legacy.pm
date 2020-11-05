@@ -1,9 +1,9 @@
 #!usr/bin/perl
 
-package Air::Lorcon2;
+package Air::Legacy;
 
 # Made by Edoardo Mantovani, 2020
-# main Air::Lorcon2 file
+# main Air::Legacy file
 
 use strict;
 no strict 'subs';
