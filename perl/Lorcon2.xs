@@ -4944,6 +4944,9 @@ beacon_management_meta()
 AUTH_MANAGEMENT_FRAME *
 auth_management_meta()
 
+LIBWPS_DATA *
+libwps_meta()
+	
 int 
 globule_init()
 CODE:
