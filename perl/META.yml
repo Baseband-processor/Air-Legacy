@@ -1,5 +1,5 @@
 ---
-abstract: 'Air::Lorcon2: A fast, portable and efficient library based on Lorcon2. Written in XS for perl penetration tester and wireless-security experts'
+abstract: 'Air::Legacy: A fast, portable and efficient library based on Lorcon2. Written in XS for perl penetration tester and wireless-security experts'
 author:
   - 'Edoardo Mantovani, aka BASEBAND <Baseband@cpan.org>'
 build_requires:
@@ -12,7 +12,7 @@ license: BSD2
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: '1.4'
-name: Air-Lorcon2
+name: Air-Legacy
 no_index:
   directory:
     - t
