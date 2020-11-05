@@ -1,25 +1,18 @@
-Air::Lorcon2
+Air::Legacy
 ================================================
 
 ![image of wireless_security_protocols_bg](./wireless.jpg)
 
-![coverage](https://progress-bar.dev/97?title=progress)  ![functions](https://progress-bar.dev/325?title=functions)  ![constants](https://progress-bar.dev/580?title=constants)  ![size](https://img.shields.io/github/languages/code-size/Baseband-processor/Air-Lorcon2) ![license](https://img.shields.io/github/license/Baseband-processor/Air-Lorcon2) ![Lcommits](https://img.shields.io/github/last-commit/Baseband-processor/Air-Lorcon2)  ![toplang](https://img.shields.io/github/languages/top/Baseband-processor/Air-Lorcon2) 
- ![release-date](https://img.shields.io/github/release-date/Baseband-processor/Air-Lorcon2)
+![coverage](https://progress-bar.dev/97?title=progress)  ![functions](https://progress-bar.dev/325?title=functions)  ![constants](https://progress-bar.dev/580?title=constants)  ![size](https://img.shields.io/github/languages/code-size/Baseband-processor/Air-Legacy) ![license](https://img.shields.io/github/license/Baseband-processor/Air-Legacy) ![Lcommits](https://img.shields.io/github/last-commit/Baseband-processor/Air-Legacy)  ![toplang](https://img.shields.io/github/languages/top/Baseband-processor/Air-Legacy) 
+ ![release-date](https://img.shields.io/github/release-date/Baseband-processor/Air-Legacy)
  
-![27.75](https://img.shields.io/github/commits-since/Baseband-processor/Air-Lorcon2/27.75)  ![28.00-commits](https://img.shields.io/github/commits-since/Baseband-processor/Air-Lorcon2/28.00)
+
 
 **WHO I AM?**
 
 Click [Here](https://github.com/Baseband-processor/Baseband-processor)
 
 
-**WHY PERL AND WHY LORCON?**
-
-Since my first day as (self-taught) "computer science student"  I chosed to use Perl language and, still today I think that it is even better than Python,I spent the last 3 years studying Computer Security, especially Wireless security (this includes specially WLAN security), this library is a direct application of my knoweledge in the field.
-
-The hidden history of Air::Lorcon2 started one day, while I was browsing on metacpan I found Net::Lorcon2: an old library with no documentation and limited support to the original Lorcon2 library, at first I didn't consider it and I continued to study my things, but after few months the desire of build my own Lorcon2 library growns even more.
-
-This is just the beginning, the project is long and the road is much longer but I hope that, with the help of the community, it would be possible to bring the world of cybersecurity into Perl: a language that now boasts very few tools (one of the few that comes to mind is Nikto), and which is still focused only both on automation and on CGI programming.
 
 **REQUIREMENTS**
 
@@ -32,7 +25,7 @@ This is just the beginning, the project is long and the road is much longer but 
 
 **INSTALLATION**
 
-for installing the *Air::Lorcon2* and *Lorcon2* libraries you just need to type:
+for installing the *Air::Legacy* and *Lorcon2* libraries you just need to type:
 
 ```shell
    sudo make full
@@ -49,7 +42,7 @@ for veryfing that everything works fine you can just start executing the followi
 #!/usr/bin/perl
 # Made by Edoardo Mantovani, 2020
 
-use Air::Lorcon2 qw( :lorcon );
+use Air::Legacy qw( :lorcon );
 print "avaiable drivers are:\n";
 print lorcon_actual_cards();
 sleep(2);
@@ -68,7 +61,7 @@ if this return no drivers or if in the output there isn't any wireless card try 
 
 for now only few network drivers are implemented (i.e mac80211 and madwifing), more on future.
 
-Also tests are avaiable, but they won't cover the 240+ functions which Air::Lorcon2 offers.
+Also tests are avaiable, but they won't cover the 300+ functions which Air::Legacy offers.
 
 **DOCUMENTATION**
 
@@ -114,7 +107,7 @@ some functions with the related explanation are presented here:
 
 use strict;
 use Net::Pcap qw( pcap_lookupdev );
-use Air::Lorcon2 qw(:lorcon); # This will export every lorcon2's subroutines
+use Air::Legacy qw(:lorcon); # This will export every lorcon2's subroutines
 
 my $pcap_err = '';
 my $pcap_interface = pcap_lookupdev( \$pcap_err ); # This will give us the best interface avaiable for sniffing 
@@ -223,7 +216,7 @@ Probably the project will grow even more, my future ideas are:
 
 - [x] offer a full coverage for the Lorcon2 library
 - [ ] develop a big amount of perl-based-subroutines, despite the function-avaiability, lorcon2 is a finite project, it's our work to make it infinite.
-- [ ] Write a brief PDF manual centered on all Air::Lorcon's functions
+- [ ] Write a brief PDF manual centered on all Air::Legacy's functions
 
 **Other suggested Perl libraries for network security**
 
@@ -273,7 +266,7 @@ After a long development stage, the actual version of Air::Lorcon2 is 29.00 for 
 As you may understand, Air::Lorcon2 has an autoinstaller, which couldn't be executed normally running the classical command:
 
 ```shell
-sudo cpanm Air::Lorcon2
+sudo cpanm Air::Legacy
 ```
 So in the future I'll fork the project for a cpan compatible library.
 
