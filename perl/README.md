@@ -4,6 +4,14 @@ Air::Legacy (FAQ)
 
 ![image of wireless_security](./Network_encryption.jpg)
 
+Why "Legacy"?
+========================================
+
+The first name was Air::Lorcon2 because the library was centered only on Lorcon2 API, now things have changed, drastically.
+Perl hasn't an official library for wireless security nor it has a working framework for it, the things must change, now.
+
+"Legacy" is the union of Lorcon2, reaver, aircrack-ng (and its modules) and other cryptanalytic tools for CCMP/TKIP protocol.
+
 Why (not) Python?
 ========================================
 
