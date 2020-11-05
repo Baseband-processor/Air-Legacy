@@ -1,7 +1,7 @@
 Changes
 c/lorcon_driver_t.c
-lib/Air/Lorcon2.pm
-Lorcon2.xs
+lib/Air/Legacy.pm
+Legacy.xs
 Makefile.PL
 MANIFEST
 README.md
