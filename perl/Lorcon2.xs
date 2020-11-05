@@ -40,6 +40,7 @@
 #define WLAN_FC_SUBTYPE_AUTH        11
 #define WLAN_FC_SUBTYPE_DEAUTH      12
 #define WLAN_FC_SUBTYPE_QOSDATA     8
+#define LIBWPS_MAX_STR_LEN 256
 
 
 #define WPS_UUID_LEN 16
