@@ -7,8 +7,7 @@
 use Test;
 use strict;
 no strict 'subs';
-use Air::Lorcon2 qw( :lorcon ); 
-use Data::Dumper qw( Dumper );
+use Air::Legacy qw( :lorcon ); 
 
 BEGIN { plan tests => 2 };
 
@@ -19,6 +18,7 @@ my $pcap_intf = pcap_lookupdev( \$pcap_err );
 my $driver;
 my @list = lorcon_list_drivers();
 
+use Data::Dumper;
 foreach ( @list ){
         if ( Dumper( $_ ) =~ "mac80211"){
                 $driver = "mac80211";
