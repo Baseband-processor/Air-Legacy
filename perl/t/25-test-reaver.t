@@ -12,7 +12,7 @@ use Test;
 
 BEGIN{ plan tests => 1 };
 
-use Air::Lorcon2 qw( :reaver );
+use Air::Legacy qw( :reaver );
 
 
 ok 1;
