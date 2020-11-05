@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # Made by Edoardo Mantovani, 2020
-# Main installer for Air::Lorcon2
+# Main installer for Air::Legacy
 
 use strict;
 no strict 'refs';
@@ -10,13 +10,13 @@ use warnings;
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-   NAME => 'Air::Lorcon2',
+   NAME => 'Air::Legacy',
    LICENSE => 'BSD2',
    AUTHOR => 'Edoardo Mantovani aka Baseband',
   # CCFLAGS        => '-Wall -std=c99',
   # OPTIMIZE       => '-oS  ',
    DEFINE => '',
-   VERSION_FROM => 'lib/Air/Lorcon2.pm',
+   VERSION_FROM => 'lib/Air/Legacy.pm',
    LIBS => ['-L/lib -L/usr/lib -L/usr/local/lib -llorcon2'],
    INC => '-I/include -I/usr/include -I/usr/local/include',
    PREREQ_PM => {
