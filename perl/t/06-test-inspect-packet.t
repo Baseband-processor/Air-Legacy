@@ -7,7 +7,7 @@ use strict;
 no strict 'subs';
 use Test;
 
-BEGIN{ plan tests => 6 };
+BEGIN{ plan tests => 5 };
 
 use Air::Legacy qw( :lorcon );
 use Net::Pcap qw( pcap_lookupdev );
