@@ -1,4 +1,5 @@
-Air::Lorcon2 (FAQ)
+ 
+Air::Legacy (FAQ)
 ============================================
 
 ![image of wireless_security](./Network_encryption.jpg)
