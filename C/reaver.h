@@ -17,6 +17,7 @@ struct association_request_management_frame *assoc_request_meta();
 struct association_response_management_frame *assoc_response_meta();
 struct beacon_management_frame *beacon_management_meta();
 struct authentication_management_frame *auth_management_meta();
+struct libwps_data *libwps_meta();
 
 
 #endif
