@@ -2,11 +2,12 @@
 
 =head1 NAME
 
-Air::Lorcon2
+Air::Legacy
 
 =head2 DESCRIPTION
 
-Air::Lorcon2 is A fast, portable and efficient perl library based on Lorcon2. 
+Air::Legacy
+is A fast, portable and efficient perl library based on Lorcon2. 
 Written in XS for perl penetration tester and wireless-security experts, it offers more than 300 functions related to packet crafting, multi-interface sniffing, traffic analysis and even more!
 
 =head1 SYNOPSIS
@@ -15,7 +16,7 @@ Written in XS for perl penetration tester and wireless-security experts, it offe
 
 use strict;
 use Net::Pcap qw( pcap_lookupdev );
-use Air::Lorcon2 qw(:lorcon); # This will export every lorcon2's subroutines
+use Air::Legacy qw(:lorcon); # This will export every lorcon2's subroutines
 
 my $pcap_err = '';
 my $pcap_interface = pcap_lookupdev( \$pcap_err ); # This will give us the best interface avaiable for sniffing 
