@@ -1,5 +1,5 @@
 # Made by Edoardo Mantovani, 2020
-# Main installer for Lorcon2 and Air::Lorcon2
+# Main installer for Lorcon2 and Air::Legacy
 
 C_LORCON_DIR=C
 PERL_AIR_LORCON_DIR=perl
