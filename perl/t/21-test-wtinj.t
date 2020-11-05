@@ -11,7 +11,7 @@ use Test;
 
 BEGIN{ plan tests => 1};
 
-use Air::Lorcon2 qw( :lorcon );
+use Air::Legacy qw( :lorcon );
 
 # craft tx80211 object
 my $tx80211 = tx80211_meta();
