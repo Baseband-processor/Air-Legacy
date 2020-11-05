@@ -10,7 +10,7 @@ no strict 'subs';
 use Test::More skip_all => "pcap_open probably not supported!";
 
 
-use Air::Lorcon2 qw( :lorcon );
+use Air::Legacy qw( :lorcon );
 use Data::Dumper qw( Dumper );
 use Net::Pcap qw( pcap_lookupdev );
 
