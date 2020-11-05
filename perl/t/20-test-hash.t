@@ -1,12 +1,12 @@
 #!/usr/bin/perl
 
 # Made by Edoardo Mantovani, 2020
-# Main test for using Air::Lorcon2 crypto-tools
+# Main test for using Air::Legacy crypto-tools
 
 use strict;
 use Test;
 BEGIN{ plan tests => 1 };
-use Air::Lorcon2 qw(:crypto);
+use Air::Legacy qw(:crypto);
 
 # craft sha1_context and sha1_hmac_context
 
