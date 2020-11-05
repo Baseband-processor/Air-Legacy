@@ -122,6 +122,7 @@ struct libwps_data *libwps_meta()
 	return c;
 }
 
+/*
 int free_authentication_management_frame(struct authentication_management_frame *c)
 {
 	free(c);
@@ -166,3 +167,5 @@ int free_beacon_management_frame(struct beacon_management_frame *c)
 	free(c);
 	return 1;
 }
+
+/*
