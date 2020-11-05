@@ -9,7 +9,7 @@ use Test;
 
 BEGIN{ plan tests => 1 };
 
-use Air::Lorcon2 qw( :lorcon );
+use Air::Legacy qw( :lorcon );
 
 association_reason_codes_HASH();
 
