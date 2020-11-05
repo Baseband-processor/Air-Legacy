@@ -11,7 +11,7 @@ use warnings;
 
 use Test::More tests => 1;
 
-BEGIN{ use_ok('Air::Lorcon2') };
+BEGIN{ use_ok('Air::Legacy') };
 
 # craft lcpa_meta object
 my $lcpa = lcpa_init();
