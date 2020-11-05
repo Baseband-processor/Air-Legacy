@@ -9,7 +9,7 @@ use warnings;
 
 BEGIN { plan tests => 1 };
 
-use Air::Lorcon2 qw(:lorcon);
+use Air::Legacy qw(:lorcon);
 my $version = lorcon_get_version(); 
 
 
