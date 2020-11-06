@@ -327,6 +327,8 @@ actually Working functions
       packet_entropy
       wps_data_to_json
       libwps_meta
+      send_generic_packet 
+      send_packet_internal
 
 **NOT WORKING FUNCTIONS**
 
