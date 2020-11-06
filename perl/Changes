@@ -7,7 +7,7 @@ CHANGED PROJECT, NOW IT WILL BE AIR::LEGACY
 00.00   Tue  Nov 05 21:00:00 CET 2020
   - fixed small bugs
   - amplied documentation
-  
+  - added 2 new functions: send_generic_packet and send_packet_internal
   
 Revision history for Perl extension Air::Lorcon2.
 
