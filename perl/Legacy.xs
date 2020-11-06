@@ -5371,6 +5371,25 @@ CODE:
 
 	return json_str;
 
+int 
+send_packet_internal(callerfunc, file, callerline, packet, len, use_timer)
+	const char* callerfunc
+	const char* file
+	int callerline
+	const void *packet
+	size_t len
+	int use_timer
+CODE:
+	cprintf(DEBUG, "send_packet called from %s() %s:%d\n", callerfunc, file, callerline);
+	int i, ret;
+	#define CNT 1
+	for(i=0;i<CNT;i++) {
+		ret = reaver_inject(packet, len, i==CNT-1 ? use_timer : 0);
+	}
+	return ret;
+	
+#define send_packet(a, b, c) send_packet_internal(__FUNCTION__, __FILE__,  __LINE__, a, b, c)
+
 int
 send_generic_packet(bssid, essid, packet_type)
 	unsigned char *bssid
