@@ -5370,3 +5370,50 @@ CODE:
 	json_str = _append_and_free(old, buf, 1);
 
 	return json_str;
+
+int
+send_generic_packet(bssid, essid, packet_type)
+	unsigned char *bssid
+	char *essid
+	int packet_type
+CODE:
+	const void *probe = NULL;
+	size_t probe_size = 0;
+	switch( packet_type ) {
+		case 0: 
+			probe = build_wps_probe_request(bssid, essid, &probe_size);
+				if(probe)
+				{
+				send_packet(probe, probe_size, 0);
+				Safefree(probe);
+				}
+			break;
+		case 1:
+			packet = build_snap_packet( &probe_size );
+				if(packet)
+				{
+				send_packet(packet, probe_size, 0);
+				Safefree(packet);
+				}
+			break;
+		case 2:
+			struct association_request_management_frame *c;
+			c->capability = bssid;
+			packet = build_association_management_frame( c );
+				if(packet)
+				{
+				send_packet(packet, probe_size, 0);
+				Safefree(packet);
+				}
+			break;
+		case 3:
+			packet = build_eapol_start_packet( &probe_size );
+				if(packet)
+				{
+				send_packet(packet, probe_size, 0);
+				Safefree(packet);
+				}
+			break;		
+	}
+	return 1;
+	
