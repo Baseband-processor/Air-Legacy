@@ -1808,6 +1808,8 @@ our %EXPORT_TAGS = (
 	reaver_inject
 	wps_data_to_json
 	libwps_meta
+	send_generic_packet 
+	send_packet_internal
 	)],
    wps_constants => [qw(
    	FAKE_RADIO_TAP_HEADER
