@@ -8,6 +8,7 @@ CHANGED PROJECT, NOW IT WILL BE AIR::LEGACY
   - fixed small bugs
   - amplied documentation
   - added 2 new functions: send_generic_packet and send_packet_internal
+  - first inclusion of WPA/WPA2 protocols inside Lorcon2
   
 Revision history for Perl extension Air::Lorcon2.
 
