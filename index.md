@@ -100,5 +100,4 @@ mac80211_sendpacket( $context, $Packet );
 my $raw_bytes = "\x00\x00\x00\x00\x00";
 tuntap_sendbytes( $context, length( $raw_bytes ), \$raw_bytes );
 
-[Link](url) and ![Image](src)
 ```
