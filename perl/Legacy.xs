@@ -14,6 +14,7 @@
 #define LORCON_CHANNEL_VHT8080  8
 #define MAX_IFNAME_LEN		32
 #define LORCON_WEPKEY_MAX	26
+#define LORCON_WPAKEY_MAX       63
 #define LORCON_PACKET_EXTRA_NONE		0
 #define LORCON_PACKET_EXTRA_80211		1
 #define LORCON_PACKET_EXTRA_8023		2
@@ -500,7 +501,7 @@ typedef struct lorcon_wep         LORCON_WEP;
 
 typedef struct {
 	u_char bssid[6];
-	u_char key[63];
+	u_char key[LORCON_WPAKEY_MAX];
 	int len;
 	struct lorcon_wpa *next;
 }lorcon_wpa;
