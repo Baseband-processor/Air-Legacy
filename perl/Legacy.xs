@@ -499,6 +499,15 @@ typedef struct  {
 typedef struct lorcon_wep         LORCON_WEP;
 
 typedef struct {
+	u_char bssid[6];
+	u_char key[63];
+	int len;
+	struct lorcon_wpa *next;
+}lorcon_wpa;
+
+typedef struct lorcon_wpa        LORCON_WPA;
+
+typedef struct {
     TIME last_ts;
 }rtfile_extra_lorcon;
 
