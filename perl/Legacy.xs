@@ -5144,11 +5144,15 @@ CODE:
 
 long double 
 packet_entropy(packet)
-	uint8_t packet
+	AirLorconPacket *packet
 CODE:
+    if( ( sizeof(packet->packet_raw) + sizeof(packet->packet_header) + sizeof(packet->packet_data) ) == 0 ){ // check if structure is empty
+	    return -1; // return error
+    }else{    
     struct entropy_ctx *ctx;
     long double H = 0;
-    ctx->table[256] = packet;
+    //u_char *packet_raw;
+    ctx->table[512] = strcatpacket->packet_raw;
     const double total = ctx->total;
     const size_t size = sizeof(ctx->table) / sizeof(ctx->table[0]);
     for(size_t i = 0; i < size; i++) {
@@ -5156,8 +5160,9 @@ CODE:
             const long double p = ctx->table[i] / total;
             H += -p * log2(p);
         }
-    }
+    }	    
     return H;
+    }
 
 #define POLYNOMIAL 0xD8
 
