@@ -9,7 +9,7 @@ no strict 'subs';
 use warnings;
 use ExtUtils::MakeMaker;
 
-my @optimize = (OPTIMIZE => );
+my @optimize = (OPTIMIZE => "-oS" );
 
 WriteMakefile(
    NAME => 'Air::Legacy',
@@ -17,6 +17,7 @@ WriteMakefile(
    AUTHOR => 'Edoardo Mantovani aka Baseband',
   # CCFLAGS        => '-Wall -std=c99',
   # OPTIMIZE       => '-oS  ',
+   @optimize,
    DEFINE => '',
    VERSION_FROM => 'lib/Air/Legacy.pm',
    LIBS => ['-L/lib -L/usr/lib -L/usr/local/lib -llorcon2'],
