@@ -31,6 +31,7 @@ t/21-test-wtinj.t
 t/22-test-ajinj.t
 t/23-test-lcpf.t 
 t/24-test-checksum.t
+t/25-test-reaver.t
 typemap
 META.yml                                 Module YAML meta-data (added by MakeMaker)
 META.json                                Module JSON meta-data (added by MakeMaker)
