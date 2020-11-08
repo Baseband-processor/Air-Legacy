@@ -1,5 +1,7 @@
 TYPEMAP
 
+PAirpcapDeviceDescription                   T_PTROBJ
+PAirpcapDeviceDescription *                 T_PTROBJ
 LIBWPS_DATA *                               T_PTRREF
 TAG_PARAMS *                                T_PTROBJ
 WPS_REGISTRAR_DEVICE                        T_PTRREF
