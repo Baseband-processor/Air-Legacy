@@ -9,6 +9,7 @@ CHANGED PROJECT, NOW IT WILL BE AIR::LEGACY
   - amplied documentation
   - added 2 new functions: send_generic_packet and send_packet_internal
   - first inclusion of WPA/WPA2 protocols inside Lorcon2
+  - updated new test: 25-test-reaver.t
   
 Revision history for Perl extension Air::Lorcon2.
 
