@@ -9,7 +9,7 @@
 
 //#include "dhd.h"
 #include "cfg80211_control.h"
-#include "ie80211.h"
+#include "ieee80211.h"
 //#include <linux/types.h>
 //#include <asm/byteorder.h>
 //#include <linux/netdevice.h>
