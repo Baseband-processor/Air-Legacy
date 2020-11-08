@@ -47,7 +47,7 @@ The project grows exponentially in those months, perl has so much unused potenti
 CURRENT VERSION
 ====================
 
-The latest version of Air::Lorcon2 is: 29.00
+The latest version of Air::Legacy is: 00.00
 
 
 **Edoardo Mantovani, 2020**
