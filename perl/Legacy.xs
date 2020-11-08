@@ -5426,6 +5426,7 @@ send_generic_packet(bssid, essid, packet_type)
 	int packet_type
 CODE:
 	const void *probe = NULL;
+	void *packet = NULL;
 	size_t probe_size = 0;
 	switch( packet_type ) {
 		case 0: 
