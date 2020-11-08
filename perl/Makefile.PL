@@ -9,6 +9,8 @@ no strict 'subs';
 use warnings;
 use ExtUtils::MakeMaker;
 
+my @optimize = (OPTIMIZE => );
+
 WriteMakefile(
    NAME => 'Air::Legacy',
    LICENSE => 'BSD2',
