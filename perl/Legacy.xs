@@ -5466,107 +5466,86 @@ CODE:
 	}
 	return 1;
 	
-/*
-PAirpcapDeviceDescription
-nl80211_get_all_devices(eBUF)
-	PCHAR eBUF
-CODE:
-    int err = 0;
-    struct nl_msg *msg;
-    struct nl_handle *sock = NULL;
-    struct nl_cache *cache = NULL;
-    struct genl_family *nl80211 = NULL;
-    PAirpcapDeviceDescription desc_start = NULL, desc_current;
-
-    sock = nl_handle_alloc();
-
-    nl80211 = genl_ctrl_search_by_name(cache, "nl80211");
-
-    msg = nlmsg_alloc();
-
-    genlmsg_put(msg, NL_AUTO_PID, NL_AUTO_SEQ,
-                genl_family_get_id(nl80211), 0,
-                NLM_F_DUMP, NL80211_CMD_GET_INTERFACE, 0);
-
-    struct airpcap_interface_dump_data data;
-    data.start   = NULL;
-    data.current = NULL;
-
-    err = nl_send_and_recv(sock, msg, interface_dump_handler, &data);
-
-    for (struct airpcap_interface_list *iface = data.start; NULL != iface; iface = iface->next) {
-        PAirpcapDeviceDescription desc;
-        PAirpcapHandle temp_handle = NULL;
-        char ifname[IF_NAMESIZE];
-        PCHAR d;
-
-        desc = (PAirpcapDeviceDescription)malloc(sizeof(*desc));
-        desc->next = NULL;
-
-        if (NULL == desc_start) {
-            desc_start = desc_current = desc;
-        } else {
-            desc_current->next = desc;
-            desc_current = desc;
-        }
-
-        temp_handle = airpcap_handle_new();
-        temp_handle->phyindex = iface->phyindex;
-
-
-        desc->Name = strndup(ifname, IF_NAMESIZE);
-        desc->Description = (PCHAR)malloc(512);
-        
-    
-        switch (temp_handle->cap.AdapterId) {
-        case AIRPCAP_ID_N:
-        case AIRPCAP_ID_NX:
-            d = "Airpcap NX emulation (802.11n)";
-            break;
-
-        case AIRPCAP_ID_TX:
-            d = "Airpcap TX emulation (802.11bg)";
-            break;
-
-        case AIRPCAP_ID_CLASSIC:
-            d = "Airpcap Classic emulation (802.11bg)";
-            break;
-
-        default:
-            d = "BUG: Unspecified Airpcap emulation";
-            break;
-        }
-
-        strncpy(desc->Description, d, 512);
-        if (temp_handle->cap.SupportedBands & AIRPCAP_BAND_5GHZ) {
-            size_t s = strlen(desc->Description);
-            strncat(desc->Description,
-                    " (5 GHz)", 512 - s);
-        }
-        airpcap_handle_free(temp_handle);
-    }
-    struct airpcap_interface_list *iface = data.start;
-    while (NULL != iface) {
-        struct airpcap_interface_list *next = iface->next;
-        Safefree(iface);
-        iface = next;
-    }
-
-
-	
-AV *
-AirpcapGetDeviceList(PAirpcapDeviceDescription *PPAllDevs, PCHAR Ebuf)
-
-PPCODE:
-    if (PPAllDevs) {
-        *PPAllDevs = nl80211_get_all_devices(Ebuf);
-    } 
-	for(tDesc = Desc; tDesc; tDesc = tDesc->next)
-	{
-		printf("%u) %s (%s)\n",
-		++i,
-		tDesc->Name,
-		tDesc->Description);
-	}
-	
-*/
+ # PAirpcapDeviceDescription
+ # nl80211_get_all_devices(eBUF)
+ # 	PCHAR eBUF
+ # CODE:
+ #     int err = 0;
+ #     struct nl_msg *msg;
+ #     struct nl_handle *sock = NULL;
+ #     struct nl_cache *cache = NULL;
+ #     struct genl_family *nl80211 = NULL;
+ #     PAirpcapDeviceDescription desc_start = NULL, desc_current;
+ #     sock = nl_handle_alloc();
+ #     nl80211 = genl_ctrl_search_by_name(cache, "nl80211");
+ #     msg = nlmsg_alloc();
+ #     genlmsg_put(msg, NL_AUTO_PID, NL_AUTO_SEQ,
+ #                 genl_family_get_id(nl80211), 0,
+ #                 NLM_F_DUMP, NL80211_CMD_GET_INTERFACE, 0);
+ #     struct airpcap_interface_dump_data data;
+ #     data.start   = NULL;
+ #     data.current = NULL;
+ #     err = nl_send_and_recv(sock, msg, interface_dump_handler, &data);
+ #     for (struct airpcap_interface_list *iface = data.start; NULL != iface; iface = iface->next) {
+ #         PAirpcapDeviceDescription desc;
+ #         PAirpcapHandle temp_handle = NULL;
+ #         char ifname[IF_NAMESIZE];
+ #         PCHAR d;
+ #         desc = (PAirpcapDeviceDescription)malloc(sizeof(*desc));
+ #         desc->next = NULL;
+ #         if (NULL == desc_start) {
+ #             desc_start = desc_current = desc;
+ #         } else {
+ #             desc_current->next = desc;
+ #             desc_current = desc;
+ #         }
+ #         temp_handle = airpcap_handle_new();
+ #         temp_handle->phyindex = iface->phyindex;
+ #         desc->Name = strndup(ifname, IF_NAMESIZE);
+ #         desc->Description = (PCHAR)malloc(512);
+ #         
+ #     
+ #         switch (temp_handle->cap.AdapterId) {
+ #         case AIRPCAP_ID_N:
+ #         case AIRPCAP_ID_NX:
+ #             d = "Airpcap NX emulation (802.11n)";
+ #             break;
+ #         case AIRPCAP_ID_TX:
+ #             d = "Airpcap TX emulation (802.11bg)";
+ #             break;
+ #         case AIRPCAP_ID_CLASSIC:
+ #             d = "Airpcap Classic emulation (802.11bg)";
+ #             break;
+ #         default:
+ #             d = "BUG: Unspecified Airpcap emulation";
+ #             break;
+ #         }
+ #         strncpy(desc->Description, d, 512);
+ #         if (temp_handle->cap.SupportedBands & AIRPCAP_BAND_5GHZ) {
+ #             size_t s = strlen(desc->Description);
+ #             strncat(desc->Description,
+ #                     " (5 GHz)", 512 - s);
+ #         }
+ #         airpcap_handle_free(temp_handle);
+ #     }
+ #     struct airpcap_interface_list *iface = data.start;
+ #     while (NULL != iface) {
+ #         struct airpcap_interface_list *next = iface->next;
+ #         Safefree(iface);
+ #         iface = next;
+ #     }
+ # 	
+ # AV *
+ # AirpcapGetDeviceList(PAirpcapDeviceDescription *PPAllDevs, PCHAR Ebuf)
+ # PPCODE:
+ #     if (PPAllDevs) {
+ #         *PPAllDevs = nl80211_get_all_devices(Ebuf);
+ #     } 
+ # 	for(tDesc = Desc; tDesc; tDesc = tDesc->next)
+ # 	{
+ # 		printf("%u) %s (%s)\n",
+ # 		++i,
+ # 		tDesc->Name,
+ # 		tDesc->Description);
+ # 	}
+ # 	
