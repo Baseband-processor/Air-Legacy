@@ -7,7 +7,7 @@ ADDITIONAL EXAMPLES
 
 This is the most basic example avaiable of Air::Legacy, it uses only a small sets of subroutines taken from the original Lorcon2 API     
 
-<p float="left">
+<p float="right">
   <img src="/tenor.gif" width="100" />
 </p>
 
