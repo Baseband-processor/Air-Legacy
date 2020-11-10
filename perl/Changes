@@ -10,6 +10,9 @@ CHANGED PROJECT, NOW IT WILL BE AIR::LEGACY
   - added 2 new functions: send_generic_packet and send_packet_internal
   - first inclusion of WPA/WPA2 protocols inside Lorcon2
   - updated new test: 25-test-reaver.t
+  - added new suggested perl library: Linux::TunTap
+  - start works for a more advanced tun/tap interface
+  - first beta for wireless driver writing
   
 Revision history for Perl extension Air::Lorcon2.
 
