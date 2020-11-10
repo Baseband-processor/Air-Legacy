@@ -7,8 +7,8 @@ ADDITIONAL EXAMPLES
 
 This is the most basic example avaiable of Air::Legacy, it uses only a small sets of subroutines taken from the original Lorcon2 API     
 
-<p float="right">
-  <img src="/tenor.gif" width="100" />
+<p float="left">
+  <td valign="top"> <img src="/tenor.gif" width="100" /> </td>
 </p>
 
 Now, Lorcon2 has a limited attack set, you can create network fuzzers and sniff packets from multiple interfaces,but it isn't able  to send WPS packet or to bruteforce WPA/WPA2 packets, this would be a serious limitation, obviously.
