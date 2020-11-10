@@ -1,5 +1,5 @@
 
-Air::Legacy is growing, now it is infecting also the WWW!
+Air::Legacy is growing, now it is ready to infect also the WWW!
 
 
 ADDITIONAL EXAMPLES
@@ -101,3 +101,9 @@ my $raw_bytes = "\x00\x00\x00\x00\x00";
 tuntap_sendbytes( $context, length( $raw_bytes ), \$raw_bytes );
 
 ```
+
+Requests and collaborations
+==============================
+Feel free to email me at Baseband@cpan.org
+I am open to suggestions, code improvement, collaboration and other requests
+ 
