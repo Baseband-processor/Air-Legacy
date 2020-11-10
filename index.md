@@ -5,7 +5,7 @@ Air::Legacy is growing, now it is ready to infect also the WWW!
 ADDITIONAL EXAMPLES
 ====================================================
 
-<img style="float: right;" src="tenor.gif">
+![image alt <](/tenor.gif)
 
 This is the most basic example avaiable of Air::Legacy, it uses only a small sets of subroutines taken from the original Lorcon2 API     
 
