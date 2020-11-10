@@ -253,6 +253,7 @@ for starting I suggest to learn:
 * [SNMPMonitor](https://metacpan.org/pod/SNMPMonitor)
 * [Net::LibNIDS](https://metacpan.org/pod/Net::LibNIDS)
 * [Parse::Snort](https://metacpan.org/pod/Parse::Snort)
+* [Linux::TunTap](https://metacpan.org/pod/Linux::TunTap)
 
 **PERL NETWORK SECURITY RESOURCE**
 
