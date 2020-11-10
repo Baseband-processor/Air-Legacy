@@ -5,6 +5,11 @@ Air::Legacy is growing, now it is ready to infect also the WWW!
 ADDITIONAL EXAMPLES
 ====================================================
 
+This is the most basic example avaiable of Air::Legacy, it uses only a small sets of subroutines taken from the original Lorcon2 API       ![gif](./tenor.gif)
+
+Now, Lorcon2 has a limited attack set, you can create network fuzzers and sniff packets from multiple interfaces,but it isn't able  to send WPS packet or to bruteforce WPA/WPA2 packets, this would be a serious limitation, obviously.
+
+Air::Legacy is the union of every wireless attacks implementation into a single, compact perl library.
 
 ```perl
 #!/usr/bin/perl
@@ -105,5 +110,6 @@ tuntap_sendbytes( $context, length( $raw_bytes ), \$raw_bytes );
 Requests and collaborations
 ==============================
 Feel free to email me at Baseband@cpan.org
+
 I am open to suggestions, code improvement, collaboration and other requests
  
