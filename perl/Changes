@@ -13,6 +13,7 @@ CHANGED PROJECT, NOW IT WILL BE AIR::LEGACY
   - added new suggested perl library: Linux::TunTap
   - start works for a more advanced tun/tap interface
   - first beta for wireless driver writing
+  - added new wireless drivers documentation
   
 Revision history for Perl extension Air::Lorcon2.
 
