@@ -100,8 +100,13 @@ some resources about libnl library can be found here:
    
  Resources about various aspect of wireless protocols:
    - [802.11 Authentication and Key Management](https://www.cwnp.com/uploads/802-11i_key_management.pdf)            
-   - [Official Wi-fi standard specifications ](https://www.wi-fi.org/discover-wi-fi/specifications)
+   - [Official Wi-fi standard specifications](https://www.wi-fi.org/discover-wi-fi/specifications)
    - [LDPA 802.11 guide, 2700+ pages](https://legal.vvv.enseirb-matmeca.fr/download/amichel/%5BStandard%20LDPC%5D%20802.11-2012.pdf)
+   
+ Resources about various wireless drivers:
+   - [cfg80211 layer](https://www.kernel.org/doc/html/v4.12/driver-api/80211/cfg80211.html)
+   - [mac80211 layer (first part)](https://www.kernel.org/doc/html/v4.12/driver-api/80211/mac80211.html)
+   - [mac80211 layer (second part)](https://www.kernel.org/doc/html/v4.12/driver-api/80211/mac80211-advanced.html)
    
    
 **PERL DOCUMENTATION**
