@@ -14,6 +14,7 @@ CHANGED PROJECT, NOW IT WILL BE AIR::LEGACY
   - start works for a more advanced tun/tap interface
   - first beta for wireless driver writing
   - added new wireless drivers documentation
+  - added new test : 26-test-reaver-xml.t
   
 Revision history for Perl extension Air::Lorcon2.
 
