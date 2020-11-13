@@ -5234,7 +5234,9 @@ CODE:
 	size_t i,j, l = sv_len(s), ls=l;
 	for(i=0;i<ls;i++) if(s[i] < ' ' || s[i] > 127) l += 4;
 	char *new = malloc(l+1);
-	if(!new) return 0;
+	if(!new){
+		return 0;
+	}
 	for(i=0,j=0;i<ls;i++) {
 		if(s[i] < ' ' || s[i] > 127) {
 			sprintf(new + j, "\\\\x%02x", s[i] & 0xff);
@@ -5402,10 +5404,10 @@ CODE:
 
 int 
 send_packet_internal(callerfunc, file, callerline, packet, len, use_timer)
-	const char* callerfunc
-	const char* file
+	char* callerfunc
+	char* file
 	int callerline
-	const void *packet
+	void *packet
 	size_t len
 	int use_timer
 CODE:
@@ -5425,7 +5427,7 @@ send_generic_packet(bssid, essid, packet_type)
 	char *essid
 	int packet_type
 CODE:
-	const void *probe = NULL;
+	void *probe = NULL;
 	void *packet = NULL;
 	size_t probe_size = 0;
 	switch( packet_type ) {
