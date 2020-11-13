@@ -9,6 +9,7 @@
 #include "XSUB.h"
 #include <string.h>
 #include <math.h>
+#include <assert.h>
 #include <lorcon2/lorcon.h>
 #include <lorcon2/lorcon_packet.h>
 #include <lorcon2/lorcon_multi.h>
