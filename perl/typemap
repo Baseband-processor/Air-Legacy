@@ -1,5 +1,6 @@
 TYPEMAP
 
+PIXIE *                                     T_PTROBJ
 PAirpcapDeviceDescription                   T_PTROBJ
 PAirpcapDeviceDescription *                 T_PTROBJ
 LIBWPS_DATA *                               T_PTRREF
