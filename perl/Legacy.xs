@@ -5176,7 +5176,7 @@ CODE:
     struct entropy_ctx *ctx;
     long double H = 0;
     //u_char *packet_raw;
-    ctx->table[512] = strcatpacket->packet_raw;
+    ctx->table[512] = packet->packet_raw;
     const double total = ctx->total;
     const size_t size = sizeof(ctx->table) / sizeof(ctx->table[0]);
     for(size_t i = 0; i < size; i++) {
@@ -5246,7 +5246,7 @@ CODE:
 	return new;
 	
 char *
-wps_data_to_json(bssid, ssid, channel,  rssi, endor, wps, progress) 
+wps_data_to_json(bssid, ssid, channel,  rssi, vendor, wps, progress) 
 	char* bssid
 	char *ssid
 	int channel
