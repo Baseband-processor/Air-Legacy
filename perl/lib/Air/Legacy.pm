@@ -2166,20 +2166,6 @@ sub dbm_to_mw {
 	return( 10 ** ( $dbm / 10 ) ); # our mW converted value
 }
 
-sub detect_sensitivity(){
-	my $wireless = "/proc/net/wireless";
-	if( ! -e $wireless ){
-		return -1;
-	}else{
-		# open the file and save only the last line
-		open($WIRELESS, '>', $wireless);
-		my $last_line;
-		$last_line = $_, while (<$WIRELESS>);
-		my @lines = split( / /, $last_line );
-		close($WIRELESS); # close the fh
-		return( $lines[4] ); # return the receiver sensitivity
-	}
-}
 
 sub calculate_APdistance {
 	my ( $frequency, $dbm ) = @_;
