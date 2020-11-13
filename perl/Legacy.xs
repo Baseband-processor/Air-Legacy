@@ -5409,9 +5409,9 @@ send_packet_internal(callerfunc, file, callerline, packet, len, use_timer)
 	size_t len
 	int use_timer
 CODE:
-	cprintf(DEBUG, "send_packet called from %s() %s:%d\n", callerfunc, file, callerline);
+	printf("send_packet called from %s() %s:%d\n", callerfunc, file, callerline);
 	int i, ret;
-	#define CNT 1
+	int CNT = 1;
 	for(i=0;i<CNT;i++) {
 		ret = reaver_inject(packet, len, i==CNT-1 ? use_timer : 0);
 	}
