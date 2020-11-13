@@ -1,4 +1,4 @@
-Please, refer to the main document for understanding of how contribute to _Air::Lorcon2_ library.
+Please, refer to the main document for understanding how contribute to _Air::Legacy_ library.
 
 Feel free to email me at Baseband@cpan.org
 
