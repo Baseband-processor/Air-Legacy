@@ -20,10 +20,20 @@
 
 #include <sys/socket.h>
 #include <linux/netdevice.h>
-#include <linux/debugfs.h>
-#include <linux/list.h>
-#include <linux/bug.h>
-#include <linux/netlink.h>
+#include "debugfs.h"
+
+#ifdef _LINUX_LIST_H
+	#include <linux/list.h>
+#endif
+
+#ifdef _LINUX_BUG_H
+	#include <linux/bug.h>
+#endif
+
+#ifdef _UAPI__LINUX_NETLINK_H
+	#include <linux/netlink.h>
+#endif
+
 #include <linux/skbuff.h>
 #include "nl80211.h"
 #include <linux/if_ether.h>
