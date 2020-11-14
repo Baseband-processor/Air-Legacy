@@ -17,10 +17,10 @@
 #include <linux/kernel.h>
 #include <linux/if_ether.h>
 #include <linux/skbuff.h>
-#include <linux/ieee80211.h>
-#include <net/cfg80211.h>
+#include "ieee80211.h"
+#include "cfg80211.h"
 #include <net/codel.h>
-#include <net/ieee80211_radiotap.h>
+#include "ieee80211_radiotap.h"
 #include <asm/unaligned.h>
 
 /**
