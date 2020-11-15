@@ -11,7 +11,7 @@ no strict 'refs';
 use warnings;
 use Net::MAC; # require Net::MAC library for MAC manipulation
 
-our $VERSION = '29.00';
+our $VERSION = '00.00';
 use base qw(Exporter DynaLoader);
 
 
