@@ -1832,6 +1832,11 @@ our %EXPORT_TAGS = (
      packet_crc
      packet_entropy
      )],
+     physical => [qw(
+     	mw_to_dbm
+     	dbm_to_mw
+     
+     )],
 );
 
 # _pcap_check_activate has been eliminated due to debug errors
@@ -1857,6 +1862,7 @@ our @EXPORT = (
    @{ $EXPORT_TAGS{ reaver } },
    @{ $EXPORT_TAGS{ wps_constants } },
    @{ $EXPORT_TAGS{ packet_checksum } },
+   @{ $EXPORT_TAGS{ physical } },
 );
 
 # NOTE:
@@ -2177,6 +2183,6 @@ __PACKAGE__->bootstrap($VERSION);
 
 1;
 
-__END__
+
 
 
