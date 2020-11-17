@@ -15,8 +15,12 @@ CHANGED PROJECT, NOW IT WILL BE AIR::LEGACY
   - first beta for wireless driver writing
   - added new wireless drivers documentation
   - added new test : 26-test-reaver-xml.t
-  
-Revision history for Perl extension Air::Lorcon2.
+  - added new packet crafting functions from the Lorcon2 library: 
+     * lcpf_assocresp
+     * lcpf_data
+     * lcpf_qosheaders
+
+Revision history for the (old)  Perl extension Air::Lorcon2.
 
 
 29.00   Sun Opt 18 16:00:00 CET 2020
