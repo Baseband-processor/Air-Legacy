@@ -1759,7 +1759,11 @@ our %EXPORT_TAGS = (
       filter_association_codes
       tx80211_decodepkt
       ajinj_open
-      ajinj_close
+      ajinj_close      
+      lcpf_assocresp
+      lcpf_data
+      lcpf_qosheaders
+
  )],
  
    suites => [qw(
