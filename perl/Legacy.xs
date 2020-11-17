@@ -3117,6 +3117,62 @@ CODE:
 	pack = lcpa_append_copy(pack, "ASSOCREQLI", 2, chunk);
 
 
+void 
+lcpf_assocresp(pack, dst, src, bssid, framecontrol, duration, fragment, sequence, capabilities, status, aid)
+	LCPA_META *pack
+	uint8_t *dst
+	uint8_t *src
+	uint8_t *bssid
+	int framecontrol
+	int duration
+	int fragment
+	int sequence
+	uint16_t capabilities
+	uint16_t status
+	uint16_t aid
+CODE:
+	uint8_t chunk[2];
+	uint16_t *sixptr = (uint16_t *) chunk;
+
+	lcpf_80211headers(pack, WLAN_FC_TYPE_MGMT, WLAN_FC_SUBTYPE_ASSOCRESP, framecontrol, duration, dst, src, bssid, NULL, fragment, sequence);
+
+	*sixptr = capabilities;
+	pack = lcpa_append_copy(pack, "ASSOCRESPCAPAB", 2, chunk);
+	*sixptr = status;
+	pack = lcpa_append_copy(pack, "ASSOCRESPSTAT", 2, chunk);
+	*sixptr = aid;
+	pack = lcpa_append_copy(pack, "ASSOCRESPID", 2, chunk);
+
+
+void 
+lcpf_data(pack, fcflags, duration, mac1, mac2, mac3, mac4, fragment, sequence) 
+	LCPA_META *pack
+	unsigned int fcflags
+	unsigned int duration
+	uint8_t *mac1
+	uint8_t *mac2 
+	uint8_t *mac3
+	uint8_t *mac4
+	unsigned int fragment
+	unsigned int sequence
+CODE:
+	lcpf_80211headers(pack, WLAN_FC_TYPE_DATA, WLAN_FC_SUBTYPE_DATA,
+		fcflags, duration, mac1, mac2, mac3, mac4, fragment, sequence)
+		
+void 
+lcpf_qosheaders(pack, priority, eosp, ackpol) 
+	LCPA_META *pack
+	unsigned int priority
+	unsigned int eosp
+	unsigned int ackpol
+CODE:
+	uint8_t chunk[2];
+
+	chunk[0] = 0;
+	chunk[0] = ((priority << 5) | (eosp << 3) | (ackpol << 1));
+	chunk[1] = 0;
+	pack = lcpa_append_copy(pack, "80211QOSHDR", 2, chunk);
+		
 int 
 lorcon_packet_to_dot3(packet, data) 
 	AirLorconPacket *packet
