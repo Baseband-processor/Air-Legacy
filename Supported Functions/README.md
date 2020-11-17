@@ -329,6 +329,9 @@ actually Working functions
       libwps_meta
       send_generic_packet 
       send_packet_internal
+      lcpf_assocresp
+      lcpf_data
+      lcpf_qosheaders
 
 **NOT WORKING FUNCTIONS**
 
