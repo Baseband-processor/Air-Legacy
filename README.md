@@ -284,6 +284,13 @@ sudo cpanm Air::Legacy
 ```
 So in the future I'll fork the project for a cpan compatible library.
 
+**Creating the challenge inside the community**
+
+Air::Legacy is a powerfull perl library usefull for attacking wireless networks, unfortunately on CPAN there are no "antagonist" libraries for protecting wireless network,
+yes, there is Net::Libnids, but is quite old and (probably) there won't be any significant updates.
+
+The challenge is open for everyone who wants to develop a **N**etwork **I**ntrusion **D**etection **S**ystem in perl for counterattacking Air::Legacy attack vectors, 
+every developer who wants to partecipate (and probably beat my library) is welcome!
 
 
 Requests and collaborations
