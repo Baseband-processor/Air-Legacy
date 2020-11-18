@@ -49,6 +49,10 @@
 #define RADIOTAP_HEADER \
 "\0\0" \
 
+#define INFO 1
+#define VERBOSE 3
+#define DEBUG 4
+
 #define IEEE80211_RADIOTAP_F_FRAG	0x08
 #define TX80211_CAP_CTRL	64
 #define TX80211_CAP_SELFACK	512
@@ -548,6 +552,12 @@ typedef struct wg80211_frame{
 #define WPS_EMSK_LEN 32
 #define WPS_PSK_LEN 16
 #define WPS_SECRET_NONCE_LEN 16
+
+typedef struct pixie_thread_data {
+	char cmd[4096];
+	char pinbuf[64];
+	size_t pinlen;
+}ptd;
 
 typedef struct wps_context{
 	int ap;
@@ -5576,47 +5586,7 @@ CODE:
 	}
 	globule->pin = (value) ? savepv(value) : NULL;
 	
-void 
-pixie_attack() 
-CODE:
-	WPS_DATA *wps = get_wps();
-	PIXIE *p = &pixie;
-	GLOB *globule;
-	int dh_small = globule->dh_small();
 
-	if(p->do_pixie) {
-		char uptime_str[64];
-		snprintf(uptime_str, sizeof(uptime_str), "-u %llu ", (unsigned long long) globule->uptime);
-		snprintf(ptd.cmd, sizeof (ptd.cmd),"pixiewps %s-e %s -s %s -z %s -a %s -n %s %s %s", (p->use_uptime ? uptime_str : ""),
-		p->pke, p->ehash1, p->ehash2, p->authkey, p->enonce, dh_small ? "-S" : "-r" , dh_small ? "" : p->pkr);
-		printf("executing %s\n", ptd.cmd);
-		ptd.pinlen = 64;
-		ptd.pinbuf[0] = 0;
-		if(_pixie_run_thread(&ptd)) {
-			cprintf(INFO, "[+] Pixiewps: success: setting pin to %s\n", ptd.pinbuf);
-			set_pin(ptd.pinbuf);
-			if(timeout_hit) {
-				cprintf(VERBOSE, "[+] Pixiewps timeout hit, sent WSC NACK\n");
-				cprintf(INFO, "[+] Pixiewps timeout, exiting. Send pin with -p\n");
-				update_wpc_from_pin();
-				exit(0);
-			}
-			Safefree(wps->dev_password);
-			wps->dev_password = malloc(ptd.pinlen+1);
-			memcpy(wps->dev_password, ptd.pinbuf, ptd.pinlen+1);
-			wps->dev_password_len = ptd.pinlen;
-		} else {
-			cprintf(INFO, "[-] Pixiewps fail, sending WPS NACK\n");
-			send_wsc_nack();
-			exit(1);
-		}
-	}
-	PIXIE_FREE(authkey);
-	PIXIE_FREE(pkr);
-	PIXIE_FREE(pke);
-	PIXIE_FREE(enonce);
-	PIXIE_FREE(ehash1);
-	PIXIE_FREE(ehash2);
 	
  # PAirpcapDeviceDescription
  # nl80211_get_all_devices(eBUF)
