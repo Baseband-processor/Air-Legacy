@@ -16,6 +16,7 @@ open (my $logo, $file) or die "Please, don't delete the logo.txt file!\n";
 sleep(2);
 while( my $line = <$logo> )  {   
     print $line;  
+    usleep(111111);
     last if $. == 0;
 }
 close($logo);
