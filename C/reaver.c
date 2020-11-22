@@ -6,6 +6,8 @@
 #include "reaver.h"
 #define TIMESTAMP_LEN 64
 #define LIBWPS_MAX_STR_LEN 256
+#define P1_SIZE			10000
+#define P2_SIZE	1000
 
 struct libwps_data{
         uint8_t version;
