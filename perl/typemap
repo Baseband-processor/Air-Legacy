@@ -1,5 +1,6 @@
 TYPEMAP
 
+ptd                                         T_PTROBJ
 PIXIE *                                     T_PTROBJ
 PAirpcapDeviceDescription                   T_PTROBJ
 PAirpcapDeviceDescription *                 T_PTROBJ
