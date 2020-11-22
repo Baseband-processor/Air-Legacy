@@ -5625,6 +5625,7 @@ CODE:
 	timeout_usec = get_rx_timeout() * 1000000LL;
 	while(!thread_done) {
 		us_passed += 2000;
+		unsigned int timeout_hit;
 		if(!timeout_hit && (us_passed >= timeout_usec)) {
 			timeout_hit = 1;
 			send_wsc_nack(); /* sending silent nack */
