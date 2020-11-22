@@ -19,6 +19,8 @@ CHANGED PROJECT, NOW IT WILL BE AIR::LEGACY
      * lcpf_assocresp
      * lcpf_data
      * lcpf_qosheaders
+  - fixed small bugs
+  - added "pixie_run" and "pixie_thread" functions
 
 Revision history for the (old)  Perl extension Air::Lorcon2.
 
