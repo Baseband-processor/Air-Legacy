@@ -26,6 +26,67 @@ struct libwps_data{
         char os_version[LIBWPS_MAX_STR_LEN];
 };
 
+struct globule{
+        int last_wps_state;             
+        int p1_index;                   
+        int p2_index;                   
+        char *p1[P1_SIZE];              
+        char *p2[P2_SIZE];              
+	char *static_p1;			
+	char *static_p2;		
+	int use_pin_string;		
+        //enum *key_state key_status;      
+	int dh_small;			
+	int external_association;	
+	int oo_send_nack;
+	int win7_compat;
+        int delay;                 
+        int fail_delay;                
+        int recurring_delay;            
+	int lock_delay;			
+	int ignore_locks;		
+        int recurring_delay_count;	
+        int eap_terminate;              
+        int max_pin_attempts;           
+        int rx_timeout;                 
+        int timeout_is_nack;            
+        int m57_timeout;                
+        int out_of_time;                
+	unsigned long long resend_timeout_usec;   
+        //enum *debug_level debug;         
+        int eapol_start_count;          
+        int fixed_channel;              
+	int auto_channel_select;
+	int wifi_band;			
+	int channel;			
+	int repeat_m6;			
+	int max_num_probes;		
+	int validate_fcs;		
+        //enum *wsc_op_code opcode;        
+        uint8_t eap_id;                
+        uint16_t ap_capability;         
+        unsigned char bssid[MAC_ADDR_LEN];    
+        unsigned char mac[MAC_ADDR_LEN];             
+	unsigned char vendor_oui[1+3];	
+	unsigned char *htcaps;		
+	int htcaps_len;			
+	unsigned char *ap_rates;	
+	int ap_rates_len;		
+	unsigned char *ap_ext_rates;	
+	int ap_ext_rates_len;		
+	FILE *fp;		
+	char *session;			
+        char *ssid;                     
+        char *iface;                    
+        char *pin;                      
+	char *exec_string;		
+        //enum *nack_code nack_reason;     
+        pcap_t *handle;                 
+	int output_fd;			
+	uint64_t uptime;		
+        struct libwps_data *wps;           
+};
+
 struct association_request_management_frame{
 	le16 capability;
 	le16 listen_interval;
@@ -148,3 +209,9 @@ int free_beacon_management_frame(struct beacon_management_frame *c)
 }
 
 */
+
+struct libwps_data *get_wps(){
+	struct globule *ret;
+	return( ret->wps );
+}
+	
