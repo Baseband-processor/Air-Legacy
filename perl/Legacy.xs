@@ -5549,8 +5549,69 @@ CODE:
 	}
 	return 1;
 
+
 int 
-_pixie_run_thread(ptr) 
+pixie_run(pixiecmd, pinbuf, pinlen) 
+	char *pixiecmd
+	char *pinbuf
+	size_t *pinlen
+CODE:
+	int ret = 0;
+	FILE *pr = popen(pixiecmd, "r");
+	if(pr) {
+		char buf[1024], *p;
+		while(fgets(buf, sizeof buf, pr)) {
+			printf("%s", buf);
+			if(ret){
+				continue;
+			}
+			p = buf;
+			while(isspace(*p))++p;
+			if(!strncmp(p, PIXIE_SUCCESS, sizeof(PIXIE_SUCCESS)-1)) {
+				ret = 1;
+				char *pin = p + sizeof(PIXIE_SUCCESS)-1;
+				while(isspace(*pin)){
+					++pin;
+				}
+				if(!strncmp(pin, "<empty>", 7)) {
+					*pinlen = 0;
+					*pinbuf = 0;
+				} else {
+					char *q = strchr(pin, '\n');
+					if(q) *q = 0;
+					else {
+						ret = 0;
+					}
+					size_t pl = strlen(pin);
+					if(pl < *pinlen) {
+						//memcpy(pinbuf, pin, pl+1);
+						int sum = pl + 1;
+						Copy(pin, pinbuf, sum, char );
+						*pinlen = pl;
+					} else {
+						ret = 0;
+					}
+				}
+			}
+		}
+		pclose(pr);
+	}
+return ret;
+	
+void* 
+pixie_thread(data)
+	void *data
+	BOOT:
+	ptd depository;
+	CODE:
+	// add BOOT phase
+	unsigned long ret = pixie_run(depository.cmd, depository.pinbuf, &depository.pinlen);
+	int thread_done = 1;
+	return (void*)ret;
+
+
+int 
+pixie_run_thread(ptr) 
 	void *ptr
 CODE:
 	/* to prevent from race conditions with 2 threads accessing stdout */
