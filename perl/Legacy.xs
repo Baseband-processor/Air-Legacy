@@ -4778,9 +4778,7 @@ OUTPUT:
 	
 WPS_DATA *
 get_wps()
-CODE:
-GLOB *globule;
-return globule->wps;
+
 
 
 uint16_t 
