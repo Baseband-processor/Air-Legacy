@@ -121,6 +121,8 @@ Some Attack Ideas
 ==================================================================
 
 * Create a passive WPA enterprise packet analyzer which studies some common patterns inside packets and tryto craft a  fake one.
+* Create an advanced traffic analysis framework which works out of Wlans using entropy
+
 
 Companion Libraries
 ==================================================================
