@@ -1,7 +1,7 @@
 theme: jekyll-theme-hacker
 title: Air::Legacy
 author: Edoardo   Mantovani
-
+markdown: kramdown 
 navbar-links:
   About Me: "18 years old, cryptanalysis student, love maths"
   Resources:
