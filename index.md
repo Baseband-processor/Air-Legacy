@@ -188,7 +188,7 @@ my $SSid; #IDK
 my $channel = int(rand(6));
 my $rssi; # STILL WIP
 
-wps_data_to_json($mac1, ssid, $channel,  rssi, \"x00\x00\x00\x00\x00\x00", $libWPS, \"10") 
+wps_data_to_json($mac1, ssid, $channel,  rssi, \"\x00\x00\x00\x00\x00\x00", $libWPS, \"10") 
 
 sleep(5);
 }
