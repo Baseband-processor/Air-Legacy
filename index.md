@@ -116,6 +116,11 @@ tuntap_sendbytes( $context, length( $raw_bytes ), \$raw_bytes );
 </html>
 
 
+Some Attack Ideas
+==================================================================
+
+* Create a passive WPA enterprise packet analyzer which studies some common patterns inside packets and tryto craft a  fake one.
+
 Requests and collaborations
 ==============================
 Feel free to email me at Baseband@cpan.org
