@@ -2,7 +2,10 @@
 Air::Legacy is growing, now it is ready to infect also the WWW!
 
 
-ADDITIONAL EXAMPLES
+This page expand the Air::Lorcon2 attack set
+
+
+Synopsis
 ====================================================
 
 
