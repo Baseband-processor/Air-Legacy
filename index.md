@@ -157,6 +157,30 @@ sub process_packet {
 
 ```
 
+**sniff WPS data and print into JSON file**
+
+```perl
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Air::Lorcon2 qw( :lorcon2 :reaver );
+
+my $libWPS = libwps_meta();
+
+# generate 2 random MAC address, just for try :)
+
+my $mac1 = RMAC_gen();
+my $SSid; #IDK
+my $channel = int(rand(6));
+my $rssi; # STILL WIP
+
+wps_data_to_json($mac1, ssid, $channel,  rssi, \"x00\x00\x00\x00\x00\x00", $libWPS, \"10") 
+
+sleep(5);
+
+```
+
 Some Attack Ideas
 ==================================================================
 
