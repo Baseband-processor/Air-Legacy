@@ -17,6 +17,10 @@ Air::Legacy is the union of every wireless attacks implementation into a single,
 ```perl
 #!/usr/bin/perl
 
+# Made by Edoardo Mantovani, 2020
+
+sub BEGIN{
+
 use strict;
 use Net::Pcap qw( pcap_lookupdev );
 use Air::Legacy qw(:lorcon); # This will export every lorcon2's subroutines
@@ -108,6 +112,7 @@ mac80211_sendpacket( $context, $Packet );
 my $raw_bytes = "\x00\x00\x00\x00\x00";
 tuntap_sendbytes( $context, length( $raw_bytes ), \$raw_bytes );
 
+}
 ```
 
 <html>
@@ -122,6 +127,10 @@ tuntap_sendbytes( $context, length( $raw_bytes ), \$raw_bytes );
 
 ```perl
 #!/usr/bin/perl
+
+# Made by Edoardo Mantovani, 2020
+
+sub BEGIN{
 
 use strict;
 use Net::Pcap qw( pcap_lookupdev pcap_open_live pcap_loop);
@@ -154,13 +163,17 @@ sub process_packet {
 
  }
 
-
+ }
 ```
 
-**sniff WPS data and print into JSON file**
+**Represent WPS data into JSON file**
 
 ```perl
 #!/usr/bin/perl
+
+# Made by Edoardo Mantovani, 2020
+
+sub BEGIN{
 
 use strict;
 use warnings;
@@ -178,7 +191,7 @@ my $rssi; # STILL WIP
 wps_data_to_json($mac1, ssid, $channel,  rssi, \"x00\x00\x00\x00\x00\x00", $libWPS, \"10") 
 
 sleep(5);
-
+}
 ```
 
 Some Attack Ideas
