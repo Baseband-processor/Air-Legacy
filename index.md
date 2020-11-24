@@ -124,6 +124,12 @@ Some Attack Ideas
 
 * Create a passive WPA enterprise packet analyzer which studies some common patterns inside packets and tryto craft a  fake one.
 
+Companion Libraries
+==================================================================
+
+As you have seen, usually Air::Legacy uses some companion libraries for extending its attack horizont, probably the most important library here is Net::Pcap, which is based on the famous libpcap library, also Air::Legacy support some additional pcap functions (see pcap_inject).
+
+
 Requests and collaborations
 ==============================
 Feel free to email me at Baseband@cpan.org
