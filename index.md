@@ -172,6 +172,7 @@ sub Wireless_Scan(){
  
 
 }
+&Wireless_Scan();
 
 sleep(2);
 my $bssid = <STDIN>;
