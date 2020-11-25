@@ -1,12 +1,13 @@
 theme: jekyll-theme-hacker
 title: Air::Legacy
-author: Edoardo   Mantovani
+author: Edoardo Mantovani
 markdown: kramdown 
 navbar-links:
   About Me: "18 years old, cryptanalysis student, love maths security and covert channels!"
   Resources:
     - Main Legacy Page: "https://github.com/Baseband-processor/Air-Legacy"
-
+    - My Github profile: "https://github.com/Baseband-processor"
+    
 avatar: "https://avatars2.githubusercontent.com/u/68107554?s=460&u=7f04866e4604acaeb702755f326f10faa93af6e2&v=4"
 round-avatar: true
 
