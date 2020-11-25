@@ -4874,10 +4874,9 @@ CODE:
 
 
 void*
-build_wps_probe_request(bssid, essid, length)
+build_wps_probe_request(bssid, essid)
 	unsigned char *bssid
 	char *essid
-	size_t *length
 CODE:	
 	TAG_PARAMS *ssid_tag;
 	void *packet = NULL;
