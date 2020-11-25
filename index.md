@@ -257,7 +257,10 @@ my $libWPS = libwps_meta();
 my $mac1 = RMAC_gen();
 my $SSid; #IDK
 my $channel = int(rand(6));
-my $rssi; # STILL WIP
+
+# get the RSSI through Net::Wireless::802_11::WPA::CLI
+
+my $rssi;
 
 wps_data_to_json($mac1, ssid, $channel,  rssi, \"\x00\x00\x00\x00\x00\x00", $libWPS, \"10") 
 
