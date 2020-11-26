@@ -22,6 +22,7 @@ CHANGED PROJECT, NOW IT WILL BE AIR::LEGACY
   - fixed small bugs
   - added "pixie_run" and "pixie_thread" functions
   - added airpcap files
+  - created official site
   
 Revision history for the (old)  Perl extension Air::Lorcon2.
 
