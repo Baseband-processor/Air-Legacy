@@ -8,6 +8,7 @@
 #define LIBWPS_MAX_STR_LEN 256
 #define P1_SIZE			10000
 #define P2_SIZE	1000
+#define MAC_ADDR_LEN 6
 
 struct libwps_data{
         uint8_t version;
