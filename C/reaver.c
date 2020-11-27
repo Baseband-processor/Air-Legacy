@@ -165,6 +165,11 @@ struct libwps_data *libwps_meta()
 	return c;
 }
 
+uint16_t  get_ap_capability(){
+	struct globule *globule;
+	return globule->ap_capability;
+}
+
 /*
 int free_authentication_management_frame(struct authentication_management_frame *c)
 {
