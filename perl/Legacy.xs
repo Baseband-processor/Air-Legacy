@@ -4917,7 +4917,7 @@ CODE:
 
 	packet_len = rt_len + dot11_len + llc_len;
 	//packet = malloc(packet_len);
-	Newx(packet, packet_len, 1);
+	Newx(packet, packet_len, void);
 	if(packet) {
 		memset((void *) packet, 0, packet_len);
 		//Zero(packet, 0, packet_len);
@@ -4992,7 +4992,7 @@ CODE:
 	{
 		buf_len = snap_len + dot1x_len + eap_len + total_payload_len;
 		//buf = malloc(buf_len);
-		Newx(buf, buf_len, 1);
+		Newx(buf, buf_len, void);
 		if(buf)
 		{
 			//memset((void *) buf, 0, buf_len);
@@ -5017,8 +5017,8 @@ CODE:
 
 			if(payload && payload_length)
 			{
-				//memcpy((void *) ((char *) buf+offset), payload, payload_length);
-				Copy(payload, boffset, payload_length, 1);
+				memcpy((void *) ((char *) buf+offset), payload, payload_length);
+				//Copy(payload, boffset, payload_length, 1);
 			}
 			char *len = (offset + payload_length);
 		}
