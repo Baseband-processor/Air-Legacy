@@ -2177,11 +2177,6 @@ sub dbm_to_mw {
 }
 
 
-sub calculate_APdistance {
-	my ( $frequency, $dbm ) = @_;
-	my $signal_strength = &detect_sensitivity();
-	return( (27.55 - ($dbm * log( $frequency ) ) + $signal_strength)/$dbm; # output in KM
-}
 
 __PACKAGE__->bootstrap($VERSION);
 
