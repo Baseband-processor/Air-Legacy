@@ -292,6 +292,10 @@ yes, there is Net::Libnids, but is quite old and (probably) there won't be any s
 The challenge is open for everyone who wants to develop a **N**etwork **I**ntrusion **D**etection **S**ystem in perl for counterattacking Air::Legacy attack vectors, 
 every developer who wants to partecipate (and probably beat my library) is welcome!
 
+**More informations**
+
+If you are interested in new developments of Air::Legacy see its [official site](https://baseband-processor.github.io/WirelessLegacy.github.io/)
+
 
 Requests and collaborations
 ====================================
