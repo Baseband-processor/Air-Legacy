@@ -45,7 +45,7 @@ $|++;
 use strict;
 no strict 'subs';
 no strict 'refs';
-no warnings;
+no warnings 'all';
 
 require "./include/Processes.pm";
 require "./include/Detect.pm";
