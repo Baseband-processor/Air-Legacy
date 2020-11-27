@@ -45,6 +45,5 @@ foreach ( @PossibleDirs ){
 close(HEADER);
 
 print "Everything went well, return code: 0\n";
-die 1;
 
   }
