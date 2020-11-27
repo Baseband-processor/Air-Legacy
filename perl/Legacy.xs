@@ -2306,6 +2306,30 @@ CODE:
 	
 	return (TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT | TX80211_CAP_SELFACK | TX80211_CAP_DSSSTX);
 
+char* 
+append(s1, s2) 
+	char* s1
+	char *s2
+	CODE:
+	char buf[512];
+	int l = snprintf(buf, sizeof(buf), "%s%s", s1, s2);
+	if (l <= 0){
+		return 0;
+	}
+	if (l >= sizeof(buf)) {
+		//char *new = malloc(l + 1);
+		int smalloc = l +1;
+		Newx(new, smalloc, char);
+		if(!new){
+			return 0;
+		}
+		int m = snprintf(new, l + 1, "%s%s", s1, s2);
+		assert(m == l);
+		return new;
+	}
+return savepv(buf);
+	
+	
 Pcap *
 pcap_open_live(device, snaplen, promisc, to_ms, err)
         const char *device
