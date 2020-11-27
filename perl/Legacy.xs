@@ -4928,7 +4928,7 @@ CODE:
 		//Copy(&dot11_header, p, dot11_len, 1);
 		memcpy((void *) ((char *) packet+rt_len+dot11_len), &llc_header, llc_len);
 		char *p1 = packet + rt_len + dot11_len;
-		Copy(&llc_header, p1, llc_len, 1);
+		//Copy(&llc_header, p1, llc_len, 1);
 		int *len = packet_len;
 	}
 	return packet;
@@ -5209,8 +5209,8 @@ CODE:
 	assert(wps_param_len == 2);
 	assert(2 == sizeof (TAG_PARAMS *));
 
-	//memcpy(buf, &wps_param, sizeof wps_param);
-	StructCopy(&wps_param, buf, wps_param);
+	memcpy(buf, &wps_param, sizeof wps_param);
+	//StructCopy(&wps_param, buf, wps_param);
 	memcpy(buf+2, WPS_REGISTRAR_TAG, WPS_TAG_SIZE);
 	return ( 2 + WPS_TAG_SIZE );
 	
