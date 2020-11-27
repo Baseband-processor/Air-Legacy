@@ -683,9 +683,9 @@ typedef struct  {
 	void *ap_settings_cb_ctx;
 	WPS_CREDENTIAL *use_cred;
 	int use_psk_key;
-}wps_data;
+}WPS_DATA;
 
-typedef struct wps_data WPS_DATA;
+//typedef struct wps_data WPS_DATA;
 
 typedef struct pixie {
 	char *authkey;
@@ -757,9 +757,9 @@ typedef struct {
 	int output_fd;			
 	uint64_t uptime;		
         WPS_DATA *wps;           
-}globule;
+}GLOB;
 
-typedef struct globule GLOB;
+//typedef struct globule GLOB;
 
 typedef struct {
         int type, subtype;
