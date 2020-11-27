@@ -2319,6 +2319,7 @@ append(s1, s2)
 	if (l >= sizeof(buf)) {
 		//char *new = malloc(l + 1);
 		int smalloc = l +1;
+		char *new;
 		Newx(new, smalloc, char);
 		if(!new){
 			return 0;
