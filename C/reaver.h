@@ -7,6 +7,8 @@
 #include <unistd.h>
 #include <string.h>
 
+#include <pcap.h>
+
 #ifndef LE16_DEFINED
 #define LE16_DEFINED
 typedef uint16_t le16;
