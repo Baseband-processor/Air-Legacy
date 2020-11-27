@@ -3168,9 +3168,8 @@ lcpf_data(pack, fcflags, duration, mac1, mac2, mac3, mac4, fragment, sequence)
 	unsigned int fragment
 	unsigned int sequence
 CODE:
-	lcpf_80211headers(pack, WLAN_FC_TYPE_DATA, WLAN_FC_SUBTYPE_DATA,
-		fcflags, duration, mac1, mac2, mac3, mac4, fragment, sequence)
-		
+	lcpf_80211headers(pack, WLAN_FC_TYPE_DATA, WLAN_FC_SUBTYPE_DATA, fcflags, duration, mac1, mac2, mac3, mac4, fragment, sequence);
+	
 void 
 lcpf_qosheaders(pack, priority, eosp, ackpol) 
 	LCPA_META *pack
@@ -3190,8 +3189,9 @@ lorcon_packet_to_dot3(packet, data)
 	AirLorconPacket *packet
 	u_char **data
 CODE:
-	int length = 0, offt = 0;
-	Lorcon_DOT11 *extra = (Lorcon_DOT11 *) packet->extra_info;
+	int length = 0;
+	int offt = 0;
+	Lorcon_DOT11 *extra = ( Lorcon_DOT11 *) packet->extra_info;
 	if (packet->length_data == 0 || packet->packet_data == NULL || packet->extra_info == NULL || packet->extra_type != LORCON_PACKET_EXTRA_80211) {
 		*data = NULL;
 		return 0;
