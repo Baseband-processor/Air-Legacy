@@ -5508,6 +5508,7 @@ CODE:
 	void *probe = NULL;
 	void *packet = NULL;
 	size_t probe_size = 0;
+	ASSOCIATION_REQUEST_MANAGEMENT_FRAME *c;
 	switch( packet_type ) {
 		case 0: 
 			probe = build_wps_probe_request(bssid, essid, &probe_size);
@@ -5526,7 +5527,6 @@ CODE:
 				}
 			break;
 		case 2:
-			ASSOCIATION_REQUEST_MANAGEMENT_FRAME *c;
 			c->capability = bssid;
 			packet = build_association_management_frame( c );
 				if(packet)
@@ -5610,16 +5610,19 @@ pixie_thread(data)
 int 
 pixie_run_thread(ptr) 
 	void *ptr
+PREINIT:
+	ptd comm;
 CODE:
 	/* to prevent from race conditions with 2 threads accessing stdout */
 	cprintf_mute();
 	pthread_t pt;
-	if(pthread_create(&pt, 0, pixie_thread, ptr) != 0) {
+	if(pthread_create(&pt, 0, pixie_thread(), ptr) != 0) {
 		cprintf(INFO, "[-] error creating pixie thread\n");
-		return pixie_run(ptd.cmd, ptd.pinbuf, &ptd.pinlen);
+		return pixie_run(comm.cmd, comm.pinbuf, &comm.pinlen);
 	}
 	unsigned long long us_passed = 0,
 	timeout_usec = get_rx_timeout() * 1000000LL;
+	int thread_done = 1;
 	while(!thread_done) {
 		us_passed += 2000;
 		unsigned int timeout_hit;
@@ -5637,6 +5640,8 @@ CODE:
 void 
 set_pin(value)
 	char *value
+PREINIT:
+	GLOB *globule;
 CODE:
 	if(globule->pin){
 		Safefree(globule->pin);
