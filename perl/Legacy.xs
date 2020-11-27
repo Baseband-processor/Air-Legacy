@@ -124,6 +124,8 @@
 #define TX80211_STATUS_MAX  1
 #define AIRPCAP_ERRBUF_SIZE 512
 
+#define PIXIE_SUCCESS "[+] WPS pin:"
+
 #define BIT(x) (1 << (x))
 #define WLAN_FC_TODS                BIT(0)
 #define WLAN_FC_FROMDS              BIT(1)
@@ -3190,8 +3192,7 @@ lorcon_packet_to_dot3(packet, data)
 CODE:
 	int length = 0, offt = 0;
 	Lorcon_DOT11 *extra = (Lorcon_DOT11 *) packet->extra_info;
-	if (packet->length_data == 0 || packet->packet_data == NULL ||
-		packet->extra_info == NULL || packet->extra_type != LORCON_PACKET_EXTRA_80211) {
+	if (packet->length_data == 0 || packet->packet_data == NULL || packet->extra_info == NULL || packet->extra_type != LORCON_PACKET_EXTRA_80211) {
 		*data = NULL;
 		return 0;
 	}
@@ -4783,9 +4784,6 @@ get_wps()
 
 uint16_t 
 get_ap_capability()
-CODE:
-GLOB *globule;
-return globule->ap_capability;
 
 
 void 
@@ -5528,7 +5526,7 @@ CODE:
 				}
 			break;
 		case 2:
-			struct association_request_management_frame *c;
+			ASSOCIATION_REQUEST_MANAGEMENT_FRAME *c;
 			c->capability = bssid;
 			packet = build_association_management_frame( c );
 				if(packet)
@@ -5600,7 +5598,7 @@ return ret;
 void* 
 pixie_thread(data)
 	void *data
-	BOOT:
+	INIT:
 	ptd depository;
 	CODE:
 	// add BOOT phase
