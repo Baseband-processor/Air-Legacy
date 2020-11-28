@@ -5904,3 +5904,30 @@ CODE:
 
 	}
     
+int 
+osdep_get_max_txpower() 
+PREINIT:
+int available_out_txpowers_count;
+osdep_init_txpowers();
+CODE:
+    int max_out = 0, max_in = 0, i;
+    if (! available_out_txpowers_count) {
+      return -1;
+    }
+
+    for (i=0; i<available_out_txpowers_count; i++) {
+      if (available_out_txpowers[i] > max_out) max_out = available_out_txpowers[i];
+    }
+
+	if(strLE(osdep_iface_in, osdep_iface_out)){
+		if (! available_in_txpowers_count) {
+		  printf("You forget to osdep_init_txpowers()!\n");
+		  return 0;
+		}
+
+		for (i=0; i<available_in_txpowers_count; i++) {
+		  if (available_in_txpowers[i] > max_in) max_in = available_in_txpowers[i];
+		}
+	}
+
+    return max_out > max_in ? max_in : max_out;
