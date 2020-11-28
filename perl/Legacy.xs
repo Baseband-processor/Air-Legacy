@@ -2306,7 +2306,7 @@ CODE:
 	
 	return (TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT | TX80211_CAP_SELFACK | TX80211_CAP_DSSSTX);
 
-char* 
+char * 
 append(s1, s2) 
 	char* s1
 	char *s2
