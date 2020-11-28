@@ -2306,29 +2306,7 @@ CODE:
 	
 	return (TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT | TX80211_CAP_SELFACK | TX80211_CAP_DSSSTX);
 
-char * 
-append(s1, s2) 
-	char* s1
-	char *s2
-	CODE:
-	char buf[512];
-	int l = snprintf(buf, sizeof(buf), "%s%s", s1, s2);
-	if (l <= 0){
-		return 0;
-	}
-	if (l >= sizeof(buf)) {
-		//char *new = malloc(l + 1);
-		int smalloc = l +1;
-		char *new;
-		Newx(new, smalloc, char);
-		if(!new){
-			return 0;
-		}
-		int m = snprintf(new, l + 1, "%s%s", s1, s2);
-		assert(m == l);
-		return new;
-	}
-return savepv(buf);
+
 	
 	
 Pcap *
@@ -5316,15 +5294,7 @@ _append_and_free(s1, s2, who)
 	char* s1
 	char *s2
 	int who
-CODE:
-	char *new = append(s1, s2);
-	if(who & 1){
-		Safefree(s1);
-	}
-	if(who & 2){
-		Safefree(s2);
-	}
-	return new;
+
 
 char* 
 _sanitize_string(s) 
