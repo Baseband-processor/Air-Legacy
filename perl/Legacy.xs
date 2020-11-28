@@ -969,7 +969,8 @@ typedef struct airpcap_interface_list {
 
 #include "c/lorcon_driver_t.c"
 #include "c/tx80211_decode.c"
-	
+#include "c/wif.c"
+
 #define PIXIE_FREE(KEY) \
 	do { \
 		if(pixie.KEY) Safefree(pixie.KEY); \
