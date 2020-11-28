@@ -7,6 +7,6 @@ use warnings;
 use Data::Dumper qw( Dumper );
 use Air::Legacy qw( :lorcon );
 
-my @Avaiable_cards = Air::Lorcon2::lorcon_list_drivers();
+my @Avaiable_cards = lorcon_list_drivers();
 print Dumper(\@Avaiable_cards);
 
