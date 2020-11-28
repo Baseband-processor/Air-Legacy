@@ -6,7 +6,7 @@ sub BEGIN{
 
 use strict;
 use warnings;
-use Air::Lorcon2 qw( :lorcon :reaver );
+use Air::Legacy qw( :lorcon :reaver );
 
 my $libWPS = libwps_meta();
 
