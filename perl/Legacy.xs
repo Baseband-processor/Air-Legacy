@@ -5811,11 +5811,11 @@ CODE:
     return 0;
 	
 
-void osdep_init_txpowers()
-{
-    //Stupid? Just try rates to find working ones...
-    //Anybody know how to get a proper list of supported rates?
-
+int  
+osdep_init_txpowers()
+PREINIT:
+char *osdep_iface_out = NULL;
+CODE:
     if (!osdep_iface_out) {
       printf("D'oh, open interface %s first, idiot...\n", osdep_iface_out);
       return;
@@ -5830,17 +5830,20 @@ void osdep_init_txpowers()
       return;
     }
 
-    memset(&wreq, 0, sizeof(struct iwreq));
+    //memset(&wreq, 0, sizeof(struct iwreq));
+    Zero(&wreq, 1, iwreq);
     strncpy(wreq.ifr_name, osdep_iface_out, IFNAMSIZ);
     wreq.u.power.flags = 0;
 
     if(ioctl(osdep_sockfd_out, SIOCGIWTXPOW, &wreq) < 0) {
       perror("Can't get TX power from card: ");
-      return;
+      return -1;
     }
 
     old_txpower = wreq.u.txpower.value;
     printf("Interface %s current TX power: %i dBm\n", osdep_iface_out, wreq.u.txpower.value);
+
+    #define MAX_TX_POWER 50
 
     for (i=0; i<MAX_TX_POWER; i++) {
       wreq.u.txpower.value = i;
@@ -5869,7 +5872,8 @@ void osdep_init_txpowers()
 		  return;
 		}
 
-		memset(&wreq, 0, sizeof(struct iwreq));
+		//memset(&wreq, 0, sizeof(struct iwreq));
+		Zero(&wreq, 1, iwreq);
 		strncpy(wreq.ifr_name, osdep_iface_in, IFNAMSIZ);
 		wreq.u.power.flags = 0;
 
@@ -5899,5 +5903,4 @@ void osdep_init_txpowers()
 		}
 
 	}
-
-    printf("\b\b dBm\n");
+    
