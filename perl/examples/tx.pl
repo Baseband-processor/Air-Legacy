@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use Data::Dumper qw( Dumper );
 
-use Air::Lorcon2 qw( :lorcon );
+use Air::Legacy qw( :lorcon );
 
 print "Showing avaiable drivers: \n";
 sleep(1);
