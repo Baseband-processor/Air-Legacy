@@ -24,6 +24,7 @@ CHANGED PROJECT, NOW IT WILL BE AIR::LEGACY
   - added airpcap files
   - created official site
   - added wps_send.pl example: show how to send WPS packets
+  - added packet_analysis.pl example: show how to examine, convert and entropize captured packets
   
 Revision history for the (old)  Perl extension Air::Lorcon2.
 
