@@ -11,7 +11,7 @@
 
 use strict;
 use warnings;
-use Air::Lorcon2 qw( :lorcon ); # import lorcon2 utilities
+use Air::Legacy qw( :lorcon ); # import lorcon2 utilities
 
 my $driver = shift or die "./beacon_flood_raw.pl <driver> <interface> <channel>\n";
 my $interface = shift or die "./beacon_flood_raw.pl <driver> <interface> <channel>\n";
