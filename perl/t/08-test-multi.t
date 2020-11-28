@@ -13,7 +13,7 @@ no warnings;
 use Test;
 BEGIN{ plan tests => 1 };
 
-use Air::Lorcon2 qw(:lorcon);
+use Air::Legacy qw(:lorcon);
 
 my $loop = lorcon_multi_create(); # create lorcon_multi_t type
 my $interfaces = lorcon_multi_get_interfaces( $loop ) or die("error about interfaces\n");
