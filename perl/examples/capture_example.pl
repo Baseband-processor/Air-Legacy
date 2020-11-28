@@ -7,7 +7,7 @@
 use strict;
 use warnings;
 
-use Air::Lorcon2 qw( :lorcon );
+use Air::Legacy qw( :lorcon );
 
 # defining our packet disassembly sub
 
