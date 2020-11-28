@@ -8,7 +8,7 @@ sub BEGIN{
 use strict;
 use warnings;
 use Term::ANSIColor;
-use Air::Lorcon2 qw( :lorcon :reaver );
+use Air::Legacy qw( :lorcon :reaver );
 
 # NOTE: lorcon export is usefull only for pcap_inject function
 
