@@ -8,7 +8,7 @@
 
 use strict;
 use warnings;
-use Air::Lorcon2 qw( :lorcon );
+use Air::Legacy qw( :lorcon );
 
 my $SSID = shift or die "./beacon_flood_lcpa.pl <SSID> <interface> <driver> <channel>\n";
 my $interface = shift or die "./beacon_flood_lcpa.pl <SSID> <interface> <driver> <channel>\n";
