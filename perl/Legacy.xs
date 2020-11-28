@@ -5728,3 +5728,176 @@ CODE:
  # 		tDesc->Description);
  # 	}
  # 	
+
+int 
+osdep_start(interface1, interface2)
+	char *interface1
+	char *interface2
+INIT:
+typedef struct devices{
+    int fd_in,  arptype_in;
+    int fd_out, arptype_out;
+    int fd_rtc;
+}dev;
+
+dev device;
+#define MAX_IFACE_NAME	64
+typedef struct wif {
+        int     (*wi_read)(struct wif *wi, unsigned char *h80211, int len,
+                           struct rx_info *ri);
+        int     (*wi_write)(struct wif *wi, unsigned char *h80211, int len,
+                            struct tx_info *ti);
+        int     (*wi_set_channel)(struct wif *wi, int chan);
+        int     (*wi_get_channel)(struct wif *wi);
+        int     (*wi_set_freq)(struct wif *wi, int freq);
+        int     (*wi_get_freq)(struct wif *wi);
+	void	(*wi_close)(struct wif *wi);
+	int	(*wi_fd)(struct wif *wi);
+	int	(*wi_get_mac)(struct wif *wi, unsigned char *mac);
+	int	(*wi_set_mac)(struct wif *wi, unsigned char *mac);
+	int	(*wi_set_rate)(struct wif *wi, int rate);
+	int	(*wi_get_rate)(struct wif *wi);
+	int	(*wi_set_mtu)(struct wif *wi, int mtu);
+	int	(*wi_get_mtu)(struct wif *wi);
+        int     (*wi_get_monitor)(struct wif *wi);
+
+        void	*wi_priv;
+        char	wi_interface[MAX_IFACE_NAME];
+};
+
+wif *_wi_in, *_wi_out;
+CODE:
+    char *osdep_iface_in = NULL;
+    char *osdep_iface_out = NULL;
+    //osdep_iface_in = malloc(strlen(interface1) + 1);
+    int interface_len = strlen(interface1) + 1;
+    Newx(osdep_iface_in, interface_len, char ); 
+    strcpy(osdep_iface_in, interface1);
+
+    //osdep_iface_out = malloc(strlen(interface2) + 1);
+    int interface2_len = ( strlen(interface2) + 1 );
+    Newx(osdep_iface_out, interface2_len, char );
+    strcpy(osdep_iface_out, interface2);
+
+	/* open the replay interface */
+	_wi_out = wi_open(interface2);
+	if (!_wi_out){
+		printf("open interface %s failed.\n", interface2);
+		return 1;
+	}
+
+	device.fd_out = wi_fd(_wi_out);
+
+	if(! strLE(interface1, interface2) ){
+
+		/* open the packet source */
+		_wi_in = _wi_out;
+		device.fd_in = device.fd_out;
+
+		/* XXX */
+		device.arptype_in = device.arptype_out;
+	}
+	else{
+
+		/* open the packet source */
+		_wi_in = wi_open(interface1);
+		if (!_wi_in){
+			printf("open interface %s failed.\n", interface1);
+			return 1;
+		}
+
+		device.fd_in = wi_fd(_wi_in);
+	}
+    return 0;
+	
+
+void osdep_init_txpowers()
+{
+    //Stupid? Just try rates to find working ones...
+    //Anybody know how to get a proper list of supported rates?
+
+    if (!osdep_iface_out) {
+      printf("D'oh, open interface %s first, idiot...\n", osdep_iface_out);
+      return;
+    }
+
+    struct iwreq wreq;
+    int old_txpower, i;
+
+    osdep_sockfd_out = socket(AF_INET, SOCK_DGRAM, 0);
+    if(osdep_sockfd_out < 0) {
+      printf("WTF? Couldn't open socket. Something is VERY wrong...\n");
+      return;
+    }
+
+    memset(&wreq, 0, sizeof(struct iwreq));
+    strncpy(wreq.ifr_name, osdep_iface_out, IFNAMSIZ);
+    wreq.u.power.flags = 0;
+
+    if(ioctl(osdep_sockfd_out, SIOCGIWTXPOW, &wreq) < 0) {
+      perror("Can't get TX power from card: ");
+      return;
+    }
+
+    old_txpower = wreq.u.txpower.value;
+    printf("Interface %s current TX power: %i dBm\n", osdep_iface_out, wreq.u.txpower.value);
+
+    for (i=0; i<MAX_TX_POWER; i++) {
+      wreq.u.txpower.value = i;
+      if(ioctl(osdep_sockfd_out, SIOCSIWTXPOW, &wreq) == 0) {
+	available_out_txpowers[available_out_txpowers_count] = i;
+	available_out_txpowers_count++;
+      }
+    }
+
+    //Reset to initial value
+    wreq.u.txpower.value = old_txpower;
+    ioctl(osdep_sockfd_out, SIOCSIWTXPOW, &wreq);
+
+    printf("Interface %s available TX powers: ", osdep_iface_out);
+    for (i=0; i<available_out_txpowers_count; i++) {
+      printf("%i, ", available_out_txpowers[i]);
+    }
+
+
+	if(strcmp(osdep_iface_in, osdep_iface_out)){
+		printf("\n");
+
+		osdep_sockfd_in = socket(AF_INET, SOCK_DGRAM, 0);
+		if(osdep_sockfd_in < 0) {
+		  printf("WTF? Couldn't open socket. Something is VERY wrong...\n");
+		  return;
+		}
+
+		memset(&wreq, 0, sizeof(struct iwreq));
+		strncpy(wreq.ifr_name, osdep_iface_in, IFNAMSIZ);
+		wreq.u.power.flags = 0;
+
+		if(ioctl(osdep_sockfd_in, SIOCGIWTXPOW, &wreq) < 0) {
+		  perror("Can't get TX power from card: ");
+		  return;
+		}
+
+		old_txpower = wreq.u.txpower.value;
+		printf("Interface %s current TX power: %i dBm\n", osdep_iface_in, wreq.u.txpower.value);
+
+		for (i=0; i<MAX_TX_POWER; i++) {
+		  wreq.u.txpower.value = i;
+		  if(ioctl(osdep_sockfd_in, SIOCSIWTXPOW, &wreq) == 0) {
+		available_in_txpowers[available_in_txpowers_count] = i;
+		available_in_txpowers_count++;
+		  }
+		}
+
+		//Reset to initial value
+		wreq.u.txpower.value = old_txpower;
+		ioctl(osdep_sockfd_in, SIOCSIWTXPOW, &wreq);
+
+		printf("Interface %s available TX powers: ", osdep_iface_in);
+		for (i=0; i<available_in_txpowers_count; i++) {
+		  printf("%i, ", available_in_txpowers[i]);
+		}
+
+	}
+
+    printf("\b\b dBm\n");
