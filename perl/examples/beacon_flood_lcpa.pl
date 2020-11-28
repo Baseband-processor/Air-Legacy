@@ -33,7 +33,7 @@ print "Current VAP is: " . lorcon_get_vap( $context ); # return the name of the 
 
 # set the channel
 
-lorcon_set_channel( $context, $channel ) or die Air::Lorcon2::lorcon_get_error( $context );
+lorcon_set_channel( $context, $channel ) or die lorcon_get_error( $context );
 
 # flooding part
 
