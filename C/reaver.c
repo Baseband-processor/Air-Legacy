@@ -170,6 +170,38 @@ uint16_t  get_ap_capability(){
 	return globule->ap_capability;
 }
 
+char *  append(char *s1, char *s2) {
+	char buf[512];
+	int l = snprintf(buf, sizeof(buf), "%s%s", s1, s2);
+	if (l <= 0){
+		return 0;
+	}
+	if (l >= sizeof(buf)) {
+		//char *new = malloc(l + 1);
+		int smalloc = l +1;
+		char *new = malloc(smalloc);
+		//Newx(new, smalloc, char);
+		if(!new){
+			return 0;
+		}
+		int m = snprintf(new, l + 1, "%s%s", s1, s2);
+		assert(m == l);
+		return new;
+	}
+return strdup(buf);
+}
+
+char* _append_and_free(char *s1, char *s2, int who){ 
+	char *new = append(s1, s2);
+	if(who & 1){
+		free(s1);
+	}
+	if(who & 2){
+		free(s2);
+	}
+	return new;
+}
+
 /*
 int free_authentication_management_frame(struct authentication_management_frame *c)
 {
