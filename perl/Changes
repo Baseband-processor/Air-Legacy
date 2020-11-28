@@ -26,6 +26,7 @@ CHANGED PROJECT, NOW IT WILL BE AIR::LEGACY
   - added wps_send.pl example: show how to send WPS packets
   - added packet_analysis.pl example: show how to examine, convert and entropize captured packets
   - added wps_to_json.pl example: show how to convert WPS stats into json format
+  - fixed broken examples
   
 Revision history for the (old)  Perl extension Air::Lorcon2.
 
