@@ -1011,7 +1011,7 @@ CODE:
 
 AirLorconDriver *
 lorcon_find_driver( driver )
-      const char *driver
+      char *driver
 
 
 AirLorconDriver *
@@ -1032,7 +1032,7 @@ OUTPUT:
 	
 AirLorconDriver *
 lorcon_auto_driver(interface)
-      const char *interface
+      char *interface
       CODE:
       AirLorconDriver *list = NULL, *i = NULL, *ret = NULL;
       i = list = lorcon_list_drivers();
@@ -1083,6 +1083,10 @@ lorcon_open_inject(context)
 int
 lorcon_open_monitor(context)
       AirLorcon *context
+	INIT:
+	if( ! context ){
+		return -1;
+	}
 	CODE:
 	  if (context->openmon_cb == NULL) {
 		snprintf(context->errstr, LORCON_STATUS_MAX,  "Driver %s does not support MONITOR mode", context->drivername);
@@ -1094,6 +1098,10 @@ lorcon_open_monitor(context)
 int
 lorcon_open_injmon(context)
       AirLorcon *context
+      	INIT:
+	if( ! context ){
+		return -1;
+	}
       	CODE:
  	if(lorcon_open_injmon(context) == NULL) {
 		snprintf(context->errstr, LORCON_STATUS_MAX,  "Driver %s does not support INJMON mode", context->drivername);
@@ -1111,23 +1119,23 @@ CODE:
 		return NULL;
 	}
 	Newxz( l_packet, 1, AirLorconDriver );
-
 	l_packet->lcpa = lcpa;
-	return l_packet;
+	return (l_packet);
 
 
 AirLorconPacket *
 lorcon_packet_from_pcap(context, h,  bytes)
 	AirLorcon *context							 
 	PCAP_PKTHDR *h
-	const u_char *bytes	
+	u_char *bytes	
 CODE:
         AirLorconPacket *l_packet;
 	if (bytes == NULL){
 		return NULL;
 	}
 	//l_packet = (AirLorconPacket *) malloc(sizeof(AirLorconPacket *));
-	Newx(l_packet, 1, AirLorconPacket);
+	int airlorconpacket_size = sizeof( AirLorconPacket * );
+	Newx(l_packet, airlorconpacket_size, AirLorconPacket);
     	l_packet->interface = context;
 	l_packet->lcpa = NULL;
 	l_packet->ts.tv_sec = h->ts.tv_sec;
@@ -1140,11 +1148,10 @@ CODE:
 	l_packet->free_data = 0;
 
 	l_packet->dlt = context->dlt;
-
 	l_packet->packet_raw = bytes;
 	l_packet->packet_header = NULL;
 	l_packet->packet_data = NULL;
-	lorcon_packet_decode(l_packet);
+	IV decode = lorcon_packet_decode(l_packet);
 	return l_packet;
 
 
@@ -1174,7 +1181,7 @@ CODE:
 void
 lorcon_set_vap(context, vap)
       AirLorcon *context
-      const char *vap
+      char *vap
  CODE:
   if (context->vapname != NULL){
         Safefree(context->vapname);
@@ -1182,21 +1189,23 @@ lorcon_set_vap(context, vap)
     context->vapname = savepv(vap);
   }
 
-const char *
+char *
 lorcon_get_vap(context)
       AirLorcon *context
 
-const char *
+char *
 lorcon_get_capiface(context)
       AirLorcon *context
-CODE:
+INIT:
 	if (context->vapname){
-		return newSVpv(context->vapname, 0);
-	}else{
-	return newSVpv(context->ifname, 0);
+		IV vapname = context->vapname;
 	}
+	return vapname;
+CODE:
+  IV ifname = context->ifname;
+  return ifname;	
 
-const char *
+char *
 lorcon_get_driver_name(context)
       AirLorcon *context
 
@@ -1214,8 +1223,7 @@ if (context->setchan_cb == NULL) {
 	snprintf(context->errstr, LORCON_STATUS_MAX,  "Driver %s does not support setting channel", context->drivername);
 		return LORCON_ENOTSUPP;
 	}
-
-	//return (*(context->setchan_cb))(context, channel);
+	return (*(context->setchan_cb))(context, channel);
 
 int
 lorcon_get_channel(context)
@@ -1232,8 +1240,12 @@ int
 lorcon_set_complex_channel(context, channel) 
 	AirLorcon *context
 	AirLorconChannel *channel
+INIT:
+if( !(context) || !(channel) ){
+	return -1;
+}
 CODE:
-	    if (context->setchan_ht_cb == NULL) {
+    if (context->setchan_ht_cb == NULL) {
         snprintf(context->errstr, LORCON_STATUS_MAX, "Driver %s does not support HT channels", context->drivername);
         return LORCON_ENOTSUPP;
     }
