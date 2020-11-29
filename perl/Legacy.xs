@@ -1297,7 +1297,7 @@ lorcon_next_ex(context, packet)
 int
 lorcon_set_filter(context, filter)
       AirLorcon *context
-      const char *filter
+      char *filter
 
 int
 lorcon_set_compiled_filter(context, filter)
@@ -1383,10 +1383,20 @@ int
 lorcon_inject(context, packet)
       AirLorcon *context
       AirLorconPacket *packet
-	  CODE:
+        PREINIT:
+	if(sizeof(packet) == 0 ){
+		return -1;
+	}
+	INIT:
+	if( ! context ){
+		return -1;
+	}
+	CODE:
 	if (context->sendpacket_cb == NULL) {
 		snprintf(context->errstr, LORCON_STATUS_MAX,  "Driver %s does not define a send function", context->drivername);
 		return LORCON_ENOTSUPP;
+	}else{
+		return (*(context->sendpacket_cb))(context, packet);
 	}
 
 
@@ -1415,15 +1425,15 @@ lorcon_add_wepkey(context, bssid, key, length)
 	}
 	LORCON_WEP *wep;
 	//wep = (	LORCON_WEP *) malloc(sizeof(LORCON_WEP *) );
-	Newx(wep, 1, LORCON_WEP);	
+	Newx(&wep, 1, LORCON_WEP);	
 	//memcpy(wep->bssid, bssid, 6);
-	Copy(bssid, wep->bssid, 6, 0);	
+	Copy(&bssid, wep->bssid, 6, 0);	
 	//memcpy(wep->key, key, length);
 	Copy(key, wep->key, length, 0);	
 	wep->len = length;
 	wep->next = context->wepkeys;
 	context->wepkeys = wep;
-	
+	return 1;
 
 
 void 
@@ -1432,17 +1442,31 @@ lorcon_set_useraux(context, aux)
   void *aux
 CODE:
     context->userauxptr = aux;
-    return(1);
 
-void  
+char *
 lorcon_get_useraux(context)
   AirLorcon *context
 CODE:
-    return context->userauxptr;
-
+    RETVAL = context->userauxptr;
+OUTPUT:
+	RETVAL
+	
+	
 void  
 lorcon_packet_free(packet)
   AirLorconPacket *packet
+INIT:
+if( ! packet ){
+	return -1;
+}
+CODE:
+if (packet->free_data) {
+		if (packet->packet_raw)
+			Safefree(packet->packet_raw);
+		if (packet->lcpa)
+			lcpa_free(packet->lcpa);
+	}
+	Safefree(packet);
 
 int 
 lorcon_packet_decode(packet)
@@ -1462,19 +1486,19 @@ lorcon_packet_decrypt(context, packet)
 	AirLorconPacket *ret;
 	lorcon_wep_t *wepidx = context->wepkeys;
 	Lorcon_DOT11 *extra = (Lorcon_DOT11 *) packet->extra_info;
-	u_char pwd[LORCON_WEPKEY_MAX + 3], keyblock[256];
+	u_char pwd[LORCON_WEPKEY_MAX + 3];
+	u_char keyblock[256];
 	int pwdlen = 3;
 	int kba = 0, kbb = 0;
-if (packet->extra_info == NULL || packet->extra_type != LORCON_PACKET_EXTRA_80211 ||
-		packet->packet_data == NULL || packet->length_data < 7)
-		return NULL;
+if (packet->extra_info == NULL || packet->extra_type != LORCON_PACKET_EXTRA_80211 || packet->packet_data == NULL || packet->length_data < 7){
+		RETVAL = NULL;
+}
 	while (wepidx) {
-
 		wepidx = wepidx->next;
 		RETVAL = wepidx;
 	}
 	if(wepidx == NULL){
-		return( NULL );
+		RETVAL = NULL;
 	}
 	  OUTPUT:
 		RETVAL 
@@ -1500,22 +1524,30 @@ lcpf_randmac(addr, valid)
 int 
 lorcon_ifdown( context )
   AirLorcon *context
+INIT:
+if( ! context ){
+	return -1;
+}
 CODE:
 	if (context->ifconfig_cb == NULL) {
 		return -1;
 	}else{
-	return (*(context->ifconfig_cb))(context, 0);
+		return (*(context->ifconfig_cb))(context, 0);
 	}
 
 int
 lorcon_get_complex_channel( context, channel )
   AirLorcon *context
   AirLorconChannel *channel
+INIT:
+if( ! context || ! channel ){
+	return -2;	
+}
 CODE:
 	 if (context->getchan_ht_cb == NULL) {
 		return -1;
-    }else{
-    return (*(context->getchan_ht_cb))(context, channel);
+   	 }else{
+ 		   return (*(context->getchan_ht_cb))(context, channel);
 	 }
 
 int 
@@ -1546,7 +1578,7 @@ lorcon_multi_add_interface(ctx, lorcon_intf)
     i->next = ctx->interfaces;
     i->lorcon_intf = lorcon_intf;
     ctx->interfaces = i;
-    return 0;
+    return 1;
 
 
 void 
@@ -1558,6 +1590,10 @@ lorcon_multi_del_interface(ctx, lorcon_intf, free_interface)
 AV *
 lorcon_multi_get_interfaces(ctx)
   AirLorconMulti *ctx
+PREINIT:
+	if( ! ctx || ( sizeof(ctx) == 0 ) ){
+			return -1;
+	}
 INIT:
         AV *av = newAV();
 	AirLorcon *dri;
@@ -1577,7 +1613,7 @@ lorcon_multi_get_next_interface(ctx, intf)
   AirLorconInterface *intf
 CODE:
 	if (intf == NULL){
-        	return ctx->interfaces;
+        	RETVAL =  newSVpv(ctx->interfaces, 0);
 	}
 RETVAL = newSVpv(intf->next, 0);	
 OUTPUT:
@@ -1586,6 +1622,10 @@ RETVAL
 AirLorcon *
 lorcon_multi_interface_get_lorcon(intf)
   AirLorconInterface *intf
+INIT:
+	if( ! intf ){
+		return -1;
+	}
 CODE:
       return intf->lorcon_intf;
 
@@ -1624,7 +1664,7 @@ lorcon_multi_loop(ctx, counter, callback, user)
 
 int 
 drv_madwifing_probe(interface) 
-	const char *interface
+	char *interface
 CODE:
 	return 0;
 
@@ -1637,9 +1677,8 @@ CODE:
 	if (ifconfig_get_hwaddr(context->vapname, context->errstr, int_mac) < 0) {
 		return -1;
 	}
-
-	(*mac) = malloc(sizeof(uint8_t) * 6);
-	//Newxz(mac, 1, 6);
+	//(*mac) = malloc(sizeof(uint8_t) * 6);
+	Newx(mac, 6, uint8_t);
 	//memcpy(*mac, int_mac, 6);
 	Copy(int_mac, mac, 6, 1);
 	return 6;
@@ -1725,8 +1764,11 @@ CODE:
 	if (freebytes){
 		Safefree(bytes);
 	}
-	return ret;
-		
+	RETVAL = ret;
+OUTPUT:
+RETVAL
+
+
 int 
 madwifing_openmon_cb(context)
 	AirLorcon *context
@@ -1734,6 +1776,10 @@ madwifing_openmon_cb(context)
 int 
 drv_madwifing_init(context) 
   AirLorcon *context
+INIT:
+if( ! context ){
+	return -1;
+}
 CODE:
 	context->openinject_cb = madwifing_openmon_cb(context);
 	context->openmon_cb = madwifing_openmon_cb(context);
@@ -1750,13 +1796,14 @@ drv_madwifing_listdriver(drv)
 CODE:
 	AirLorconDriver *d;
 	//AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(lorcon_driver_t));
-	Newxz(d, 1, AirLorconDriver);
+	int size = sizeof(AirLorconDriver *);
+	Newx(d, size, AirLorconDriver);
 	d->name = savepv("madwifing"); // toggled strdup
 	d->details = savepv("Linux madwifi-ng drivers, deprecated by ath5k and ath9k"); // toggled strdup
 	d->init_func = drv_madwifing_init(drv);
 	d->probe_func = drv_madwifing_probe();
 	d->next = drv;
-	RETVAL = d;
+	RETVAL = d; // TODO: transform d into a readable string
 OUTPUT:
 	RETVAL
 	
@@ -1767,6 +1814,10 @@ lorcon_packet_set_mcs(packet, use_mcs, mcs, short_gi, use_40mhz)
 	unsigned int mcs
 	unsigned int short_gi
 	unsigned int use_40mhz
+INIT:
+	if( ! packet ){
+		return -1;
+	}
 CODE:
     packet->set_tx_mcs = use_mcs;
     packet->tx_mcs_rate = mcs;
