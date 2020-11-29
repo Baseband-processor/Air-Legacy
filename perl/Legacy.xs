@@ -1155,7 +1155,7 @@ CODE:
 	return l_packet;
 
 
-void 
+int
 lorcon_pcap_handler(user,  h, bytes)
 	u_char *user
 	PCAP_PKTHDR *h
@@ -1168,7 +1168,7 @@ CODE:
        		 r = (*(context->pcap_handler_cb))(user, h, bytes);
 
       	  if (r != 0){
-            return;
+            return -1;
     }
 	   }
 	if (context->handler_cb == NULL){
@@ -1199,11 +1199,13 @@ lorcon_get_capiface(context)
 INIT:
 	if (context->vapname){
 		IV vapname = context->vapname;
+		RETVAL = vapname;
 	}
-	return vapname;
 CODE:
   IV ifname = context->ifname;
-  return ifname;	
+  RETVAL = ifname;	
+OUTPUT:
+RETVAL
 
 char *
 lorcon_get_driver_name(context)
