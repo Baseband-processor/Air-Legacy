@@ -295,7 +295,8 @@ every developer who wants to partecipate (and probably beat my library) is welco
 
 **More informations**
 
-If you are interested in new developments of Air::Legacy see its [official site](https://baseband-processor.github.io/WirelessLegacy.github.io/)
+If you are interested in new developments of Air::Legacy see its [official site](https://baseband-processor.github.io/WirelessLegacy.github.io/),
+it is daily updated and shows last development for Air::Legacy.
 
 
 Requests and collaborations
