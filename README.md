@@ -258,6 +258,7 @@ for starting I suggest to learn:
 * [Net::LibNIDS](https://metacpan.org/pod/Net::LibNIDS)
 * [Parse::Snort](https://metacpan.org/pod/Parse::Snort)
 * [Linux::TunTap](https://metacpan.org/pod/Linux::TunTap)
+* [Net::Wireless::802_11::WPA::CLI](https://metacpan.org/pod/Net::Wireless::802_11::WPA::CLI)
 
 **PERL NETWORK SECURITY RESOURCE**
 
