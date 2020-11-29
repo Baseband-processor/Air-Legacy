@@ -3645,7 +3645,7 @@ int
 rtfile_pcap_handler(user, h,  bytes) 
 	u_char *user
 	PCAP_PKTHDR *h
-	const u_char *bytes
+	u_char *bytes
 CODE:
     AirLorcon *context = (AirLorcon *) user;
     RTFILE_EXTRA_LORCON *extra =  (RTFILE_EXTRA_LORCON *) context->auxptr;
@@ -3666,7 +3666,7 @@ CODE:
     extra->last_ts.tv_sec = h->ts.tv_sec;
     extra->last_ts.tv_usec = h->ts.tv_usec;
     usleep(delay_usec);
-
+    return 1;
 
 	    
 int 
@@ -3676,13 +3676,17 @@ CODE:
     STAT buf;
     if (stat(interface, &buf) == 0) {
         return 1;
-	}
+	}else{
 	return 0;
-
+    }
 
 int 
 drv_file_init(context) 
 	AirLorcon *context
+INIT:
+if(! context ){
+	return -1;
+}
 CODE:	
 	context->openmon_cb = file_openmon_cb();
 	context->openinjmon_cb = file_openmon_cb();
@@ -3692,17 +3696,22 @@ CODE:
 int 
 drv_rtfile_init(context) 
 	AirLorcon *context
+INIT:
+if( ! context ){
+	return -1;
+}
 CODE:
     RTFILE_EXTRA_LORCON *rtf_extra;
 	context->openmon_cb = file_openmon_cb();
 	context->openinjmon_cb = file_openmon_cb();
     	context->pcap_handler_cb = rtfile_pcap_handler();
     //rtf_extra =  (RTFILE_EXTRA_LORCON *) malloc(sizeof(RTFILE_EXTRA_LORCON *));
-    Newx(rtf_extra, 1, RTFILE_EXTRA_LORCON);
+    int size = sizeof(RTFILE_EXTRA_LORCON *);
+    Newx(rtf_extra, size, RTFILE_EXTRA_LORCON);
     rtf_extra->last_ts.tv_sec = 0;
     rtf_extra->last_ts.tv_usec = 0;
     context->auxptr = rtf_extra;
-	return 1;
+    return 1;
 
 
      
@@ -3712,10 +3721,11 @@ drv_file_listdriver(drv)
 CODE:
 	AirLorconDriver *d; 
 	//d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
-	Newx(d, 1, AirLorconDriver);
+	int Airsize = sizeof(AirLorconDriver *);
+	Newx(d, Airsize, AirLorconDriver);
 	AirLorconDriver *rtd; 
 	//rtd = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
-	Newx(rtd, 1, AirLorconDriver);
+	Newx(rtd, Airsize, AirLorconDriver);
 	d->name = savepv("file");
 	d->details = savepv("PCAP file source");
 	d->init_func = drv_file_init;
@@ -3752,20 +3762,22 @@ int
 bcm43xx_open(in_tx)
 	TX80211 *in_tx
 CODE:
-	const char inject_nofcs_pname[] = "/sys/class/net/%s/device/inject_nofcs";
+	char inject_nofcs_pname[] = "/sys/class/net/%s/device/inject_nofcs";
 	char *inject_nofcs_location = NULL;
 	int nofcs = -1;
 	if (strlen(in_tx->ifname) == 0) {
 		snprintf(in_tx->errstr, TX80211_STATUS_MAX, "%s", "No interface name\n");
 		return -1;
 	}
-	inject_nofcs_location  = (char*) malloc(strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5); 
-	int ifname_l = strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5;
-	//Newxz(inject_nofcs_location , 1, (strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5) );
+	//inject_nofcs_location  = (char*) malloc(strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5); 
+	int ifname_l = (strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5);
+	Newx( inject_nofcs_location , ifname_l, char );
 	snprintf(inject_nofcs_location,  strlen(in_tx->ifname) + strlen(inject_nofcs_pname) + 5, inject_nofcs_pname, in_tx->ifname);
 	nofcs = open(inject_nofcs_location, O_WRONLY);
 	Safefree(inject_nofcs_location);
-	if (nofcs<0) {return -1;}
+	if (nofcs<0) {
+		return -1;
+	}
 	else {
 		in_tx->raw_fd=nofcs;
 		return 0;
@@ -3775,9 +3787,13 @@ CODE:
 int 
 bcm43xx_close(in_tx)
 	TX80211 *in_tx
+INIT:
+if(! in_tx ){
+	return -1;
+}
 CODE:
-	int i=close(in_tx->raw_fd); 
-	in_tx->raw_fd=-1; 
+	int i = close(in_tx->raw_fd); 
+	in_tx->raw_fd = -1; 
 	RETVAL = i;
 OUTPUT:
 	RETVAL
@@ -3843,7 +3859,7 @@ CODE:
 
 	frame = malloc(sizeof(*frame) + payloadlen);
 	int frame_l = sizeof(*frame)+ payloadlen;
-	//Newxz(frame, 1, frame + payloadlen);
+	Newx(frame, frame_l, WG80211_FRAME);
 	if (frame == NULL) {
 		snprintf(wginj->errstr, TX80211_STATUS_MAX, "wlan-ng send unable to allocate memory buffer");
 		return TX80211_ENOTX;
@@ -3872,7 +3888,7 @@ CODE:
 
 int 
 drv_mac80211_probe(interface) 
-	const char *interface
+	char *interface
 CODE:
 	if (ifconfig_get_sysattr(interface, "phy80211")){
 		return 1;
@@ -3920,7 +3936,8 @@ CODE:
 		len = lcpa_size(packet->lcpa);
 		freebytes = 1;
 		bytes = (u_char *) malloc(sizeof(u_char) * len);
-		//Newxz(bytes, 1, len);
+		int size = sizeof(u_char) * len;
+		Newx(bytes, size, u_char);
 		lcpa_freeze(packet->lcpa, bytes);
 	} else if (packet->packet_header != NULL) {
 		freebytes = 0;
@@ -3942,7 +3959,7 @@ CODE:
 	snprintf(context->errstr, LORCON_STATUS_MAX, "drv_mac80211 failed to send packet: %s", strerror(errno));
 
 	if (freebytes){
-		free(bytes);
+		Safefree(bytes);
 	}
 	RETVAL = ret;
 OUTPUT:
