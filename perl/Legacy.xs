@@ -2068,8 +2068,8 @@ nl80211_disconnect(nl_sock)
 
 int 
 nl80211_createvif(interface, newinterface, in_flags, flags_sz, errstr)
-     const char *interface
-     const char *newinterface
+     char *interface
+     char *newinterface
      unsigned int *in_flags
      unsigned int * flags_sz
      char *errstr
@@ -2086,7 +2086,7 @@ nl80211_setchannel_cache(ifidx, nl_sock, nl80211_id, channel, chmode, errstr)
 
 int
 nl80211_setfrequency(interface, control_freq, chan_width, center_freq1, center_freq2, errstr)
-        const char *interface 
+        char *interface 
         unsigned int control_freq
         unsigned int chan_width
         unsigned int center_freq1
@@ -2106,18 +2106,19 @@ nl80211_setfrequency_cache(ifidx, nl_sock, nl80211_id, control_freq, chan_width,
 
 char *
 nl80211_find_parent(interface)
-   const char *interface
+   char *interface
 
 #define IW_ESSID_MAX_SIZE   32
 #define	SIOCSIWESSID   0x8B1A
 
 int
 iwconfig_set_ssid(input_dev, errstr, input_essid)
-   const char *input_dev
+   char *input_dev
    char *errstr
    char *input_essid
-CODE:
+INIT:
 	struct iwreq wrq;
+CODE:
 	int skfd;
 	char essid[IW_ESSID_MAX_SIZE + 1];
 
@@ -2146,11 +2147,12 @@ CODE:
 
 int
 iwconfig_get_ssid(input_dev, errstr, input_essid)
-   const char *input_dev   
+   char *input_dev   
    char *errstr
    char *input_essid
-CODE:
+INIT:
 	struct iwreq wrq;
+CODE:
 	int skfd;
 	char essid[IW_ESSID_MAX_SIZE + 1];
 
@@ -2178,11 +2180,12 @@ CODE:
 
 int
 iwconfig_get_name(input_dev, errstr, input_name)
-   const char *input_dev
+   char *input_dev
    char *errstr
    char *input_name
-CODE:
+INIT:
 	struct iwreq wrq;
+CODE:
 	int skfd;
 
 	if ((skfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
@@ -2205,7 +2208,7 @@ CODE:
 
 int 
 floatchan2int(input_chan)
-	float input_chan
+	double input_chan
 CODE:
     if (input_chan == 0){
         return 0;
@@ -2225,7 +2228,7 @@ CODE:
     else if (input_chan >= 58320 && input_chan <= 64800){
         return (input_chan - 56160) / 2160;
 	}
-    return input_chan;
+    return ((long double) input_chan);
 	
 float 
 iwfreq2float(inreq)
@@ -2238,10 +2241,11 @@ CODE:
 
 int
 iwconfig_get_channel(input_dev, errstr)
-   const char *input_dev
+   char *input_dev
    char *errstr
-CODE:
+INIT:
 	struct iwreq wrq;
+CODE:
 	int skfd;
 
 	if ((skfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
@@ -2260,17 +2264,21 @@ CODE:
 	}
 
 	close(skfd);
-	return newSVpv((floatchan2int(iwfreq2float(&wrq))), 0);
+	IV return_value = (floatchan2int(iwfreq2float(&wrq)));
+	RETVAL = return_value;
+OUTPUT:
+RETVAL
 
 #define IW_FREQ_FIXED   0x01
 
 int
 iwconfig_set_channel(input_dev, errstr, input_channel)
-   const char *input_dev
+   char *input_dev
    char *errstr
    int input_channel
-CODE:
+INIT:
 	struct iwreq wrq;
+CODE:
 	int skfd;
 
 	if ((skfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
@@ -2307,10 +2315,11 @@ CODE:
 	
 int 
 iwconfig_get_mode(input_dev, errstr)
-   const char *input_dev
+   char *input_dev
    char *errstr
+INIT:
+	struct iwreq wrq;
 CODE:
-        struct iwreq wrq;
 	int skfd;
 	if ((skfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
 		snprintf(errstr, LORCON_STATUS_MAX, "Failed to create AF_INET DGRAM socket %d:%s", errno, strerror(errno));
@@ -2327,15 +2336,16 @@ CODE:
 		return -1;
 	}
 	close(skfd);
-	return (wrq.u.mode);
+	return ((int)(wrq.u.mode));
 	
 int
 iwconfig_set_mode(input_dev, in_err, tx80211_mode)
-	const char *input_dev
+	char *input_dev
 	char *in_err
 	int tx80211_mode
-CODE:
+INIT:
 	struct iwreq wrq;
+CODE:
 	int skfd;
 
 	if ((skfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
@@ -2360,8 +2370,8 @@ CODE:
 	
 int 
 iwconfig_set_intpriv(in_dev, privcmd, val1, val2, errstr)
-	const char *in_dev
-	const char *privcmd
+	char *in_dev
+	char *privcmd
 	int val1
 	int val2	
 	char *errstr
@@ -2489,6 +2499,10 @@ CODE:
 int 
 drv_tuntap_init(context)
    AirLorcon *context
+INIT:
+	if( ! context ){
+		return -1;
+	}
      CODE:
 	lorcon_open_inject(context) ==  tuntap_openmon_cb(context);
 	lorcon_open_monitor(context) == tuntap_openmon_cb(context);
@@ -2503,7 +2517,8 @@ drv_tuntap_listdriver(drv)
 	CODE:
  	AirLorconDriver *d;
 	//AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
-	Newxz(d, 1, AirLorconDriver);
+	int driver_size = sizeof( AirLorconDriver *);
+	Newx(d, driver_size, AirLorconDriver);
 	d->name = savepv("tuntap");
 	d->details = savepv("Linux tuntap virtual interface drivers");
 	d->init_func = drv_tuntap_init;
@@ -2519,7 +2534,7 @@ lcpa_init()
 LCPA_META *
 lcpa_append_copy(in_pack, in_type, in_length, in_data)
               LCPA_META *in_pack
-              const char *in_type
+              char *in_type
               int in_length
               uint8_t *in_data
 
@@ -2530,14 +2545,14 @@ lcpa_free(in_head)
 LCPA_META *
 lcpa_append(in_pack, in_type, in_length, in_data)
               LCPA_META *in_pack
-              const char *in_type
+              char *in_type
               int in_length
               uint8_t *in_data
 
 LCPA_META *
 lcpa_insert(in_pack, in_type, in_length, in_data)
         LCPA_META *in_pack
-        const char *in_type
+        char *in_type
         int in_length
         uint8_t *in_data
         CODE:
@@ -2548,7 +2563,7 @@ lcpa_insert(in_pack, in_type, in_length, in_data)
 LCPA_META *
 lcpa_find_name(in_head, in_type)
               LCPA_META *in_head
-              const char *in_type
+              char *in_type
          CODE:
       RETVAL = lcpa_find_name(&in_head, &in_type);
    OUTPUT:
@@ -2557,16 +2572,30 @@ lcpa_find_name(in_head, in_type)
 void
 lcpa_replace_copy(in_pack, in_type, in_length, in_data)
               LCPA_META *in_pack
-              const char *in_type
+              char *in_type
               int in_length
               uint8_t *in_data
               
-void
+int
 lcpa_replace(in_pack, in_type, in_length, in_data)
         LCPA_META *in_pack
-        const char *in_type
+        char *in_type
         int in_length
         uint8_t *in_data
+PREINIT:
+	if (in_pack->freedata) {
+		Safefree(in_pack->data);
+	}
+INIT:
+	//in_pack->data = (uint8_t *) malloc(in_len);
+	Newx(in_pack->data, in_len, LCPA_META);
+	//memcpy(in_pack->data, in_data, in_len);
+	Copy(in_data, in_pack->data, in_len, LCPA_META);
+	in_pack->len = in_len;
+	in_pack->freedata = 1;
+CODE:
+	snprintf(in_pack->type, 24, "%s", in_type);
+
 			    
 int 
 lcpa_size(in_head) 
@@ -2610,7 +2639,7 @@ CODE:
         
 int 
 madwifing_list_vaps(interface_name, errorstring)
-	const char *interface_name
+	char *interface_name
 	char *errorstring
 
 
@@ -2620,21 +2649,21 @@ madwifing_free_vaps(in_vaplist)
 
 int 
 madwifing_setdevtype(interface_name, devtype, errorstring)
-	const char *interface_name
+	char *interface_name
 	char *devtype
 	char *errorstring
 
 
 int 
 madwifing_destroy_vap(interface_name, errorstring)
-	const char *interface_name
+	char *interface_name
 	char *errorstring
 
 int 
 madwifing_build_vap(interface_name, errorstring, vapname, retvapname, vapmode, vapflags)
-	const char *interface_name
+	char *interface_name
 	char *errorstring
-	const char *vapname
+	char *vapname
 	char *retvapname
 	int vapmode
 	int vapflags
@@ -2665,9 +2694,9 @@ madwifing_build_vap(interface_name, errorstring, vapname, retvapname, vapmode, v
 	Zero(&ifr, 1, ifr); 
 	//memset(&cp, 0, sizeof(cp));
 	Zero(&cp, 1, cp);
-	//strncpy(cp->icp_name, tnam, IFNAMSIZ);
-	//cp->icp_opmode = vapmode;
-	//cp->icp_flags = vapflags;
+	strncpy(cp->icp_name, tnam, IFNAMSIZ);
+	cp->icp_opmode = vapmode;
+	cp->icp_flags = vapflags;
 
 	strncpy(ifr.ifr_name, interface_name, IFNAMSIZ);
 	ifr.ifr_data = (caddr_t) &cp;
@@ -2699,52 +2728,52 @@ madwifing_find_parent(vaplist)
 
 char *
 ifconfig_get_sysdriver(in_dev)
-	const char *in_dev
+	char *in_dev
 
 int
 ifconfig_get_sysattr(in_dev, attr)
-	const char *in_dev
-	const char *attr
+	char *in_dev
+	char *attr
 
 int 
 ifconfig_set_flags(in_dev, errorstring, flags)
-	const char *in_dev
+	char *in_dev
 	char *errorstring
 	short flags
 
 int 
 ifconfig_delta_flags(in_dev, errorstring,  flags)
-	const char *in_dev
+	char *in_dev
 	char *errorstring
 	short flags
 
 int 
 ifconfig_get_flags(in_dev, errorstring, flags)
-	const char *in_dev
+	char *in_dev
 	char *errorstring
 	short *flags
 
 int 
 ifconfig_get_hwaddr(in_dev, errorstring, ret_hwaddr)
-	const char *in_dev
+	char *in_dev
 	char *errorstring
 	uint8_t * ret_hwaddr
 
 int 
 ifconfig_set_hwaddr(in_dev, errorstring, in_hwaddr)
-	const char *in_dev
+	char *in_dev
 	char *errorstring
 	uint8_t * in_hwaddr
 
 int 
 ifconfig_set_mtu(in_dev, errorstring, in_mtu)
-	const char *in_dev
+	char *in_dev
 	char *errorstring
 	uint16_t in_mtu
 
 int 
 ifconfig_ifupdown(in_dev, errorstring,  devup)
-	const char *in_dev
+	char *in_dev
 	char *errorstring
 	int devup
 
