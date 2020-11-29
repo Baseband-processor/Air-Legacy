@@ -2888,6 +2888,10 @@ int
 rt2570_send(input_tx, input_pkt)
 	TX80211 *input_tx
 	TX80211_PACKET *input_pkt
+INIT:
+if( ! input_tx || ! input_pkt ){
+		return -1;
+}
 CODE:
 	int ret;
 
@@ -2898,12 +2902,13 @@ CODE:
 	ret = write(input_tx->raw_fd, input_pkt->packet, input_pkt->plen);
 
 	usleep(2);
-
 	if (ret < 0){
 		return TX80211_ENOTX;
 	}
-	return (ret);
-	
+	RETVAL = ret;
+OUTPUT:
+RETVAL
+
 int 
 tx80211_zd1211rw_capabilities()
 	CODE:
@@ -2947,6 +2952,10 @@ lcpf_80211headers(pack, type, subtype, fcflags, duration, mac1, mac2, mac3, mac4
 	uint8_t *mac4
 	unsigned int fragment
 	unsigned int sequence
+INIT:
+	pack->data = NULL;
+	pack->type = NULL;
+	pack->len = NULL;
 CODE:
 	uint8_t chunk[2];
 	uint16_t *sixptr;
@@ -2987,6 +2996,10 @@ lcpf_qos_data(pack, fcflags, duration, mac1, mac2, mac3, mac4, fragment,  sequen
 	uint8_t *mac4
 	unsigned int fragment
 	unsigned int sequence
+INIT:
+	pack->data = NULL;
+	pack->type = NULL;
+	pack->len = NULL;
 CODE:
 	lcpf_80211headers(pack, WLAN_FC_TYPE_DATA, WLAN_FC_SUBTYPE_QOSDATA, fcflags, duration, mac1, mac2, mac3, mac4, fragment, sequence);
 
@@ -3004,6 +3017,10 @@ lcpf_beacon(pack, src, bssid, framecontrol, duration, fragment, sequence,  times
 	uint64_t timestamp
 	int beacon
 	int capabilities
+INIT:
+	pack->data = NULL;
+	pack->type = NULL;
+	pack->len = NULL;
 CODE:
 	uint8_t chunk[8];
 	uint16_t *sixptr = (uint16_t *) chunk;
@@ -3030,6 +3047,10 @@ lcpf_add_ie(pack, num, len, data)
 	uint8_t num
 	uint8_t len
 	uint8_t *data
+INIT:
+	pack->data = NULL;
+	pack->type = NULL;
+	pack->len = NULL;
 CODE:
 	uint8_t chunk[257];
 	chunk[0] = num;
@@ -3050,6 +3071,10 @@ lcpf_deauth(pack, src, dst, bssid, framecontrol, duration, fragment, sequence, r
 	int fragment
 	int sequence
 	int reasoncode
+INIT:
+	pack->data = NULL;
+	pack->type = NULL;
+	pack->len = NULL;
 CODE:
 	uint8_t chunk[2];
 	uint16_t *ch16 = (uint16_t *) chunk;
@@ -3070,6 +3095,10 @@ lcpf_disassoc(pack, src, dst, bssid, framecontrol, duration, fragment, sequence,
 	int fragment
 	int sequence
 	int reasoncode
+INIT:
+	pack->data = NULL;
+	pack->type = NULL;
+	pack->len = NULL;
 CODE:
 	uint8_t chunk[2];
 	uint16_t *ch16 = (uint16_t *) chunk;
@@ -3088,6 +3117,10 @@ lcpf_probereq(pack, src, framecontrol, duration, fragment,  sequence)
 	int duration
 	int fragment
 	int sequence
+INIT:
+	pack->data = NULL;
+	pack->type = NULL;
+	pack->len = NULL;
 CODE:
 	uint8_t chunk[6] = "\xFF\xFF\xFF\xFF\xFF\xFF";
 	lcpf_80211headers(pack, WLAN_FC_TYPE_MGMT, WLAN_FC_SUBTYPE_PROBEREQ, framecontrol, duration, chunk, src, chunk, NULL, fragment, sequence);
@@ -3106,6 +3139,10 @@ lcpf_proberesp(pack, dst, src, bssid, framecontrol, duration, fragment, sequence
 	uint64_t timestamp
 	int beaconint
 	int capabilities
+INIT:
+	pack->data = NULL;
+	pack->type = NULL;
+	pack->len = NULL;
 CODE:
 	uint8_t chunk[8];
 	uint16_t *sixptr = (uint16_t *) chunk;
@@ -3131,6 +3168,10 @@ lcpf_rts(pack, recvmac, transmac, framecontrol,  duration)
 	uint8_t *transmac
 	int framecontrol
 	int duration
+INIT:
+	pack->data = NULL;
+	pack->type = NULL;
+	pack->len = NULL;
 CODE:	
 	
 	lcpf_80211ctrlheaders(pack, 1, 11, framecontrol, duration, recvmac);
@@ -3144,6 +3185,10 @@ lcpf_80211ctrlheaders(pack, type, subtype, fcflags,  duration, mac1)
 	unsigned int fcflags
 	unsigned int duration
 	uint8_t *mac1
+INIT:
+	pack->data = NULL;
+	pack->type = NULL;
+	pack->len = NULL;
 CODE:
 	uint8_t chunk[2];
 	uint16_t *sixptr;
@@ -3174,6 +3219,10 @@ lcpf_authreq(pack, dst, src, bssid, framecontrol, duration, fragment, sequence, 
 	uint16_t authalgo
 	uint16_t auth_seq
 	uint16_t auth_status
+INIT:
+	pack->data = NULL;
+	pack->type = NULL;
+	pack->len = NULL;
 CODE:
 	uint8_t chunk[2];
 	uint16_t *sixptr = (uint16_t *) chunk;
@@ -3200,6 +3249,10 @@ lcpf_authresq(pack, dst, src, bssid, framecontrol, duration, fragment, sequence,
 	uint16_t authalgo
 	uint16_t auth_seq
 	uint16_t auth_status
+INIT:
+	pack->data = NULL;
+	pack->type = NULL;
+	pack->len = NULL;
 CODE:
 	lcpf_authreq(pack, dst, src, bssid, framecontrol, duration, fragment, sequence, authalgo, auth_seq, auth_status);
 
@@ -3216,6 +3269,10 @@ lcpf_assocreq(pack, dst, src, bssid, framecontrol, duration, fragment, sequence,
 	int sequence
 	uint16_t capabilities
 	uint16_t listenint
+INIT:
+	pack->data = NULL;
+	pack->type = NULL;
+	pack->len = NULL;
 CODE:
 	uint8_t chunk[2];
 	uint16_t *sixptr = (uint16_t *) chunk;
@@ -3240,6 +3297,10 @@ lcpf_assocresp(pack, dst, src, bssid, framecontrol, duration, fragment, sequence
 	uint16_t capabilities
 	uint16_t status
 	uint16_t aid
+INIT:
+	pack->data = NULL;
+	pack->type = NULL;
+	pack->len = NULL;
 CODE:
 	uint8_t chunk[2];
 	uint16_t *sixptr = (uint16_t *) chunk;
@@ -3265,6 +3326,10 @@ lcpf_data(pack, fcflags, duration, mac1, mac2, mac3, mac4, fragment, sequence)
 	uint8_t *mac4
 	unsigned int fragment
 	unsigned int sequence
+INIT:
+	pack->data = NULL;
+	pack->type = NULL;
+	pack->len = NULL;
 CODE:
 	lcpf_80211headers(pack, WLAN_FC_TYPE_DATA, WLAN_FC_SUBTYPE_DATA, fcflags, duration, mac1, mac2, mac3, mac4, fragment, sequence);
 	
@@ -3274,6 +3339,10 @@ lcpf_qosheaders(pack, priority, eosp, ackpol)
 	unsigned int priority
 	unsigned int eosp
 	unsigned int ackpol
+INIT:
+	pack->data = NULL;
+	pack->type = NULL;
+	pack->len = NULL;
 CODE:
 	uint8_t chunk[2];
 
@@ -3302,8 +3371,9 @@ CODE:
 	}
 	
 	length = 12 + packet->length_data - offt;
-	*data = (u_char *) malloc(sizeof(u_char) * length);
-	//Newx(data, 1, length);	
+	//*data = (u_char *) malloc(sizeof(u_char) * length);
+	int size = (sizeof(u_char) * length);
+	Newx(data, size, u_char);	
 	//memcpy(*data, extra->dest_mac, 6);
 	Copy(extra->dest_mac, *data, 6, 0);	
 	//memcpy(*data + 6, extra->source_mac, 6);
@@ -3327,11 +3397,12 @@ CODE:
 	u_char *mac0 = NULL, *mac1 = NULL, *mac2 = NULL, llc[8];
 	uint8_t fcf_flags = 0;
 
-	if (length < 12 || dot11_direction == LORCON_DOT11_DIR_INTRADS)
+	if (length < 12 || dot11_direction == LORCON_DOT11_DIR_INTRADS){
 		return NULL;
-
+	}
 	//ret = (AirLorconPacket *) malloc(sizeof(AirLorconPacket *));
-	Newxz(ret, 1, AirLorconPacket);
+	int size = sizeof(AirLorconPacket *);
+	Newx(ret, size, AirLorconPacket);
 	//memset(ret, 0, sizeof(AirLorconPacket));
 	Zero(ret, 1, AirLorconPacket);
 	ret->lcpa = lcpa_init();
@@ -3397,12 +3468,17 @@ CODE:
     if (packet->extra_type != LORCON_PACKET_EXTRA_80211){
         return NULL;
     }
-    return (Lorcon_DOT11 *) packet->extra_info;
-
+    RETVAL = packet->extra_info;
+OUTPUT:
+RETVAL
 
 Lorcon_DOT3 *
 lorcon_packet_get_dot3_extra(packet) 
 	AirLorconPacket *packet
+INIT:
+	if( ! packet ){
+		return -1;
+	}
 CODE:
     if (packet->extra_info == NULL){
         return NULL;
@@ -3410,11 +3486,12 @@ CODE:
     if (packet->extra_type != LORCON_PACKET_EXTRA_8023){
         return NULL;
 	}
-    return (Lorcon_DOT3 *) packet->extra_info;
+   RETVAL = packet->extra_info;
+OUTPUT:
+RETVAL
 
 
-
-const u_char *
+u_char *
 lorcon_packet_get_source_mac(packet) 
 	AirLorconPacket *packet
 CODE:
@@ -3422,14 +3499,15 @@ CODE:
     Lorcon_DOT3 *d3extra;
 
     if ((d11extra = lorcon_packet_get_dot11_extra(packet)) != NULL) {
-        return d11extra->source_mac;
+        RETVAL = d11extra->source_mac;
     } else if ((d3extra = lorcon_packet_get_dot3_extra(packet)) != NULL) {
-        return d3extra->source_mac;
+        RETVAL = d3extra->source_mac;
     }
+OUTPUT:
+RETVAL
 
 
-
-const u_char *
+u_char *
 lorcon_packet_get_dest_mac(packet) 
 	AirLorconPacket *packet
 CODE:
@@ -3437,25 +3515,33 @@ CODE:
     Lorcon_DOT3 *d3extra;
 
     if ((d11extra = lorcon_packet_get_dot11_extra(packet)) != NULL) {
-        return d11extra->dest_mac;
+        RETVAL = d11extra->dest_mac;
     } else if ((d3extra = lorcon_packet_get_dot3_extra(packet)) != NULL) {
-        return (d3extra->dest_mac);
+        RETVAL = (d3extra->dest_mac);
     }
+OUTPUT:
+RETVAL
 
 
-
-const u_char *
+u_char *
 lorcon_packet_get_bssid_mac(packet) 
 	AirLorconPacket *packet
-CODE:
+PREINIT:
     Lorcon_DOT11 *d11extra;
+INIT:
+    if ((d11extra = lorcon_packet_get_dot11_extra(packet)) == NULL) {
+		return -1;
+    }
+CODE:
     if ((d11extra = lorcon_packet_get_dot11_extra(packet)) != NULL) {
         //return d11extra->bssid_mac;
  	  HV *out = newHV();
  	  SV *out_ref = newRV_noinc((SV *)out);
  	  hv_store(out, "bssid_mac",    4, newSVpv(d11extra->bssid_mac, 0), 0);
-	  return(out_ref);
+	  RETVAL = out_ref;
     }
+OUTPUT:
+RETVAL
 
 uint16_t 
 lorcon_packet_get_llc_type(packet) 
@@ -3463,17 +3549,19 @@ lorcon_packet_get_llc_type(packet)
 CODE:
     Lorcon_DOT3 *d3extra;
     if ((d3extra = lorcon_packet_get_dot3_extra(packet)) != NULL) {
-        return d3extra->llc_type;
+        RETVAL = d3extra->llc_type;
     } 
-
+OUTPUT:
+RETVAL
 
 
 AirLorcon *
 lorcon_packet_get_interface(packet)
 AirLorconPacket *packet
-PPCODE:
-    return packet->interface;
-
+CODE:
+    RETVAL = packet->interface;
+OUTPUT:
+RETVAL
 
 
 	
@@ -3481,7 +3569,9 @@ int
 pcap_can_set_rfmon(p)
 	Pcap *p
 CODE:
-	return (p->can_set_rfmon_op(p));
+	RETVAL =  (p->can_set_rfmon_op(p));
+OUTPUT:
+RETVAL
 
 #define PCAP_ERROR_ACTIVATED		-4
 
