@@ -2588,7 +2588,7 @@ PREINIT:
 	}
 INIT:
 	//in_pack->data = (uint8_t *) malloc(in_len);
-	Newx(in_pack->data, in_len, LCPA_META);
+	Newx(in_pack->data, in_length, LCPA_META);
 	//memcpy(in_pack->data, in_data, in_len);
 	Copy(in_data, in_pack->data, in_len, LCPA_META);
 	in_pack->len = in_len;
@@ -2954,7 +2954,6 @@ lcpf_80211headers(pack, type, subtype, fcflags, duration, mac1, mac2, mac3, mac4
 	unsigned int sequence
 INIT:
 	pack->data = NULL;
-	pack->type = NULL;
 	pack->len = NULL;
 CODE:
 	uint8_t chunk[2];
@@ -3049,7 +3048,6 @@ lcpf_add_ie(pack, num, len, data)
 	uint8_t *data
 INIT:
 	pack->data = NULL;
-	pack->type = NULL;
 	pack->len = NULL;
 CODE:
 	uint8_t chunk[257];
@@ -3073,7 +3071,6 @@ lcpf_deauth(pack, src, dst, bssid, framecontrol, duration, fragment, sequence, r
 	int reasoncode
 INIT:
 	pack->data = NULL;
-	pack->type = NULL;
 	pack->len = NULL;
 CODE:
 	uint8_t chunk[2];
@@ -3097,7 +3094,6 @@ lcpf_disassoc(pack, src, dst, bssid, framecontrol, duration, fragment, sequence,
 	int reasoncode
 INIT:
 	pack->data = NULL;
-	pack->type = NULL;
 	pack->len = NULL;
 CODE:
 	uint8_t chunk[2];
@@ -3119,7 +3115,6 @@ lcpf_probereq(pack, src, framecontrol, duration, fragment,  sequence)
 	int sequence
 INIT:
 	pack->data = NULL;
-	pack->type = NULL;
 	pack->len = NULL;
 CODE:
 	uint8_t chunk[6] = "\xFF\xFF\xFF\xFF\xFF\xFF";
@@ -3141,7 +3136,6 @@ lcpf_proberesp(pack, dst, src, bssid, framecontrol, duration, fragment, sequence
 	int capabilities
 INIT:
 	pack->data = NULL;
-	pack->type = NULL;
 	pack->len = NULL;
 CODE:
 	uint8_t chunk[8];
@@ -3170,7 +3164,6 @@ lcpf_rts(pack, recvmac, transmac, framecontrol,  duration)
 	int duration
 INIT:
 	pack->data = NULL;
-	pack->type = NULL;
 	pack->len = NULL;
 CODE:	
 	
@@ -3187,7 +3180,6 @@ lcpf_80211ctrlheaders(pack, type, subtype, fcflags,  duration, mac1)
 	uint8_t *mac1
 INIT:
 	pack->data = NULL;
-	pack->type = NULL;
 	pack->len = NULL;
 CODE:
 	uint8_t chunk[2];
@@ -3221,7 +3213,6 @@ lcpf_authreq(pack, dst, src, bssid, framecontrol, duration, fragment, sequence, 
 	uint16_t auth_status
 INIT:
 	pack->data = NULL;
-	pack->type = NULL;
 	pack->len = NULL;
 CODE:
 	uint8_t chunk[2];
@@ -3251,7 +3242,6 @@ lcpf_authresq(pack, dst, src, bssid, framecontrol, duration, fragment, sequence,
 	uint16_t auth_status
 INIT:
 	pack->data = NULL;
-	pack->type = NULL;
 	pack->len = NULL;
 CODE:
 	lcpf_authreq(pack, dst, src, bssid, framecontrol, duration, fragment, sequence, authalgo, auth_seq, auth_status);
@@ -3271,7 +3261,6 @@ lcpf_assocreq(pack, dst, src, bssid, framecontrol, duration, fragment, sequence,
 	uint16_t listenint
 INIT:
 	pack->data = NULL;
-	pack->type = NULL;
 	pack->len = NULL;
 CODE:
 	uint8_t chunk[2];
@@ -3299,7 +3288,6 @@ lcpf_assocresp(pack, dst, src, bssid, framecontrol, duration, fragment, sequence
 	uint16_t aid
 INIT:
 	pack->data = NULL;
-	pack->type = NULL;
 	pack->len = NULL;
 CODE:
 	uint8_t chunk[2];
@@ -3328,7 +3316,6 @@ lcpf_data(pack, fcflags, duration, mac1, mac2, mac3, mac4, fragment, sequence)
 	unsigned int sequence
 INIT:
 	pack->data = NULL;
-	pack->type = NULL;
 	pack->len = NULL;
 CODE:
 	lcpf_80211headers(pack, WLAN_FC_TYPE_DATA, WLAN_FC_SUBTYPE_DATA, fcflags, duration, mac1, mac2, mac3, mac4, fragment, sequence);
@@ -3341,7 +3328,6 @@ lcpf_qosheaders(pack, priority, eosp, ackpol)
 	unsigned int ackpol
 INIT:
 	pack->data = NULL;
-	pack->type = NULL;
 	pack->len = NULL;
 CODE:
 	uint8_t chunk[2];
@@ -5931,6 +5917,7 @@ CODE:
  # 	}
  # 	
 
+
 int 
 osdep_start(interface1, interface2)
 	char *interface1
@@ -6132,4 +6119,4 @@ CODE:
 		}
 	}
 
-    return max_out > max_in ? max_in : max_out;
+return max_out > max_in ? max_in : max_out;
