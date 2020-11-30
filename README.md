@@ -24,6 +24,7 @@ More attack can be used, more the efficency growns.
 **REQUIREMENTS**
 
 - [x] perl 
+- [x] cpan and App::Cpan
 - [x] libpcap
 - [x] C compiler (gcc is fine)
 - [ ] libnl-dev (optional, required only for using nl80211 capabilities)
