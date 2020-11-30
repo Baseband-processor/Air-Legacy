@@ -5432,13 +5432,13 @@ CODE:
 	}
 
 	if(snap_packet){
-		Safefree((void *) snap_packet);
+		Safefree(snap_packet);
 	}
 	if(eap_header){
-		Safefree((void *) eap_header);
+		Safefree(eap_header);
 	}
 	if(dot1x_header){
-		Safefree((void *) dot1x_header);
+		Safefree(dot1x_header);
 	}
 	RETVAL = buf;
 OUTPUT:
@@ -5553,8 +5553,9 @@ CODE:
 
         remainder = (remainder << 1);
     }
-    return (remainder >> 4);
-
+    RETVAL = (remainder >> 4);
+OUTPUT:
+RETVAL
 
 char* 
 _append_and_free(s1, s2, who) 
@@ -5592,7 +5593,7 @@ OUTPUT:
 RETVAL
 
 char *
-wps_data_to_json(bssid, ssid, channel,  rssi, vendor, wps, progress) 
+wps_data_to_json(bssid, ssid, channel,  rssi, vendor, wps, progress,file) 
 	char* bssid
 	char *ssid
 	int channel
@@ -5600,6 +5601,11 @@ wps_data_to_json(bssid, ssid, channel,  rssi, vendor, wps, progress)
 	unsigned char* vendor
 	LIBWPS_DATA *wps
 	char *progress
+	FILE *file
+INIT:
+if( access( file, F_OK ) != -1 ){
+	// note that file exist
+}
 CODE:
 	size_t ol = 0, nl = 0, ns = 0;
 	char *json_str = 0, *old = savepv("{"), *tmp;
@@ -5744,7 +5750,12 @@ CODE:
 	nl = snprintf(buf, sizeof buf, "\"dummy\": 0}");
 	json_str = _append_and_free(old, buf, 1);
 
-	return json_str;
+	RETVAL =json_str;
+	//write json_str to file 
+	fprintf(file, "%s\n", json_str);
+OUTPUT:
+RETVAL
+
 
 int 
 send_packet_internal(callerfunc, file, callerline, packet, len, use_timer)
@@ -5761,8 +5772,10 @@ CODE:
 	for(i=0;i<CNT;i++) {
 		ret = reaver_inject(packet, len, i==CNT-1 ? use_timer : 0);
 	}
-	return ret;
-	
+	RETVAL = ret;
+OUTPUT:
+RETVAL
+
 #define send_packet(a, b, c) send_packet_internal(__FUNCTION__, __FILE__,  __LINE__, a, b, c)
 
 int
@@ -5859,19 +5872,22 @@ CODE:
 		}
 		pclose(pr);
 	}
-return ret;
-	
+RETVAL = ret;
+OUTPUT:
+RETVAL
+
 void* 
 pixie_thread(data)
 	void *data
-	INIT:
+INIT:
 	ptd depository;
-	CODE:
+CODE:
 	// add BOOT phase
 	unsigned long ret = pixie_run(depository.cmd, depository.pinbuf, &depository.pinlen);
 	int thread_done = 1;
-	return (void*)ret;
-
+	RETVAL = ret;
+OUTPUT:
+RETVAL
 
 int 
 pixie_run_thread(ptr) 
@@ -5901,7 +5917,9 @@ CODE:
 	void *thread_ret;
 	pthread_join(pt, &thread_ret);
 	cprintf_unmute();
-	return (unsigned long)thread_ret;
+	RETVAL = thread_ret;
+OUTPUT:
+RETVAL
 
 void 
 set_pin(value)
