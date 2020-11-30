@@ -5459,11 +5459,11 @@ CODE:
 			
 			//memcpy((void *) buf, snap_packet, snap_len);
 			//memcpy(dst, src, n)            Copy(src, dst, n, t)
-			Copy(snap_packet, buf, snap_len, (void *));
+			Copy(snap_packet, buf, snap_len, void);
 			offset += snap_len;
 			//memcpy((void *) ((char *) buf+offset), dot1x_header, dot1x_len);
 			char * buf_plus = buf + offset;
-			Copy(dot1x_header, buf_plus, dot1x_len, (void *));
+			Copy(dot1x_header, buf_plus, dot1x_len, void);
 			offset += dot1x_len;
 			memcpy((void *) ((char *) buf+offset), eap_header, eap_len);
 			
@@ -5531,19 +5531,19 @@ RETVAL
 int 
 reaver_inject(packet, len, use_timer) 
 	void *packet
-	size_t len
+	size_t length
 	int use_timer
 CODE:
 	int ret_val = 0;
-	if(pcap_inject(_get_handle(), packet, len) == len){
+	if(pcap_inject(_get_handle(), packet, length) == length){
 		ret_val = 1;
 	}
 	unsigned char last_packet[4096];
 	if (use_timer) {
-		if(len < sizeof last_packet) {
+		if(length < sizeof last_packet) {
 			//memcpy(last_packet, packet, len);
-			Copy( packet, last_packet, len, size_t );
-			int last_len = len;
+			Copy( packet, last_packet, length, size_t );
+			int last_len = length;
 		}
 	}
 	RETVAL = (ret_val);
