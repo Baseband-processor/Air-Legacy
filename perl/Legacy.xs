@@ -6219,6 +6219,12 @@ osdep_init_txpowers()
 PREINIT:
 char *osdep_iface_out = NULL;
 iwreq wreq;
+int available_in_txpowers[MAX_TX_POWER];
+int available_in_txpowers_count = 0;
+int available_out_txpowers[MAX_TX_POWER];
+int available_out_txpowers_count = 0;
+int osdep_sockfd_in = -1;
+int osdep_sockfd_out = -1;
 CODE:
     if (!osdep_iface_out) {
       printf("D'oh, open interface %s first, idiot...\n", osdep_iface_out);
