@@ -6152,11 +6152,10 @@ typedef struct devices{
     int fd_out, arptype_out;
     int fd_rtc;
 }dev;
-
 dev device;
-wif *_wi_in;
-wif *_wi_out;
 CODE:
+    wif *_wi_in;
+    wif *_wi_out;
     char *osdep_iface_in = NULL;
     char *osdep_iface_out = NULL;
     //osdep_iface_in = malloc(strlen(interface1) + 1);
