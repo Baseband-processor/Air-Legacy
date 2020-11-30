@@ -266,6 +266,20 @@ typedef struct {
 }iwreq;
 
 
+typedef struct {
+        unsigned int     ti_rate;
+}tx_info;
+
+typedef struct {
+        uint64_t ri_mactime;
+        int32_t ri_power;
+        int32_t ri_noise;
+        uint32_t ri_channel;
+        uint32_t ri_freq;
+        uint32_t ri_rate;
+        uint32_t ri_antenna;
+}rx_info;
+
 typedef struct fd_set {
   u_int  fd_count;
   SOCKET fd_array[FD_SETSIZE];
