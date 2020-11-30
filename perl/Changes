@@ -39,6 +39,7 @@ CHANGED PROJECT, NOW IT WILL BE AIR::LEGACY
     * wi_get_monitor
     * wi_get_ifname
     * wi_close
+   - added OSdep tag
   
 Revision history for the (old)  Perl extension Air::Lorcon2.
 
