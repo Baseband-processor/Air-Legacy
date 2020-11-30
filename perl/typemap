@@ -113,6 +113,7 @@ short			      T_IV
 short *                       T_IV
 unsigned short	T_UV
 char			      T_CHAR
+long double     T_LONG
 unsigned char		T_U_CHAR
 char *			    T_PV
 unsigned char * T_PV
