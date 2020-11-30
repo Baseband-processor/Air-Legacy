@@ -549,6 +549,30 @@ typedef struct wg80211_frame{
 	uint8_t data[0];
 }WG80211_FRAME;
 
+typedef struct wif {
+        int     (*wi_read)(struct wif *wi, unsigned char *h80211, int len,
+                           struct rx_info *ri);
+        int     (*wi_write)(struct wif *wi, unsigned char *h80211, int len,
+                            struct tx_info *ti);
+        int     (*wi_set_channel)(struct wif *wi, int chan);
+        int     (*wi_get_channel)(struct wif *wi);
+        int     (*wi_set_freq)(struct wif *wi, int freq);
+        int     (*wi_get_freq)(struct wif *wi);
+	void	(*wi_close)(struct wif *wi);
+	int	(*wi_fd)(struct wif *wi);
+	int	(*wi_get_mac)(struct wif *wi, unsigned char *mac);
+	int	(*wi_set_mac)(struct wif *wi, unsigned char *mac);
+	int	(*wi_set_rate)(struct wif *wi, int rate);
+	int	(*wi_get_rate)(struct wif *wi);
+	int	(*wi_set_mtu)(struct wif *wi, int mtu);
+	int	(*wi_get_mtu)(struct wif *wi);
+        int     (*wi_get_monitor)(struct wif *wi);
+
+        void	*wi_priv;
+        char	wi_interface[MAX_IFACE_NAME];
+}wif;
+
+
 #define P1_SIZE			10000
 #define P2_SIZE	1000
 
@@ -6021,6 +6045,102 @@ CODE:
  # 	}
  # 	
 
+int
+wi_read(wi, h80211, len, ri)
+	wif *wi
+	unsigned char *h80211
+	int length
+	rx_info *ri
+CODE:
+        assert(wi->wi_read);
+        RETVAL = wi->wi_read(wi, h80211, len, ri);
+OUTPUT:
+RETVAL
+
+int
+wi_write(wi, h80211, len, ti)
+	wif *wi
+	unsigned char *h80211
+	int len 
+	tx_info *ti
+CODE:
+        assert(wi->wi_write);
+        RETVAL = wi->wi_write(wi, h80211, len, ti);
+OUTPUT:
+RETVAL
+
+int 
+wi_set_channel(wi, channel)
+	wif *wi
+	int channel
+CODE:
+        assert(wi->wi_set_channel);
+        RETVAL = wi->wi_set_channel(wi, channel);
+OUTPUT:
+RETVAL
+
+int 
+wi_get_channel(wi)
+	wif *wi
+CODE:
+	assert(wi->wi_get_channel);
+        RETVAL = wi->wi_get_channel(wi);
+OUTPUT:
+RETVAL
+
+
+int 
+wi_set_freq(wi, frequency)
+	wif *wi
+	int frequency
+CODE:
+        assert(wi->wi_set_freq);
+        RETVAL = wi->wi_set_freq(wi, frequency);
+OUTPUT:
+RETVAL
+
+int 
+wi_get_freq(wi)
+	wif *wi
+CODE:
+	assert(wi->wi_get_freq);
+        RETVAL = wi->wi_get_freq(wi);
+OUTPUT:
+RETVAL
+
+int 
+wi_get_monitor(wi)
+	wif *wi
+CODE:
+        assert(wi->wi_get_monitor);
+        RETVAL = wi->wi_get_monitor(wi);
+OUTPUT:
+RETVAL
+
+char *
+wi_get_ifname(wi)
+	wif *wi
+CODE:
+      RETVAL = wi->wi_interface;
+OUTPUT:
+RETVAL
+
+void 
+wi_close(wi)
+	wif *wi
+CODE:
+        assert(wi->wi_close);
+        wi->wi_close(wi);
+	
+
+int 
+wi_fd(wi)
+	wif *wi
+CODE:
+	assert(wi->wi_fd);
+	RETVAL = wi->wi_fd(wi);
+OUTPUT:
+RETVAL
 
 int 
 osdep_start(interface1, interface2)
@@ -6034,28 +6154,7 @@ struct devices{
 }dev;
 
 dev device;
-struct wif {
-        int     (*wi_read)(struct wif *wi, unsigned char *h80211, int len,
-                           struct rx_info *ri);
-        int     (*wi_write)(struct wif *wi, unsigned char *h80211, int len,
-                            struct tx_info *ti);
-        int     (*wi_set_channel)(struct wif *wi, int chan);
-        int     (*wi_get_channel)(struct wif *wi);
-        int     (*wi_set_freq)(struct wif *wi, int freq);
-        int     (*wi_get_freq)(struct wif *wi);
-	void	(*wi_close)(struct wif *wi);
-	int	(*wi_fd)(struct wif *wi);
-	int	(*wi_get_mac)(struct wif *wi, unsigned char *mac);
-	int	(*wi_set_mac)(struct wif *wi, unsigned char *mac);
-	int	(*wi_set_rate)(struct wif *wi, int rate);
-	int	(*wi_get_rate)(struct wif *wi);
-	int	(*wi_set_mtu)(struct wif *wi, int mtu);
-	int	(*wi_get_mtu)(struct wif *wi);
-        int     (*wi_get_monitor)(struct wif *wi);
 
-        void	*wi_priv;
-        char	wi_interface[MAX_IFACE_NAME];
-};
 
 wif *_wi_in, *_wi_out;
 CODE:
