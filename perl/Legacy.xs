@@ -4054,6 +4054,10 @@ int
 mac80211_ifconfig_cb(context, up) 
 	AirLorcon *context
 	int up
+INIT:
+if( ! context ){
+	return -1;
+}
 CODE:
 	return ifconfig_ifupdown(context->vapname, context->errstr, up);
 
@@ -4066,8 +4070,9 @@ CODE:
 	AirLorcon_MAC80211 *extras = (AirLorcon_MAC80211 *) context->auxptr;
 	if (nl80211_setchannel_cache(extras->ifidx, extras->nlhandle, extras->nl80211id, channel, 0, context->errstr) < 0) {
 		return -1;
-	}
+	}else{
 	return 0;
+	}
 
 int 
 drv_mac80211_init(context) 
@@ -4075,7 +4080,8 @@ drv_mac80211_init(context)
 CODE:
 	AirLorcon_MAC80211 *extras; // declare extras
 	//struct mac80211_lorcon *extras =  (struct mac80211_lorcon *) malloc(sizeof(struct mac80211_lorcon));
-	Newxz(extras, 1, AirLorcon_MAC80211);
+	int size = sizeof(AirLorcon_MAC80211);
+	Newxz(extras, size, AirLorcon_MAC80211);
 	//memset(extras, 0, sizeof(struct mac80211_lorcon));
 	Zero(extras, 1, AirLorcon_MAC80211);
 	context->openinject_cb = mac80211_openmon_cb(context);
@@ -4095,18 +4101,24 @@ CODE:
 AirLorconDriver  *
 drv_mac80211_listdriver(head) 
 	AirLorconDriver *head
+INIT:
+if(! head ){
+	return -1;
+}
 CODE:
 	AirLorconDriver *d;
 	//AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(AirLorconDriver *));
-	Newxz(d, 1, AirLorconDriver);
+	int size = sizeof(AirLorconDriver *);
+	Newx(d, size, AirLorconDriver);
 	AirLorcon *interface;
 	d->name = savepv("mac80211");
 	d->details = savepv("Linux mac80211 kernel drivers, includes all in-kernel drivers on modern systems");
 	d->init_func = drv_mac80211_init(interface);
 	d->probe_func = drv_mac80211_probe();
 	d->next = head;
-	return d;
-	
+	RETVAL = d;
+OUTPUT:
+RETVAL
 
 
 
@@ -4133,7 +4145,8 @@ CODE:
 	input_tx->selfack_callthrough = wtinj_selfack();
 	return 0;
 
-int rt61_open(input_tx)
+int
+rt61_open(input_tx)
 	TX80211 *input_tx
 CODE:
 	char errstr[TX80211_STATUS_MAX];
@@ -4142,7 +4155,9 @@ CODE:
 		return -1;
 	}
 
-	return(wtinj_open(input_tx));
+	RETVAL = (wtinj_open(input_tx));
+OUTPUT:
+RETVAL
 
 int 
 tx80211_rt61_capabilities()
@@ -4197,7 +4212,7 @@ CODE:
 
 int 
 nl80211_get_chanlist(interface, ret_num_chans, ret_chan_list, errstr) 
-	const char *interface
+	char *interface
 	int *ret_num_chans
 	int **ret_chan_list
 	char *errstr
@@ -4207,9 +4222,10 @@ nl80211_get_chanlist(interface, ret_num_chans, ret_chan_list, errstr)
 int 
 wginj_open(wginj)
 	TX80211 *wginj
+INIT:
+	struct ifreq if_req;
 CODE:
 	int err;
-	struct ifreq if_req;
 	SOCKADDR_LL sa_ll;
 
 	wginj->raw_fd = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
@@ -4273,14 +4289,18 @@ CODE:
 	ret = system(cmdline);
 	if (ret != 0) {
 		return -1;
-	}else{	return 0; }
+	}else{	
+		return 0; 
+}
 
 int 
 wginj_getmode(wginj)
 	TX80211 *wginj
 CODE:
 	char errstr[TX80211_STATUS_MAX];
-	return ( iwconfig_get_mode(wginj->ifname, errstr) );
+	RETVAL = ( iwconfig_get_mode(wginj->ifname, errstr) );
+OUTPUT:
+RETVAL
 
 #define TX80211_MODE_MONITOR	6 
 #define TX80211_MODE_INFRA	2
@@ -4402,8 +4422,9 @@ CODE:
 			return -1;
 		}
 	}
-	return(wtinj_open(input_tx));
-
+	RETVAL = (wtinj_open(input_tx));
+OUTPUT:
+RETVAL
 
 int
 rt73_close(input_tx)
@@ -4416,8 +4437,10 @@ CODE:
 		return -1;
 	}
 
-	return(wtinj_close(input_tx));
-	
+	RETVAL = (wtinj_close(input_tx));
+OUTPUT:
+RETVAL
+
 void 
 tx80211_initpacket(input_packet) 
 	TX80211_PACKET *input_packet
@@ -4438,7 +4461,9 @@ tx80211_getdlt(input_tx)
 	TX80211 *input_tx
 CODE:	
 	int ret_val = input_tx->dlt;
-	return( ret_val );
+	RETVAL = ( ret_val );
+OUTPUT:
+RETVAL
 
 char *
 tx80211_getdrivername(in_inj)
@@ -4454,13 +4479,15 @@ CODE:
 		if (cardlist->injnum[i] == in_inj) {
 			ret = savepv(cardlist->cardnames[i]);
 			tx80211_freecardlist(cardlist);
-			return ret;
+			RETVAL = ret;
 		}
 	}
 
 	tx80211_freecardlist(cardlist);
-	return NULL;
+	//return NULL;
 
+OUTPUT:
+RETVAL
 
 
 int 
@@ -4495,8 +4522,9 @@ CODE:
 		snprintf(input_tx->errstr, TX80211_STATUS_MAX, "Error enabling rfmontx private ioctl: %s\n", errstr);
 		return -1;
 	}
-	return(wtinj_open(input_tx));
-
+	RETVAL = (wtinj_open(input_tx));
+OUTPUT:
+RETVAL
 
 int 
 rt2500_close(input_tx)
@@ -4506,9 +4534,12 @@ CODE:
 	if (iwconfig_set_charpriv(input_tx->ifname, "rfmontx", "0", errstr) != 0) {
 		snprintf(input_tx->errstr, TX80211_STATUS_MAX, "Error disabling rfmontx private ioctl: %s\n", errstr);
 		return -1;
+	}else{
+	RETVAL = (wtinj_close(input_tx));
 	}
-	return(wtinj_close(input_tx));
-	
+OUTPUT:
+RETVAL
+
 #define TX80211_ENOERR			0
 
 
@@ -4517,6 +4548,10 @@ tx80211_init(input_tx, input_ifname, input_injector)
 	TX80211 *input_tx
 	char *input_ifname
 	int input_injector
+INIT:
+if( ! input_tx ){
+	return -1;
+}
 CODE:
 	int ret = TX80211_ENOERR;
 	//memset(in_tx, 0, sizeof(struct tx80211));
@@ -4615,27 +4650,28 @@ CODE:
 		return TX80211_ENOTCAPAB;
 	}
 	input_packet->modulation = modulation;
-	return TX80211_ENOERR;
-
+	RETVAL = TX80211_ENOERR;
+OUTPUT:
+RETVAL
 
 int 
 tx80211_getmodulation(input_packet) 
 	TX80211_PACKET *input_packet
 CODE:
-	return(input_packet->modulation);
+	RETVAL = (input_packet->modulation);
+OUTPUT:
+RETVAL
 
-
-#//int 
-#//tx80211_setfunctionalmode(input_tx, in_fmode)
-#//	TX80211 *input_tx
-#//	int in_fmode
-#//PPCODE:
-#	//if (input_tx->setfuncmode_callthrough == NULL)  {
-#	//	snprintf(input_tx->errstr, TX80211_STATUS_MAX,  "Setfunctionalmode callthrough handler not implemented");
-#	//	return TX80211_ENOHANDLER;
-#	//}
-#
-#	//return (input_tx->setfuncmode_callthrough) (input_tx, in_fmode);
+int 
+tx80211_setfunctionalmode(input_tx, in_fmode)
+	TX80211 *input_tx
+	int in_fmode
+CODE:
+if (input_tx->setfuncmode_callthrough == NULL)  {
+	snprintf(input_tx->errstr, TX80211_STATUS_MAX,  "Setfunctionalmode callthrough handler not implemented");
+	return TX80211_ENOHANDLER;
+}
+return (input_tx->setfuncmode_callthrough) (input_tx, in_fmode);
 
 
 int 
@@ -4648,7 +4684,6 @@ CODE:
 		snprintf(input_tx->errstr, TX80211_STATUS_MAX,  "Setchannel callthrough handler not implemented");
 		return TX80211_ENOHANDLER;
 	}
-
 	return (input_tx->setchan_callthrough) (input_tx, input_channel);
 
 
@@ -4669,8 +4704,9 @@ CODE:
 	if (input_tx->open_callthrough == NULL){
 		return TX80211_ENOHANDLER;
 	}
-	return (input_tx->open_callthrough);
-
+	RETVAL =  (input_tx->open_callthrough);
+OUTPUT:
+RETVAL
 
 int 
 tx80211_close(input_tx)
@@ -4701,8 +4737,10 @@ int
 tx80211_gettxrate(input_packet)
 	TX80211_PACKET *input_packet
 CODE:
-	return(input_packet->txrate);
-	
+	RETVAL = (input_packet->txrate);
+OUTPUT:
+RETVAL
+
 int 
 tx80211_settxrate(input_tx, input_packet, txrate)
 	TX80211 *input_tx
@@ -4719,8 +4757,11 @@ CODE:
 		return TX80211_ENOTCAPAB;
 	}
 
-	input_packet->txrate = txrate;
+	if( ! ( input_packet->txrate = txrate ) ){
+		return -1;
+	}else{
 	return TX80211_ENOERR;
+	}
 
 int 
 tx80211_setfunctionalmode(input_tx, in_fmode)
@@ -4733,7 +4774,9 @@ CODE:
 		return TX80211_ENOHANDLER;
 	}
 
-	return (input_tx->setfuncmode_callthrough);
+	RETVAL = (input_tx->setfuncmode_callthrough);
+OUTPUT:
+RETVAL
 
 int 
 tx80211_getmode(input_tx)
@@ -4745,11 +4788,13 @@ CODE:
 		return TX80211_ENOHANDLER;
 	}
 
-	return (input_tx->getmode_callthrough);
+	RETVAL = (input_tx->getmode_callthrough);
+OUTPUT:
+RETVAL
 
 int 
 tx80211_resolvecard(in_str)
-	const char *in_str
+	char *in_str
 	
 int 
 tx80211_resolveinterface(input_str)
@@ -4790,7 +4835,9 @@ char *
 tx80211_geterrstr(input_tx)
 	TX80211 *input_tx
 CODE:
-	return newSVpv(input_tx->errstr, 0);
+	RETVAL = newSVpv(input_tx->errstr, 0);
+OUTPUT:
+RETVAL
 
 int 
 tx80211_setmode(input_tx, input_mode)
