@@ -4886,7 +4886,7 @@ sha1_update( ctx, input, length )
   sha1_context *ctx
   uint8_t *input
   uint32_t length
-PPCODE:
+CODE:
     uint32_t left, fill;
 
     if( ! length ){
@@ -5026,24 +5026,34 @@ get_ap_capability()
 
 void 
 set_channel(channel)
-int channel
+	int channel
+INIT:
+		GLOB *globule;
+		globule->channel = NULL;
+		globule->wifi_band = NULL;
 CODE:
-	GLOB *globule;
 	globule->channel = channel;
-        return( 0 );
 
 int 
 get_channel()
 CODE:
 	GLOB *globule;
-	return globule->channel;
+	RETVAL = globule->channel;
+OUTPUT:
+RETVAL
 
 char *
 get_mac()
+INIT:
+GLOB *globule;
+if( ! globule->mac || globule->mac == NULL){
+	RETVAL = -1;
+}	
 CODE:
-	GLOB *globule;
-	return globule->mac;
-	
+	RETVAL = NewSVpv(globule->mac, 0);
+OUTPUT:
+RETVAL
+
 void 
 set_bssid(value)
 unsigned char *value
@@ -5051,7 +5061,6 @@ CODE:
 	GLOB *globule;
 	//memcpy(globule->bssid, value, MAC_ADDR_LEN);
 	Copy(value, globule->bssid, MAC_ADDR_LEN, 1);
-	return 0;
 
 # define end_htole16(x) (uint16_t)(x)
 #define LISTEN_INTERVAL         0x0064
@@ -5106,8 +5115,9 @@ build_dot11_frame_header(fh, fc)
 		DOT11_FRAME_H *fh
 		uint16_t fc
 CODE:
-	return build_dot11_frame_header_m(fh, fc, get_bssid());
-
+	RETVAL =  build_dot11_frame_header_m(fh, fc, get_bssid());
+OUTPUT:
+RETVAL
 
 void*
 build_wps_probe_request(bssid, essid)
@@ -5117,7 +5127,7 @@ CODE:
 	TAG_PARAMS *ssid_tag;
 	void *packet = NULL;
 	size_t offset = 0, rt_len = 0, dot11_len = 0, ssid_tag_len = 0, packet_len = 0;
-	int broadcast = !memcmp(bssid, "\xff\xff\xff\xff\xff\xff", 6);
+	int broadcast = !memEQ(bssid, "\xff\xff\xff\xff\xff\xff", 6);
 
 	if(!broadcast && essid != NULL)
 	{
@@ -5183,21 +5193,27 @@ CODE:
 	DOT1X *header = NULL;
 	void *buf = NULL;
 
-	buf = malloc(sizeof(DOT1X));
+	//buf = malloc(sizeof(DOT1X));
+	int size = sizeof(DOT1X);
+	Newx(buf, size, void);
 	if(buf){
 		*len = sizeof(DOT1X);
-		memset((void *) buf, 0, sizeof(DOT1X));
+		//memset((void *) buf, 0, sizeof(DOT1X));
+		//memset(dst, 0, n * sizeof(t))  Zero(dst, n, t)
+		Zero(buf, 1, DOT1X);
 		header = (DOT1X *) buf;
 
 		header->version = DOT1X_VERSION;
 		header->type = type;
 		header->len = htons(payload_len);
 	}
-	return buf;
-	
+	RETVAL = buf;
+OUTPUT:
+RETVAL
+
 void *
 build_eap_packet(payload, payload_length, length)
-	const void *payload
+	void *payload
 	uint16_t payload_length
 	size_t *length
 CODE:
@@ -5255,8 +5271,10 @@ CODE:
 
 			if(payload && payload_length)
 			{
-				memcpy((void *) ((char *) buf+offset), payload, payload_length);
-				//Copy(payload, boffset, payload_length, 1);
+				//memcpy((void *) ((char *) buf+offset), payload, payload_length);
+				//memcpy(dst, src, n)            Copy(src, dst, n, t)
+				char *buff_plus = ((char *) buf + offset );
+				Copy(payload, buff_plus, payload_length, void);
 			}
 			char *len = (offset + payload_length);
 		}
@@ -5265,11 +5283,12 @@ CODE:
 		Safefree(eap_header);
 		Safefree(dot1x_header);
 		if(wfa_header) {
-			Safefree((void *) wfa_header);
+			Safefree(wfa_header);
 	}
-					return(buf);
+					RETVAL = (buf);
 	}	
-
+OUTPUT:
+RETVAL
 
 
 ASSOCIATION_REQUEST_MANAGEMENT_FRAME *
@@ -5289,18 +5308,21 @@ libwps_meta()
 	
 int 
 globule_init()
+INIT:
+	GLOB *globule;
 CODE:
 	int ret = 0;
-	GLOB *globule;
 	if(globule){
-		memset(globule, 0, sizeof(GLOB *));
-		//Zero(globule, 1, struct globals);
+		//memset(globule, 0, sizeof(GLOB *));
+		//memset(dst, 0, n * sizeof(t))  Zero(dst, n, t)
+		Zero(globule, 1, (GLOB *));
 		ret = 1;
 		globule->resend_timeout_usec = 200000;
 		globule->output_fd = -1;
 	}
-	return ret;
-
+	RETVAL = ret;
+OUTPUT:
+RETVAL
 
 void 
 globule_deinit()
@@ -5366,23 +5388,27 @@ CODE:
 	if(snap_packet && dot1x_header)
 	{
         	packet_len = snap_len + dot1x_len;
-        	packet = malloc(packet_len);
-
+        	//packet = malloc(packet_len);
+		Newx(packet, packet_len, (void *));
         	if(packet)
         	{
         	        /* Build packet */
-        	        memset((void *) packet, 0, packet_len);
-        	        memcpy((void *) packet, snap_packet, snap_len);
-        	        memcpy((void *) ((char *) packet+snap_len), dot1x_header, dot1x_len);
-
+        	         memset((void *) packet, 0, packet_len);
+					
+        	        StructCopy(snap_packet, packet, void);
+        	        //memcpy((void *) ((char *) packet+snap_len), dot1x_header, dot1x_len);
+			char *packet_plus = packet + snap_len;
+			Copy(dot1x_header, packet_plus, dot1x_len, void);
 			*length = packet_len;
 		}
 
 		Safefree(snap_packet);
 		Safefree(dot1x_header);
 	}
-	return packet;
-	
+	RETVAL =  packet;
+OUTPUT:
+RETVAL
+
 void *
 build_eap_failure_packet(len)
 	size_t *len
@@ -5399,26 +5425,39 @@ CODE:
 
 	if(snap_packet && eap_header && dot1x_header)
 	{
-		buf = malloc(buf_len);
+		//buf = malloc(buf_len);
+		Newx(buf, buf_len, (void *));
 		if(buf)
 		{
 			memset((void *) buf, 0, buf_len);
 			
-			memcpy((void *) buf, snap_packet, snap_len);
+			//memcpy((void *) buf, snap_packet, snap_len);
+			//memcpy(dst, src, n)            Copy(src, dst, n, t)
+			Copy(snap_packet, buf, snap_len, (void *));
 			offset += snap_len;
-			memcpy((void *) ((char *) buf+offset), dot1x_header, dot1x_len);
+			//memcpy((void *) ((char *) buf+offset), dot1x_header, dot1x_len);
+			char * buf_plus = buf + offset;
+			Copy(dot1x_header, buf_plus, dot1x_len, (void *));
 			offset += dot1x_len;
 			memcpy((void *) ((char *) buf+offset), eap_header, eap_len);
-
+			
 			*len = buf_len;
 		}
 	}
 
-	if(snap_packet) Safefree((void *) snap_packet);
-	if(eap_header) Safefree((void *) eap_header);
-	if(dot1x_header) Safefree((void *) dot1x_header);
-	return buf;
-	
+	if(snap_packet){
+		Safefree((void *) snap_packet);
+	}
+	if(eap_header){
+		Safefree((void *) eap_header);
+	}
+	if(dot1x_header){
+		Safefree((void *) dot1x_header);
+	}
+	RETVAL = buf;
+OUTPUT:
+RETVAL
+
 size_t 
 build_tagged_parameter(tag, number, size)
 	TAG_PARAMS *tag
@@ -5447,17 +5486,21 @@ CODE:
 	assert(wps_param_len == 2);
 	assert(2 == sizeof (TAG_PARAMS *));
 
-	memcpy(buf, &wps_param, sizeof wps_param);
-	//StructCopy(&wps_param, buf, wps_param);
+	//memcpy(buf, &wps_param, sizeof wps_param);
+	//memcpy(dst, src, sizeof(t))    StructCopy(src, dst, t)
+	StructCopy(&wps_param, buf, wps_param);
 	memcpy(buf+2, WPS_REGISTRAR_TAG, WPS_TAG_SIZE);
-	return ( 2 + WPS_TAG_SIZE );
-	
+	RETVAL = ( 2 + WPS_TAG_SIZE );
+OUTPUT:
+RETVAL
+
 Pcap *
 _get_handle()
 CODE:
 	GLOB *globule;
-	return globule->handle;
-
+	RETVAL = globule->handle;
+OUTPUT:
+RETVAL
 
 int 
 reaver_inject(packet, len, use_timer) 
@@ -5477,8 +5520,9 @@ CODE:
 			int last_len = len;
 		}
 	}
-	return (ret_val);
-	
+	RETVAL = (ret_val);
+OUTPUT:
+RETVAL
 
 
 
@@ -5501,8 +5545,10 @@ CODE:
             H += -p * log2(p);
         }
     }	    
-    return H;
+    RETVAL = H;
     }
+OUTPUT:
+RETVAL
 
 #define POLYNOMIAL 0xD8
 
@@ -5534,14 +5580,16 @@ _append_and_free(s1, s2, who)
 char* 
 _sanitize_string(s) 
 	char *s
-CODE:
+INIT:
 	if(!s){
-		return savepv("(null)");
+		RETVAL = savepv("(null)");
 	}
-
+RETVAL:
 	size_t i,j, l = sv_len(s), ls=l;
 	for(i=0;i<ls;i++) if(s[i] < ' ' || s[i] > 127) l += 4;
-	char *new = malloc(l+1);
+	//char *new = malloc(l+1);
+	char *new;
+	Newx(new, (l+1), (char *));
 	if(!new){
 		return 0;
 	}
@@ -5553,8 +5601,10 @@ CODE:
 		j++;
 	}
 	new[j] = 0;
-	return new;
-	
+	RETVAL = new;
+OUTPUT:
+RETVAL
+
 char *
 wps_data_to_json(bssid, ssid, channel,  rssi, vendor, wps, progress) 
 	char* bssid
