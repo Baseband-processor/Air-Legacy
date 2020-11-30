@@ -4482,10 +4482,7 @@ CODE:
 			RETVAL = ret;
 		}
 	}
-
 	tx80211_freecardlist(cardlist);
-	//return NULL;
-
 OUTPUT:
 RETVAL
 
