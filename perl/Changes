@@ -29,7 +29,16 @@ CHANGED PROJECT, NOW IT WILL BE AIR::LEGACY
   - fixed broken examples
   - added new suggested library: Net::Wireless::802_11::WPA::CLI
   - included unistd.h header, usefull for check if file exist 
- 
+  - added wi_ related functions
+    * wi_read
+    * wi_write
+    * wi_set_channel
+    * wi_get_channel
+    * wi_get_freq
+    * wi_set_freq
+    * wi_get_monitor
+    * wi_get_ifname
+    * wi_close
   
 Revision history for the (old)  Perl extension Air::Lorcon2.
 
