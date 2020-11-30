@@ -5529,7 +5529,7 @@ OUTPUT:
 RETVAL
 
 int 
-reaver_inject(packet, len, use_timer) 
+reaver_inject(packet, length, use_timer) 
 	void *packet
 	size_t length
 	int use_timer
@@ -5612,7 +5612,9 @@ INIT:
 		RETVAL = savepv("(null)");
 	}
 RETVAL:
-	size_t i,j, l = sv_len(s), ls=l;
+	size_t i,j;
+	size_t l = sv_len(s);
+	ls = l;
 	for(i=0;i<ls;i++) if(s[i] < ' ' || s[i] > 127) l += 4;
 	//char *new = malloc(l+1);
 	char *new;
