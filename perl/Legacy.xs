@@ -5926,10 +5926,11 @@ set_pin(value)
 	char *value
 PREINIT:
 	GLOB *globule;
-CODE:
+INIT:
 	if(globule->pin){
 		Safefree(globule->pin);
 	}
+CODE:
 	globule->pin = (value) ? savepv(value) : NULL;
 	
 
