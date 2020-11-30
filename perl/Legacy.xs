@@ -6221,4 +6221,10 @@ CODE:
 		}
 	}
 
-return max_out > max_in ? max_in : max_out;
+if(max_out > max_in ){
+	RETVAL = max_in;
+}else{
+	RETVAL = max_out;
+}
+OUTPUT:
+RETVAL
