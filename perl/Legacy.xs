@@ -49,6 +49,8 @@
 #define RADIOTAP_HEADER \
 "\0\0" \
 
+#define MAX_TX_POWER 50
+
 #define INFO 1
 #define VERBOSE 3
 #define DEBUG 4
@@ -6065,7 +6067,7 @@ wi_read(wi, h80211, len, ri)
 	rx_info *ri
 CODE:
         assert(wi->wi_read);
-        RETVAL = wi->wi_read(wi, h80211, len, ri);
+        RETVAL = wi->wi_read(wi, h80211, length, ri);
 OUTPUT:
 RETVAL
 
@@ -6073,11 +6075,11 @@ int
 wi_write(wi, h80211, len, ti)
 	wif *wi
 	unsigned char *h80211
-	int len 
+	int length 
 	tx_info *ti
 CODE:
         assert(wi->wi_write);
-        RETVAL = wi->wi_write(wi, h80211, len, ti);
+        RETVAL = wi->wi_write(wi, h80211, length, ti);
 OUTPUT:
 RETVAL
 
@@ -6243,8 +6245,6 @@ CODE:
 
     old_txpower = wreq.u.txpower.value;
     printf("Interface %s current TX power: %i dBm\n", osdep_iface_out, wreq.u.txpower.value);
-
-    #define MAX_TX_POWER 50
 
     for (i=0; i<MAX_TX_POWER; i++) {
       wreq.u.txpower.value = i;
