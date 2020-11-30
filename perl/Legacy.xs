@@ -53,6 +53,8 @@
 #define VERBOSE 3
 #define DEBUG 4
 
+#define MAX_IFACE_NAME	64
+
 #define IEEE80211_RADIOTAP_F_FRAG	0x08
 #define TX80211_CAP_CTRL	64
 #define TX80211_CAP_SELFACK	512
@@ -6032,7 +6034,6 @@ typedef struct devices{
 }dev;
 
 dev device;
-#define MAX_IFACE_NAME	64
 typedef struct wif {
         int     (*wi_read)(struct wif *wi, unsigned char *h80211, int len,
                            struct rx_info *ri);
@@ -6106,13 +6107,13 @@ int
 osdep_init_txpowers()
 PREINIT:
 char *osdep_iface_out = NULL;
+iwreq wreq;
 CODE:
     if (!osdep_iface_out) {
       printf("D'oh, open interface %s first, idiot...\n", osdep_iface_out);
-      return;
+      return -1;
     }
 
-    struct iwreq wreq;
     int old_txpower, i;
 
     osdep_sockfd_out = socket(AF_INET, SOCK_DGRAM, 0);
@@ -6154,13 +6155,13 @@ CODE:
     }
 
 
-	if(strcmp(osdep_iface_in, osdep_iface_out)){
+	if(strLE(osdep_iface_in, osdep_iface_out)){
 		printf("\n");
 
 		osdep_sockfd_in = socket(AF_INET, SOCK_DGRAM, 0);
 		if(osdep_sockfd_in < 0) {
 		  printf("WTF? Couldn't open socket. Something is VERY wrong...\n");
-		  return;
+		  return -1;
 		}
 
 		//memset(&wreq, 0, sizeof(struct iwreq));
