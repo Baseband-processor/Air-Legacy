@@ -6060,7 +6060,7 @@ CODE:
  # 	
 
 int
-wi_read(wi, h80211, len, ri)
+wi_read(wi, h80211, length, ri)
 	wif *wi
 	unsigned char *h80211
 	int length
@@ -6072,7 +6072,7 @@ OUTPUT:
 RETVAL
 
 int
-wi_write(wi, h80211, len, ti)
+wi_write(wi, h80211, length, ti)
 	wif *wi
 	unsigned char *h80211
 	int length 
@@ -6217,6 +6217,7 @@ CODE:
 int  
 osdep_init_txpowers()
 PREINIT:
+char *osdep_iface_in = NULL;
 char *osdep_iface_out = NULL;
 iwreq wreq;
 int available_in_txpowers[MAX_TX_POWER];
@@ -6314,6 +6315,15 @@ CODE:
 int 
 osdep_get_max_txpower() 
 PREINIT:
+char *osdep_iface_in = NULL;
+char *osdep_iface_out = NULL;
+int available_in_txpowers[MAX_TX_POWER];
+int available_in_txpowers_count = 0;
+int available_out_txpowers[MAX_TX_POWER];
+int available_out_txpowers_count = 0;
+int osdep_sockfd_in = -1;
+int osdep_sockfd_out = -1;
+INIT:
 int available_out_txpowers_count;
 osdep_init_txpowers();
 CODE:
