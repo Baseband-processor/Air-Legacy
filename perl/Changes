@@ -28,6 +28,8 @@ CHANGED PROJECT, NOW IT WILL BE AIR::LEGACY
   - added wps_to_json.pl example: show how to convert WPS stats into json format
   - fixed broken examples
   - added new suggested library: Net::Wireless::802_11::WPA::CLI
+  - included unistd.h header, usefull for check if file exist 
+ 
   
 Revision history for the (old)  Perl extension Air::Lorcon2.
 
