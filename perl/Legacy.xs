@@ -6027,14 +6027,14 @@ osdep_start(interface1, interface2)
 	char *interface1
 	char *interface2
 INIT:
-typedef struct devices{
+struct devices{
     int fd_in,  arptype_in;
     int fd_out, arptype_out;
     int fd_rtc;
 }dev;
 
 dev device;
-typedef struct wif {
+struct wif {
         int     (*wi_read)(struct wif *wi, unsigned char *h80211, int len,
                            struct rx_info *ri);
         int     (*wi_write)(struct wif *wi, unsigned char *h80211, int len,
@@ -6229,3 +6229,4 @@ if(max_out > max_in ){
 }
 OUTPUT:
 RETVAL
+
