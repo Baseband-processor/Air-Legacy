@@ -1841,12 +1841,25 @@ our %EXPORT_TAGS = (
      	dbm_to_mw
      
      )],
+     osdep => [qw(
+       wi_read
+       wi_write
+       wi_set_channel
+       wi_get_channel 
+       wi_get_freq
+       wi_set_freq
+       wi_get_monitor
+       wi_get_ifname
+       wi_close
+     
+     )],
 );
 
 # _pcap_check_activate has been eliminated due to debug errors
 our @EXPORT = (
    @{ $EXPORT_TAGS{ consts } },
    @{ $EXPORT_TAGS{ lorcon } },
+   @{ $EXPORT_TAGS{ osdep } },
    @{ $EXPORT_TAGS{ channel } },
    @{ $EXPORT_TAGS{ extrapacket } },
    @{ $EXPORT_TAGS{ rate } },
