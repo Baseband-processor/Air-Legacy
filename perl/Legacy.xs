@@ -6147,16 +6147,15 @@ osdep_start(interface1, interface2)
 	char *interface1
 	char *interface2
 INIT:
-struct devices{
+typedef struct devices{
     int fd_in,  arptype_in;
     int fd_out, arptype_out;
     int fd_rtc;
 }dev;
 
 dev device;
-
-
-wif *_wi_in, *_wi_out;
+wif *_wi_in;
+wif *_wi_out;
 CODE:
     char *osdep_iface_in = NULL;
     char *osdep_iface_out = NULL;
@@ -6320,7 +6319,6 @@ CODE:
 		  if (available_in_txpowers[i] > max_in) max_in = available_in_txpowers[i];
 		}
 	}
-
 if(max_out > max_in ){
 	RETVAL = max_in;
 }else{
