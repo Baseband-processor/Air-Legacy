@@ -6373,6 +6373,8 @@ typedef struct testcase {
         struct testcase * next;
 }TESTCASE;
 //u_char *packet_header = packet->packet_header;
+
+
 CODE:
 // Dumps information into a readable form, for now convert packet in its hexadecimal form
 // HEADER
