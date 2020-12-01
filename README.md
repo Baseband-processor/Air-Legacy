@@ -27,7 +27,7 @@ More attack can be used, more the efficency growns.
 - [x] cpan and App::Cpan
 - [x] libpcap
 - [x] C compiler (gcc is fine)
-- [ ] libnl-dev (optional, required only for using nl80211 capabilities)
+- [ ] libnl-dev (optional, required only for using airpcap capabilities)
 - [x] linux-libc-dev (usefull for cfg80211 layer)
 
 every requirements will be installed automatically by _install-deps.pl_ through OS packet manager.
