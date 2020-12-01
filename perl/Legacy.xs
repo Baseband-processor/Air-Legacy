@@ -6365,10 +6365,13 @@ if( ! packet || ( packet->packet_raw == NULL) ){
 }
 INIT:
 u_char *packet_rawdata = packet->packet_raw;
-u_char *packet_header = packet->packet_header;
+//u_char *packet_header = packet->packet_header;
 CODE:
-	// Dumps information into a readable form
-RETVAL = packet_rawdata;
+// Dumps information into a readable form, for now convert packet in its hexadecimal form
+// HEADER
+// + 
+// DATA_PACKET
+RETVAL = printf("%d\n", packet_rawdata);
 OUTPUT:
 RETVAL
 
