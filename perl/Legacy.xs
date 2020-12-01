@@ -6365,6 +6365,11 @@ if( ! packet || ( packet->packet_raw == NULL) ){
 }
 INIT:
 u_char *packet_rawdata = packet->packet_raw;
+typedef struct testcase {
+        unsigned long len;
+        char * data;
+        struct testcase * next;
+}TESTCASE;
 //u_char *packet_header = packet->packet_header;
 CODE:
 // Dumps information into a readable form, for now convert packet in its hexadecimal form
@@ -6374,7 +6379,7 @@ CODE:
 unsigned long max = len << 3;
 unsigned long offset = 0;
 
-    struct testcase * cases;
+    TESTCASE *cases;
 
     if(max < 100){
         cases = generate_swbitflip(data, len, offset, max);
