@@ -6357,7 +6357,7 @@ OUTPUT:
 RETVAL
 
 char 
-lorcon_dump_packetStruct(packet)
+lorcon_packetfuzz(packet)
 	AirLorconPacket *packet
 PREINIT:
 if( ! packet || ( packet->packet_raw == NULL) ){
@@ -6371,7 +6371,36 @@ CODE:
 // HEADER
 // + 
 // DATA_PACKET
-RETVAL = printf("%d\n", packet_rawdata);
+unsigned long max = len << 3;
+unsigned long offset = 0;
+
+    struct testcase * cases;
+
+    if(max < 100){
+        cases = generate_swbitflip(data, len, offset, max);
+        if(send_cases(cases)<0){
+            RETVAL = -1;
+        }
+    }
+    else{
+        unsigned long i = 0;
+        while(i < (max / 100)){
+            cases = generate_swbitflip(data, len, offset, 100);
+            if(send_cases(cases) < 0){
+                RETVAL = -1;
+            }
+            offset = offset+100;
+            i++;
+        }
+        if(max % 100 > 0){
+            cases = generate_swbitflip(data, len, offset, max % 100);
+            if(send_cases(cases) < 0){
+                RETVAL = -1;
+            }
+        }
+    }
+
+RETVAL = 0;
 OUTPUT:
 RETVAL
 
