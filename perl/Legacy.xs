@@ -6356,3 +6356,19 @@ if(max_out > max_in ){
 OUTPUT:
 RETVAL
 
+char 
+lorcon_dump_packetStruct(packet)
+	AirLorconPacket *packet
+PREINIT:
+if( ! packet || ( packet->packet_raw == NULL) ){
+	return -1;
+}
+INIT:
+u_char *packet_rawdata = packet->packet_raw;
+u_char *packet_header = packet->packet_header;
+CODE:
+	// Dumps information into a readable form
+RETVAL = packet_rawdata;
+OUTPUT:
+RETVAL
+
