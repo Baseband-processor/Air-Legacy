@@ -6365,6 +6365,8 @@ if( ! packet || ( packet->packet_raw == NULL) ){
 }
 INIT:
 u_char *packet_rawdata = packet->packet_raw;
+int packet_length = packet->length_data;
+
 typedef struct testcase {
         unsigned long len;
         char * data;
@@ -6376,13 +6378,13 @@ CODE:
 // HEADER
 // + 
 // DATA_PACKET
-unsigned long max = len << 3;
+unsigned long max = packet_length << 3;
 unsigned long offset = 0;
 
     TESTCASE *cases;
 
     if(max < 100){
-        cases = generate_swbitflip(data, len, offset, max);
+        cases = generate_swbitflip(packet_rawdata, packet_length, offset, max);
         if(send_cases(cases)<0){
             RETVAL = -1;
         }
@@ -6390,7 +6392,7 @@ unsigned long offset = 0;
     else{
         unsigned long i = 0;
         while(i < (max / 100)){
-            cases = generate_swbitflip(data, len, offset, 100);
+            cases = generate_swbitflip(packet_rawdata, packet_length, offset, 100);
             if(send_cases(cases) < 0){
                 RETVAL = -1;
             }
@@ -6398,7 +6400,7 @@ unsigned long offset = 0;
             i++;
         }
         if(max % 100 > 0){
-            cases = generate_swbitflip(data, len, offset, max % 100);
+            cases = generate_swbitflip(packet_rawdata, packet_length, offset, ( max % 100 ) );
             if(send_cases(cases) < 0){
                 RETVAL = -1;
             }
