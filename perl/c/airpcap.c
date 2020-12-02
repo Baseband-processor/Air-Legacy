@@ -21,7 +21,7 @@
 
 
 #include "airpcap.h"
-#include <linux/nl80211.h>
+#include "../../C/nl80211.h"
 
 static int
 nl80211_state_init(PAirpcapHandle handle, PCHAR Ebuf)
