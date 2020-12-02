@@ -1763,6 +1763,7 @@ our %EXPORT_TAGS = (
       lcpf_assocresp
       lcpf_data
       lcpf_qosheaders
+      tx80211_decodepacket 
 
  )],
  
