@@ -1050,7 +1050,9 @@ char *
 lorcon_get_error( context )
       AirLorcon *context
 CODE:
-	return newSVpv(context->errstr, 0);
+	RETVAL = newSVpv(context->errstr, 0);
+OUTPUT:
+RETVAL
 
 AirLorconDriver *
 lorcon_find_driver( driver )
@@ -1115,7 +1117,11 @@ lorcon_get_timeout(context)
 int
 lorcon_open_inject(context)
       AirLorcon *context
-  CODE:	
+INIT:
+if(! context){
+	return -1;
+}
+CODE:	
 	if (context->openinject_cb == NULL) {
 		snprintf(context->errstr, LORCON_STATUS_MAX,  "Driver %s does not support INJECT mode", context->drivername);
 		return LORCON_ENOTSUPP;
@@ -1159,12 +1165,13 @@ lorcon_packet_from_lcpa(context, lcpa)
 CODE:
 	AirLorconPacket *l_packet;
 	if (lcpa == NULL){
-		return NULL;
+		RETVAL = NULL;
 	}
-	Newxz( l_packet, 1, AirLorconDriver );
+	Newx( l_packet, 1, AirLorconDriver );
 	l_packet->lcpa = lcpa;
-	return (l_packet);
-
+	RETVAL = (l_packet);
+OUTPUT:
+RETVAL
 
 AirLorconPacket *
 lorcon_packet_from_pcap(context, h,  bytes)
@@ -1195,8 +1202,9 @@ CODE:
 	l_packet->packet_header = NULL;
 	l_packet->packet_data = NULL;
 	IV decode = lorcon_packet_decode(l_packet);
-	return l_packet;
-
+	RETVAL = l_packet;
+OUTPUT:
+RETVAL
 
 int
 lorcon_pcap_handler(user,  h, bytes)
@@ -1240,13 +1248,15 @@ char *
 lorcon_get_capiface(context)
       AirLorcon *context
 INIT:
-	if (context->vapname){
-		IV vapname = context->vapname;
-		RETVAL = vapname;
+	if (! context->vapname){
+		RETVAL = -1;
 	}
 CODE:
-  IV ifname = context->ifname;
-  RETVAL = ifname;	
+	if (context->vapname){
+		SV vapname = context->vapname;
+		RETVAL = vapname;
+	}
+RETVAL = ifname;	
 OUTPUT:
 RETVAL
 
@@ -1323,7 +1333,9 @@ Pcap *
 lorcon_get_pcap(context)
       AirLorcon *context
       	CODE:
-	  return(context->pcap);
+	  RETVAL = (context->pcap);
+OUTPUT:
+RETVAL
 
 void 
 lorcon_packet_set_freedata(packet, freedata)
@@ -1392,8 +1404,9 @@ lorcon_loop(context, counter,  callback, user)
     if (ret == -1) {
         snprintf(context->errstr, LORCON_STATUS_MAX, "pcap_loop failed: %s", pcap_geterr(context->pcap) );
     }
-	return( ret );
-
+	RETVAL = ( ret );
+OUTPUT:
+RETVAL
       
 int 
 lorcon_dispatch(context, counter,  callback, user)
@@ -1463,8 +1476,7 @@ lorcon_add_wepkey(context, bssid, key, length)
       u_char *bssid
       u_char *key
       int length
-	CODE:
-	  
+ CODE:	  
 	 if (length > 26){
 		return -1;
 	}
