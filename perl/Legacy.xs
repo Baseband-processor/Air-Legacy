@@ -6330,6 +6330,48 @@ RETVAL
 
 #ifdef __LINUX_NL80211_H && ifdef __LINUX_NETLINK_H
 
+int 
+linux_nl80211_init(state)
+	NL80211_STATE* state
+CODE:
+    int err;
+
+    state->nl_sock = nl_socket_alloc();
+
+    if (!state->nl_sock) {
+        fprintf(stderr, "Failed to allocate netlink socket.\n");
+        return -ENOMEM;
+    }
+
+    if (genl_connect(state->nl_sock)) {
+        fprintf(stderr, "Failed to connect to generic netlink.\n");
+        err = -ENOLINK;
+        goto out_handle_destroy;
+    }
+
+    if (genl_ctrl_alloc_cache(state->nl_sock, &state->nl_cache)) {
+        fprintf(stderr, "Failed to allocate generic netlink cache.\n");
+        err = -ENOMEM;
+        goto out_handle_destroy;
+    }
+
+    state->nl80211 = genl_ctrl_search_by_name(state->nl_cache, "nl80211");
+    if (!state->nl80211) {
+        fprintf(stderr, "nl80211 not found.\n");
+        err = -ENOENT;
+        goto out_cache_free;
+    }
+
+    return 0;
+
+ out_cache_free:
+    Safefree(state->nl_cache);
+ out_handle_destroy:
+    Safefree(state->nl_sock);
+    return err;
+
+
+	
 PAirpcapDeviceDescription
 nl80211_get_all_devices(Ebuf)
 	PCHAR Ebuf
