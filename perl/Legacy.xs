@@ -6402,9 +6402,23 @@ RETVAL
 #define IEEE80211_HDR_LEN 32
 
 
-HV * 
-inject_tcp(airpwn_ctx *ctx, ieee80211_hdr *w_hdr, struct iphdr *ip_hdr, struct tcphdr *tcp_hdr, uint8_t *wepkey, uint32_t keylen, char *content, uint32_t contentlen, uint8_t tcpflags, uint32_t *seqnum)
-
+SV * 
+inject_tcp(ctx, w_hdr, ip_hdr, tcp_hdr, wepkey, keylen, content, contentlen, tcpflags, seqnum, counter)
+	AirPwnContext *ctx
+	ieee80211_hdr *w_hdr
+	struct iphdr *ip_hdr
+	struct tcphdr *tcp_hdr
+	uint8_t *wepkey 
+	uint32_t keylen
+	char *content
+	uint32_t contentlen
+	uint8_t tcpflags
+	uint32_t *seqnum
+	int counter
+PREINIT:
+	HV *ret_hash;
+INIT:
+        ret_hash = newHV();
 CODE:
   // libnet wants the data in host-byte-order
   u_int ack = ntohl(tcp_hdr->seq) +  ( ntohs(ip_hdr->tot_len) - ip_hdr->ihl * 4 - tcp_hdr->doff * 4 );
@@ -6491,8 +6505,7 @@ ctx->tcp_t = libnet_build_tcp(
     /* encryption starts after the 802.11 header, but the LLC header
      * gets encrypted. */
     memcpy(tmpbuf, packet_buff+IEEE80211_HDR_LEN_NO_LLC,  len-IEEE80211_HDR_LEN_NO_LLC);
-    len = wep_encrypt(tmpbuf, packet_buff+IEEE80211_HDR_LEN_NO_LLC,
-			len-IEEE80211_HDR_LEN_NO_LLC, wepkey, keylen);
+    len = wep_encrypt(tmpbuf, packet_buff+IEEE80211_HDR_LEN_NO_LLC, len-IEEE80211_HDR_LEN_NO_LLC, wepkey, keylen);
     if(len <= 0){
 	RETVAL = -3;
 	  
@@ -6505,15 +6518,17 @@ ctx->tcp_t = libnet_build_tcp(
   ctx->in_packet.plen = len;
 
   /* Send the packet */
-  if (tx80211_txpacket(&ctx->inject_tx, &ctx->in_packet) < 0) {
-	RETVAL = -4;
+  for(int ok_boomer = 0; ok_boomer <= counter; ok_boomer++){
+  	if (tx80211_txpacket(&ctx->inject_tx, &ctx->in_packet) < 0) {
+		RETVAL = -4;
+  	}
+	hv_stores(ret_hash, counter, 3, newSViv(len));
 
   }
 
   *seqnum += contentlen;  //advance the sequence number
   
-RETVAL = 
-
+RETVAL = newRV_noinc((SV *)ret_hash);
 OUTPUT:
 RETVAL
 
