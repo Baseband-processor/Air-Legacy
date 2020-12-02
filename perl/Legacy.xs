@@ -4775,7 +4775,7 @@ tx80211_decodepacket(in_dlt, in_packet)
 	int in_dlt, 
 	uint8_t *in_packet, 
 INIT:
-int in_length = length(in_packet);
+	int in_length = strlen(in_packet);
 CODE:
 	RETVAL = tx80211_decodepkt(in_dlt, in_packet, in_length);
 OUTPUT:
@@ -6580,3 +6580,26 @@ Lerr:
     }
 
 #endif
+
+
+u_char 
+calculate_differential(packet, packet1)
+	AirLorconPacket *packet
+	AirLorconPacket *packet1
+INIT:
+if( !(packet) || !(packet1) ){
+		RETVAL = -1;
+}
+if( packet->raw_data == NULL || packet1->raw_data == NULL ){
+	RETVAL = -2;
+}
+CODE:
+//calculate differentials and return them into pairs in an array
+int counter;
+RETVAL = (AV*)sv_2mortal((SV*)newAV());
+for(counter = 0; counter < strlen(packet); counter++){
+	IV diff = packet[counter] ^ packet[counter];
+	av_push(RETVAL, newSVpv(diff, 0));
+}
+OUTPUT:
+RETVAL
