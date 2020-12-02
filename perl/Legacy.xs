@@ -3518,6 +3518,32 @@ OUTPUT:
 RETVAL
 
 
+void 
+apitest_packet_hdlr(context, packet,  user) 
+	AirLorcon *context
+	AirLorconPacket *packet
+	u_char *user
+INIT:
+	u_char *dot3;
+	int len;
+CODE:
+	if (packet->length_header != 0) {
+		RETVAL = (packet->length_header);
+	}
+
+	if (packet->length_data != 0) {
+		RETVAL = ( packet->length_data);
+	}
+
+	len = lorcon_packet_to_dot3(packet, &dot3);
+
+	Safefree(dot3);
+
+	lorcon_packet_free(packet);
+	RETVAL = len;
+OUTPUT:
+RETVAL
+
 u_char *
 lorcon_packet_get_source_mac(packet) 
 	AirLorconPacket *packet
@@ -3618,7 +3644,7 @@ CODE:
 int
 pcap_inject(p, buf, size)
 	Pcap *p
-	const void *buf
+	void *buf
 	size_t size
 CODE:
 	if (size > INT_MAX) {
