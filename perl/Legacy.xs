@@ -6369,7 +6369,7 @@ RETVAL
 
 #ifdef __LINUX_NL80211_H && ifdef __LINUX_NETLINK_H
 
-#include "c/airpcap.h"
+#include "c/airpcap.c"
 
 #endif
 
