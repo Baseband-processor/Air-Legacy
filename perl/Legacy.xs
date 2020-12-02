@@ -6582,7 +6582,7 @@ Lerr:
 #endif
 
 
-u_char *
+AV *
 calculate_differential(packet, packet1)
 	AirLorconPacket *packet
 	AirLorconPacket *packet1
@@ -6594,8 +6594,8 @@ if( packet->raw_data == NULL || packet1->raw_data == NULL ){
 	RETVAL = -2;
 }
 INIT:
-u_char *pack = packet->raw_data;
-u_char *pack1 = packet1->raw_data;
+	u_char *pack = packet->raw_data;
+	u_char *pack1 = packet1->raw_data;
 CODE:
 //calculate differentials and return them into pairs in an array
 int counter;
@@ -6606,3 +6606,4 @@ for(counter = 0; counter < strlen(pack); counter++){
 }
 OUTPUT:
 RETVAL
+
