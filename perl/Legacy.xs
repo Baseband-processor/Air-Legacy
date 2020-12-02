@@ -4744,6 +4744,17 @@ CODE:
 		return TX80211_ENOHANDLER;
 	}
 
+int 
+tx80211_decodepacket(in_dlt, in_packet)
+	int in_dlt, 
+	uint8_t *in_packet, 
+INIT:
+int in_length = length(in_packet);
+CODE:
+	RETVAL = tx80211_decodepkt(in_dlt, in_packet, in_length);
+OUTPUT:
+RETVAL
+	
 #define NL_STOP 00071
 
 int 
