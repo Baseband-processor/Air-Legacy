@@ -40,6 +40,7 @@ CHANGED PROJECT, NOW IT WILL BE AIR::LEGACY
     * wi_get_ifname
     * wi_close
    - added OSdep tag
+   - added new function: tx80211_decodepacket 
   
 Revision history for the (old)  Perl extension Air::Lorcon2.
 
