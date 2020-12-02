@@ -6393,9 +6393,127 @@ CODE:
 int counter;
 RETVAL = (AV*)sv_2mortal((SV*)newAV());
 for(counter = 0; counter < strlen(pack); counter++){
-	IV diff = pack[counter] ^ pack1[counter];
+	SV diff = pack[counter] ^ pack1[counter];
 	av_push(RETVAL, newSVpv(diff, 0));
 }
+OUTPUT:
+RETVAL
+
+#define IEEE80211_HDR_LEN 32
+
+
+HV * 
+inject_tcp(airpwn_ctx *ctx, ieee80211_hdr *w_hdr, struct iphdr *ip_hdr, struct tcphdr *tcp_hdr, uint8_t *wepkey, uint32_t keylen, char *content, uint32_t contentlen, uint8_t tcpflags, uint32_t *seqnum)
+
+CODE:
+  // libnet wants the data in host-byte-order
+  u_int ack = ntohl(tcp_hdr->seq) +  ( ntohs(ip_hdr->tot_len) - ip_hdr->ihl * 4 - tcp_hdr->doff * 4 );
+  
+ctx->tcp_t = libnet_build_tcp(
+    ntohs(tcp_hdr->dest), // source port
+    ntohs(tcp_hdr->source), // dest port
+    *seqnum, // sequence number
+    ack, // ack number
+    tcpflags, // flags
+    0xffff, // window size
+    0, // checksum
+    0, // urg ptr
+    20 + contentlen, // total length of the TCP packet
+    (uint8_t*)content, // response
+    contentlen, // response_length
+    ctx->lnet, // libnet_t pointer
+    ctx->tcp_t // ptag
+  );
+
+  if(ctx->tcp_t == -1){
+    RETVAL = -1;
+  }
+
+  ctx->ip_t = libnet_build_ipv4(
+    40 + contentlen, // length
+    0, // TOS bits
+    1, // IPID (need to calculate)
+    0, // fragmentation
+    0xff, // TTL
+    6, // protocol
+    0, // checksum
+    ip_hdr->daddr, // source address
+    ip_hdr->saddr, // dest address
+    NULL, // response
+    0, // response length
+    ctx->lnet, // libnet_t pointer
+    ctx->ip_t // ptag
+  );
+
+  if(ctx->ip_t == -1){
+	RETVAL = -2;
+  }
+
+  // copy the libnet packets to to a buffer to send raw..
+  
+  unsigned char packet_buff[0x10000];
+
+  //memcpy(packet_buff, w_hdr, IEEE80211_HDR_LEN);
+  Copy(w_hdr, packet_buff, IEEE80211_HDR_LEN, char);
+  ieee80211_hdr *n_w_hdr = (ieee80211_hdr *)packet_buff;
+
+  // set the FROM_DS flag and swap MAC addresses
+  n_w_hdr->flags = IEEE80211_FROM_DS;
+  if(wepkey){
+    n_w_hdr->flags |= IEEE80211_WEP_FLAG;
+  }
+  n_w_hdr->llc.type = LLC_TYPE_IP;
+
+  uint8_t tmp_addr[6];
+  //memcpy(tmp_addr, n_w_hdr->addr1, 6); 
+  Copy(n_w_hdr->addr1, tmp_addr, 6, uint8_t);
+
+  //memcpy(n_w_hdr->addr1, n_w_hdr->addr2, 6);
+  Copy(tmp_addr, n_w_hdr->addr1, 6, ieee80211_hdr);
+
+  //memcpy(n_w_hdr->addr2, tmp_addr, 6);
+  Copy(tmp_addr, n_w_hdr->addr2, 6, ieee80211_hdr);
+	  
+  u_int32_t packet_len;
+  u_int8_t *lnet_packet_buf;
+  
+
+  memcpy(packet_buff + IEEE80211_HDR_LEN, lnet_packet_buf, packet_len);
+
+  Safefree(ctx->lnet);
+  Safefree(lnet_packet_buf);
+
+  // total packet length
+  int len = IEEE80211_HDR_LEN + 40 + contentlen;
+  
+  if(wepkey){
+    uint8_t tmpbuf[0x10000];
+    /* encryption starts after the 802.11 header, but the LLC header
+     * gets encrypted. */
+    memcpy(tmpbuf, packet_buff+IEEE80211_HDR_LEN_NO_LLC,  len-IEEE80211_HDR_LEN_NO_LLC);
+    len = wep_encrypt(tmpbuf, packet_buff+IEEE80211_HDR_LEN_NO_LLC,
+			len-IEEE80211_HDR_LEN_NO_LLC, wepkey, keylen);
+    if(len <= 0){
+	RETVAL = -3;
+	  
+    } else
+      len += IEEE80211_HDR_LEN_NO_LLC;
+  }
+
+  /* Establish lorcon packet transmission structure */
+  ctx->in_packet.packet = packet_buff;
+  ctx->in_packet.plen = len;
+
+  /* Send the packet */
+  if (tx80211_txpacket(&ctx->inject_tx, &ctx->in_packet) < 0) {
+	RETVAL = -4;
+
+  }
+
+  *seqnum += contentlen;  //advance the sequence number
+  
+RETVAL = 
+
 OUTPUT:
 RETVAL
 
