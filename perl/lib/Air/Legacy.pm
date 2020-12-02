@@ -1764,7 +1764,7 @@ our %EXPORT_TAGS = (
       lcpf_data
       lcpf_qosheaders
       tx80211_decodepacket 
-
+      apitest_packet_hdlr
  )],
  
    suites => [qw(
