@@ -1,3 +1,6 @@
+// DEACTIVATED
+
+/*
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -40,3 +43,4 @@ struct wif {
         char	wi_interface[MAX_IFACE_NAME];
 };
 
+*/
