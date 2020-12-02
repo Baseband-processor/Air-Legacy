@@ -1,5 +1,25 @@
 // Made by Edoardo Mantovani, 2020
 
+#include <errno.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+#include <net/if.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
+#include <netlink/genl/genl.h>
+#include <netlink/genl/family.h>
+#include <netlink/genl/ctrl.h>
+#include <netlink/msg.h>
+#include <netlink/attr.h>
+
+#include <netlink/route/addr.h>
+#include <netlink/route/link.h>
+
+
 #include "airpcap.h"
 #include <linux/nl80211.h>
 
