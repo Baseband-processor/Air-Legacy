@@ -6357,8 +6357,8 @@ CODE:
     int err = 0;
     NL_MSG *msg;
     struct nl_handle *sock = NULL;
-    struct NL_CACHE *cache = NULL;
-    struct GENL_F *nl80211 = NULL;
+    NL_CACHE *cache = NULL;
+    GENL_F *nl80211 = NULL;
     PAirpcapDeviceDescription desc_start = NULL, desc_current;
 
     sock = nl_handle_alloc();
@@ -6418,7 +6418,8 @@ CODE:
             continue;
         }
 
-        desc = (PAirpcapDeviceDescription)malloc(sizeof(*desc));
+        //desc = (PAirpcapDeviceDescription)malloc(sizeof(*desc));
+	Newx(desc, desc, PAirpcapDeviceDescription);
         desc->next = NULL;
 
         /* Update the list */
