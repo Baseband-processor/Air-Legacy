@@ -3,7 +3,7 @@ Air::Legacy
 
 ![image of wireless_security_protocols_bg](./wireless.jpg)
 
-![coverage](https://progress-bar.dev/0?title=progress)  ![functions](https://progress-bar.dev/339?title=functions)  ![constants](https://progress-bar.dev/580?title=constants)  ![size](https://img.shields.io/github/languages/code-size/Baseband-processor/Air-Legacy) ![license](https://img.shields.io/github/license/Baseband-processor/Air-Legacy) ![Lcommits](https://img.shields.io/github/last-commit/Baseband-processor/Air-Legacy)  ![toplang](https://img.shields.io/github/languages/top/Baseband-processor/Air-Legacy) 
+![coverage](https://progress-bar.dev/0?title=progress)  ![functions](https://progress-bar.dev/340?title=functions)  ![constants](https://progress-bar.dev/580?title=constants)  ![size](https://img.shields.io/github/languages/code-size/Baseband-processor/Air-Legacy) ![license](https://img.shields.io/github/license/Baseband-processor/Air-Legacy) ![Lcommits](https://img.shields.io/github/last-commit/Baseband-processor/Air-Legacy)  ![toplang](https://img.shields.io/github/languages/top/Baseband-processor/Air-Legacy) 
  ![release-date](https://img.shields.io/github/release-date/Baseband-processor/Air-Legacy)
  
 
