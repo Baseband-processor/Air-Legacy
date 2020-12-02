@@ -2191,6 +2191,20 @@ sub dbm_to_mw {
 }
 
 
+sub parse_differential{
+	my $Packet, $Packet1 = @_;
+	my $i = 0;
+	my $str;
+	if(undef($Packet) || undef($Packet1) ){
+		return -1;
+	}
+	my @parsed_differentials = calculate_differential($Packet, $Packet1);
+	while( $i <= $#parsed_differentials ){
+		$str .= $parsed_differentials[$i];
+		$i++ if($i <= $#parsed_differentials);
+	}
+	return($str);
+}
 
 __PACKAGE__->bootstrap($VERSION);
 
