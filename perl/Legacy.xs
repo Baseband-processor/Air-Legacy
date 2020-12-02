@@ -6582,23 +6582,26 @@ Lerr:
 #endif
 
 
-u_char 
+u_char *
 calculate_differential(packet, packet1)
 	AirLorconPacket *packet
 	AirLorconPacket *packet1
-INIT:
+PREINIT:
 if( !(packet) || !(packet1) ){
 		RETVAL = -1;
 }
 if( packet->raw_data == NULL || packet1->raw_data == NULL ){
 	RETVAL = -2;
 }
+INIT:
+u_char *pack = packet->raw_data;
+u_char *pack1 = packet1->raw_data;
 CODE:
 //calculate differentials and return them into pairs in an array
 int counter;
 RETVAL = (AV*)sv_2mortal((SV*)newAV());
-for(counter = 0; counter < strlen(packet); counter++){
-	IV diff = packet[counter] ^ packet[counter];
+for(counter = 0; counter < strlen(pack); counter++){
+	IV diff = pack[counter] ^ pack1[counter];
 	av_push(RETVAL, newSVpv(diff, 0));
 }
 OUTPUT:
