@@ -6408,6 +6408,13 @@ CODE:
     return err;
 
 
+
+#define AIRPCAP_ID_CLASSIC
+#define AIRPCAP_ID_CLASSIC_REL2
+#define AIRPCAP_ID_TX
+#define AIRPCAP_ID_EX
+#define AIRPCAP_ID_N
+#define AIRPCAP_ID_NX
 	
 PAirpcapDeviceDescription
 nl80211_get_all_devices(Ebuf)
