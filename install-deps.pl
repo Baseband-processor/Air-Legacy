@@ -61,21 +61,21 @@ if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /u
 	# for first thing update the Debian Repositories
 	$apt->update();
 	# install all pre-requisites
-	$apt->install( "flex", "bison", "libpcap-dev", "linux-libc-dev" ); # Equivalent of `apt update && apt install flex bison libpcap-dev linux-libc-dev`;
+	$apt->install( "flex", "bison", "libpcap-dev", "linux-libc-dev", "libnet1-dev" ); # Equivalent of `apt update && apt install flex bison libpcap-dev linux-libc-dev libnet1-dev`;
 	# libpcap is a special case, we will use libpcap-dev package for installing it as dep.
   }
   elsif( Detect->distribution_name() =~ "fedora" || Detect->distribution_name() =~ "centos" ||  Detect->distribution_name() =~ "rhel" ){ # for Fedora/CentOS/RHEL
     print colored(['bright_red on_black'], "Installing requisites for GNU  Fedora!", "\n");
-    system("sudo yum install flex bison libpcap*  ");
+    system("sudo yum install flex bison libpcap* libnet-* ");
   }elsif( Detect->distribution_name() =~ "openSUSE" ){
     print colored(['bright_red on_black'], "Installing requisites for GNU  SUSE!", "\n");
-    system("sudo zypper install flex bison libpcap*  ");
+    system("sudo zypper install flex bison libpcap*  libnet-*");
   }elsif( Detect->distribution_name() =~ "Mageia" ){
     print colored(['bright_red on_black'], "Installing requisites for GNU Mageia!", "\n");
-    system("sudo urpmi flex bison libpcap*  ");
+    system("sudo urpmi flex bison libpcap* libnet-* ");
   }elsif( Detect->distribution_name() =~ "Alpine"){
      print colored(['bright_red on_black'], "Installing requisites for Alpine Linux!", "\n");
-    system("sudo apk add flex bison libpcap*  ");  
+    system("sudo apk add flex bison libpcap*  libnet-*");  
   }
   	print "\nEvery requirement has been installed!\n";
   	});
