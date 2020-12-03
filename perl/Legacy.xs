@@ -2112,7 +2112,7 @@ CODE:
 
 int 
 nl80211_connect(interface, nl_sock, nl80211_id, if_index, errstr)
-     const char *interface
+     char *interface
      void **nl_sock
      int *nl80211_id
      int *if_index
@@ -2658,7 +2658,7 @@ lcpa_size(in_head)
 	LCPA_META *in_head
 CODE:
 	LCPA_META *h = NULL, *i = NULL;
-	int len = 0;
+	IV len = 0;
 	for (h = in_head; h->prev != NULL; h = h->prev) {
 		;
 	}
@@ -2670,8 +2670,9 @@ CODE:
 		len += i->len;
 	}
 
-	return len;
-
+RETVAL = len;
+OUTPUT:
+RETVAL
 
 void 
 lcpa_freeze(in_head, bytes) 
@@ -2687,7 +2688,7 @@ CODE:
 
 	for (i = h; i != NULL; i = i->next) {
 		//memcpy(&(bytes[offt]), i->data, i->len);
-		Copy(i->data, (bytes[offt]), i->len, 0);		
+		Copy(i->data, (bytes[offt]), i->len, LCPA_META);		
 		offt += i->len;
 	}
 
@@ -2844,7 +2845,9 @@ int
 wtinj_close(wtinj)
 	TX80211 *wtinj
 CODE:
-	return( close(wtinj->raw_fd) );
+	IV return_val  =( close(wtinj->raw_fd) );
+OUTPUT:
+return_val
 
 int 
 wtinj_setchannel(wtinj, channel)
@@ -2946,20 +2949,20 @@ rt2570_send(input_tx, input_pkt)
 	TX80211_PACKET *input_pkt
 INIT:
 if( ! input_tx || ! input_pkt ){
-		return -1;
+		RETVAL = -1;
 }
 CODE:
 	int ret;
 
 	if (!(input_tx->raw_fd > 0)) {
-		return 0;
+		RETVAL = 0;
 	}
 
 	ret = write(input_tx->raw_fd, input_pkt->packet, input_pkt->plen);
 
 	usleep(2);
 	if (ret < 0){
-		return TX80211_ENOTX;
+		RETVAL = TX80211_ENOTX;
 	}
 	RETVAL = ret;
 OUTPUT:
@@ -2978,7 +2981,7 @@ tx80211_zd1211rw_capabilities()
 int 
 tx80211_zd1211rw_init(input_tx)
 	TX80211 *input_tx
-	CODE:
+CODE:
 	input_tx->capabilities = tx80211_zd1211rw_capabilities();
 	input_tx->open_callthrough = wtinj_open();
 	input_tx->close_callthrough = wtinj_close();
@@ -3421,7 +3424,7 @@ CODE:
 	//memcpy(*data + 12, packet->packet_data + offt, packet->length_data - offt);
 	Copy(packet->packet_data + offt, *data + 12, packet->length_data - offt, 0);
 	RETVAL = length;
-	  OUTPUT:
+OUTPUT:
 	RETVAL
 
 
@@ -4981,7 +4984,7 @@ CODE:
 
     if( left && length >= fill ){
         //memcpy( (void *) (ctx->buffer + left), (const void *) input, fill );
-        Copy(input, (ctx->buffer + left), fill, 1);
+        Copy(input, (ctx->buffer + left), fill, void);
         sha1_process( ctx, ctx->buffer );
         length -= fill;
         input  += fill;
@@ -4996,7 +4999,7 @@ CODE:
 
     if( length ){
         //memcpy( (void *) (ctx->buffer + left), (const void *) input, length );
-        Copy(input,  (ctx->buffer + left), length, 1);
+        Copy(input,  (ctx->buffer + left), length, void);
     }
     
 void 
@@ -5087,8 +5090,9 @@ CODE:
 	RADIOTAP_HEADER_RATE_OPTION \
 	"\x18\0" 
 	int radio_header = sizeof(RADIOTAP_HEADER) - 1;
-	memcpy(rt_header, RADIOTAP_HEADER, sizeof(RADIOTAP_HEADER)-1);
-	//StructCopy(RADIOTAP_HEADER, rt_header, radio_header);
+	//memcpy(rt_header, RADIOTAP_HEADER, sizeof(RADIOTAP_HEADER)-1);
+	int radiotap_size = sizeof(RADIOTAP_HEADER) -1;
+	StructCopy(RADIOTAP_HEADER, rt_header, radiotap_size);
 	RETVAL = ( sizeof(RADIOTAP_HEADER) - 1 );
 OUTPUT:
 	RETVAL
@@ -5120,7 +5124,7 @@ CODE:
 OUTPUT:
 RETVAL
 
-char *
+SV *
 get_mac()
 INIT:
 GLOB *globule;
@@ -5138,7 +5142,7 @@ unsigned char *value
 CODE:
 	GLOB *globule;
 	//memcpy(globule->bssid, value, MAC_ADDR_LEN);
-	Copy(value, globule->bssid, MAC_ADDR_LEN, 1);
+	Copy(value, globule->bssid, MAC_ADDR_LEN, GLOB);
 
 # define end_htole16(x) (uint16_t)(x)
 #define LISTEN_INTERVAL         0x0064
@@ -5147,6 +5151,10 @@ CODE:
 size_t
 build_association_management_frame(f)
          ASSOCIATION_REQUEST_MANAGEMENT_FRAME *f
+INIT:
+if(! f || f == NULL){
+	return -1;
+}
 CODE:
 	
 	f->capability = end_htole16(get_ap_capability());
@@ -5157,6 +5165,10 @@ CODE:
 size_t
 build_authentication_management_frame(f)
          AUTH_MANAGEMENT_FRAME *f
+INIT:
+if(! f || f == NULL){
+	return -1;
+}
 CODE:
 
 	f->algorithm = end_htole16(OPEN_SYSTEM);
@@ -5179,13 +5191,13 @@ CODE:
 
 	//memcpy(dst, src, n)            Copy(src, dst, n, t)
 	//memcpy(fh->addr1, dstmac, MAC_ADDR_LEN);
-	Copy(dstmac, fh->addr1, MAC_ADDR_LEN, 1);
+	Copy(dstmac, fh->addr1, MAC_ADDR_LEN, char);
 	//memcpy(fh->addr2, get_mac(), MAC_ADDR_LEN);
-	Copy(get_mac(), fh->addr2, MAC_ADDR_LEN, 1);
+	Copy(get_mac(), fh->addr2, MAC_ADDR_LEN, char);
 	//memcpy(fh->addr3, dstmac, MAC_ADDR_LEN);
-	Copy(dstmac, fh->addr3, MAC_ADDR_LEN, 1);
+	Copy(dstmac, fh->addr3, MAC_ADDR_LEN, char);
 	frag_seq += 0x10; /* SEQ_MASK */
-	return sizeof *fh;
+	return (sizeof *fh);
 
 
 size_t 
@@ -5224,7 +5236,6 @@ CODE:
 	rt_len = build_radio_tap_header(&rt_header);
 	DOT11_FRAME_H *dot11_header;
 	dot11_len = build_dot11_frame_header_m(&dot11_header, FC_PROBE_REQUEST, bssid);
-
 	packet_len = rt_len + dot11_len + ssid_tag_len;
 	return 0;
 
@@ -5245,19 +5256,21 @@ CODE:
 	//packet = malloc(packet_len);
 	Newx(packet, packet_len, void);
 	if(packet) {
-		memset((void *) packet, 0, packet_len);
-		//Zero(packet, 0, packet_len);
-		memcpy((void *) packet, &rt_header, rt_len);
-		//Copy(&rt_header, packet, rt_len, 1);
-		memcpy((void *) ((char *) packet+rt_len), &dot11_header, dot11_len);
+		//memset((void *) packet, 0, packet_len);
+		Zero(packet, packet_len, void);
+		//memcpy((void *) packet, &rt_header, rt_len);
+		Copy(&rt_header, packet, rt_len, void);
+		//memcpy((void *) ((char *) packet+rt_len), &dot11_header, dot11_len);
 		char *p = packet + rt_len;
-		//Copy(&dot11_header, p, dot11_len, 1);
+		Copy(&dot11_header, p, dot11_len, void);
 		memcpy((void *) ((char *) packet+rt_len+dot11_len), &llc_header, llc_len);
 		char *p1 = packet + rt_len + dot11_len;
 		//Copy(&llc_header, p1, llc_len, 1);
 		int *len = packet_len;
 	}
-	return packet;
+RETVAL = packet;
+OUTPUT:
+RETVAL
 
 #define DOT1X_VERSION           0x01
 #define DOT1X_START             0x01
