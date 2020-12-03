@@ -1860,7 +1860,8 @@ CODE:
 	d->init_func = drv_madwifing_init(drv);
 	d->probe_func = drv_madwifing_probe();
 	d->next = drv;
-	RETVAL = d; // TODO: transform d into a readable string
+	SV to_return =  lorcon_driver_t_c2sv(d); // TODO: transform d into a readable string
+	RETVAL = to_return;
 OUTPUT:
 	RETVAL
 	
@@ -1872,7 +1873,7 @@ lorcon_packet_set_mcs(packet, use_mcs, mcs, short_gi, use_40mhz)
 	unsigned int short_gi
 	unsigned int use_40mhz
 INIT:
-	if( ! packet ){
+if( ! packet ){
 		return -1;
 	}
 CODE:
