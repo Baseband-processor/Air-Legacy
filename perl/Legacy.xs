@@ -1847,7 +1847,7 @@ CODE:
 	context->auxptr = NULL;
 	return 1;
 			    
-AirLorconDriver *
+SV 
 drv_madwifing_listdriver(drv)
    AirLorconDriver * drv
 CODE:
