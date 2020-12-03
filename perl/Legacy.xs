@@ -6434,8 +6434,7 @@ RETVAL
 void
 inject_tcp(ch, content, content, contentlen, tcpflags, seqnum)
 	int ch
-	key
-	keylen
+	uint32_t keylen
 	char *content
 	uint32_t contentlen
 	uint8_t tcpflags
