@@ -29,6 +29,7 @@ More attack can be used, more the efficency growns.
 - [x] C compiler (gcc is fine)
 - [ ] libnl-dev (optional, required only for using airpcap capabilities)
 - [x] linux-libc-dev (usefull for cfg80211 layer)
+- [x] libnet (required for using Airpwn capabilities)
 
 every requirements will be installed automatically by _install-deps.pl_ through OS packet manager.
 
