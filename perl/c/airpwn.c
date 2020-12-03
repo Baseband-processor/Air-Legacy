@@ -278,13 +278,13 @@ inject_tcp(airpwn_ctx *ctx,
   printlog(ctx, 2, "wrote %d bytes to the wire(less)\n", len);
 }
 
-int perl_inject_tcp(int ch, key, keylen,  char *content, uint32_t contentlen, uint8_t tcpflags, uint32_t *seqnum){
+int perl_inject_tcp(int ch, uint32_t keylen,  char *content, uint32_t contentlen, uint8_t tcpflags, uint32_t *seqnum){
 	if(ch == 1 ){
 		struct ieee80211_hdr *w_hdr;
 		struct iphdr *ip_hdr;
 		struct tcphdr *tcp_hdr;
 		airpwn_ctx *ctx
-		ctx->wpakey = key;
+		uint8_t  key = ctx->wpakey;
 		inject_tcp(ctx,w_hdr,ip_hdr,tcp_hdr, key, keylen, content, contentlen, tcpflags, seqnum);
 	
 }else{
@@ -292,7 +292,7 @@ int perl_inject_tcp(int ch, key, keylen,  char *content, uint32_t contentlen, ui
 		struct iphdr *ip_hdr;
 		struct tcphdr *tcp_hdr;
 		airpwn_ctx *ctx
-		ctx->wepkey = key;
+		uint32_t key = ctx->wepkey;
 		inject_tcp(ctx,w_hdr,ip_hdr,tcp_hdr, key, keylen, content, contentlen, tcpflags, seqnum);
 		
 	}
