@@ -4001,7 +4001,9 @@ CODE:
 	if (packet->lcpa != NULL) {
 		len = lcpa_size(packet->lcpa);
 		freebytes = 1;
-		bytes = (u_char *) malloc(sizeof(u_char) * len);
+		//bytes = (u_char *) malloc(sizeof(u_char) * len);
+		int len_size = sizeof(u_char)*len);
+		Newx(bytes, len_size, u_char);
 		int size = sizeof(u_char) * len;
 		Newx(bytes, size, u_char);
 		lcpa_freeze(packet->lcpa, bytes);
@@ -4096,8 +4098,7 @@ CODE:
 	Copy(context->vapname, if_req.ifr_name, IFNAMSIZ, 0);
 	if_req.ifr_name[IFNAMSIZ - 1] = 0;
 	if (ioctl(context->inject_fd, SIOCGIFINDEX, &if_req) < 0) {
-		snprintf(context->errstr, LORCON_STATUS_MAX, "failed to get interface idex: %s",
-				 strerror(errno));
+		snprintf(context->errstr, LORCON_STATUS_MAX, "failed to get interface idex: %s", strerror(errno));
 		close(context->inject_fd);
 		pcap_close(context->pcap);
 		nl80211_disconnect(extras->nlhandle);
@@ -4178,7 +4179,7 @@ CODE:
 	return 1;
 
      
-AirLorconDriver  *
+SV *
 drv_mac80211_listdriver(head) 
 	AirLorconDriver *head
 INIT:
@@ -4196,7 +4197,7 @@ CODE:
 	d->init_func = drv_mac80211_init(interface);
 	d->probe_func = drv_mac80211_probe();
 	d->next = head;
-	RETVAL = d;
+	RETVAL = newSVpv(lorcon_driver_t_c2sv(d),0);
 OUTPUT:
 RETVAL
 
