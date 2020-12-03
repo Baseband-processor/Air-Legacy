@@ -115,6 +115,11 @@ struct wpakey {
   uint8_t handshake;   
 };
   
+struct choose{
+	wpakey wpakeys;	
+	wepkey wepkeys;	
+}
+
 struct airpwn_ctx {
   conf_entry *conf_list;
   char *monitor_if;
@@ -139,11 +144,11 @@ struct airpwn_ctx {
 // FUNCTIONS
 airpwn_ctx *spawn_Airpwn(void){
   	struct airpwn_ctx *c =  (sizeof airpwn_ctx *) malloc(sizeof(struct airpwn_ctx));
-	  c->keys = NULL;
-    c->wpakey  = NULL;
-  	c->status = NULL;
-	  c->algorithm = NULL;
-	  return c;	
+	 c->keys = NULL;
+   	 c->wpakey  = NULL;
+  	 c->status = NULL;
+	 c->algorithm = NULL;
+	 return c;	
 }
 
 void 
@@ -272,3 +277,22 @@ inject_tcp(airpwn_ctx *ctx,
   
   printlog(ctx, 2, "wrote %d bytes to the wire(less)\n", len);
 }
+
+int perl_inject_tcp(int ch, key, keylen,  char *content, uint32_t contentlen, uint8_t tcpflags, uint32_t *seqnum){
+	if(ch == 1 ){
+		struct ieee80211_hdr *w_hdr;
+		struct iphdr *ip_hdr;
+		struct tcphdr *tcp_hdr;
+		airpwn_ctx *ctx
+		ctx->wpakey = key;
+		inject_tcp(ctx,w_hdr,ip_hdr,tcp_hdr, key, keylen, content, contentlen, tcpflags, seqnum);
+	
+}else{
+                struct ieee80211_hdr *w_hdr;
+		struct iphdr *ip_hdr;
+		struct tcphdr *tcp_hdr;
+		airpwn_ctx *ctx
+		ctx->wepkey = key;
+		inject_tcp(ctx,w_hdr,ip_hdr,tcp_hdr, key, keylen, content, contentlen, tcpflags, seqnum);
+		
+	}
