@@ -3,6 +3,49 @@
 
 #ifndef IEEE80211_H
 
+struct ieee80211_hdr {
+      __le16 frame_ctl;
+      __le16 duration_id;
+      uint8_t payload[0];
+} __attribute__ ((packed));
+
+
+#else
+	#include <ieee80211.h>
+#endif
+
+struct tcphdr {
+	_be16 	source
+	__be16 	dest
+	__be32 	seq
+	__be32 	ack_seq
+	__be16 	window
+	__sum16	check
+	__be16 	urg_ptr		
+}
+
+struct iphdr {
+  #if defined(__LITTLE_ENDIAN_BITFIELD)
+       __u8    ihl:4,
+           version:4;
+   #elif defined (__BIG_ENDIAN_BITFIELD)
+       __u8    version:4,
+           ihl:4;
+   #else
+   #error  "Please fix <asm/byteorder.h>"
+   #endif
+       __u8    tos;
+       __be16  tot_len;
+       __be16  id;
+       __be16  frag_off;
+       __u8    ttl;
+       __u8    protocol;
+       __sum16 check;
+       __be32  saddr;
+       __be32  daddr;
+       /*The options start here. */
+  };
+  
 struct tx80211_packet {
 	uint8_t modulation;
 	uint8_t txrate;
