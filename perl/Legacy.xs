@@ -5520,8 +5520,8 @@ CODE:
 		Newx(buf, buf_len, (void *));
 		if(buf)
 		{
-			memset((void *) buf, 0, buf_len);
-			
+			//memset((void *) buf, 0, buf_len);
+			Zero(buf, buf_len, void);
 			//memcpy((void *) buf, snap_packet, snap_len);
 			//memcpy(dst, src, n)            Copy(src, dst, n, t)
 			Copy(snap_packet, buf, snap_len, void);
@@ -5530,8 +5530,8 @@ CODE:
 			char * buf_plus = buf + offset;
 			Copy(dot1x_header, buf_plus, dot1x_len, void);
 			offset += dot1x_len;
-			memcpy((void *) ((char *) buf+offset), eap_header, eap_len);
-			
+			//memcpy((void *) ((char *) buf+offset), eap_header, eap_len);
+			Copy(eap_header, buf+offset, eap_len, void);
 			*len = buf_len;
 		}
 	}
@@ -5956,7 +5956,7 @@ CODE:
 				while(isspace(*pin)){
 					++pin;
 				}
-				if(!strncmp(pin, "<empty>", 7)) {
+				if(!strnEQ(pin, "<empty>", 7)) {
 					*pinlen = 0;
 					*pinbuf = 0;
 				} else {
@@ -6431,6 +6431,17 @@ RETVAL
 #ifdef __LIBNET_H
 
 	#include "c/airpwn.c"
-
+void
+inject_tcp(ch, content, content, contentlen, tcpflags, seqnum)
+	int ch
+	key
+	keylen
+	char *content
+	uint32_t contentlen
+	uint8_t tcpflags
+	uint32_t *seqnum
+CODE:
+perl_inject_tcp(ch, key, keylen, content, contentlen, tcpflags, seqnum);
+return 0;
 
 #endif
