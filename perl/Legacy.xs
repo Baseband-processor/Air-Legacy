@@ -3673,7 +3673,7 @@ CODE:
 int
 pcap_sendpacket(p, buf, size)
 	Pcap *p
-	const u_char *buf
+	u_char *buf
 	int size
 
 
