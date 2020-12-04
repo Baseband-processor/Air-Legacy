@@ -3506,10 +3506,10 @@ lorcon_packet_get_dot11_extra(packet)
 	AirLorconPacket *packet
 CODE:
     if (packet->extra_info == NULL){
-        return NULL;
+        RETVAL = NULL;
     }
     if (packet->extra_type != LORCON_PACKET_EXTRA_80211){
-        return NULL;
+        RETVAL = NULL;
     }
     RETVAL = packet->extra_info;
 OUTPUT:
@@ -3520,16 +3520,16 @@ lorcon_packet_get_dot3_extra(packet)
 	AirLorconPacket *packet
 INIT:
 	if( ! packet ){
-		return -1;
+		RETVAL = -1;
 	}
 CODE:
     if (packet->extra_info == NULL){
-        return NULL;
+        RETVAL = NULL;
 }
     if (packet->extra_type != LORCON_PACKET_EXTRA_8023){
-        return NULL;
+        RETVAL = NULL;
 	}
-   RETVAL = packet->extra_info;
+RETVAL = packet->extra_info;
 OUTPUT:
 RETVAL
 
@@ -3606,7 +3606,7 @@ CODE:
         //return d11extra->bssid_mac;
  	  HV *out = newHV();
  	  SV *out_ref = newRV_noinc((SV *)out);
- 	  hv_store(out, "bssid_mac",    4, newSVpv(d11extra->bssid_mac, 0), 0);
+ 	  hv_store(out, "bssid_mac", 4, newSVpv(d11extra->bssid_mac, 0), 0);
 	  RETVAL = out_ref;
     }
 OUTPUT:
@@ -3858,7 +3858,7 @@ bcm43xx_close(in_tx)
 	TX80211 *in_tx
 INIT:
 if(! in_tx ){
-	return -1;
+	RETVAL = -1;
 }
 CODE:
 	int i = close(in_tx->raw_fd); 
@@ -3914,9 +3914,9 @@ CODE:
 	int payloadlen;
 	WG80211_FRAME *frame;
 	if (input_pkt->plen < 24) {
-		snprintf(wginj->errstr, TX80211_STATUS_MAX, "wlan-ng raw "
-				"injection only capable with fill 802.11 "
-				"frames, control frames are not possible.");
+		//snprintf(wginj->errstr, TX80211_STATUS_MAX, "wlan-ng raw "
+		//		"injection only capable with fill 802.11 "
+		//		"frames, control frames are not possible.");
 		return TX80211_ENOTX;
 	}
 
@@ -3926,7 +3926,7 @@ CODE:
 		return TX80211_ENOTX;
 	}
 
-	frame = malloc(sizeof(*frame) + payloadlen);
+	//frame = malloc(sizeof(*frame) + payloadlen);
 	int frame_l = sizeof(*frame)+ payloadlen;
 	Newx(frame, frame_l, WG80211_FRAME);
 	if (frame == NULL) {
