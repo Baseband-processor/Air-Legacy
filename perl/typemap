@@ -1,5 +1,6 @@
 TYPEMAP
 
+PAirpcapHandle                              T_PTROBJ
 wif *                                       T_PTROBJ
 rx_info *                                   T_PTROBJ
 tx_info *                                   T_PTROBJ
