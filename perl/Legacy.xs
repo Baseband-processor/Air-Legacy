@@ -6398,6 +6398,25 @@ RETVAL
 
 #include "c/airpcap.c"
 
+int
+nl80211_state_init(handle, Ebuf)
+	PAirpcapHandle handle
+	PCHAR Ebuf
+	
+int
+nl80211_device_init(handle, Ebuf)
+	PAirpcapHandle handle
+	PCHAR Ebuf
+	
+int
+nl80211_create_monitor(handle, Ebuf)
+	PAirpcapHandle handle
+	PCHAR Ebuf
+
+int 
+nl80211_destroy_monitor(handle)
+	PAirpcapHandle handle
+	
 #endif
 
 
@@ -6431,7 +6450,7 @@ RETVAL
 #ifdef __LIBNET_H
 
 	#include "c/airpwn.c"
-void
+int
 inject_tcp(ch, content, content, contentlen, tcpflags, seqnum)
 	int ch
 	uint32_t keylen
