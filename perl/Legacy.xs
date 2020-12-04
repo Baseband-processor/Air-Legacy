@@ -2669,7 +2669,6 @@ CODE:
 	for (i = h; i != NULL; i = i->next) {
 		len += i->len;
 	}
-
 RETVAL = len;
 OUTPUT:
 RETVAL
