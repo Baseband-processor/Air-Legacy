@@ -2845,8 +2845,9 @@ wtinj_close(wtinj)
 	TX80211 *wtinj
 CODE:
 	IV return_val  =( close(wtinj->raw_fd) );
+	RETVAL = return_val;
 OUTPUT:
-return_val
+RETVAL
 
 int 
 wtinj_setchannel(wtinj, channel)
