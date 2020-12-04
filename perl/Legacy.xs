@@ -4789,8 +4789,8 @@ CODE:
 
 int 
 tx80211_decodepacket(in_dlt, in_packet)
-	int in_dlt, 
-	uint8_t *in_packet, 
+	int in_dlt
+	uint8_t *in_packet
 INIT:
 	int in_length = strlen(in_packet);
 CODE:
