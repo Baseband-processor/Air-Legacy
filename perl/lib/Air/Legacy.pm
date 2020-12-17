@@ -2097,7 +2097,9 @@ sub add_WEPKey {
 
 # these 2 functions return a reference for the %channel_to_frequency and %reason_codes hashes
 sub channel_to_frequency_HASH(){
-	return(\%channel_to_frequency);
+	foreach( keys %channel_to_frequency ){
+		print "channel : $_ -> $channel_to_frequency{ $_ }\n";
+	}
 }
 
 # these 2 functions drop the reference for the dissociation and association reason codes required for lcpf functions
