@@ -6296,14 +6296,14 @@ CODE:
 int 
 osdep_get_max_txpower() 
 PREINIT:
-char *osdep_iface_in = NULL;
-char *osdep_iface_out = NULL;
-int available_in_txpowers[MAX_TX_POWER];
-int available_in_txpowers_count = 0;
-int available_out_txpowers[MAX_TX_POWER];
-int available_out_txpowers_count = 0;
-int osdep_sockfd_in = -1;
-int osdep_sockfd_out = -1;
+	char *osdep_iface_in = NULL;
+	char *osdep_iface_out = NULL;
+	int available_in_txpowers[MAX_TX_POWER];
+	int available_in_txpowers_count = 0;
+	int available_out_txpowers[MAX_TX_POWER];
+	int available_out_txpowers_count = 0;
+	int osdep_sockfd_in = -1;
+	int osdep_sockfd_out = -1;
 INIT:
 int available_out_txpowers_count;
 osdep_init_txpowers();
