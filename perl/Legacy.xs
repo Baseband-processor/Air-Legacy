@@ -3544,11 +3544,11 @@ INIT:
 	int len;
 CODE:
 	if (packet->length_header != 0) {
-		RETVAL = (packet->length_header);
+	RETVAL = (packet->length_header);
 	}
 
 	if (packet->length_data != 0) {
-		RETVAL = ( packet->length_data);
+	RETVAL = ( packet->length_data);
 	}
 
 	len = lorcon_packet_to_dot3(packet, &dot3);
