@@ -6305,7 +6305,6 @@ PREINIT:
 	int osdep_sockfd_in = -1;
 	int osdep_sockfd_out = -1;
 INIT:
-	int available_out_txpowers_count;
 	osdep_init_txpowers();
 CODE:
     int max_out = 0, max_in = 0, i;
