@@ -52,13 +52,15 @@ for veryfing that everything works fine you can just start executing the followi
 #!/usr/bin/perl
 # Made by Edoardo Mantovani, 2020
 
-use Air::Legacy qw( :lorcon );
-print "avaiable drivers are:\n";
-print lorcon_actual_cards();
-sleep(2);
-print "\n while Lorcon2's supported drivers are:\n";
-print lorcon_supported_cards();
+sub BEGIN{
+ use Air::Legacy qw( :lorcon );
+ print "avaiable drivers are:\n";
+ print lorcon_actual_cards();
+ sleep(2);
+ print "\n while Lorcon2's supported drivers are:\n";
+ print lorcon_supported_cards();
 
+}
 ```
 
 if this return no drivers or if in the output there isn't any wireless card try to init the interfaces though the *drv_* functions listed below:
@@ -122,7 +124,7 @@ some functions with the related explanation are presented here:
 
 use strict;
 use Net::Pcap qw( pcap_lookupdev );
-use Air::Legacy qw(:lorcon); # This will export every lorcon2's subroutines
+use Air::Legacy qw( :lorcon ); # This will export every lorcon2's subroutines
 
 my $pcap_err = '';
 my $pcap_interface = pcap_lookupdev( \$pcap_err ); # This will give us the best interface avaiable for sniffing 
