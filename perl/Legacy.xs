@@ -3540,7 +3540,7 @@ apitest_packet_hdlr(context, packet,  user)
 	AirLorconPacket *packet
 	u_char *user
 INIT:
-	u_char *dot3;
+	u_char *dot3 = NULL;
 	int len;
 CODE:
 	if (packet->length_header != 0) {
@@ -3606,7 +3606,7 @@ CODE:
         //return d11extra->bssid_mac;
  	  HV *out = newHV();
  	  SV *out_ref = newRV_noinc((SV *)out);
- 	  hv_store(out, "bssid_mac", 4, newSVpv(d11extra->bssid_mac, 0), 0);
+ 	  hv_store(out, "bssid_mac", 4, newSVpv(d11extra->bssid_mac, 1), 0);
 	  RETVAL = out_ref;
     }
 OUTPUT:
@@ -3662,11 +3662,14 @@ pcap_inject(p, buf, size)
 	Pcap *p
 	void *buf
 	size_t size
+INIT:
+	if( ! p ){
+		return -1;
+	}
 CODE:
 	if (size > INT_MAX) {
 		return (PCAP_ERROR);
 	}
-
 	if (size == 0) {
 		return (PCAP_ERROR);
 	}
@@ -3743,7 +3746,7 @@ drv_file_probe(interface)
 	char *interface
 CODE:
     STAT buf;
-    if (stat(interface, &buf) == 0) {
+    if ( stat(interface, &buf) == 0) {
         return 1;
 	}else{
 	return 0;
