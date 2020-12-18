@@ -4,6 +4,7 @@
 #ifdef __NET_CFG80211_H
 
 #include "config.h"
+#include <net/cfg80211.h>
 
 #ifndef __CFG80211_CONFIG__
 #define __CFG80211_CONFIG__
