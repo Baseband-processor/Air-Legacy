@@ -6427,7 +6427,7 @@ PREINIT:
 if( !(packet) || !(packet1) ){
 		RETVAL = -1;
 }
-if( packet->raw_data == NULL || packet1->packet_raw == NULL ){
+if( packet->packet_raw == NULL || packet1->packet_raw == NULL ){
 		RETVAL = -2;
 }
 INIT:
