@@ -263,7 +263,7 @@ for starting I suggest to learn:
 * [Parse::Snort](https://metacpan.org/pod/Parse::Snort)
 * [Linux::TunTap](https://metacpan.org/pod/Linux::TunTap)
 * [Net::Wireless::802_11::WPA::CLI](https://metacpan.org/pod/Net::Wireless::802_11::WPA::CLI)
-* [IO::Socket::SSL::Intercept](https://metacpan.org/IO::Socket::SSL::Intercept)
+* [IO::Socket::SSL::Intercept](https://metacpan.org/pod/IO::Socket::SSL::Intercept)
 
 **PERL NETWORK SECURITY RESOURCE**
 
