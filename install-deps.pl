@@ -31,7 +31,7 @@ Air::Legacy: A fast, portable and efficient library based on Lorcon2. Written in
 foreach( $text =~/./g ){
 	print $_;
 	select()->flush(); # flush STDIN
-	usleep(111111);
+	usleep(6666);
 	}
 
 print "\n";
@@ -41,14 +41,17 @@ print "\n";
 
 END {
 # installing libraries and related perl modules
+
 $|++;
 use strict;
-no strict 'subs';
+no strict 'subs'; # optimize subroutine execution
 no strict 'refs';
 no warnings 'all';
 
+{
 require "./include/Processes.pm";
 require "./include/Detect.pm";
+}
 
 # run the processes in Background
 my $process = Proc::Simple->new(); 
@@ -107,7 +110,7 @@ foreach(  qw(Net::Pcap Net::MAC )  ){
 	$comm = undef; # cancel $comm content
 	if( $_ eq "Net::Pcap" ){
 		chomp(my $yy =<STDIN>);
-		$yy ||= "yes\n\n\n\n\n"; 
+		$yy ||= "yes\n\n"; 
 	}
 }
 	
