@@ -5484,8 +5484,8 @@ CODE:
         	if(packet)
         	{
         	        /* Build packet */
-        	         memset((void *) packet, 0, packet_len);
-					
+        	        // memset(packet, 0, packet_len);
+			Zero(packet, packet_len, int);		
         	        StructCopy(snap_packet, packet, void);
         	        //memcpy((void *) ((char *) packet+snap_len), dot1x_header, dot1x_len);
 			char *packet_plus = packet + snap_len;
