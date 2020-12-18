@@ -5683,7 +5683,7 @@ RETVAL:
 	unsigned int  i;
 	unsigned int j;
 	unsigned int l = sv_len(s);
-	ls = l;
+	int ls = l;
 	for(i=0;i<ls;i++) if(s[i] < ' ' || s[i] > 127) l += 4;
 	//char *new = malloc(l+1);
 	char *new;
