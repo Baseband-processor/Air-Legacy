@@ -5677,8 +5677,9 @@ INIT:
 		RETVAL = savepv("(null)");
 	}
 RETVAL:
-	size_t i,j;
-	size_t l = sv_len(s);
+	unsigned int  i;
+	unsigned int j;
+	unsigned int l = sv_len(s);
 	ls = l;
 	for(i=0;i<ls;i++) if(s[i] < ' ' || s[i] > 127) l += 4;
 	//char *new = malloc(l+1);
