@@ -6427,12 +6427,12 @@ PREINIT:
 if( !(packet) || !(packet1) ){
 		RETVAL = -1;
 }
-if( packet->raw_data == NULL || packet1->raw_data == NULL ){
+if( packet->raw_data == NULL || packet1->packet_raw == NULL ){
 		RETVAL = -2;
 }
 INIT:
-	u_char *pack = packet->raw_data;
-	u_char *pack1 = packet1->raw_data;
+	u_char *pack = packet->packet_raw;
+	u_char *pack1 = packet1->packet_raw;
 CODE:
 //calculate differentials and return them into pairs in an array
 int counter;
