@@ -6198,15 +6198,15 @@ CODE:
 int  
 osdep_init_txpowers()
 PREINIT:
-char *osdep_iface_in = NULL;
-char *osdep_iface_out = NULL;
+	char *osdep_iface_in = NULL;
+	char *osdep_iface_out = NULL;
 iwreq wreq;
-int available_in_txpowers[MAX_TX_POWER];
-int available_in_txpowers_count = 0;
-int available_out_txpowers[MAX_TX_POWER];
-int available_out_txpowers_count = 0;
-int osdep_sockfd_in = -1;
-int osdep_sockfd_out = -1;
+	int available_in_txpowers[MAX_TX_POWER];
+	int available_in_txpowers_count = 0;
+	int available_out_txpowers[MAX_TX_POWER];
+	int available_out_txpowers_count = 0;
+	int osdep_sockfd_in = -1;
+	int osdep_sockfd_out = -1;
 CODE:
     if (!osdep_iface_out) {
       printf("D'oh, open interface %s first, idiot...\n", osdep_iface_out);
@@ -6305,8 +6305,8 @@ PREINIT:
 	int osdep_sockfd_in = -1;
 	int osdep_sockfd_out = -1;
 INIT:
-int available_out_txpowers_count;
-osdep_init_txpowers();
+	int available_out_txpowers_count;
+	osdep_init_txpowers();
 CODE:
     int max_out = 0, max_in = 0, i;
     if (! available_out_txpowers_count) {
@@ -6429,7 +6429,7 @@ if( !(packet) || !(packet1) ){
 		RETVAL = -1;
 }
 if( packet->raw_data == NULL || packet1->raw_data == NULL ){
-	RETVAL = -2;
+		RETVAL = -2;
 }
 INIT:
 	u_char *pack = packet->raw_data;
