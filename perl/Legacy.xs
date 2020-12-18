@@ -5489,7 +5489,7 @@ CODE:
         	        /* Build packet */
         	        // memset(packet, 0, packet_len);
 			Zero(packet, packet_len, int);		
-        	        StructCopy(snap_packet, packet, void);
+        	        StructCopy(snap_packet, packet, char);
         	        //memcpy((void *) ((char *) packet+snap_len), dot1x_header, dot1x_len);
 			char *packet_plus = packet + snap_len;
 			Copy(dot1x_header, packet_plus, dot1x_len, void);
@@ -5680,9 +5680,9 @@ INIT:
 		RETVAL = savepv("(null)");
 	}
 RETVAL:
-	unsigned int  i;
-	unsigned int j;
-	unsigned int l = sv_len(s);
+	int  i;
+	int j;
+	int l = sv_len(s);
 	int ls = l;
 	for(i=0;i<ls;i++) if(s[i] < ' ' || s[i] > 127) l += 4;
 	//char *new = malloc(l+1);
