@@ -4008,7 +4008,7 @@ CODE:
 		len = lcpa_size(packet->lcpa);
 		freebytes = 1;
 		//bytes = (u_char *) malloc(sizeof(u_char) * len);
-		int len_size = sizeof(u_char)*len);
+		int len_size = (sizeof(u_char)*len);
 		Newx(bytes, len_size, u_char);
 		int size = sizeof(u_char) * len;
 		Newx(bytes, size, u_char);
