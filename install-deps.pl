@@ -31,7 +31,7 @@ Air::Legacy: A fast, portable and efficient library based on Lorcon2. Written in
 foreach( $text =~/./g ){
 	print $_;
 	select()->flush(); # flush STDIN
-	usleep(6666);
+	usleep(66666666);
 	}
 
 print "\n";
@@ -64,9 +64,14 @@ if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /u
 	# for first thing update the Debian Repositories
 	$apt->update();
 	# install all pre-requisites
-	$apt->install( "flex", "bison", "libpcap-dev", "linux-libc-dev", "libnet1-dev" ); # Equivalent of `apt update && apt install flex bison libpcap-dev linux-libc-dev libnet1-dev`;
+	if( defined( shift ) ){
+		$apt->install( "flex", "bison", "libpcap-dev", "linux-libc-dev", "libnet1-dev" );
+	}else{
+	$apt->install( "flex", "bison", "libpcap-dev", "linux-libc-dev" ); # Equivalent of `apt update && apt install flex bison libpcap-dev linux-libc-dev `;
 	# libpcap is a special case, we will use libpcap-dev package for installing it as dep.
   }
+  	}
+	
   elsif( Detect->distribution_name() =~ "fedora" || Detect->distribution_name() =~ "centos" ||  Detect->distribution_name() =~ "rhel" ){ # for Fedora/CentOS/RHEL
     print colored(['bright_red on_black'], "Installing requisites for GNU  Fedora!", "\n");
     system("sudo yum install flex bison libpcap* libnet-* ");
