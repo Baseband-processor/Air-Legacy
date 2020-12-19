@@ -6440,9 +6440,10 @@ INIT:
 CODE:
 //calculate differentials and return them into pairs in an array
 int counter;
+IV diff;
 RETVAL = (AV*)sv_2mortal((SV*)newAV());
 for(counter = 0; counter < strlen(pack); counter++){
-	SV diff = pack[counter] ^ pack1[counter];
+	 diff = pack[counter] ^ pack1[counter];
 	av_push(RETVAL, newSVpv(diff, 0));
 }
 OUTPUT:
