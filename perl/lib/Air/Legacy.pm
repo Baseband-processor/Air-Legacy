@@ -2155,7 +2155,9 @@ sub filter_association_codes{
 
 sub Channel_to_Frequency{
         my $channel = shift;
-        return $channel_to_frequency{ $channel };
+	if( defined( $channel_to_frequency{ $channel } ) ){
+        	return $channel_to_frequency{ $channel };
+	}
 }
 
 sub Frequency_to_Channel{
@@ -2176,7 +2178,7 @@ sub lorcon_actual_cards {
 	my $driver = lorcon_list_drivers();
 	foreach( @{ $driver } ){
 		my %r = %{ $_ };
-		foreach( keys %{ $_ }){
+		foreach( keys %{ $_ } ){
 			print $_ . " => " . $r{ $_ };
 			print "\n";
 		}
@@ -2202,7 +2204,7 @@ sub parse_differential{
 	my $Packet, $Packet1 = @_;
 	my $i = 0;
 	my $str;
-	if(undef($Packet) || undef($Packet1) ){
+	if( undef($Packet) || undef($Packet1) ){
 		return -1;
 	}
 	my @parsed_differentials = calculate_differential($Packet, $Packet1);
