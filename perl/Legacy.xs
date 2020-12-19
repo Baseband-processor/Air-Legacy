@@ -3637,6 +3637,10 @@ RETVAL
 int
 pcap_can_set_rfmon(p)
 	Pcap *p
+INIT:
+	if( ! p ){
+		return -1;
+	}
 CODE:
 	RETVAL =  (p->can_set_rfmon_op(p));
 OUTPUT:
@@ -3673,8 +3677,10 @@ CODE:
 	if (size == 0) {
 		return (PCAP_ERROR);
 	}
-	return(p->inject_op(p, buf, (int)size));
-
+	IV return_val = (p->inject_op(p, buf, (int)size));
+	RETVAL = return_val;
+OUTPUT:
+RETVAL
 	
 int
 pcap_sendpacket(p, buf, size)
@@ -4212,8 +4218,7 @@ RETVAL
 int 
 tx80211_prism54_capabilities()
 CODE:
-return (TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT | TX80211_CAP_SEQ | TX80211_CAP_BSSTIME | TX80211_CAP_FRAG | TX80211_CAP_DURID 
-| TX80211_CAP_SNIFFACK | TX80211_CAP_DSSSTX | TX80211_CAP_SELFACK | TX80211_CAP_CTRL);
+return (TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT | TX80211_CAP_SEQ | TX80211_CAP_BSSTIME | TX80211_CAP_FRAG | TX80211_CAP_DURID  | TX80211_CAP_SNIFFACK | TX80211_CAP_DSSSTX | TX80211_CAP_SELFACK | TX80211_CAP_CTRL);
 
 
 int 
@@ -4912,7 +4917,6 @@ CODE:
 		return INJ_MADWIFING;
 	}
 #endif
-
 	return INJ_NODRIVER;
 	
 char *
