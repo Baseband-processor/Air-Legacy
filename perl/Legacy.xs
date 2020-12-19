@@ -5680,8 +5680,6 @@ INIT:
 		RETVAL = savepv("(null)");
 	}
 RETVAL:
-	int  i;
-	int j;
 	int l = sv_len(s);
 	int ls = l;
 	for(i=0;i<ls;i++) if(s[i] < ' ' || s[i] > 127) l += 4;
@@ -5691,11 +5689,11 @@ RETVAL:
 	if(!new){
 		return 0;
 	}
-	for(i=0,j=0;i<ls;i++) {
+	for(int i, j = 0;i<ls;i++) {
 		if(s[i] < ' ' || s[i] > 127) {
 			sprintf(new + j, "\\\\x%02x", s[i] & 0xff);
 			j  += 4;
-		} else new[j] = s[i];
+		} else int j = 0; new[j] = s[i];
 		j++;
 	}
 	new[j] = 0;
