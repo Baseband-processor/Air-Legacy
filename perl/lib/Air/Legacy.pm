@@ -2016,12 +2016,13 @@ sub ChangeMAC {
 	delete $INC{'Net/MAC.pm'}; # toggle module from %INC
 	`ip link set dev interface down`; # set interface to down (0)
         if(`sudo ip link set dev $interface address $MAC`){
-		`sudo ip link set dev $interface up`;
-		return 0;
+		if( `sudo ip link set dev $interface up` ){
+			return 0;
 	}else{
 		return -1;
 }
 	}
+		}
 	
 sub Inject_Frame {
     my ($context, $packet) = @_;
@@ -2080,9 +2081,13 @@ sub auto_Initialize_driver{
 		my $drivers_list = lorcon_list_drivers();
 		foreach (@{ $drivers_list }){
 		  if($_ =~ $supported_drivers[0]){
-			return drv_madwifing_init( $context );
+			if( drv_madwifing_init( $context ) ){
+				return 1;
+			}
  	}elsif($_ =~ $supported_drivers[1]){
-			return drv_mac80211_init( $context );
+			if( drv_mac80211_init( $context ) ){
+				return 1;
+			}
 }
 	}
 	}
