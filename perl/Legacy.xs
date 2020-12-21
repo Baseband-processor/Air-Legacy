@@ -5030,8 +5030,10 @@ CODE:
 
     for( i = 0; i < keylength; i++ )
     {
-        if( i >= 64 ) break;
-
+        if( i >= 64 ){
+		break;
+	}
+	    
         k_ipad[i] ^= key[i];
         hctx->k_opad[i] ^= key[i];
     }
@@ -5166,7 +5168,7 @@ CODE:
 	
 	f->capability = end_htole16(get_ap_capability());
 	f->listen_interval = end_htole16(LISTEN_INTERVAL);
-	return (sizeof *f);
+	return(sizeof *f);
 
 
 size_t
@@ -5219,7 +5221,7 @@ RETVAL
 void*
 build_wps_probe_request(bssid, essid)
 	unsigned char *bssid
-	char *essid
+	SV *essid
 CODE:	
 	TAG_PARAMS *ssid_tag;
 	void *packet = NULL;
@@ -5228,7 +5230,7 @@ CODE:
 
 	if(!broadcast && essid != NULL)
 	{
-		 ssid_tag->len = (uint8_t) strlen(essid);
+		 ssid_tag->len = sv_len(essid);
 	}
 	else
 	{
@@ -5270,9 +5272,9 @@ CODE:
 		//memcpy((void *) ((char *) packet+rt_len), &dot11_header, dot11_len);
 		char *p = packet + rt_len;
 		Copy(&dot11_header, p, dot11_len, void);
-		memcpy((void *) ((char *) packet+rt_len+dot11_len), &llc_header, llc_len);
-		char *p1 = packet + rt_len + dot11_len;
-		//Copy(&llc_header, p1, llc_len, 1);
+		//memcpy((void *) ((char *) packet+rt_len+dot11_len), &llc_header, llc_len);
+		int p1 = packet + rt_len + dot11_len;
+		Copy(&llc_header, p1, llc_len, void);
 		int *len = packet_len;
 	}
 RETVAL = packet;
@@ -5431,11 +5433,15 @@ PPCODE:
 	{
 		for(i=0; i<P1_SIZE; i++)
                 {
-                        if(globule->p1[i]) Safefree(globule->p1[i]);
+                        if(globule->p1[i]){
+				Safefree(globule->p1[i]);
+			}
                 }
                 for(i=0; i<P2_SIZE; i++)
                 {
-                        if(globule->p2[i]) Safefree(globule->p2[i]);
+                        if(globule->p2[i]){
+				Safefree(globule->p2[i]);
+			}
                 }
 
 		//if(globule->wps){
@@ -5468,7 +5474,9 @@ PPCODE:
 		if(globule->exec_string){
 			Safefree(globule->exec_string);
 		}
-		if(globule->output_fd != -1) close(globule->output_fd);
+		if(globule->output_fd != -1){
+			close(globule->output_fd); 
+		}
 
 		Safefree(globule);
 	}
