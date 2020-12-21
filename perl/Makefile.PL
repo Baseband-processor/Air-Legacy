@@ -6,7 +6,6 @@
 sub BEGIN{
 
 use strict;
-no strict 'refs';
 no strict 'subs';
 use warnings;
 use ExtUtils::MakeMaker;
