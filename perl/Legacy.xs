@@ -94,6 +94,30 @@
 
 #define WPS_DH_GROUP 5
 
+#define RADIOTAP_HEADER_LENGTH \
+	"\x0c\0"
+
+#define RADIOTAP_HEADER_PRESENT_FLAGS \
+	"\x04\x80\0\0" 
+
+#define RADIOTAP_HEADER_RATE_OPTION \
+	"\0\0" 
+
+#define RADIOTAP_HEADER_LENGTH \
+	"\x0a\0" 
+
+#define RADIOTAP_HEADER_PRESENT_FLAGS \
+	"\x00\x80\0\0"
+
+#define RADIOTAP_HEADER_RATE_OPTION ""
+
+#define RADIOTAP_HEADER \
+	"\0\0"  \
+	RADIOTAP_HEADER_LENGTH \
+	RADIOTAP_HEADER_PRESENT_FLAGS \
+	RADIOTAP_HEADER_RATE_OPTION \
+	"\x18\0" 
+
 #define WPS_UUID_LEN 16
 #define WPS_NONCE_LEN 16
 #define WPS_AUTHENTICATOR_LEN 8
@@ -1482,9 +1506,9 @@ lorcon_add_wepkey(context, bssid, key, length)
 	}
 	LORCON_WEP *wep;
 	//wep = (	LORCON_WEP *) malloc(sizeof(LORCON_WEP *) );
-	Newx(&wep, 1, LORCON_WEP);	
+	Newx(wep, 1, LORCON_WEP);	
 	//memcpy(wep->bssid, bssid, 6);
-	Copy(&bssid, wep->bssid, 6, 0);	
+	Copy(bssid, wep->bssid, 6, u_char);	
 	//memcpy(wep->key, key, length);
 	Copy(key, wep->key, length, 0);	
 	wep->len = length;
@@ -1847,7 +1871,7 @@ CODE:
 	context->auxptr = NULL;
 	return 1;
 			    
-SV 
+SV *
 drv_madwifing_listdriver(drv)
    AirLorconDriver * drv
 CODE:
@@ -1855,12 +1879,12 @@ CODE:
 	//AirLorconDriver *d = (AirLorconDriver *) malloc(sizeof(lorcon_driver_t));
 	int size = sizeof(AirLorconDriver *);
 	Newx(d, size, AirLorconDriver);
-	d->name = savepv("madwifing"); // toggled strdup
-	d->details = savepv("Linux madwifi-ng drivers, deprecated by ath5k and ath9k"); // toggled strdup
+	d->name = savepv("madwifing"); 
+	d->details = savepv("Linux madwifi-ng drivers, deprecated by ath5k and ath9k"); 
 	d->init_func = drv_madwifing_init(drv);
 	d->probe_func = drv_madwifing_probe();
 	d->next = drv;
-	SV to_return =  lorcon_driver_t_c2sv(d); // TODO: transform d into a readable string
+	SV * to_return =  lorcon_driver_t_c2sv(d); 
 	RETVAL = to_return;
 OUTPUT:
 	RETVAL
@@ -3520,7 +3544,7 @@ lorcon_packet_get_dot3_extra(packet)
 	AirLorconPacket *packet
 INIT:
 	if( ! packet ){
-		RETVAL = -1;
+		return -1;
 	}
 CODE:
     if (packet->extra_info == NULL){
@@ -3544,11 +3568,11 @@ INIT:
 	int len;
 CODE:
 	if (packet->length_header != 0) {
-	RETVAL = (packet->length_header);
+		RETVAL = (packet->length_header);
 	}
 
 	if (packet->length_data != 0) {
-	RETVAL = ( packet->length_data);
+		RETVAL = ( packet->length_data);
 	}
 
 	len = lorcon_packet_to_dot3(packet, &dot3);
@@ -5081,26 +5105,8 @@ size_t
 build_radio_tap_header(rt_header)
 	void *rt_header
 CODE:
-	#define RADIOTAP_HEADER_LENGTH \
-	"\x0c\0"
-	#define RADIOTAP_HEADER_PRESENT_FLAGS \
-	"\x04\x80\0\0" 
-	#define RADIOTAP_HEADER_RATE_OPTION \
-	"\0\0" 
-	#define RADIOTAP_HEADER_LENGTH \
-	"\x0a\0" 
-	#define RADIOTAP_HEADER_PRESENT_FLAGS \
-	"\x00\x80\0\0"
-	#define RADIOTAP_HEADER_RATE_OPTION ""
-	#define RADIOTAP_HEADER \
-	"\0\0"  \
-	RADIOTAP_HEADER_LENGTH \
-	RADIOTAP_HEADER_PRESENT_FLAGS \
-	RADIOTAP_HEADER_RATE_OPTION \
-	"\x18\0" 
-	int radio_header = sizeof(RADIOTAP_HEADER) - 1;
 	//memcpy(rt_header, RADIOTAP_HEADER, sizeof(RADIOTAP_HEADER)-1);
-	int radiotap_size = sizeof(RADIOTAP_HEADER) -1;
+	int radiotap_size = (sizeof(RADIOTAP_HEADER) -1);
 	StructCopy(RADIOTAP_HEADER, rt_header, radiotap_size);
 	RETVAL = ( sizeof(RADIOTAP_HEADER) - 1 );
 OUTPUT:
