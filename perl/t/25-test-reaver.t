@@ -31,16 +31,16 @@ my $glob = globule_init();
 # deinit glob, would be quite similar to $glob = undef
 $glob = globule_deinit();
 
-use constant packet = "\x00\x00\x00\x00\x00\x00\x00\x00\x00" # NULL packet
+my $packet = "\x00\x00\x00\x00\x00\x00\x00\x00\x00" # NULL packet
 
-my $eapol_packet = build_eapol_start_packet( length( packet ) );
+my $eapol_packet = build_eapol_start_packet( length( $packet ) );
 
-my $failure_packet = build_eap_failure_packet( length( packet ) );
+my $failure_packet = build_eap_failure_packet( length( $packet ) );
 
 my $rand_time = int(rand() );
 
 # finally, inject with reaver
 
-reaver_inject( packet, length( packet ), $rand_time );
+reaver_inject( $packet, length( $packet ), $rand_time );
 
 ok 1;
