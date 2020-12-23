@@ -3568,11 +3568,11 @@ INIT:
 	int len;
 CODE:
 	if (packet->length_header != 0) {
-		RETVAL = (packet->length_header);
+		return (packet->length_header);
 	}
 
 	if (packet->length_data != 0) {
-		RETVAL = ( packet->length_data);
+		return ( packet->length_data);
 	}
 
 	len = lorcon_packet_to_dot3(packet, &dot3);
@@ -3580,9 +3580,6 @@ CODE:
 	Safefree(dot3);
 
 	lorcon_packet_free(packet);
-	RETVAL = len;
-OUTPUT:
-RETVAL
 
 u_char *
 lorcon_packet_get_source_mac(packet) 
@@ -5106,7 +5103,7 @@ build_radio_tap_header(rt_header)
 	void *rt_header
 CODE:
 	//memcpy(rt_header, RADIOTAP_HEADER, sizeof(RADIOTAP_HEADER)-1);
-	int radiotap_size = (sizeof(RADIOTAP_HEADER) -1);
+	int radiotap_size = (RADIOTAP_HEADER -1);
 	StructCopy(RADIOTAP_HEADER, rt_header, radiotap_size);
 	RETVAL = ( sizeof(RADIOTAP_HEADER) - 1 );
 OUTPUT:
