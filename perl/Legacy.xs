@@ -5705,9 +5705,12 @@ RETVAL:
 		if(s[i] < ' ' || s[i] > 127) {
 			sprintf(new + j, "\\\\x%02x", s[i] & 0xff);
 			j  += 4;
-		} else int j = 0; new[j] = s[i];
+		} else {
+		int j = 0; 
+		new[j] = s[i];
 		j++;
 	}
+		}
 	new[j] = 0;
 	RETVAL = new;
 OUTPUT:
