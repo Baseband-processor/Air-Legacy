@@ -1280,7 +1280,7 @@ CODE:
 		SV *vapname = context->vapname;
 		RETVAL = vapname;
 	}
-	RETVAL = newSVpv(AirLorcon->ifname, 0);	
+	RETVAL = newSVpv(context->ifname, 0);	
 OUTPUT:
 RETVAL
 
