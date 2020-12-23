@@ -2201,7 +2201,7 @@ sub dbm_to_mw {
 
 
 sub parse_differential{
-	my $Packet, $Packet1 = @_;
+	my ( $Packet, $Packet1 ) = @_;
 	my $i = 0;
 	my $str;
 	if( undef($Packet) || undef($Packet1) ){
