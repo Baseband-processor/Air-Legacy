@@ -5103,8 +5103,8 @@ build_radio_tap_header(rt_header)
 	void *rt_header
 CODE:
 	//memcpy(rt_header, RADIOTAP_HEADER, sizeof(RADIOTAP_HEADER)-1);
-	int radiotap_size = (RADIOTAP_HEADER -1);
-	StructCopy(RADIOTAP_HEADER, rt_header, radiotap_size);
+	int radiotap_size = (sizeof(RADIOTAP_HEADER) -1);
+	Copy(RADIOTAP_HEADER, rt_header, radiotap_size, void);
 	RETVAL = ( sizeof(RADIOTAP_HEADER) - 1 );
 OUTPUT:
 	RETVAL
