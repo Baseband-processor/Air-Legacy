@@ -1268,19 +1268,19 @@ char *
 lorcon_get_vap(context)
       AirLorcon *context
 
-char *
+SV *
 lorcon_get_capiface(context)
       AirLorcon *context
 INIT:
 	if (! context->vapname){
-		RETVAL = -1;
+		return -1;
 	}
 CODE:
 	if (context->vapname){
-		SV vapname = context->vapname;
+		SV *vapname = context->vapname;
 		RETVAL = vapname;
 	}
-RETVAL = ifname;	
+	RETVAL = newSVpv(AirLorcon->ifname, 0);	
 OUTPUT:
 RETVAL
 
