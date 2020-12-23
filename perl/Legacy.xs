@@ -5532,7 +5532,7 @@ CODE:
 	if(snap_packet && eap_header && dot1x_header)
 	{
 		//buf = malloc(buf_len);
-		Newx(buf, buf_len, (void *));
+		Newx(buf, buf_len, void);
 		if(buf)
 		{
 			//memset((void *) buf, 0, buf_len);
@@ -5593,9 +5593,12 @@ CODE:
 	assert(2 == sizeof (TAG_PARAMS *));
 
 	//memcpy(buf, &wps_param, sizeof wps_param);
+	int wps_par_size = sizeof(wps_param);
 	//memcpy(dst, src, sizeof(t))    StructCopy(src, dst, t)
-	StructCopy(&wps_param, buf, wps_param);
-	memcpy(buf+2, WPS_REGISTRAR_TAG, WPS_TAG_SIZE);
+	Copy(&wps_param, buf, wps_par_size, TAG_PARAMS);
+	//memcpy(buf+2, WPS_REGISTRAR_TAG, WPS_TAG_SIZE);
+	int tempbuf = buf + 2;
+	Copy(WPS_REGISTRAR_TAG, tempbuf, WPS_TAG_SIZE, TAG_PARAMS);
 	RETVAL = ( 2 + WPS_TAG_SIZE );
 OUTPUT:
 RETVAL
