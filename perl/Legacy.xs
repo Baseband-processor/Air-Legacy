@@ -6439,10 +6439,10 @@ calculate_differential(packet, packet1)
 	AirLorconPacket *packet1
 PREINIT:
 if( !(packet) || !(packet1) ){
-		RETVAL = -1;
+		return -1;
 }
 if( packet->packet_raw == NULL || packet1->packet_raw == NULL ){
-		RETVAL = -2;
+		return -2;
 }
 INIT:
 	u_char *pack = packet->packet_raw;
