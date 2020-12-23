@@ -5119,7 +5119,7 @@ get_ap_capability()
 
 
 void 
-set_channel(channel)
+reaver_set_channel(channel)
 	int channel
 INIT:
 		GLOB *globule;
