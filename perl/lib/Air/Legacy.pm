@@ -1791,7 +1791,7 @@ our %EXPORT_TAGS = (
    	build_radio_tap_header
    	get_wps
    	get_ap_capability
-   	set_channel
+   	reaver_set_channel
 	get_channel
 	set_bssid
 	build_wps_probe_request
