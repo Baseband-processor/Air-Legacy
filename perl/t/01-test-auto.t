@@ -9,9 +9,9 @@ use strict;
 no strict 'refs';
 use Net::Pcap qw( pcap_lookupdev );
 use Test::More tests => 2;
-BEGIN { use_ok("Air::Lorcon2") };
-use Air::Legacy qw(:lorcon); 
+BEGIN { use_ok("Air::Legacy") };
 
+use Air::Legacy qw( :lorcon );
 my $pcap_err = '';
 my $pcap_intf = pcap_lookupdev( \$pcap_err );
 lorcon_auto_driver( $pcap_intf );
