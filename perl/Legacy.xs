@@ -5691,17 +5691,23 @@ INIT:
 	if(!s){
 		RETVAL = savepv("(null)");
 	}
-RETVAL:
+CODE:
 	int l = sv_len(s);
 	int ls = l;
-	for(i=0;i<ls;i++) if(s[i] < ' ' || s[i] > 127) l += 4;
+	for(int i=0; i<ls; i++){
+		 if(s[i] < ' ' || s[i] > 127){
+			 l += 4;
+		}
+	}
 	//char *new = malloc(l+1);
 	char *new;
-	Newx(new, (l+1), (char *));
+	int temp = l + 1;
+	Newx(new, temp, char );
 	if(!new){
 		return 0;
 	}
-	for(int i, j = 0;i<ls;i++) {
+	int j;
+	for(int i = 0;i<ls;i++) {
 		if(s[i] < ' ' || s[i] > 127) {
 			sprintf(new + j, "\\\\x%02x", s[i] & 0xff);
 			j  += 4;
@@ -5711,6 +5717,7 @@ RETVAL:
 		j++;
 	}
 		}
+	
 	new[j] = 0;
 	RETVAL = new;
 OUTPUT:
@@ -6352,62 +6359,6 @@ OUTPUT:
 RETVAL
 
 
-# char 
-# lorcon_packetfuzz(packet)
-# 	AirLorconPacket *packet
-# PREINIT:
-# if( ! packet || ( packet->packet_raw == NULL) ){
-# 	return -1;
-# }
-# INIT:
-# u_char *packet_rawdata = packet->packet_raw;
-# int packet_length = packet->length_data;
-# 
-# typedef struct testcase {
-#         unsigned long len;
-#         char * data;
-#         struct testcase * next;
-# }TESTCASE;
-# //u_char *packet_header = packet->packet_header;
-# 
-# 
-# CODE:
-# // Dumps information into a readable form, for now convert packet in its hexadecimal form
-# // HEADER
-# // + 
-# // DATA_PACKET
-# unsigned long max = packet_length << 3;
-# unsigned long offset = 0;
-# 
-#     TESTCASE *cases;
-# 
-#     if(max < 100){
-#         cases = generate_swbitflip(packet_rawdata, packet_length, offset, max);
-#         if(send_cases(cases)<0){
-#             RETVAL = -1;
-#         }
-#     }
-#     else{
-#         unsigned long i = 0;
-#         while(i < (max / 100)){
-#             cases = generate_swbitflip(packet_rawdata, packet_length, offset, 100);
-#             if(send_cases(cases) < 0){
-#                 RETVAL = -1;
-#             }
-#             offset = offset+100;
-#             i++;
-#         }
-#         if(max % 100 > 0){
-#             cases = generate_swbitflip(packet_rawdata, packet_length, offset, ( max % 100 ) );
-#             if(send_cases(cases) < 0){
-#                 RETVAL = -1;
-#             }
-#         }
-#     }
-# 
-# RETVAL = 0;
-# OUTPUT:
-# RETVAL
 
 
 #if defined(__LINUX_NL80211_H) && defined(__LINUX_NETLINK_H)
