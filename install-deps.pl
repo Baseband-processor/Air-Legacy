@@ -31,7 +31,7 @@ Air::Legacy: A fast, portable and efficient library based on Lorcon2. Written in
 foreach( $text =~/./g ){
 	print $_;
 	select()->flush(); # flush STDIN
-	usleep(66666666);
+	usleep(6666);
 	}
 
 print "\n";
