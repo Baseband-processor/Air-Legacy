@@ -25,6 +25,7 @@ WriteMakefile(
    PREREQ_PM => {
       Net::MAC =>  0,
       Net::Pcap => 0,
+      Test::More => 0,
   },
 );
 
