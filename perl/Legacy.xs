@@ -6392,6 +6392,22 @@ int
 nl80211_destroy_monitor(handle)
 	PAirpcapHandle handle
 	
+void
+AirpcapFreeDeviceList(AirPcap_dev)
+	PAirpcapDeviceDescription AirPcap_dev
+INIT:
+    PAirpcapDeviceDescription next = NULL;
+CODE:
+    while (PAllDevs) {
+        next = AirPcap_dev->next;
+
+        Safefree(AirPcap_dev->Name);
+        Safefree(AirPcap_dev->Description);
+        Safefree(AirPcap_dev);
+
+        AirPcap_dev = next;
+    }
+	
 #endif
 
 
