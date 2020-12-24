@@ -6391,6 +6391,11 @@ nl80211_create_monitor(handle, Ebuf)
 int 
 nl80211_destroy_monitor(handle)
 	PAirpcapHandle handle
+
+PAirpcapHandle 
+AirpcapOpen(DeviceName, Ebuf)
+	PCHAR DeviceName
+	PCHAR Ebuf
 	
 void
 AirpcapFreeDeviceList(AirPcap_dev)
@@ -6407,7 +6412,7 @@ CODE:
 
         AirPcap_dev = next;
     }
-	
+
 #endif
 
 
