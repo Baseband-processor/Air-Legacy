@@ -1,0 +1,11 @@
+#ifndef __AIRPCAP_NL_CONFIG_H__
+#define __AIRPCAP_NL_CONFIG_H__
+
+#define AIRPCAP_VERSION_MAJOR @airpcap_VERSION_MAJOR@
+#define AIRPCAP_VERSION_MINOR @airpcap_VERSION_MINOR@
+#define AIRPCAP_VERSION_REV   @airpcap_VERSION_REV@
+#define AIRPCAP_VERSION_BUILD @airpcap_VERSION_BUILD@
+
+#cmakedefine CONFIG_LIBNL20
+
+#endif /* __AIRPCAP_NL_CONFIG_H__ */
