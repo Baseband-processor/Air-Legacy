@@ -1824,7 +1824,9 @@ CODE:
 	if (packet->lcpa != NULL) {
 		len = lcpa_size(packet->lcpa);
 		freebytes = 1;
-		bytes = (u_char *) malloc(sizeof(u_char) * len);
+		//bytes = (u_char *) malloc(sizeof(u_char) * len);
+		int sSize = (sizeof(u_char) * len);
+		Newx(bytes, sSize, u_char);
 		lcpa_freeze(packet->lcpa, bytes);
 	} else if (packet->packet_header != NULL) {
 		freebytes = 0;
