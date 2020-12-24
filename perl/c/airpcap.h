@@ -7,5 +7,6 @@
 // code acquired from: https://github.com/hbock/libairpcap-nl
 
 #include "airpcap/airpcap.h"
+#include "airpcap/airpcap-nl.h"
 
 #endif
