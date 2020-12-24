@@ -381,6 +381,68 @@ Lerr:
         return desc_start;
     }
 }
+ 
+PAirpcapHandle AirpcapOpen(PCHAR DeviceName, PCHAR Ebuf){
+    PAirpcapHandle handle;
+
+    if (NULL != Ebuf) {
+        Ebuf[0] = 0;
+    }
+
+    unsigned ifindex = if_nametoindex((char *)DeviceName);
+    if (ifindex <= 0) {
+        setebuf(Ebuf, "Invalid device specified.");
+        return NULL;
+    }
+
+    handle = airpcap_handle_new();
+    if (NULL == handle) {
+        setebuf(Ebuf, "Error allocating handle.");
+        return NULL;
+    }
+    /* Assign interface index after allocation. */
+    handle->ifindex = ifindex;
+    /* FIXME: handle if name + "mon" is too long for IF_NAMESIZE. */
+    strncpy(handle->master_ifname, DeviceName, IF_NAMESIZE);
+
+    /* Initialize unique netlink/nl80211 connection and
+     * state for this handle. */
+    if (-1 == nl80211_state_init(handle, Ebuf)) {
+        return NULL;
+    }
+    /* FIXME: proper deallocation. */
+    if (-1 == nl80211_device_init(handle, Ebuf)) {
+        return NULL;
+    }
+    /* if (-1 == nl80211_create_monitor(handle, Ebuf)) { */
+    /*     return NULL; */
+    /* } */
+    /* By default, we must set to accept everything, as noted is the default.
+     */
+    if (-1 == nl80211_set_monitor(handle, AIRPCAP_VT_ACCEPT_EVERYTHING, Ebuf)) {
+        /* We might as well just call close here, since
+         * all state is essentially allocated and ready.
+         */
+        AirpcapClose(handle);
+        return NULL;
+    }
+
+    /* Finally, bring the device up (and leave it up - do not bring
+     * down the interface in AirpcapClose!). */
+    if (-1 == ifconfig_ifupdown(handle->master_ifname, 1)) {
+        setebuf(Ebuf, "Unable to bring interface up: %s", strerror(errno));
+        AirpcapClose(handle);
+        return NULL;
+    }
     
-    
-    
+    if (FALSE == AirpcapSetDeviceChannel(handle, 6)) {
+        if (NULL != Ebuf) {
+            strncpy(Ebuf, handle->last_error, AIRPCAP_ERRBUF_SIZE);
+            Ebuf[AIRPCAP_ERRBUF_SIZE] = 0;
+        }
+        AirpcapClose(handle);
+        return NULL;
+    }
+
+    return handle;
+}
