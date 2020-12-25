@@ -43,6 +43,10 @@ CHANGED PROJECT, NOW IT WILL BE AIR::LEGACY
    - added new function: tx80211_decodepacket 
    - added new function: apitest_packet_hdlr
    - added new suggested library: IO::Socket::SSL::Intercept
+   - fixed memory leak bugs
+   - added aircrack-ng  interface
+   - added aircrack-ng installer
+   - added ac_crypto_engine functions and related
    
 Revision history for the (old)  Perl extension Air::Lorcon2.
 
