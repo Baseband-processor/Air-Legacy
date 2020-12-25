@@ -2215,6 +2215,18 @@ sub parse_differential{
 	return($str);
 }
 
+sub generate_random_data(){
+	my $rand_ASCII = undef;
+	my @temp_array = ("a" .. "z" );
+	for( 1 .. 16 ){	 # Iterate for 16 rounds
+		$rand_ASCII .= $temp_array[int(rand($#temp_array - 1))];
+	}
+	@temp_array = undef; # delete array
+	if( Packet_to_hex( $rand_ASCII ) ){
+		return $_;
+	}
+}
+
 __PACKAGE__->bootstrap($VERSION);
 
 1;
