@@ -6540,3 +6540,24 @@ ac_crypto_engine_thread_destroy(engine, threadid)
 	
 #endif
 	
+#ifdef _CRYPTO_H
+
+void 
+ac_crypto_init()
+
+int 
+decrypt_wep(data, len, key, keylen)
+	SV * data
+	int len
+	SV * key
+	int keylen
+	
+int 
+encrypt_wep(data, len, key, keylen)
+	SV * data
+	int len
+	SV * key
+	int keylen
+	
+
+#endif
