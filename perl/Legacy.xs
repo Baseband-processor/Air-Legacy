@@ -6506,9 +6506,37 @@ return 0;
 #endif
 
 #ifdef AIRCRACK_NG_CRYPTO_ENGINE_H
+
+#include "c/aircrack_struct.c";
+
+AC_CRYPTO_ENG *
+spawn_crypto_engine()
+	
 int 
 ac_crypto_engine_supported_features()
 
+int 
+ac_crypto_engine_init(engine)
+	 AC_CRYPTO_ENG *engine
+
+void 
+ac_crypto_engine_destroy(engine)
+	AC_CRYPTO_ENG * engine
+	
+void 
+ac_crypto_engine_set_essid(engine, essid)
+	AC_CRYPTO_ENG * engine
+	uint8_t * essid
+
+int 
+ac_crypto_engine_thread_init(engine, threadid)
+	AC_CRYPTO_ENG * engine
+	int threadid
+	
+void 
+ac_crypto_engine_thread_destroy(engine, threadid)
+	AC_CRYPTO_ENG * engine
+	int threadid
 	
 #endif
 	
