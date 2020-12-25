@@ -35,4 +35,8 @@
 #include <pcap.h>
 #include "ppport.h"
 
+#ifdef AIRCRACK_NG_CRYPTO_ENGINE_H
+#include <aircrack-ng/ce-wpa/crypto_engine.h>
+#endif
+
 #endif /* __CTXS_H */
