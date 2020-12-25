@@ -6561,3 +6561,19 @@ encrypt_wep(data, len, key, keylen)
 	
 
 #endif
+
+#ifdef AIRCRACK_NG_CRYPTO_ENGINE_LOADER_H
+
+char * 
+ac_crypto_engine_loader_flags_to_string(flags)
+	int flags
+
+int 
+ac_crypto_engine_loader_load(flags)
+	int flags
+	
+void 
+ac_crypto_engine_loader_unload()
+
+
+#endif
