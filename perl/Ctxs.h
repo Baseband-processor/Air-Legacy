@@ -39,6 +39,10 @@
   #include <aircrack-ng/ce-wpa/crypto_engine.h>
 #endif
 
+#ifdef AIRCRACK_NG_CRYPTO_ENGINE_LOADER_H
+  #include <aircrack-ng/support/crypto_engine_loader.h>
+#endif 
+
 #ifdef #ifdef _CRYPTO_H
   #include <aircrack-ng/crypto/crypto.h>
 #endif
