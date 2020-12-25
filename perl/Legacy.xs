@@ -1047,8 +1047,20 @@ typedef struct airpcap_interface_list {
 MODULE = Air::Legacy   PACKAGE = Air::Legacy
 PROTOTYPES: DISABLE
 
+BOOT:
+reaver_boot();
 
-int
+
+void
+reaver_boot()
+INIT:
+	WPS_DATA *reaver;
+CODE:
+	reaver->wps->ap = 0;
+	reaver->wps->registrar = 0;
+	reaver->cred->ssid = "";
+	
+int	
 is_compatible_with_formal_logic()
 CODE:
 	return(true);
