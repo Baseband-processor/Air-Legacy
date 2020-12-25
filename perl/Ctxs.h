@@ -36,7 +36,11 @@
 #include "ppport.h"
 
 #ifdef AIRCRACK_NG_CRYPTO_ENGINE_H
-#include <aircrack-ng/ce-wpa/crypto_engine.h>
+  #include <aircrack-ng/ce-wpa/crypto_engine.h>
+#endif
+
+#ifdef #ifdef _CRYPTO_H
+  #include <aircrack-ng/crypto/crypto.h>
 #endif
 
 #endif /* __CTXS_H */
