@@ -2,9 +2,10 @@
 # Detect OS and Install deps for Air::Legacy
 # Made by Edoardo Mantovani, 2020
 # version 1.35: added APT interface
-
+# Version 1.47: added Aircrack-ng library installer interface
 
 use Term::ANSIColor;
+
 
 BEGIN{
 # set the screen style
@@ -53,6 +54,10 @@ require "./include/Processes.pm";
 require "./include/Detect.pm";
 }
 
+print color("green"), "Would you like to install also the Aircrack-ng extension? [y/n]: ";
+my $answ = <STDIN>;
+chop($answ);
+
 # run the processes in Background
 my $process = Proc::Simple->new(); 
 
@@ -66,9 +71,21 @@ if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /u
 	# install all pre-requisites
 	if( defined( shift ) ){
 		$apt->install( "flex", "bison", "libpcap-dev", "linux-libc-dev", "libnet1-dev" );
+		if( $answ =~ "y" ){
+			$apt->install("build-essential",  "autoconf",  "automake",  "libtool",  "pkg-config",  "libnl-3-dev",  "libnl-genl-3-dev",  "libssl-dev",  "ethtool",  "shtool",  "rfkill",  "zlib1g-dev",  "libpcap-dev",  "libsqlite3-dev",  "libpcre3-dev",  "libhwloc-dev",  "libcmocka-dev",  "hostapd",  "wpasupplicant",  "tcpdump",  "screen",  "iw",  "usbutils");
+		}
+		if( ! `which git` ){
+			$apt->install("git");
+		}
 	}else{
-	$apt->install( "flex", "bison", "libpcap-dev", "linux-libc-dev" ); # Equivalent of `apt update && apt install flex bison libpcap-dev linux-libc-dev `;
+		$apt->install( "flex", "bison", "libpcap-dev", "linux-libc-dev" ); # Equivalent of `apt update && apt install flex bison libpcap-dev linux-libc-dev `;
 	# libpcap is a special case, we will use libpcap-dev package for installing it as dep.
+		if( $answ =~ "y" ){
+			$apt->install("build-essential",  "autoconf",  "automake",  "libtool",  "pkg-config",  "libnl-3-dev",  "libnl-genl-3-dev",  "libssl-dev",  "ethtool",  "shtool",  "rfkill",  "zlib1g-dev",  "libpcap-dev",  "libsqlite3-dev",  "libpcre3-dev",  "libhwloc-dev",  "libcmocka-dev",  "hostapd",  "wpasupplicant",  "tcpdump",  "screen",  "iw",  "usbutils");
+		}
+		if( ! `which git` ){
+			$apt->install("git");
+		}
   }
   	}
 	
@@ -94,6 +111,14 @@ sleep(3);
 
 # installing:
 # Net::Pcap
+
+sub install_aircrack(){
+	# gather aircrack-ng binary
+	`git clone https://github.com/aircrack-ng/aircrack-ng`;
+	if( readdir( "aircrack-ng" ) ){
+
+	}
+}
 
 
 sub display_load{
