@@ -135,6 +135,38 @@
 #define WPS_OOB_DEVICE_PASSWORD_LEN 32
 #define WPS_OOB_PUBKEY_HASH_LEN 20
 
+#define MAX_KEYS_PER_CRYPT_SUPPORTED 16
+#define CACHELINE_SIZE 64
+
+#define CACHELINE_PADDED_FIELD(T, name, length, cacheline_size)                \
+	T name[(length)];                                                          \
+	uint8_t name##_padding[(cacheline_size)                                    \
+						   - ((length * sizeof(T)) % (cacheline_size))]
+
+#pragma pack(push, 1)
+typedef struct ac_crypto_engine_perthread
+{
+	CACHELINE_PADDED_FIELD(wpapsk_hash,
+						   pmk,
+						   MAX_KEYS_PER_CRYPT_SUPPORTED,
+						   CACHELINE_SIZE);
+	
+	CACHELINE_PADDED_FIELD(uint8_t,
+						   hash1,
+						   (64 + 20) * MAX_KEYS_PER_CRYPT_SUPPORTED,
+						   CACHELINE_SIZE);
+	
+}AC_CRYPTO_ENG_PERTHREAD;
+
+#define MAX_THREADS 32
+
+typedef struct ac_crypto_engine{
+	uint8_t ** essid;
+	uint32_t essid_length;
+
+	AC_CRYPTO_ENG_PERTHREAD * thread_data[MAX_THREADS];
+}AC_CRYPTO_ENG;
+
 #define __FD_ISSET(d, set) \
   ((__FDS_BITS (set)[__FD_ELT (d)] & __FD_MASK (d)) != 0)
 
