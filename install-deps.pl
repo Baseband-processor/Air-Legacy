@@ -116,10 +116,15 @@ sub install_aircrack(){
 	# gather aircrack-ng binary
 	`git clone https://github.com/aircrack-ng/aircrack-ng`;
 	if( readdir( "aircrack-ng" ) ){
-
+		system("sudo sh aircrack-ng/autogen.sh");
+		sleep(2);
+		system("cd aircrack-ng && ./configure --prefix=/usr/ && make && make install");
 	}
 }
 
+if( defined( $answ ) ){
+	&install_aircrack();
+}
 
 sub display_load{
 	# consider @_ == time
