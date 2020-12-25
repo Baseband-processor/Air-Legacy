@@ -234,6 +234,11 @@ Probably the project will grow even more, my future ideas are:
 - [x] offer a full coverage for the Lorcon2 library
 - [ ] develop a big amount of perl-based-subroutines, despite the function-avaiability, lorcon2 is a finite project, it's our work to make it infinite.
 - [ ] Write a brief PDF manual centered on all Air::Legacy's functions
+- [ ] add SPIKE interface for network protocol fuzzing
+- [ ] add low level driver manipulation
+- [ ] add customized complex formal methods analysis for wireless protocols
+- [ ] add  WPA2 / WPA3 working authentication functions
+- [ ] fix memory leak bugs
 
 **Other suggested Perl libraries for network security**
 
