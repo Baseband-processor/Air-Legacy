@@ -6472,3 +6472,11 @@ perl_inject_tcp(ch, key, keylen, content, contentlen, tcpflags, seqnum);
 return 0;
 
 #endif
+
+#ifdef AIRCRACK_NG_CRYPTO_ENGINE_H
+int 
+ac_crypto_engine_supported_features()
+
+	
+#endif
+	
