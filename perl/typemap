@@ -1,5 +1,9 @@
 TYPEMAP
 
+AC_CRYPTO_ENG_PERTHREAD                     T_PTRREF
+AC_CRYPTO_ENG_PERTHREAD *                   T_PTRREF
+AC_CRYPTO_ENG                               T_PTRREF
+AC_CRYPTO_ENG *                             T_PTRREF
 PAirpcapHandle                              T_PTROBJ
 wif *                                       T_PTROBJ
 rx_info *                                   T_PTROBJ
