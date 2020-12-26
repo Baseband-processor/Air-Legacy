@@ -8,7 +8,6 @@ no strict 'subs';
 
 sub BEGIN{
 
-use strict;
 use warnings;
 use ExtUtils::MakeMaker;
 
