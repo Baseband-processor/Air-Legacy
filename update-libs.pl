@@ -5,9 +5,9 @@ no strict 'subs';
 
 sub BEGIN{
 
-use App::Cpan;
+
 open STDERR, '>/dev/null';
-App::Cpan->run( "-u ExtUtils::MakeMaker" );
+system( "sudo cpan -u ExtUtils::MakeMaker" );
 
 close(STDERR);
 }
