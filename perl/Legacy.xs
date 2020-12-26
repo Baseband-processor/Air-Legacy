@@ -144,6 +144,15 @@
 						   - ((length * sizeof(T)) % (cacheline_size))]
 
 #pragma pack(push, 1)
+
+typedef struct
+{
+	union {
+		uint32_t v[8];
+		uint8_t c[32];
+	} data;
+}wpapsk_hash;
+
 typedef struct ac_crypto_engine_perthread
 {
 	CACHELINE_PADDED_FIELD(wpapsk_hash,
