@@ -1,5 +1,6 @@
 TYPEMAP
 
+HASHDB_REC *                                T_PTRREF
 COWPA_FILE *                                T_PTRREF
 HASHDB *                                    T_PTRREF
 AC_CRYPTO_ENG_PERTHREAD                     T_PTRREF
