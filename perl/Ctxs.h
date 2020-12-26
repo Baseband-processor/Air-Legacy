@@ -43,7 +43,7 @@
   #include <aircrack-ng/support/crypto_engine_loader.h>
 #endif 
 
-#ifdef #ifdef _CRYPTO_H
+#ifdef _CRYPTO_H
   #include <aircrack-ng/crypto/crypto.h>
 #endif
 
