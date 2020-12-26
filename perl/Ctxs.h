@@ -47,4 +47,8 @@
   #include <aircrack-ng/crypto/crypto.h>
 #endif
 
+#ifdef _COWPATTY_H_	
+  #include <aircrack-ng/cowpatty/cowpatty.h>
+#endif
+
 #endif /* __CTXS_H */
