@@ -38,5 +38,5 @@ struct ac_crypto_engine{
      ac_crypto_engine * crypto_eng = malloc(ac_crypto_engine *);
      crypto_eng->essid = NULL;
      crypto_eng->essid = NULL;
-
+     retuurn(crypto_eng);
  }
