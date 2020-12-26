@@ -1,5 +1,6 @@
 TYPEMAP
 
+HASHDB *                                    T_PTRREF
 AC_CRYPTO_ENG_PERTHREAD                     T_PTRREF
 AC_CRYPTO_ENG_PERTHREAD *                   T_PTRREF
 AC_CRYPTO_ENG                               T_PTRREF
