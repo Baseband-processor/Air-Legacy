@@ -1,3 +1,4 @@
+#include "Ctxs.h"
 #define INT_MAX    2147483647
 #define TIMESTAMP_LEN           8
 #define MAC_ADDR_LEN 		6
@@ -228,8 +229,6 @@ typedef struct ac_crypto_engine{
 #define SIOC80211IFCREATE (SIOCDEVPRIVATE+7)
 
 #define SHA1_DIGEST_LEN 20
-
-#include "Ctxs.h"
 
 typedef uint8_t u8;
 typedef uint16_t u16;
