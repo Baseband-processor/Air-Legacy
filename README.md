@@ -239,7 +239,7 @@ Probably the project will grow even more, my future ideas are:
 - [ ] add customized complex formal methods analysis for wireless protocols
 - [ ] add  WPA2 / WPA3 working authentication functions
 - [ ] add Aircrack-ng working API
-- [ ] fix memory leak bugs
+- [ ] add advanced  functions from _cfg80211_ layer
 
 **Other suggested Perl libraries for network security**
 
