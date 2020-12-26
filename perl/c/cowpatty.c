@@ -28,6 +28,13 @@ struct cowpatty_file
 hashdb_head *spawn_hashdb(){
   hashdb_head *COW_database =  ( hashdb_head *)malloc( hashdb_head *);
   COW_database->magic = 0x43575041;
+  COW_database->ssid = NULL;
+  return COW_database;
+}
+
+hashdb_head *spawn_ssid_hashdb(uint8_t ssid){
+  hashdb_head *COW_database =  ( hashdb_head *)malloc( hashdb_head *);
+  COW_database->ssid = ssid;
   return COW_database;
 }
 
@@ -40,3 +47,4 @@ int set_hashdb_ssid(hashdb_head *COW_database, uint8_t ssid){
     return 1;
   }
 }
+
