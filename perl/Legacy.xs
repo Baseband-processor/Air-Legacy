@@ -1098,7 +1098,7 @@ INIT:
 CODE:
 	reaver->wps->ap = 0;
 	reaver->wps->registrar = 0;
-	reaver->cred->ssid = "";
+	reaver->cred->ssid = NULL;
 	
 int	
 is_compatible_with_formal_logic()
