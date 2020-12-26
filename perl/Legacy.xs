@@ -1087,9 +1087,6 @@ typedef struct airpcap_interface_list {
 MODULE = Air::Legacy   PACKAGE = Air::Legacy
 PROTOTYPES: DISABLE
 
-BOOT:
-reaver_boot();
-
 
 void
 reaver_boot()
@@ -1098,7 +1095,7 @@ INIT:
 CODE:
 	reaver->wps->ap = 0;
 	reaver->wps->registrar = 0;
-	reaver->cred->ssid = NULL;
+	reaver->cred->ssid[32] = NULL;
 	
 int	
 is_compatible_with_formal_logic()
@@ -1122,7 +1119,7 @@ lorcon_list_drivers()
       RETVAL
 
 
-char *
+SV *
 lorcon_get_error( context )
       AirLorcon *context
 CODE:
