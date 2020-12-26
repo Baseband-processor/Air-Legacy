@@ -2285,14 +2285,15 @@ if( readlink("/sys/class/net/wlo1/device/driver") ){
 sub Detect_Driver(){
 	my $linked_drv = readlink(&FindLinkage() );
 	my @driver = split(/\//, $linked_drv);
+	undef( $linked_drv );
 	return($driver[-1]); 
 }
 
 
 sub RString_Gen(){ # adapted string for MAC address
-  my @chars = ("a".."f", 0 .. 9);
+  my @chars = ("a" .. "f", 0 .. 9);
   my $string;
-  $string .= $chars[rand @chars] for 1..12;
+  $string .= $chars[rand @chars] for (1 .. 12);
   return($string);
 }
 
@@ -2347,19 +2348,18 @@ sub kill_lorcon(){
    }else{
       return 0;   
 }
-
    }
 
 sub Open_Monitor { # Open monitor mode, tries with both libpcap and lorcon2
     my $context = @_;
     my $pcap = lorcon_get_pcap( $context );
-    if( pcap_can_set_rfmon( $pcap ) == -1 ){
+    if( ! ( pcap_can_set_rfmon( $pcap ) ) ){
     	return -1;
     }else{
-    if(! ( lorcon_open_monitor( $context ) ) ){
-	return -1; # Bad 
-     }else{
-        return 1;   # Good
+    	if(! ( lorcon_open_monitor( $context ) ) ){
+		return -1; # Bad 
+     	}else{
+        	return 1;   # Good
 }
     }
     	}
@@ -2389,8 +2389,12 @@ sub ChangeMAC {
 	# Prevention against malformed MAC's
 	my $control = Net::MAC->new('mac' => $MAC, 'die' => 0); # Die if MAC is wrong
 	delete $INC{'Net/MAC.pm'}; # toggle module from %INC
-	`ip link set dev interface down`; # set interface to down (0)
-        if(`sudo ip link set dev $interface address $MAC`){
+	
+	if( ! `ip link set dev interface down` ){ # set interface to down (0)
+		return -1;
+	}
+        
+	if(`sudo ip link set dev $interface address $MAC`){
 		if( `sudo ip link set dev $interface up` ){
 			return 0;
 	}else{
@@ -2401,11 +2405,21 @@ sub ChangeMAC {
 	
 sub Inject_Frame {
     my ($context, $packet) = @_;
+    
+    if( undef( $context ) || undef( $packet ) ){
+    	return -1;
+    }
+    
     return( lorcon_inject($context, $packet) );
 }
    
 sub Send_Bytes {
     my ($context, $packet ) = @_;
+    
+    if( undef( $context ) || undef( $packet ) ){
+    	return -1;
+    }
+    
     my $length = length($packet);
     return( lorcon_send_bytes($context, $length, \$packet) );
 }
