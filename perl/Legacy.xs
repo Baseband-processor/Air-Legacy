@@ -6507,7 +6507,7 @@ return 0;
 
 #ifdef AIRCRACK_NG_CRYPTO_ENGINE_H
 
-#include "c/aircrack_struct.c";
+#include "c/aircrack_struct.c"
 
 AC_CRYPTO_ENG *
 spawn_crypto_engine()
@@ -6575,5 +6575,37 @@ ac_crypto_engine_loader_load(flags)
 void 
 ac_crypto_engine_loader_unload()
 
+
+#endif
+
+#ifdef _COWPATTY_H_
+	
+#include <aircrack-ng/cowpatty/cowpatty.h>
+#include "c/cowpatty.c"
+
+HASHDB *
+spawn_hashdb()
+
+HASHDB *
+spawn_ssid_hashdb(ssid)
+	uint8_t ssid
+	
+int 
+set_hashdb_ssid(COW_database, ssid)
+	HASHDB *COW_database
+	uint8_t ssid
+	
+void 
+close_free_cowpatty_hashdb(cf)
+	COWPA_FILE * cf
+	
+COWPA_FILE * 
+open_cowpatty_hashdb(filename, mode)
+	char * filename
+	char * mode
+	
+HASHDB_REC * 
+read_next_cowpatty_record(cf)
+	COWPA_FILE * cf
 
 #endif
