@@ -158,5 +158,7 @@ sleep(2);
 
 
 print color('reset'); # finally reset the terminal's original color
+
+print "entering into Lorcon2 installation!\n";
 }
 	
