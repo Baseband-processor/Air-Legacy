@@ -2255,6 +2255,7 @@ our @EXPORT = (
    @{ $EXPORT_TAGS{ wps_constants } },
    @{ $EXPORT_TAGS{ packet_checksum } },
    @{ $EXPORT_TAGS{ physical } },
+   @{ $EXPORT_TAGS{ ethernet } },
 );
 
 # NOTE:
