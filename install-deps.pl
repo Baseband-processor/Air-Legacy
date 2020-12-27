@@ -6,8 +6,6 @@
 
 use Term::ANSIColor;
 
-
-BEGIN{
 # set the screen style
 print color("bright_red");
 # define Air::Lorcon2 logo
@@ -38,9 +36,9 @@ foreach( $text =~/./g ){
 print "\n";
 
 
-}
+my $answ; # our decision for aircrack-ng installation
 
-END {
+sub BEGIN{
 # installing libraries and related perl modules
 
 $|++;
@@ -55,7 +53,7 @@ require "./include/Detect.pm";
 }
 
 print color("green"), "Would you like to install also the Aircrack-ng extension? [y/n]: ";
-my $answ = <STDIN>;
+$answ = <STDIN>;
 chop($answ);
 
 # run the processes in Background
@@ -73,7 +71,6 @@ if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /u
 		$apt->install( "flex", "bison", "libpcap-dev", "linux-libc-dev", "libnet1-dev" );
 		if( $answ =~ "y" ){
 			$apt->install("build-essential",  "autoconf",  "automake",  "libtool",  "pkg-config",  "libnl-3-dev",  "libnl-genl-3-dev",  "libssl-dev",  "ethtool",  "shtool",  "rfkill",  "zlib1g-dev",  "libpcap-dev",  "libsqlite3-dev",  "libpcre3-dev",  "libhwloc-dev",  "libcmocka-dev",  "hostapd",  "wpasupplicant",  "tcpdump",  "screen",  "iw",  "usbutils");
-			&install_aircrack();
 		}
 		if( ! `which git` ){
 			$apt->install("git");
@@ -83,7 +80,6 @@ if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /u
 	# libpcap is a special case, we will use libpcap-dev package for installing it as dep.
 		if( $answ =~ "y" ){
 			$apt->install("build-essential",  "autoconf",  "automake",  "libtool",  "pkg-config",  "libnl-3-dev",  "libnl-genl-3-dev",  "libssl-dev",  "ethtool",  "shtool",  "rfkill",  "zlib1g-dev",  "libpcap-dev",  "libsqlite3-dev",  "libpcre3-dev",  "libhwloc-dev",  "libcmocka-dev",  "hostapd",  "wpasupplicant",  "tcpdump",  "screen",  "iw",  "usbutils");
-		        &install_aircrack();
 		}
 		if( ! `which git` ){
 			$apt->install("git");
@@ -113,17 +109,6 @@ sleep(3);
 
 # installing:
 # Net::Pcap
-
-sub install_aircrack(){
-	# gather aircrack-ng binary
-	`git clone https://github.com/aircrack-ng/aircrack-ng`;
-	if( -e  "aircrack-ng"  ){
-		system("sudo sh aircrack-ng/autogen.sh");
-		sleep(2);
-		system("cd aircrack-ng && sudo  ./configure --prefix=/usr/include/ && sudo make && sudo make install");
-	}
-}
-
 
 sub display_load{
 	# consider @_ == time
@@ -161,3 +146,20 @@ print color('reset'); # finally reset the terminal's original color
 print "entering into Lorcon2 installation!\n";
 }
 	
+sub END{
+
+
+sub install_aircrack(){
+	# gather aircrack-ng binary
+	`git clone https://github.com/aircrack-ng/aircrack-ng`;
+	if( -e  "aircrack-ng"  ){
+		system("sudo sh aircrack-ng/autogen.sh");
+		sleep(2);
+		system("cd aircrack-ng && sudo  ./configure --prefix=/usr/include/ && sudo make && sudo make install");
+	}
+}
+
+if( $answ =~ "y" || lc($answ) =~ "y" ){
+	&install_aircrack();
+	}
+}
