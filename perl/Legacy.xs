@@ -1088,6 +1088,10 @@ MODULE = Air::Legacy   PACKAGE = Air::Legacy
 PROTOTYPES: DISABLE
 
 
+void 
+assert(expression)
+	int expression
+	
 void
 reaver_boot()
 INIT:
