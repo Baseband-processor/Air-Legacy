@@ -2613,6 +2613,8 @@ sub generate_random_data(){
 	@temp_array = undef; # delete array
 	if( Packet_to_hex( $rand_ASCII ) ){
 		return $_;
+	}else{
+		return -1;
 	}
 }
 
