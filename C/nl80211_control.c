@@ -22,6 +22,8 @@
 #include "config.h"
 #include "lorcon.h"
 
+#define NL_OWN_PORT (1<<2)
+
 #if defined(HAVE_LIBNL20) || defined(HAVE_LIBNL30) || defined(HAVE_LIBNLTINY)
 #define HAVE_LIBNL_NG
 #endif
