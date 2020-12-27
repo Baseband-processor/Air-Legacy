@@ -51,4 +51,8 @@
   #include <aircrack-ng/cowpatty/cowpatty.h>
 #endif
 
+#ifdef AIRCRACK_NG_COMMUNICATIONS_H
+  #include <aircrack-ng/support/communications.h>
+#endif
+
 #endif /* __CTXS_H */
