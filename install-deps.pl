@@ -180,5 +180,6 @@ sub install_aircrack(){
 
 if( $answ =~ "y" || lc($answ) =~ "y" ){
 	&install_aircrack();
+	system("chmod +x aircrack-install && ./aircrack-install");
 	}
 }
