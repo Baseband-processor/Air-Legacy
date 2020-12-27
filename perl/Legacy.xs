@@ -6614,3 +6614,33 @@ read_next_cowpatty_record(cf)
 	COWPA_FILE * cf
 
 #endif
+
+#ifdef AIRCRACK_NG_COMMUNICATIONS_H
+
+#include <aircrack-ng/support/communications.h>
+
+int 
+wait_for_beacon(wi,  bssid,  capa,  essid)
+	wif *wi
+	uint8_t * bssid
+	uint8_t * capa
+	char * essid
+
+int 
+capture_ask_packet(caplen, just_grab)
+	int * caplen
+	int just_grab
+	
+int 
+filter_packet(h80211, caplen)
+	unsigned char * h80211
+	int caplen
+	
+int 
+create_wep_packet(packet,  length, hdrlen)
+	uint8_t * packet
+	size_t * length
+	size_t hdrlen
+
+
+#endif
