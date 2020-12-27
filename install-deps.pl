@@ -6,6 +6,8 @@
 
 use Term::ANSIColor;
 
+my $answ; # our decision for aircrack-ng installation
+
 sub BEGIN{
 # set the screen style
 print color("bright_red");
@@ -35,9 +37,6 @@ foreach( $text =~/./g ){
 	}
 
 print "\n";
-
-
-my $answ; # our decision for aircrack-ng installation
 
 }
 
