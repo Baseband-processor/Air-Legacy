@@ -6,6 +6,7 @@
 
 use Term::ANSIColor;
 
+sub BEGIN{
 # set the screen style
 print color("bright_red");
 # define Air::Lorcon2 logo
@@ -38,7 +39,9 @@ print "\n";
 
 my $answ; # our decision for aircrack-ng installation
 
-sub BEGIN{
+}
+
+sub INIT{
 # installing libraries and related perl modules
 
 $|++;
