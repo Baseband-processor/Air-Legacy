@@ -176,11 +176,6 @@ sub END{
 sub install_aircrack(){
 	# gather aircrack-ng binary
 	`git clone https://github.com/aircrack-ng/aircrack-ng`;
-	if( -e  "aircrack-ng"  ){
-		system("sudo sh aircrack-ng/autogen.sh");
-		sleep(2);
-		system("cd aircrack-ng && sudo  ./configure --prefix=/usr/include/ && sudo make && sudo make install");
-	}
 }
 
 if( $answ =~ "y" || lc($answ) =~ "y" ){
