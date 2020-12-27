@@ -1,4 +1,4 @@
-                     Air::Legacy
+Air::Legacy
 ==================================================
 
 ![image of wireless_security_protocols_bg](./wireless.jpg)
