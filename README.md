@@ -1,5 +1,5 @@
-<center> <h1>Air::Legacy 1</h1> </center>
-================================================
+                     Air::Legacy
+==================================================
 
 ![image of wireless_security_protocols_bg](./wireless.jpg)
 
