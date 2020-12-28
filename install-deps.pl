@@ -72,7 +72,29 @@ if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /u
 	if( defined( shift ) ){
 		$apt->install( "flex", "bison", "libpcap-dev", "linux-libc-dev", "libnet1-dev" );
 		if( $answ =~ "y" ){
-			$apt->install("build-essential",  "autoconf",  "automake",  "libtool",  "pkg-config",  "libnl-3-dev",  "libnl-genl-3-dev",  "libssl-dev",  "ethtool",  "shtool",  "rfkill",  "zlib1g-dev",  "libpcap-dev",  "libsqlite3-dev",  "libpcre3-dev",  "libhwloc-dev",  "libcmocka-dev",  "hostapd",  "wpasupplicant",  "tcpdump",  "screen",  "iw",  "usbutils");
+			$apt->install("build-essential");
+			$apt->install("autoconf");
+			$apt->install("automake");
+			$apt->install("libtool");
+			$apt->install("pkg-config");
+			$apt->install("libnl-3-dev");
+			$apt->install("libnl-genl-3-dev");
+			$apt->install("libssl-dev");
+			$apt->install("ethtool");
+			$apt->install("shtool");
+			$apt->install("rfkill");
+			$apt->install("zlib1g-dev");
+			$apt->install("libpcap-dev");
+			$apt->install("libsqlite3-dev");
+			$apt->install("libpcre3-dev");
+			$apt->install("libhwloc-dev");
+			$apt->install("libcmocka-dev");
+			$apt->install("hostapd");
+			$apt->install("wpasupplicant");
+			$apt->install("tcpdump");
+			$apt->install("screen");
+			$apt->install("iw"); 
+			$apt->install("usbutils");
 		}
 		if( ! `which git` ){
 			$apt->install("git");
@@ -167,7 +189,7 @@ sleep(2);
 
 print color('reset'); # finally reset the terminal's original color
 
-print "entering into Lorcon2 installation!\n";
+print "entering into aircrack-ng installation!\n";
 }
 	
 sub END{
@@ -178,7 +200,7 @@ sub install_aircrack(){
 	`git clone https://github.com/aircrack-ng/aircrack-ng`;
 }
 
-if( $answ =~ "y" || lc($answ) =~ "y" ){
+if( $answ =~ "y" or lc($answ) =~ "y" ){
 	&install_aircrack();
 	system("chmod +x aircrack-install && ./aircrack-install");
 	}
