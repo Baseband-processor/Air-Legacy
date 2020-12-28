@@ -80,7 +80,7 @@ static inline struct nl_handle *nl_socket_alloc(void) {
 
 #endif
 
-
+/*
 void nl_handle_destroy(struct nl_handle * handle ) {
 #ifdef HAVE_LINUX_NETLINK
 	if (!handle){
@@ -97,7 +97,8 @@ void nl_handle_destroy(struct nl_handle * handle ) {
 	#endif
 }
 
-	
+*/
+
 void nl_socket_free(struct nl_sock *h) {
 #ifdef HAVE_LINUX_NETLINK
 	nl_handle_destroy(h);
