@@ -50,6 +50,9 @@
 #define RADIOTAP_HEADER \
 "\0\0" \
 
+#define nl80211_mntr_flag_control	3
+#define nl80211_mntr_flag_otherbss	4
+
 #define MAX_TX_POWER 50
 
 #define INFO 1
