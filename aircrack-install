@@ -1,2 +1,2 @@
 (sudo sh aircrack-ng/autogen.sh)
-(cd aircrack-ng && sudo  ./configure --prefix=/usr/include/ && sudo make && sudo make install)
+(cd aircrack-ng && sudo  ./configure --prefix=/usr/ && sudo make && sudo make install)
