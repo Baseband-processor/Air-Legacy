@@ -27,15 +27,8 @@ WriteMakefile(
       Net::Pcap => 0,
       Test::More => 0,
   },
-  xs => {
-      all => {
-      },
-          DEFINE => '-Dfunktastic', 
-          INC => '-I/usr/include/ -I/usr/local/include', 
-          LIBS => '-llorcon2 -lassert',
-      },
-);
 
+);
 # NOTE: for now the OPTIMIZE and the CCFLAGS are flawed, will be updated in future
 
 ## END ##
