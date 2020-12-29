@@ -2637,18 +2637,23 @@ sub parse_differential{
 }
 
 sub generate_random_data(){
-	my $rand_ASCII = undef;
-	my @temp_array = ("a" .. "z" );
-	for( 1 .. 16 ){	 # Iterate for 16 rounds
-		$rand_ASCII .= $temp_array[int(rand($#temp_array - 1))];
-	}
-	@temp_array = undef; # delete array
-	if( Packet_to_hex( $rand_ASCII ) ){
-		return $_;
-	}else{
-		return -1;
-	}
+        my $rand_ASCII = undef;
+        my @temp_array = ("a" .. "z", "A" .. "Z", 1 .. 9 );
+        for( 1 .. rand(26) ){    # Iterate for 16 rounds
+                $rand_ASCII .= $temp_array[int(rand($#temp_array - 1))];
+        }
+        #@temp_array = undef; # delete array
+        if( Packet_to_hex( $rand_ASCII ) ){
+                return Packet_to_hex( $rand_ASCII );
+        }else{
+              for( 1 .. rand(32) ){    # Iterate for 16 rounds
+                        $rand_ASCII .= $temp_array[int(rand($#temp_array - 1))];
+                }
+                return Packet_to_hex( $rand_ASCII );
+        }
 }
+
+
 
 __PACKAGE__->bootstrap($VERSION);
 
