@@ -1,4 +1,5 @@
 #include "Ctxs.h"
+
 #define INT_MAX    2147483647
 #define TIMESTAMP_LEN           8
 #define MAC_ADDR_LEN 		6
@@ -708,8 +709,6 @@ typedef struct wps_context{
 	char *friendly_name;
 
 	char *manufacturer_url;
-
-
 	char *model_description;
 
 
@@ -1098,7 +1097,7 @@ assert(expression)
 void
 reaver_boot()
 INIT:
-	WPS_DATA *reaver;
+	WPS_DATA *reaver = (WPS_DATA *)malloc(sizeof(WPS_DATA));
 CODE:
 	reaver->wps->ap = 0;
 	reaver->wps->registrar = 0;
