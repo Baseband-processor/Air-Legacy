@@ -14,7 +14,6 @@ minimal:  perlT
 full: prerequisites  perlT
 
 prerequisites:
-	#sudo perl update-libs.pl
 	sudo perl install-deps.pl
 perlT:
 	(cd ./C && chmod 755 ./configure && sudo ./configure --prefix=$(TMP_INSTALL_DIR) && sudo make all && sudo make install)
