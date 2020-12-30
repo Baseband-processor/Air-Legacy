@@ -49,6 +49,7 @@ CHANGED PROJECT, NOW IT WILL BE AIR::LEGACY
    - added ac_crypto_engine functions and related
    - added ETHERNET constant class [+182]
    - deleted useless headers
+   - updated official site
    
 Revision history for the (old)  Perl extension Air::Lorcon2.
 
