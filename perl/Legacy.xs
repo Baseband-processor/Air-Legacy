@@ -2187,8 +2187,7 @@ CODE:
 int
 tx80211_airpcap_capabilities()
 CODE:
-	return(TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT | 
-	TX80211_CAP_SETMODULATION | TX80211_CAP_SETRATE);
+	return(TX80211_CAP_SNIFF | TX80211_CAP_TRANSMIT | TX80211_CAP_SETMODULATION | TX80211_CAP_SETRATE);
 
 
 int 
@@ -2254,7 +2253,7 @@ iwconfig_set_ssid(input_dev, errstr, input_essid)
    char *errstr
    char *input_essid
 INIT:
-	struct iwreq wrq;
+	iwreq *wrq;
 CODE:
 	int skfd;
 	char essid[IW_ESSID_MAX_SIZE + 1];
@@ -2269,9 +2268,9 @@ CODE:
 		return -1;
 	}
 	strncpy(wrq.ifr_name, input_dev, IFNAMSIZ);
-	wrq.u.essid.pointer = (caddr_t) essid;
-	wrq.u.essid.length = sv_len(essid) + 1;
-	wrq.u.essid.flags = 1;
+	wrq->u->essid.pointer = (caddr_t) essid;
+	wrq->u->essid.length = sv_len(essid) + 1;
+	wrq->u->essid.flags = 1;
 	if (ioctl(skfd, SIOCSIWESSID, &wrq) < 0) {
 		snprintf(errstr, LORCON_STATUS_MAX, "Failed to set SSID on %s: %s", input_dev, strerror(errno));
 		close(skfd);
