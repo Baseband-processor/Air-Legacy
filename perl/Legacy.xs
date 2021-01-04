@@ -4125,7 +4125,11 @@ OUTPUT:
 int 
 mac80211_openmon_cb(context) 
 	AirLorcon *context
-CODE:
+PREINIT:
+	if( sizeof(context) == 0 || ( ! context ) || ( context == NULL )){
+		return -1;
+	}
+INIT:
 	char *parent;
 	char pcaperr[PCAP_ERRBUF_SIZE];
 	AirLorcon_MAC80211 *extras = (AirLorcon_MAC80211 *) context->auxptr;
@@ -4137,6 +4141,7 @@ CODE:
   	unsigned int num_flags = 2;
     	unsigned int fi;
     	unsigned int flags[2];
+CODE:
     fi = 0;
     flags[fi++] = nl80211_mntr_flag_control;
     flags[fi++] = nl80211_mntr_flag_otherbss;
