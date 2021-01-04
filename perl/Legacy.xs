@@ -3377,6 +3377,10 @@ lcpf_authresq(pack, dst, src, bssid, framecontrol, duration, fragment, sequence,
 	uint16_t authalgo
 	uint16_t auth_seq
 	uint16_t auth_status
+PREINIT:
+	if( sizeof(pack) == 0 || ( pack == NULL ) ){
+		return -1;
+	}
 INIT:
 	pack->data = NULL;
 	pack->len = NULL;
