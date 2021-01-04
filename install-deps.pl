@@ -28,7 +28,8 @@ use Time::HiRes qw(usleep);
 print "\n";
 
 my $text = "
-Air::Legacy: A fast, portable and efficient library based on Lorcon2. Written in XS for perl penetration tester and wireless-security experts";
+Air::Legacy: A fast, portable and efficient library based on Lorcon2, aircrack-ng and pixie-wps, with some cryptographic reinforcement. 
+Written in XS for both perl penetration tester and wireless-security experts";
 
 foreach( $text =~/./g ){
 	print $_;
