@@ -2267,10 +2267,10 @@ CODE:
 		snprintf(errstr, LORCON_STATUS_MAX, "Failed to create ioctl socket to set SSID on %s: %s", input_dev, strerror(errno));
 		return -1;
 	}
-	strncpy(wrq.ifr_name, input_dev, IFNAMSIZ);
-	wrq->u->essid.pointer = (caddr_t) essid;
-	wrq->u->essid.length = sv_len(essid) + 1;
-	wrq->u->essid.flags = 1;
+	strncpy(wrq->ifr_name, input_dev, IFNAMSIZ);
+	wrq->u.essid.pointer = (caddr_t) essid;
+	wrq->u.essid.length = sv_len(essid) + 1;
+	wrq->u.essid.flags = 1;
 	if (ioctl(skfd, SIOCSIWESSID, &wrq) < 0) {
 		snprintf(errstr, LORCON_STATUS_MAX, "Failed to set SSID on %s: %s", input_dev, strerror(errno));
 		close(skfd);
