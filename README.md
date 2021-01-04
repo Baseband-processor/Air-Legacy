@@ -23,6 +23,7 @@ More attack can be used, more the efficency growns.
 
 **REQUIREMENTS**
 
+- [x] UNIX based os ( no Windows compatibility for now )
 - [x] perl 
 - [x] cpan and App::Cpan
 - [x] libpcap
