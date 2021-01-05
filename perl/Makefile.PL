@@ -20,7 +20,7 @@ WriteMakefile(
   # OPTIMIZE       => '-oS  ',
    'OPTIMIZE' => '-O0', 
    VERSION_FROM => 'lib/Air/Legacy.pm',
-   LIBS => ['-L/lib -L/usr/lib -L/usr/local/lib -llorcon2'],
+   LIBS => ['-L/lib -L/usr/lib -L/usr/local/lib -llorcon2 -laircrack-ng'],
    INC => '-I/include -I/usr/include -I/usr/local/include',
    PREREQ_PM => {
       Net::MAC =>  0,
