@@ -1,4 +1,3 @@
-#!/usr/bin/perl
 
 #### FILE DEPRECATED, FOR NOW NO USES ####
 
