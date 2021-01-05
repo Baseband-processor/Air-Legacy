@@ -1,5 +1,3 @@
-#!/usr/bin/perl
-
 # return all driver from the lorcon_list_driver and try to use the best with lorcon_
 
 use strict;
