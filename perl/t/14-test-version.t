@@ -1,5 +1,3 @@
-#!/usr/bin/perl
-
 # Made by Edoardo Mantovani, 2020
 # see if lorcon is installed by checking the "get_version" func, this will return the constant LORCON_VERSION
 
