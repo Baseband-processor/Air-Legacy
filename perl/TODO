@@ -4,11 +4,13 @@ Made by Edoardo Mantovani, 2020
 - fix many compilation problems at "make" command (+99% success)
 
 REALTODO:
-- write full documentation ( 70% )
+- write full documentation ( 75% )
 - write small pdf about every module with the help of community
 - fix some C code wich still crash
 - decide if static linking lorcon2.so perl's object, this will be a first pass for creating an independing Air::Lorcon2 library (from originary lorcon2)
 - try to re-implement CCFLAGS from Makefile.PL
+
+/*
 - implement new drivers
    * ath5k 
    * ath9k
@@ -17,11 +19,8 @@ REALTODO:
    * mt76
    * rt2x00
    * ti
-   
+  */
+  
 - add TKIP/CCMP support
-- add lorcon_wpa struct
-- update pcap_can_set_rfmon and relate
-- fix lorcon_multi_loop and relate
 - speed up Air::Lorcon2's execution
 - rename the entire project into Air::Legacy, this because it will include reaver, aircrack, hashcat and lorcon2 functions
-- create custom Makefile for cfg80211.h file
