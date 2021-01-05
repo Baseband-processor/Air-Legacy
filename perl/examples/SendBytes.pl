@@ -1,6 +1,5 @@
-#!/usr/bin/perl
-
 use strict;
+no strict 'subs';
 use Air::Legacy qw( :lorcon );
 use Data::Dumper qw( Dumper );
 print Dumper(  lorcon_list_drivers() );
