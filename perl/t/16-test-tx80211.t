@@ -1,5 +1,3 @@
-#!/usr/bin/perl
-
 # Made by Edoardo Mantovani, 2020
 # simple test utility for tx80211_getcardlist function and related tx80211 functions
 
