@@ -1,4 +1,6 @@
-#include "Ctxs.h"
+#ifndef __CTXS_H
+	#include "Ctxs.h"
+#endif
 
 #define INT_MAX    2147483647
 #define TIMESTAMP_LEN           8
