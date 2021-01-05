@@ -1,10 +1,9 @@
-#!/usr/bin/perl
-
 # Made by Edoardo Mantovani, 2020
 
 sub BEGIN{
 
 use strict;
+no strict 'subs';
 use Net::Pcap qw( pcap_lookupdev pcap_open_live pcap_loop);
 use Air::Legacy qw( :lorcon :packet_checksum  );
 
