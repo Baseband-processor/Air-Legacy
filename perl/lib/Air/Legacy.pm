@@ -1,5 +1,3 @@
-#!usr/bin/perl
-
 package Air::Legacy;
 
 # Made by Edoardo Mantovani, 2020
