@@ -1,4 +1,3 @@
-#!/usr/bin/perl
 
 # Made by Edoardo Mantovani, 2020
 # Main installer for Air::Legacy
