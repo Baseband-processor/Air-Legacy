@@ -23,4 +23,3 @@ REALTODO:
   
 - add TKIP/CCMP support
 - speed up Air::Lorcon2's execution
-- rename the entire project into Air::Legacy, this because it will include reaver, aircrack, hashcat and lorcon2 functions
