@@ -1,5 +1,3 @@
-#!/usr/bin/perl
-
 # Made by Edoardo Mantovani, 2020
 # easy test which takes 100 random functions and tests if returns some value
 
