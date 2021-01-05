@@ -1,5 +1,3 @@
-#!/usr/bin/perl
-
 # Made by Edoardo Mantovani, 2020
 # Main test for using Air::Legacy crypto-tools
 
