@@ -1,5 +1,3 @@
-#!/usr/bin/perl
-
 # Made by Edoardo Mantovani, 2020
 # test lorcon_get_pcap and other related pcap utilities
 
