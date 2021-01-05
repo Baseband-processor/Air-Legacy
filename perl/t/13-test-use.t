@@ -1,5 +1,3 @@
-#!/usr/bin/perl
-
 # Made by Edoardo Mantovani, 2020
 # simple test for lorcon export
 
