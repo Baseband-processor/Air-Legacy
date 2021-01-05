@@ -1,4 +1,3 @@
-#!/usr/bin/perl
 
 # Made by Edoardo Mantovani, 2020
 # Implementation of tx.c program, originally made by Joshua Wright and dragorn
