@@ -1,4 +1,3 @@
-#!/usr/bin/perl
 # Detect OS and Install deps for Air::Legacy
 # Made by Edoardo Mantovani, 2020
 # version 1.35: added APT interface
