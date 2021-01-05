@@ -70,7 +70,11 @@ if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /u
 	$apt->update();
 	# install all pre-requisites
 	if( defined( shift ) ){
-		$apt->install( "flex", "bison", "libpcap-dev", "linux-libc-dev", "libnet1-dev" );
+		$apt->install( "flex");
+		$apt->install("bison");
+		$apt->install("libpcap-dev");
+		$apt->install("linux-libc-dev");
+		$apt->install("libnet1-dev");
 		if( $answ =~ "y" ){
 			$apt->install("build-essential");
 			$apt->install("autoconf");
@@ -100,8 +104,12 @@ if( Detect->distribution_name() =~ /debian/ || Detect->distribution_name() =~ /u
 			$apt->install("git");
 	}
 	}else{
-		$apt->install( "flex", "bison", "libpcap-dev", "linux-libc-dev" ); # Equivalent of `apt update && apt install flex bison libpcap-dev linux-libc-dev `;
-	# libpcap is a special case, we will use libpcap-dev package for installing it as dep.
+		$apt->install( "flex");
+		$apt->install("bison");
+		$apt->install("libpcap-dev");
+		$apt->install("linux-libc-dev" ); 
+		# Equivalent of `apt update && apt install flex bison libpcap-dev linux-libc-dev `;
+		# libpcap is a special case, we will use libpcap-dev package for installing it as dep.
 		if( $answ =~ "y" ){
 			$apt->install("build-essential");
 			$apt->install("autoconf");
