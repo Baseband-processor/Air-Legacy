@@ -1,4 +1,3 @@
-#!/usr/bin/perl
 
 # Made by Edoardo Mantovani, 2020
 
@@ -7,6 +6,7 @@
 #	packet assembly functionality
 
 use strict;
+no strict 'subs';
 use warnings;
 use Air::Legacy qw( :lorcon );
 
