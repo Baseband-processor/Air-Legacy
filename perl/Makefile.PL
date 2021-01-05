@@ -3,11 +3,11 @@
 # Made by Edoardo Mantovani, 2020
 # Main installer for Air::Legacy
 
-no strict 'subs';
 
 
 sub BEGIN{
 
+no strict 'subs';
 use warnings;
 use ExtUtils::MakeMaker;
 
