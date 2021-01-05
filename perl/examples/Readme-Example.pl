@@ -1,6 +1,5 @@
-#!/usr/bin/perl
-
 use strict;
+no strict 'subs';
 use Net::Pcap qw( pcap_lookupdev );
 use Data::Dumper qw(Dumper);
 use Air::Legacy qw(:lorcon); # This will export every lorcon2's subroutines
