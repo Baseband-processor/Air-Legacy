@@ -205,7 +205,14 @@ sub END{
 
 sub install_aircrack(){
 	# gather aircrack-ng binary
+	# disable STDOUT
+	if( -e "/dev/null"){
+		open(STDOUT, '>/dev/null');
+	}
 	`git clone https://github.com/aircrack-ng/aircrack-ng`;
+	if( -e "/dev/null"){
+		close(STDOUT);
+	}
 }
 
 if( $answ =~ "y" or lc($answ) =~ "y" ){
