@@ -1,4 +1,3 @@
-#!/usr/bin/perl
 
 # Made by Edoardo Mantovani, 2020 
 # Craft and send WPS packets
@@ -6,6 +5,7 @@
 sub BEGIN{
 
 use strict;
+no strict 'subs';
 use warnings;
 use Term::ANSIColor;
 use Air::Legacy qw( :lorcon :reaver );
