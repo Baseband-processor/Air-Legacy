@@ -1,5 +1,3 @@
-#!/usr/bin/perl
-
 # Made by Edoardo Mantovani, 2020
 
 # perl translation for "beacon_flood_raw.py"
@@ -10,6 +8,7 @@
 
 
 use strict;
+no strict 'subs';
 use warnings;
 use Air::Legacy qw( :lorcon ); # import lorcon2 utilities
 
