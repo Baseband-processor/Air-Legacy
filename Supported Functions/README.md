@@ -365,6 +365,8 @@ actually Working functions
       wi_get_monitor
       wi_get_ifname
       wi_close
+      mw_to_dbm
+      dbm_to_mw
        
 **NOT WORKING FUNCTIONS**
 
