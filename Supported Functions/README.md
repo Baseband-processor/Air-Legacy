@@ -332,7 +332,30 @@ actually Working functions
       lcpf_assocresp
       lcpf_data
       lcpf_qosheaders
-
+     	spawn_crypto_engine
+	ac_crypto_engine_supported_features
+	ac_crypto_engine_init
+	ac_crypto_engine_destroy
+	ac_crypto_engine_set_essid
+	ac_crypto_engine_thread_init
+	ac_crypto_engine_thread_destroy
+	ac_crypto_init
+	decrypt_wep
+	encrypt_wep
+	ac_crypto_engine_loader_flags_to_string
+	ac_crypto_engine_loader_load
+	ac_crypto_engine_loader_unload
+	spawn_hashdb
+	spawn_ssid_hashdb
+	set_hashdb_ssid
+	close_free_cowpatty_hashdb
+	open_cowpatty_hashdb
+	read_next_cowpatty_record
+	wait_for_beacon
+	capture_ask_packet
+	filter_packet
+	create_wep_packet
+	
 **NOT WORKING FUNCTIONS**
 
 - [ ]      lcpa_append_copy
