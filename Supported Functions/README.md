@@ -355,6 +355,7 @@ actually Working functions
       capture_ask_packet
       filter_packet
       create_wep_packet
+      inject_tcp
 	
 **NOT WORKING FUNCTIONS**
 
