@@ -356,7 +356,16 @@ actually Working functions
       filter_packet
       create_wep_packet
       inject_tcp
-	
+      wi_read
+      wi_write
+      wi_set_channel
+      wi_get_channel 
+      wi_get_freq
+      wi_set_freq
+      wi_get_monitor
+      wi_get_ifname
+      wi_close
+       
 **NOT WORKING FUNCTIONS**
 
 - [ ]      lcpa_append_copy
